@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>Tripude Institute of Management Education</title>
+    <link rel="stylesheet" type='text/css' href="{% static 'homepage.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700|Quicksand:300,400,700|Arvo:400,700&display=swap"
+          rel="stylesheet">
+    <style media="screen">
+        .btn-outline-primary {
+            border-color: #08371E;
+            color: #08371E;
+        }
+
+        .btn-outline-primary:hover {
+            color: #ffffff;
+            background-image: linear-gradient(to top right, #426150, #08371E);
+            border-color: #08371E;
+        }
+
+        .btn-primary {
+            border-color: #08371E;
+            background-image: linear-gradient(to top right, #426150, #08371E);
+        }
+
+        .btn-primary:hover {
+            border-color: #08371E;
+            background-image: linear-gradient(to top right, #ffffff, #ffffff);
+            color: #08371E;
+        }
+
+        .btn-outline-primary:not(:disabled):not(.disabled).active, .btn-outline-primary:not(:disabled):not(.disabled):active, .show > .btn-outline-primary.dropdown-toggle {
+            color: #fff;
+            background-image: linear-gradient(to top right, #426150, #08371E);
+            border-color: #08371E;
+        }
+
+        .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
+            color: #08371E;
+            background-color: #08371E;
+            border-color: #08371E;
+        }
+
+        .btn-outline-primary:hover {
+            color: #fff;
+            background-color: #08371E;
+            border-color: #08371E;
+        }
+
+        .btn-outline-primary.focus, .btn-outline-primary:focus {
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0);
+        }
+
+        .btn.focus, .btn:focus {
+            outline: 0;
+        }
+
+        .btn-outline-primary:not(:disabled):not(.disabled).active:focus, .btn-outline-primary:not(:disabled):not(.disabled):active:focus, .show > .btn-outline-primary.dropdown-toggle:focus {
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0);
+        }
+
+        .btn-outline-primary:not(:disabled):not(.disabled).active, .btn-outline-primary:not(:disabled):not(.disabled):active, .show > .btn-outline-primary.dropdown-toggle {
+            color: #fff;
+            background-color: #08371E;
+            border-color: #08371E;
+        }
+
+        .btn-primary.focus, .btn-primary:focus {
+            box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0);
+        }
+
+        .btn.focus, .btn:focus {
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0);
+        }
+
+        .btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show > .btn-primary.dropdown-toggle:focus {
+            box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0);
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#" style="padding-left: 1%"> <img src="{% static 'tirpude-connect.png' %}"
+                                                                        style="height: 40px;" alt="tirpude"></a>
+    </nav>
+</header>
+
+<div class="row align-items-center" style="margin-top:25px;">
+    <div class="col-xl-4 col-lg-4 col-md-11 col-sm-11  content_homepage">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-10">
+                <div style="margin-bottom: -15px;">
+                    <h1 id="tir">tirpude</h1>
+                </div>
+                <div class="">
+                    <h1 id="ins">INSTITUTE</h1>
+                </div>
+                <div class="">
+                    <h1 id="ofm">OF&nbsp;&nbsp;MANAGEMENT</h1>
+                </div>
+                <div style="margin-top: -10px;">
+                    <h1 id="edu">EDUCATION</h1>
+                </div>
+                <p>We will be a unique education institute with strong regional roots, being a nationally influential
+                    education center imbibing moral and cultural values</p>
+                <div class="row button_class">
+                    <button type="button" class="btn btn-primary col-lg-5 col-sm-3 col-4" style="border-radius: 4px;"
+                            onclick="Admin_Login()">Login
+                    </button>
+                    <button type="button" class="btn btn-outline-primary col-lg-5 col-sm-3 col-4"
+                            style="border-radius: 4px; margin-left: 25px;" onclick="Admin_Signup()">Sign Up
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8 col-lg-8 col-md-11 col-sm-12">
+        <div class="row justify-content-center">
+            <img class="img-fluid" src="{% static 'landimg.jpg' %}">
+        </div>
+    </div>
+</div>
+</body>
+<script src="{% static '/js/plugins/jquery/dist/jquery.min.js' %}"></script>
+<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+<script type="text/javascript" src="{% static 'homepage.js' %}"></script>
+</html>

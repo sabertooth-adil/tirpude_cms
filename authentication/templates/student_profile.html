@@ -1,0 +1,1804 @@
+{% extends 'indexbase.html' %}
+{% block content %}
+{% load static %}
+<style>
+.picture-container{
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+}
+.picture{
+    width: 150px;
+    height: 150px;
+    background-color: #999999;
+    border: 4px solid #CCCCCC;
+    color: #FFFFFF;
+    border-radius: 50%;
+    margin: 0px auto;
+    overflow: hidden;
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+}
+.picture:hover{
+    border-color: #2ca8ff;
+}
+.content.ct-wizard-green .picture:hover{
+    border-color: #05ae0e;
+}
+.content.ct-wizard-blue .picture:hover{
+    border-color: #3472f7;
+}
+.content.ct-wizard-orange .picture:hover{
+    border-color: #ff9500;
+}
+.content.ct-wizard-red .picture:hover{
+    border-color: #ff3b30;
+}
+.picture input[type="file"] {
+    cursor: pointer;
+    display: block;
+    height: 100%;
+    left: 0;
+    opacity: 0 !important;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.picture-src{
+    width: 100%;
+
+}
+
+</style>
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">My Profile</h1>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <div class="row">
+        <div class="col-xl-3 order-xl-2 mb-5 mb-xl-0">
+            <div class="js-wizard-simple block">
+                <div class="row justify-content-center" style="padding:10px;">
+                    <br>
+                    <div class="picture-container">
+                        <div class="picture" id="imgInp">
+                            {% if user_info_obj.profile_image %}
+                            <img src="{{user_info_obj.profile_image.url}}" class="picture-src"
+                                 id="wizardPicturePreview" title="">
+                            <input type="file" id="wizard-picture" class="" accept="image/x-png,image/gif,image/jpeg" />
+                            {% else %}
+                            <img src="{% static '/img/theme/defaultprofile.png' %}" class="picture-src"
+                                 id="wizardPicturePreview" title="">
+                            <input type="file" id="wizard-picture" class="" accept="image/x-png,image/gif,image/jpeg" />
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="container">
+                        <br>
+                        <div class="row text-center">
+                            <div class="col-lg-3">
+                                <span class="heading">{{ academic_info_obj.fk_course.course|default_if_none:''}}</span><br>
+                                <span class="description">Course</span>
+                            </div>
+                            <div class="col-lg-3">
+                                <span class="heading">{{ academic_info_obj.fk_semesters.semester|default_if_none:''}}</span><br>
+                                <span class="description">Semester</span>
+                            </div>
+                            <div class="col-lg-3">
+                                <span class="heading">{{ academic_info_obj.fk_sections.sections|default_if_none:''}}</span><br>
+                                <span class="description">Section</span>
+                            </div>
+                            <div class="col-lg-3">
+                                <span class="heading">{{ academic_info_obj.roll_no|default_if_none:'' }}</span><br>
+                                <span class="description">Roll No.</span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <h3>
+                                {{ user_info_obj.first_name }} {{ user_info_obj.last_name }}<span
+                                    class="font-weight-light"></span>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-9 order-xl-1">
+            <div class="js-wizard-simple block">
+                <div class="card-header bg-white border-0">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0"></h3>
+                        </div>
+
+                    </div>
+                </div>
+                <ul class="nav nav-tabs nav-tabs-alt nav-justified">
+                    <li class="nav-item"><a href="" data-target="#PersonalInfo" data-toggle="tab"
+                                            class="nav-link small text-uppercase active" onclick="tab1()">Personal
+                        Info</a></li>
+                    <li class="nav-item"><a href="" data-target="#OtherDetails" data-toggle="tab"
+                                            class="nav-link small text-uppercase" onclick="tab2()">Other Details</a>
+                    </li>
+                    <li class="nav-item"><a href="" data-target="#AcademicDetails" data-toggle="tab"
+                                            class="nav-link small text-uppercase" onclick="tab3()">Academic Details</a>
+                    </li>
+                    <li style="margin: 10px 10px 0px 0px;">
+                        <button class="btn btn-sm btn-success" id="submitbutton1" onclick="SubmitDetail1()">Submit
+                        </button>
+                        <button class="btn btn-sm btn-success" id="submitbutton2" style="display: none;"
+                                onclick="SubmitDetail2()">Submit
+                        </button>
+                        <button class="btn btn-sm btn-success" id="submitbutton3" style="display: none;"
+                                onclick="SubmitDetail3()">Submit
+                        </button>
+                    </li>
+                </ul>
+                <div class="block-content block-content-full tab-content">
+                    <div id="PersonalInfo" class="tab-pane active">
+                        <h6 class="content-heading">User Information</h6>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-username">First Name<span
+                                            style="color:red">*</span>:</label>
+                                    <input type="text" id="first_name" name="first_name"
+                                           class="form-control form-control-sm form-control-alternative"
+                                           placeholder="First Name"
+                                           value="{{ user_info_obj.first_name|default_if_none:'' }}">
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_first_name">Please Enter First Name.</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-email">Middle Name<span
+                                            style="color:red"></span>:</label>
+                                    <input type="text" id="middle_name" name="middle_name"
+                                           class="form-control form-control-sm form-control-alternative"
+                                           placeholder="Middle Name"
+                                           value="{{ user_info_obj.middle_name|default_if_none:'' }}">
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_middle_name">Please Enter Middle Name.</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-email">Last Name<span
+                                            style="color:red">*</span>:</label>
+                                    <input type="text" id="last_name" name="last_name"
+                                           class="form-control form-control-sm form-control-alternative"
+                                           placeholder="Last Name"
+                                           value="{{ user_info_obj.last_name|default_if_none:'' }}">
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_last_name">Please Enter Last Name.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-first-name">Email<span
+                                            style="color:red">*</span>:</label>
+                                    <input type="text" id="email" name="email"
+                                           class="form-control form-control-sm form-control-alternative"
+                                           placeholder="Email" value="{{ user_info_obj.email|default_if_none:'' }}"
+                                           disabled>
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_email">Please Enter Email.</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-last-name">Phone Number<span
+                                            style="color:red">*</span>:</label>
+                                    <input type="text" id="phone_no" name="phone_no"
+                                           class="form-control form-control-sm form-control-alternative"
+                                           placeholder="Phone Number"
+                                           value="{{ user_info_obj.phone_no|default_if_none:'' }}" maxlength="10"
+                                           pattern="\d*"
+                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_phone_no">Please Enter Phone No.</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-last-name">Phone Number 2<span
+                                            style="color:red"></span>:</label>
+                                    <input type="text" id="phone_no2" name="phone_no2"
+                                           class="form-control form-control-sm form-control-alternative"
+                                           placeholder="Phone Number 2"
+                                           value="{{ user_info_obj.phone_no2|default_if_none:'' }}" maxlength="10"
+                                           pattern="\d*"
+                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_phone_no2">Please Enter Phone No 2.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-0"/>
+                        <h6 class="content-heading">Permanent Address</h6>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-address">Address<span
+                                            style="color:red">*</span>:</label>
+                                    <textarea name="permanent_address" id="permanent_address"
+                                              class="form-control form-control-alternative"
+                                              placeholder="Permanent Address">{{ address_detail_obj.address|default_if_none:'' }}</textarea>
+                                    <span style="display:none;color:red;font-size: 12px;"
+                                          id="err_permanentaddress">Please Enter Address</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-city">State<span
+                                            style="color:red">*</span>:</label>
+                                    <select name="permanent_state" class="form-control form-control-sm"
+                                            id="permanent_state" onchange="get_city_district_permanent('second')">
+                                        <option value="" selected>Select State</option>
+                                        {% for i in state_obj %}
+                                        {% if address_detail_obj.fk_state.id == i.id %}
+                                        <option value="{{i.id}}" selected>{{i.state}}</option>
+                                        {% else %}
+                                        <option value="{{i.id}}">{{i.state}}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_permanentstate">Please Enter States</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-state">District<span
+                                            style="color:red">*</span>:</label>
+                                    <select name="permanent_district" class="form-control form-control-sm"
+                                            id="permanent_district" required>
+                                        <option value="" selected>Select District</option>
+                                    </select>
+                                    <span style="display:none;color:red;font-size: 12px;"
+                                          id="err_permanentdistrict">Please Enter District</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-state">Tehsil<span
+                                            style="color:red">*</span>:</label>
+                                    <!--                                        <select name="permanent_tehsil" class="form-control form-control-sm"-->
+                                    <!--                                                id="permanent_tehsil">-->
+                                    <!--                                            <option value="" selected hidden>Select Tehsil</option>-->
+                                    <!--                                            {% for i in tehsil_obj %}-->
+                                    <!--                                            {% if address_detail_obj.fk_city.id == i.id %}-->
+                                    <!--                                            <option value="{{i.id}}" selected>{{i.tehsil}}</option>-->
+                                    <!--                                            {% else %}-->
+                                    <!--                                            <option value="{{i.id}}">{{i.tehsil}}</option>-->
+                                    <!--                                            {% endif %}-->
+                                    <!--                                            {% endfor %}-->
+                                    <!--                                        </select>-->
+                                    <input type="text" name="permanent_tehsil" class="form-control form-control-sm"
+                                           id="permanent_tehsil" value="{{address_detail_obj.tehsil}}">
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_permanenttehsil">Please Enter Tehsil</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-state">City<span
+                                            style="color:red">*</span>:</label>
+                                    <select name="permanent_city" class="form-control form-control-sm"
+                                            id="permanent_city"
+                                            required>
+                                        <option value="" selected>Select City</option>
+                                    </select>
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_permanentcity">Please Enter City</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-state">Pin Code<span
+                                            style="color:red">*</span>:</label>
+                                    <input class="form-control form-control-sm" placeholder="Pin Code" type="text"
+                                           id="permanent_pincode"
+                                           value="{{address_detail_obj.pin_code|default_if_none:''}}" maxlength="6"
+                                           pattern="\d*"
+                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_permanentpincode">Please Enter Pin code</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-0"/>
+                        <!-- Address -->
+                        <h6 class="content-heading">Address for Correspondence</h6>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-address">Address<span
+                                            style="color:red">*</span>:</label>
+                                    <textarea name="correspondence_address" id="correspondence_address"
+                                              class="form-control form-control-alternative"
+                                              placeholder="Correspondence Address">{{ address_detail_obj.correspondence_address|default_if_none:'' }}</textarea>
+                                    <span style="display:none;color:red;font-size: 12px;"
+                                          id="err_correspondenceaddress">Please Enter Address</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-city">State<span style="color:red">*</span>:</label>
+                                    <select name="correspondencead_state" class="form-control form-control-sm" id="correspondencead_state" onchange="get_city_district_correspondence('second')">
+                                        <option value="" selected>Select State</option>
+                                        {% for i in state_obj %}
+                                        {% if address_detail_obj.fk_correspondence_state.id == i.id %}
+                                        <option value="{{i.id}}" selected>{{i.state}}</option>
+                                        {% else %}
+                                        <option value="{{i.id}}">{{i.state}}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_correspondenceadstate">Please Enter States</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-state">District<span style="color:red">*</span>:</label>
+                                    <select name="correspondence_district" class="form-control form-control-sm" id="correspondence_district">
+                                        <option value="" selected>Select City</option>
+                                    </select>
+                                    <span style="display:none;color:red;font-size: 12px;"
+                                          id="err_correspondencedistrict">Please Enter District</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-state">Tehsil<span
+                                            style="color:red">*</span>:</label>
+                                    <!--                                        <select name="correspondence_tehsil" class="form-control form-control-sm"-->
+                                    <!--                                                id="correspondence_tehsil" required>-->
+                                    <!--                                            <option value="" selected hidden>Select City</option>-->
+                                    <!--                                            {% for i in tehsil_obj %}-->
+                                    <!--                                            {% if address_detail_obj.FK_correpondence_tehsil.id == i.id %}-->
+                                    <!--                                            <option value="{{i.id}}" selected>{{i.tehsil}}</option>-->
+                                    <!--                                            {% else %}-->
+                                    <!--                                            <option value="{{i.id}}">{{i.tehsil}}</option>-->
+                                    <!--                                            {% endif %}-->
+                                    <!--                                            {% endfor %}-->
+                                    <!--                                        </select>-->
+                                    <input type="text" name="correspondence_tehsil" class="form-control form-control-sm"
+                                           id="correspondence_tehsil" value="{{address_detail_obj.correspondence_tehsil}}">
+                                    <span style="display:none;color:red;font-size: 12px;"
+                                          id="err_correspondencetehsil">Please Enter Tehsil</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-state">City<span style="color:red">*</span>:</label>
+                                    <select name="correspondence_city" class="form-control form-control-sm" id="correspondence_city" required>
+                                        <option value="" selected>Select City</option>
+                                    </select>
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_correspondencecity">Please Enter City</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-state">Pin Code<span
+                                            style="color:red">*</span>:</label>
+                                    <input class="form-control form-control-sm" type="text"
+                                           id="correspondence_pincode" placeholder="Pin Code"
+                                           value="{{address_detail_obj.correspondence_pin_code|default_if_none:''}}"
+                                           maxlength="6" pattern="\d*"
+                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                    <span style="display:none;color:red;font-size: 12px;"
+                                          id="err_correspondencepincode">Please Enter Pin Code</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-0"/>
+                        <!-- Description -->
+                        <h6 class="content-heading">General Information</h6>
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="Gender">Gender<span
+                                            style="color:red">*</span>:</label>
+                                    <select class="form-control form-control-sm" id="gender" name="gender" required>
+                                        <option value="" selected>Select Gender</option>
+                                        {% for i in gender_obj %}
+                                        {% if user_info_obj.fk_gender.id == i.id %}
+                                        <option value="{{i.id}}" selected>{{i.gender}}</option>
+                                        {% else %}
+                                        <option value="{{i.id}}">{{i.gender}}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_gender">Please Enter Gender</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="DoB">Date of Birth<span
+                                            style="color:red">*</span>:</label>
+                                    <input name="dob_date" id="dob_date"
+                                           class="form-control form-control-sm form-control-alternative"
+                                           placeholder="DD-MM-YYYY"
+                                           value="{{user_info_obj.dob|date:'d-m-Y'}}" required>
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_dobdate">Please Select Date of Birth</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="Mother_Tongue">Adhar No.<span
+                                            style="color:red">*</span>:</label>
+                                    <input class="form-control form-control-sm form-control-alternative" type="text"
+                                           placeholder="Adhar No"
+                                           id="aadhar_no" value="{{user_info_obj.aadhar_no|default_if_none:''}}"
+                                           maxlength="12" pattern="\d*"
+                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_adharno">Please Select Adhar No</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="Nationality">Nationality<span
+                                            style="color:red">*</span>:</label>
+                                    <select class="form-control form-control-sm" id="nationality" name="nationality"
+                                            required>
+                                        <option value="" selected>Select Nationality</option>
+                                        {% for i in nationality_obj %}
+                                        {% if user_info_obj.fk_nationality.id == i.id %}
+                                        <option value="{{i.id}}" selected>{{i.nationality}}</option>
+                                        {% else %}
+                                        <option value="{{i.id}}">{{i.nationality}}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                    <span style="display:none;color:red;font-size: 12px;"
+                                          id="err_nationality">Please Select Nationality</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="Blood_Group">Blood Group<span
+                                            style="color:red"></span>:</label>
+                                    <select class="form-control form-control-sm" id="blood_group" name="blood_group"
+                                            required>
+                                        <option value="" selected>Select Blood Group</option>
+                                        {% for i in blood_group_obj %}
+                                        {% if user_info_obj.fk_blood_group.id == i.id %}
+                                        <option value="{{i.id}}" selected>{{i.blood_group}}</option>
+                                        {% else %}
+                                        <option value="{{i.id}}">{{i.blood_group}}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_blood_group">Please Select Blood Group</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="OtherDetails" class="tab-pane">
+                        <div class="card-body">
+                            <h6 class="content-heading">Legal Reservation Information</h6>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Domicile of State<span
+                                                style="color:red">*</span>:</label>
+                                        <select class="form-control form-control-sm" id="domicile_of_state"
+                                                name="domicile_of_state">
+                                            <option value="" selected>Select Domicile of State</option>
+                                            {% for i in state_obj %}
+                                            {% if academic_info_obj.fk_domicile_of_state.id == i.id %}
+                                            <option value="{{i.id}}" selected>{{i.state}}</option>
+                                            {% else %}
+                                            <option value="{{i.id}}">{{i.state}}</option>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                        <span style="display:none;color:red;font-size: 12px;" id="err_demicileofstate">Please Enter Domicile of State</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-email">Category<span
+                                                style="color:red">*</span>:</label>
+                                        <select class="form-control form-control-sm" id="category" name="category"
+                                                onchange="reserved_enablediable()">
+                                            <option value="" selected>Select Category</option>
+                                            {% for i in category_obj %}
+                                            {% if academic_info_obj.fk_category.id == i.id %}
+                                            <option value="{{i.id}}" selected>{{i.category}}</option>
+                                            {% else %}
+                                            <option value="{{i.id}}">{{i.category}}</option>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_category">Please Enter Category</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-email">if Reserved<span
+                                                style="color:red">*</span>:</label>
+                                        <select class="form-control form-control-sm" id="reserved" name="reserved"
+                                                disabled>
+                                            <option value="" selected>Select Reserved</option>
+                                            {% for i in reserved_obj %}
+                                            {% if academic_info_obj.fk_reserved.id == i.id %}
+                                            <option value="{{i.id}}" selected>{{i.reserved}}</option>
+                                            {% else %}
+                                            <option value="{{i.id}}">{{i.reserved}}</option>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_reserved">Please Enter Reserved</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-email">Applying for Concession<span
+                                                style="color:red"></span>:</label>
+                                        <select class="form-control form-control-sm" id="applying_for_concession"
+                                                name="applying_for_concession">
+                                            <option value="" selected>Select Applying for Concession</option>
+                                            {% for i in applying_concession_obj %}
+                                            {% if academic_info_obj.fk_applying_concession.id == i.id %}
+                                            <option value="{{i.id}}" selected>{{i.applying_concession}}</option>
+                                            {% else %}
+                                            <option value="{{i.id}}">{{i.applying_concession}}</option>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_applyingforconcession">Please Enter Applying for Concession</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Caste<span style="color:red">*</span>:</label>
+                                        <select class="form-control form-control-sm" id="cast" name="cast" onchange="get_subcast('second')">
+                                            <option value="" selected>Select Caste</option>
+                                            {% for i in cast_obj %}
+                                            {% if academic_info_obj.fk_cast.id == i.id %}
+                                            <option value="{{i.id}}" selected>{{i.cast}}</option>
+                                            {% else %}
+                                            <option value="{{i.id}}">{{i.cast}}</option>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                        <span style="display:none;color:red;font-size: 12px;" id="err_cast">Please Enter Caste</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-email">Sub Caste<span
+                                                style="color:red">*</span>:</label>
+                                        <select class="form-control form-control-sm" id="sub_cast" name="sub_cast">
+                                            <option value="" selected>Select Sub Caste</option>
+                                        </select>
+                                        <span style="display:none;color:red;font-size: 12px;" id="err_subcast">Please Enter Sub Cast</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-email">if Physically
+                                            Challenged<span style="color:red"></span>:</label>
+                                        <select class="form-control form-control-sm" id="physically_challenged"
+                                                name="physically_challenged"
+                                                required>
+                                            <option value="" selected>Select Physically Challenged</option>
+                                            {% for i in physically_challenged_obj %}
+                                            {% if academic_info_obj.fk_physically_challenged.id == i.id %}
+                                            <option value="{{i.id}}" selected>{{i.physically_challenged}}</option>
+                                            {% else %}
+                                            <option value="{{i.id}}">{{i.physically_challenged}}</option>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_physicallychallenged">Please Enter Physically Challenged</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-0"/>
+                            <h6 class="content-heading">Guardian Information</h6>
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Guardian Full Name<span
+                                                style="color:red">*</span>:</label>
+                                        <input type="text" id="guardian_full_name" name="guardian_full_name"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="Guardian Full Name"
+                                               value="{{ academic_info_obj.guardian_name|default_if_none:'' }}">
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_guardianfullname">Please Enter Guardian Full Name</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Occupation of the
+                                            Guardian<span
+                                                    style="color:red">*</span>:</label>
+                                        <input type="text" id="occupation_of_the_guardian" name="occupation_of_the_guardian"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="Occupation of the Guardian"
+                                               value="{{ academic_info_obj.occupation_of_guardian|default_if_none:'' }}">
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_occupationoftheguardian">Please Enter Occupation of the Guardian</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-email">Annual Income of the
+                                            Guardian
+                                            (Rs.)<span
+                                                    style="color:red">*</span>:</label>
+                                        <input type="text" id="annual_income_of_the_guardian"
+                                               name="annual_income_of_the_guardian"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="Annual Income of the Guardian"
+                                               value="{{ academic_info_obj.annual_income_of_guardian|default_if_none:'' }}"
+                                               maxlength="8" pattern="\d*"
+                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_annualincomeoftheguardian">Please Enter Annual Income of the Guardian</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-email">Relationship with
+                                            guardian<span
+                                                    style="color:red">*</span>:</label>
+                                        <input type="text" id="relationship_with_guardian" name="relationship_with_guardian"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="Relationship with guardian"
+                                               value="{{ academic_info_obj.relationship_with_guardian|default_if_none:'' }}">
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_relationshipwithguardian">Please Enter Relationship with guardian</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-email">Guardian Mobile No.<span
+                                                style="color:red">*</span>:</label>
+                                        <input type="text" id="guardian_mobile_no" name="guardian_mobile_no"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="Guardian Mobile No."
+                                               value="{{ academic_info_obj.guardian_mobile_no|default_if_none:'' }}"
+                                               maxlength="10" pattern="\d*"
+                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                        <span style="display:none;color:red;font-size: 12px;" id="err_guardianmobileno">Please Enter Guardian Mobile No.</span>
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_guardianmobileno_invalid">Please valid Guardian Mobile No.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="AcademicDetails" class="tab-pane">
+                        <div class="card-body">
+                            <h6 class="content-heading">10th Details</h6>
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-school-name">School Name<span
+                                                style="color:red">*</span>:</label>
+                                        <input type="text" name="school_name" id="school_name"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="School Name"
+                                               value="{{ academic_info_obj.school_name|default_if_none:'' }}">
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_schoolname">Please Enter School Name</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-10th-board">Board<span
+                                                style="color:red">*</span>:</label>
+                                        <input type="text" name="school_board" id="school_board"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="Board"
+                                               value="{{ academic_info_obj.school_board|default_if_none:'' }}">
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_schoolboard">Please Enter School Board</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-school-place">Place<span
+                                                style="color:red">*</span>:</label>
+                                        <input type="text" name="school_place" id="school_place"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="Place"
+                                               value="{{ academic_info_obj.school_place|default_if_none:'' }}">
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_schoolplace">Please Enter School Place</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-year-of-passing">Date of
+                                            Passing<span style="color:red">*</span>:</label>
+                                        <input name="date_of_school_passing" id="date_of_school_passing"
+                                               class="form-control form-control-sm form-control-alternative js-datepicker"
+                                               data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY"
+                                               value="{{academic_info_obj.tenth_year_of_passing|date:'d-m-Y'}}">
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_dateofschoolpassing">Please Enter Date of Passing</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-total-marks">Total Marks<span
+                                                style="color:red">*</span>:</label>
+                                        <input type="text" name="school_total_marks" id="school_total_marks"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="Total Marks"
+                                               value="{{ academic_info_obj.tenth_marks|default_if_none:'' }}"
+                                               maxlength="12" pattern="\d*"
+                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_schooltotalmarks">Please Enter Total Marks</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-out-of">Out of<span
+                                                style="color:red">*</span>:</label>
+                                        <input type="text" name="school_marks_out_of" id="school_marks_out_of"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="Out of Marks"
+                                               value="{{ academic_info_obj.tenth_out_of|default_if_none:'' }}"
+                                               maxlength="12" pattern="\d*"
+                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_schoolmarksoutof">Please Enter Marks Out of</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-out-of">Percentage(%)<span
+                                                style="color:red">*</span>:</label>
+                                        <input type="text" name="school_percentage" id="school_percentage"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="Percentage"
+                                               value="{{ academic_info_obj.school_percentage|default_if_none:'' }}"
+                                               maxlength="3" pattern="\d*"
+                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                               onkeyup="CheckPercentage()">
+                                        <span style="display:none;color:red;font-size: 12px;" id="err_schoolpercentage">Please Enter Percentage</span>
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_schoolpercentagelessthan100">Percentage must be less than 100</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="my-2"/>
+                            <!-- Address -->
+                            <h6 class="content-heading">12th or Diploma Details </h6>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-college-name">Twelveth Or
+                                            Diploma<span style="color:red">*</span>:</label>
+                                        <select class="form-control form-control-sm" id="twelveth_or_diploma" name="twelveth_or_diploma" onchange="get_streamorfield('second')">
+                                            <option value="" selected>Select Twelveth or Diploma</option>
+                                            {% for i in twelveth_or_diploma_obj %}
+                                            {% if academic_info_obj.fk_twelveth_or_diploma.id == i.id %}
+                                            <option value="{{i.id}}" selected>{{i.twelveth_or_diploma}}</option>
+                                            {% else %}
+                                            <option value="{{i.id}}">{{i.twelveth_or_diploma}}</option>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                        <span style="display:none;color:red;font-size: 12px;" id="err_twelveth_or_diploma">Please Enter Twelveth Or Diploma</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-college-name">College Name<span
+                                                style="color:red">*</span>:</label>
+                                        <input type="text" name="college_name" id="college_name"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="College Name"
+                                               value="{{ academic_info_obj.college_name|default_if_none:'' }}" required>
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_collegename">Please Enter College Name</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-12th-board">Board or
+                                            University<span
+                                                    style="color:red">*</span>:</label>
+                                        <input type="text" name="college_board_or_university" id="college_board_or_university"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="Board or University"
+                                               value="{{ academic_info_obj.college_board_or_university|default_if_none:'' }}"
+                                               required>
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_collegeboardoruniversity">Please Enter Board or University</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-12th-stream">Stream or
+                                            Field<span style="color:red">*</span>:</label>
+                                        <!--                        <input type="text" name="Twelvethstream" id="input-12th-stream" class="form-control form-control-sm form-control-alternative" placeholder="Stream or Diploma Field" value="{{ usr.twelveth_stream }}" required>-->
+                                        <select class="form-control form-control-sm" id="college_stream_or_field" name="college_stream_or_field">
+                                            <option value="" selected>Select Twelveth or Diploma</option>
+                                        </select>
+                                        <span style="display:none;color:red;font-size: 12px;" id="err_collegestreamorfield">Please Enter Stream orField</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-school-place">Place<span
+                                                style="color:red">*</span>:</label>
+                                        <input type="text" name="college_place" id="college_place"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="Place"
+                                               value="{{ academic_info_obj.college_place|default_if_none:'' }}"
+                                               required>
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_collegeplace">Please Enter Place</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-year-of-passing">Date of
+                                            Passing<span style="color:red">*</span>:</label>
+                                        <input name="college_date_of_passing" id="college_date_of_passing"
+                                               class="form-control form-control-sm form-control-alternative js-datepicker"
+                                               data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY"
+                                               value="{{academic_info_obj.college_date_of_passing|date:'d-m-Y'}}">
+
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_collegedateofpassing">Please Enter Date of Passing</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-total-marks">Total Marks<span
+                                                style="color:red">*</span>:</label>
+                                        <input type="text" name="college_total_marks" id="college_total_marks"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="Total Marks"
+                                               value="{{ academic_info_obj.college_total_marks|default_if_none:'' }}"
+                                               maxlength="12" pattern="\d*"
+                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_collegetotalmarks">Please Enter Total Marks</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-out-of">Out of<span
+                                                style="color:red">*</span>:</label>
+                                        <input type="text" name="college_marks_out_of" id="college_marks_out_of"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="Out of Marks"
+                                               value="{{ academic_info_obj.college_marks_out_of|default_if_none:'' }}"
+                                               maxlength="12" pattern="\d*"
+                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_collegemarksoutof">Please Enter Out of</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-out-of">Percentage(%)<span
+                                                style="color:red">*</span>:</label>
+                                        <input type="text" name="college_percentage" id="college_percentage"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="Percentage"
+                                               value="{{ academic_info_obj.college_percentage|default_if_none:'' }}"
+                                               maxlength="3" pattern="\d*"
+                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                               onkeyup="CheckPercentage()">
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_collegepercentage">Please Enter Percentage</span>
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_collegepercentagelessthan100">Percentage must be less than 100</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-2"/>
+                            <!-- Address -->
+                            <h6 class="content-heading">Degree</h6>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-college-name">Degree<span
+                                                style="color:red"></span>:</label>
+                                        <select class="form-control form-control-sm" id="degree" name="degree" onchange="get_degreestreamorfield('second')">
+                                            <option value="" selected>Select Twelveth or Diploma
+                                            </option>
+                                            {% for i in degree_obj %}
+                                            {% if academic_info_obj.fk_degree.id == i.id %}
+                                            <option value="{{i.id}}" selected>{{i.degree}}</option>
+                                            {% else %}
+                                            <option value="{{i.id}}">{{i.degree}}</option>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                        <span style="display:none;color:red;font-size: 12px;" id="err_degree">Please Enter Degree</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-college-name">College Name<span
+                                                style="color:red"></span>:</label>
+                                        <input type="text" name="degree_college_name" id="degree_college_name"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="College Name"
+                                               value="{{ academic_info_obj.degree_college_name|default_if_none:'' }}"
+                                               required>
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_degreecollegename">Please Enter College Name</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-12th-board">Board or
+                                            University<span
+                                                    style="color:red"></span>:</label>
+                                        <input type="text" name="degree_college_board_or_university"
+                                               id="degree_college_board_or_university"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="Board or University"
+                                               value="{{ academic_info_obj.degree_college_board_or_university|default_if_none:'' }}"
+                                               required>
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_degreecollegeboardoruniversity">Please Enter Board or University</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-12th-stream">Stream or
+                                            Field<span style="color:red"></span>:</label>
+                                        <!--                        <input type="text" name="Twelvethstream" id="input-12th-stream" class="form-control form-control-sm form-control-alternative" placeholder="Stream or Diploma Field" value="{{ usr.twelveth_stream }}" required>-->
+                                        <select class="form-control form-control-sm" id="degree_college_stream_or_field" name="degree_college_stream_or_field" required>
+                                            <option value="" selected>Select Twelveth or Diploma</option>
+                                        </select>
+                                        <span style="display:none;color:red;font-size: 12px;" id="err_degreecollegestreamorfield">Please Enter Stream or
+                                        Field</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-school-place">Place<span
+                                                style="color:red"></span>:</label>
+                                        <input type="text" name="degree_college_place" id="degree_college_place"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="Place"
+                                               value="{{ academic_info_obj.degree_college_place|default_if_none:'' }}"
+                                               required>
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_degreecollegeplace">Please Enter Place</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-year-of-passing">Date of
+                                            Passing<span style="color:red"></span>:</label>
+                                        <input name="degree_college_date_of_passing" id="degree_college_date_of_passing"
+                                               class="form-control form-control-sm form-control-alternative js-datepicker"
+                                               data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY"
+                                               value="{{academic_info_obj.degree_college_date_of_passing|date:'d-m-Y'}}">
+
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_degreecollegedateofpassing">Please Enter Date of
+                                        Passing</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-total-marks">Total Marks<span
+                                                style="color:red"></span>:</label>
+                                        <input type="text" name="degree_college_total_marks" id="degree_college_total_marks"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="Total Marks"
+                                               value="{{ academic_info_obj.degree_college_total_marks|default_if_none:'' }}"
+                                               maxlength="12" pattern="\d*"
+                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_degreecollegetotalmarks">Please Enter Total Marks</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-out-of">Out of<span
+                                                style="color:red"></span>:</label>
+                                        <input type="text" name="degree_college_marks_out_of" id="degree_college_marks_out_of"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="Out of Marks"
+                                               value="{{ academic_info_obj.degree_college_marks_out_of|default_if_none:'' }}"
+                                               maxlength="12" pattern="\d*"
+                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_degreecollegemarksoutof">Please Enter Out of</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-out-of">Percentage(%)<span
+                                                style="color:red"></span>:</label>
+                                        <input type="text" name="degree_college_percentage" id="degree_college_percentage"
+                                               class="form-control form-control-sm form-control-alternative"
+                                               placeholder="Percentage"
+                                               value="{{ academic_info_obj.degree_college_percentage|default_if_none:'' }}"
+                                               maxlength="3" pattern="\d*"
+                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                               onkeyup="CheckPercentage()">
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_degreecollegepercentage">Please Enter Percentage</span>
+                                        <span style="display:none;color:red;font-size: 12px;"
+                                              id="err_degreecollegepercentagelessthan100">Percentage must be less than 100</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $("#dob_date").datepicker({
+            format: 'dd-mm-yyyy',
+            endDate: '-18y'
+        });
+        console.log("permanent")
+        console.log('{{address_detail_obj.fk_district.id }}')
+        console.log('{{address_detail_obj.fk_city.id}}')
+        console.log("correpondence")
+        console.log('{{address_detail_obj.fk_correspondence_district.id}}')
+        console.log('{{address_detail_obj.fk_correspondence_city.id}}')
+        get_city_district_permanent('first');
+        get_city_district_correspondence('first');
+        get_subcast('first');
+        get_streamorfield('first');
+        get_degreestreamorfield('first');
+        var selectedcategory = "{{academic_info_obj.fk_category.category}}"
+        if(selectedcategory == "Reserved"){
+            $('#reserved').prop('disabled', false);
+        }
+        else {
+            $('#reserved').prop('disabled', 'disabled');
+        }
+        $("#wizard-picture").change(function(){
+            readURL(this);
+        });
+    });
+
+    function get_city_district_permanent(st) {
+        console.log("vcxvbcxmnbmnb")
+        var state = $("#permanent_state").val();
+        console.log(state)
+        $.ajax({
+            method: "POST",
+            url: "/GetCitysDistrictList/",
+            data: {
+                "state_id": state
+            },
+            success: function (response) {
+                console.log(response)
+                $("#permanent_city").html("")
+                $("#permanent_district").html("")
+                if (response['city_list'].length == 0) {
+                    $("#permanent_city").html("<option value='' selected hidden>Cities Not Found</option>")
+                }
+                else {
+                    $("#permanent_city").html("<option value='' selected hidden>Select City</option>")
+                }
+                for (i = 0; i < response['city_list'].length; i++) {
+                    cit = document.createElement('option');
+                    cit.value = response['city_list'][i][0]
+                    cit.innerHTML = response['city_list'][i][1]
+                    $("#permanent_city").append(cit)
+                }
+                if (response['district_list'].length == 0) {
+                    $("#permanent_district").html("<option value='' selected hidden>District Not Found</option>")
+                }
+                else {
+                    $("#permanent_district").html("<option value='' selected hidden>Select District</option>")
+                }
+                for (i = 0; i < response['district_list'].length; i++) {
+                    district = document.createElement('option');
+                    district.value = response['district_list'][i][0]
+                    district.innerHTML = response['district_list'][i][1]
+                    $("#permanent_district").append(district)
+                }
+                if(st == "first"){
+                    $("#permanent_district").val('{{address_detail_obj.fk_district.id }}');
+                    $("#permanent_city").val('{{address_detail_obj.fk_city.id}}');
+                }
+            }
+        })
+    }
+    function get_city_district_correspondence(st) {
+        console.log("vcxvbcxmnbmnb")
+        var state = $("#correspondencead_state").val();
+        console.log(state)
+        $.ajax({
+            method: "POST",
+            url: "/GetCitysDistrictList/",
+            data: {
+                "state_id": state
+            },
+            success: function (response) {
+                console.log(response)
+                $("#correspondence_city").html("")
+                $("#correspondence_district").html("")
+                if (response['city_list'].length == 0) {
+                    $("#correspondence_city").html("<option value='' selected hidden>Cities Not Found</option>")
+                }
+                else {
+                    $("#correspondence_city").html("<option value='' selected hidden>Select City</option>")
+                }
+                for (i = 0; i < response['city_list'].length; i++) {
+                    cit = document.createElement('option');
+                    cit.value = response['city_list'][i][0]
+                    cit.innerHTML = response['city_list'][i][1]
+                    $("#correspondence_city").append(cit)
+                }
+
+                if (response['district_list'].length == 0) {
+                    $("#correspondence_district").html("<option value='' selected hidden>District Not Found</option>")
+                }
+                else {
+                    $("#correspondence_district").html("<option value='' selected hidden>Select District</option>")
+                }
+                for (i = 0; i < response['district_list'].length; i++) {
+                    district = document.createElement('option');
+                    district.value = response['district_list'][i][0]
+                    district.innerHTML = response['district_list'][i][1]
+                    $("#correspondence_district").append(district)
+                }
+                if(st == "first"){
+                    $("#correspondence_district").val('{{address_detail_obj.fk_correspondence_district.id }}');
+                    $("#correspondence_city").val('{{address_detail_obj.fk_correspondence_city.id}}');
+                }
+            }
+        })
+    }
+    function get_subcast(st) {
+        console.log("vcxvbcxmnbmnb")
+        var cast = $("#cast").val();
+        console.log(cast)
+        $.ajax({
+            method: "POST",
+            url: "/GetSubCastList/",
+            data: {
+                "cast": cast
+            },
+            success: function (response) {
+                console.log(response)
+                $("#sub_cast").html("")
+                if (response['sub_cast_list'].length == 0) {
+                    $("#sub_cast").html("<option value='' selected hidden>Sub Caste Not Found</option>")
+                }
+                else {
+                    $("#sub_cast").html("<option value='' selected hidden>Select Sub Caste</option>")
+                }
+                for (i = 0; i < response['sub_cast_list'].length; i++) {
+                    cit = document.createElement('option');
+                    cit.value = response['sub_cast_list'][i][0]
+                    cit.innerHTML = response['sub_cast_list'][i][1]
+                    $("#sub_cast").append(cit)
+                }
+                if(st == "first"){
+                    $("#sub_cast").val('{{academic_info_obj.fk_sub_cast.id }}');
+                }
+            }
+        })
+    }
+
+    function get_streamorfield(st) {
+        console.log("vcxvbcxmnbmnb")
+        var twelveth_or_diploma = $("#twelveth_or_diploma").val();
+        console.log(cast)
+        $.ajax({
+            method: "POST",
+            url: "/GetStreamorFieldList/",
+            data: {
+                "twelveth_or_diploma": twelveth_or_diploma
+            },
+            success: function (response) {
+                console.log(response)
+                $("#sub_cast").html("")
+                if (response['stream_or_field_list'].length == 0) {
+                    $("#college_stream_or_field").html("<option value='' selected hidden>Stream or Field Not Found</option>")
+                }
+                else {
+                    $("#college_stream_or_field").html("<option value='' selected hidden>Select Stream or Field</option>")
+                }
+                for (i = 0; i < response['stream_or_field_list'].length; i++) {
+                    cit = document.createElement('option');
+                    cit.value = response['stream_or_field_list'][i][0]
+                    cit.innerHTML = response['stream_or_field_list'][i][1]
+                    $("#college_stream_or_field").append(cit)
+                }
+                if(st == "first"){
+                    $("#college_stream_or_field").val('{{academic_info_obj.fk_stream_or_field.id }}');
+                }
+            }
+        })
+    }
+
+     function get_degreestreamorfield(st) {
+        console.log("vcxvbcxmnbmnb")
+        var degree = $("#degree").val();
+        console.log(cast)
+        $.ajax({
+            method: "POST",
+            url: "/GetDegreeStreamorFieldList/",
+            data: {
+                "degree": degree
+            },
+            success: function (response) {
+                console.log(response)
+                $("#sub_cast").html("")
+                if (response['degree_stream_or_field_list'].length == 0) {
+                    $("#degree_college_stream_or_field").html("<option value='' selected hidden>Stream or Field Not Found</option>")
+                }
+                else {
+                    $("#degree_college_stream_or_field").html("<option value='' selected hidden>Select Stream or Field</option>")
+                }
+                for (i = 0; i < response['degree_stream_or_field_list'].length; i++) {
+                    cit = document.createElement('option');
+                    cit.value = response['degree_stream_or_field_list'][i][0]
+                    cit.innerHTML = response['degree_stream_or_field_list'][i][1]
+                    $("#degree_college_stream_or_field").append(cit)
+                }
+                if(st == "first"){
+                    $("#degree_college_stream_or_field").val('{{academic_info_obj.fk_degree_stream_or_field.id }}');
+                }
+            }
+        })
+    }
+    function readURL1(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#company_logo').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+            $("#company_logo_remove_icon").show();
+            $("#err_company_logo").hide();
+        }
+    }
+
+    $("#company_logo_file").change(function () {
+        readURL1(this);
+    });
+
+    function tab1() {
+        $("#submitbutton1").show();
+        $("#submitbutton2").hide();
+        $("#submitbutton3").hide();
+    }
+
+    function tab2() {
+        $("#submitbutton1").hide();
+        $("#submitbutton2").show();
+        $("#submitbutton3").hide();
+    }
+
+    function tab3() {
+        $("#submitbutton1").hide();
+        $("#submitbutton2").hide();
+        $("#submitbutton3").show();
+    }
+
+    $("#first_name").keyup(function () {
+        $("#err_first_name").hide();
+    });$("#last_name").keyup(function () {
+        $("#err_last_name").hide();
+    });$("#phone_no").keyup(function () {
+        $("#err_phone_no").hide();
+    });$("#permanent_address").keyup(function () {
+        $("#err_permanentaddress").hide();
+    });$("#permanent_state").change(function () {
+        $("#err_permanentstate").hide();
+    });$("#permanent_district").change(function () {
+        $("#err_permanentdistrict").hide();
+    });$("#permanent_tehsil").keyup(function () {
+        $("#err_permanenttehsil").hide();
+    });$("#permanent_city").change(function () {
+        $("#err_permanentcity").hide();
+    });$("#permanent_pincode").keyup(function () {
+        $("#err_permanentpincode").hide();
+    });$("#correspondence_address").keyup(function () {
+        $("#err_correspondenceaddress").hide();
+    });$("#correspondencead_state").change(function () {
+        $("#err_correspondenceadstate").hide();
+    });$("#correspondence_district").change(function () {
+        $("#err_correspondencedistrict").hide();
+    });$("#correspondence_tehsil").keyup(function () {
+        $("#err_correspondencetehsil").hide();
+    });$("#correspondence_city").change(function () {
+        $("#err_correspondencecity").hide();
+    });$("#correspondence_pincode").keyup(function () {
+        $("#err_correspondencepincode").hide();
+    });$("#gender").change(function () {
+        $("#err_gender").hide();
+    });$("#dob_date").change(function () {
+        $("#err_dobdate").hide();
+    });$("#aadhar_no").keyup(function () {
+        $("#err_adharno").hide();
+    });$("#nationality").change(function () {
+        $("#err_nationality").hide();
+    });$("#blood_group").change(function () {
+        $("#err_blood_group").hide();
+    });
+
+    function SubmitDetail1() {
+        var first_name = $("#first_name").val();
+        var middle_name = $("#middle_name").val();
+        var last_name = $("#last_name").val();
+        var phone_no = $("#phone_no").val();
+        var phone_no2 = $("#phone_no2").val();
+        var correspondence_address = $("#correspondence_address").val();
+        var correspondencead_state = $("#correspondencead_state").val();
+        var correspondence_district = $("#correspondence_district").val();
+        var correspondence_tehsil = $("#correspondence_tehsil").val();
+        var correspondence_city = $("#correspondence_city").val();
+        var correspondence_pincode = $("#correspondence_pincode").val();
+        var permanent_address = $("#permanent_address").val();
+        var permanent_state = $("#permanent_state").val();
+        var permanent_district = $("#permanent_district").val();
+        var permanent_tehsil = $("#permanent_tehsil").val();
+        var permanent_city = $("#permanent_city").val();
+        var permanent_pincode = $("#permanent_pincode").val();
+        var gender = $("#gender").val();
+        var dob_date = $("#dob_date").val();
+        var aadhar_no = $("#aadhar_no").val();
+        var nationality = $("#nationality").val();
+        var blood_group = $("#blood_group").val();
+        if (first_name == "") {
+            $("#err_first_name").show();
+        } else if (last_name == "") {
+            $("#err_last_name").show();
+        } else if (phone_no == "") {
+            $("#err_phone_no").show();
+        } else if (permanent_address == "") {
+            $("#err_permanentaddress").show();
+        } else if (permanent_state == "") {
+            $("#err_permanentstate").show();
+        } else if (permanent_district == "") {
+            $("#err_permanentdistrict").show();
+        } else if (permanent_tehsil == "") {
+            $("#err_permanenttehsil").show();
+        } else if (permanent_city == "") {
+            $("#err_permanentcity").show();
+        } else if (permanent_pincode == "") {
+            $("#err_permanentpincode").show();
+        } else if (correspondence_address == "") {
+            $("#err_correspondenceaddress").show();
+        } else if (correspondencead_state == "") {
+            $("#err_correspondenceadstate").show();
+        } else if (correspondence_district == "") {
+            $("#err_correspondencedistrict").show();
+        } else if (correspondence_tehsil == "") {
+            $("#err_correspondencetehsil").show();
+        } else if (correspondence_city == "") {
+            $("#err_correspondencecity").show();
+        } else if (correspondence_pincode == "") {
+            $("#err_correspondencepincode").show();
+        } else if (gender == "") {
+            $("#err_gender").show();
+        } else if (dob_date == "") {
+            $("#err_dobdate").show();
+        } else if (aadhar_no == "") {
+            $("#err_adharno").show();
+        } else if (nationality == "") {
+            $("#err_nationality").show();
+        }
+<!--        else if (blood_group == "") {-->
+<!--            $("#err_blood_group").show();-->
+<!--        }-->
+        else {
+            $.ajax({
+                url: "/SavePersonalInfo/",
+                method: "POST",
+                data: {
+                    "first_name": first_name,
+                    "middle_name": middle_name,
+                    "last_name": last_name,
+                    "phone_no": phone_no,
+                    "phone_no2": phone_no2,
+                    "permanent_address": permanent_address,
+                    "permanent_state": permanent_state,
+                    "permanent_district": permanent_district,
+                    "permanent_tehsil": permanent_tehsil,
+                    "permanent_city": permanent_city,
+                    "permanent_pincode": permanent_pincode,
+                    "correspondence_address": correspondence_address,
+                    "correspondencead_state": correspondencead_state,
+                    "correspondence_district": correspondence_district,
+                    "correspondence_tehsil": correspondence_tehsil,
+                    "correspondence_city": correspondence_city,
+                    "correspondence_pincode": correspondence_pincode,
+                    "gender": gender,
+                    "dob_date": dob_date,
+                    "aadhar_no": aadhar_no,
+                    "nationality": nationality,
+                    "blood_group": blood_group,
+                },
+                success: function (response) {
+                    if (response == "success") {
+                        swal("Personal Detail Updated Successfully!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+            })
+        }
+    }
+
+    $("#domicile_of_state").change(function () {
+        $("#err_demicileofstate").hide();
+    });$("#category").change(function () {
+        $("#err_category").hide();
+    });$("#reserved").change(function () {
+        $("#err_reserved").hide();
+    });$("#applying_for_concession").change(function () {
+        $("#err_applyingforconcession").hide();
+    });$("#cast").change(function () {
+        $("#err_cast").hide();
+    });$("#sub_cast").change(function () {
+        $("#err_subcast").hide();
+    });$("#physically_challenged").change(function () {
+        $("#err_physicallychallenged").hide();
+    });$("#guardian_full_name").keyup(function () {
+        $("#err_guardianfullname").hide();
+    });$("#occupation_of_the_guardian").keyup(function () {
+        $("#err_occupationoftheguardian").hide();
+    });$("#annual_income_of_the_guardian").keyup(function () {
+        $("#err_annualincomeoftheguardian").hide();
+    });$("#relationship_with_guardian").keyup(function () {
+        $("#err_relationshipwithguardian").hide();
+    });$("#guardian_mobile_no").keyup(function () {
+        $("#err_guardianmobileno").hide();
+        $("#err_guardianmobileno_invalid").hide();
+    });
+    function SubmitDetail2() {
+    var domicile_of_state = $("#domicile_of_state").val();
+    var category = $("#category").val();
+    var reserved = $("#reserved").val();
+    var applying_for_concession = $("#applying_for_concession").val();
+    var cast = $("#cast").val();
+    var sub_cast = $("#sub_cast").val();
+    var physically_challenged = $("#physically_challenged").val();
+    var guardian_full_name = $("#guardian_full_name").val();
+    var occupation_of_the_guardian = $("#occupation_of_the_guardian").val();
+    var annual_income_of_the_guardian = $("#annual_income_of_the_guardian").val();
+    var relationship_with_guardian = $("#relationship_with_guardian").val();
+    var guardian_mobile_no = $("#guardian_mobile_no").val();
+    if(domicile_of_state == ""){
+        $("#err_demicileofstate").show();
+    } else if(category == ""){
+        $("#err_category").show();
+    }else if($("#category option:selected").text() == "Reserved" && reserved == ""){
+        $("#err_reserved").show();
+    }else if(cast == ""){
+        $("#err_cast").show();
+    }else if(sub_cast == ""){
+        $("#err_subcast").show();
+    }else if(guardian_full_name == ""){
+        $("#err_guardianfullname").show();
+    }else if(occupation_of_the_guardian == ""){
+        $("#err_occupationoftheguardian").show();
+    }else if(annual_income_of_the_guardian == ""){
+        $("#err_annualincomeoftheguardian").show();
+    }else if(relationship_with_guardian == ""){
+        $("#err_relationshipwithguardian").show();
+    }else if(guardian_mobile_no == ""){
+        $("#err_guardianmobileno").show();
+    }else if(guardian_mobile_no.length < 10 ){
+        $("#err_guardianmobileno_invalid").show();
+    }else {
+        $.ajax({
+            url : "/SaveOtherDetails/",
+            method : "POST",
+            data : {
+                "domicile_of_state":domicile_of_state,
+                "category":category,
+                "reserved":reserved,
+                "applying_for_concession":applying_for_concession,
+                "cast":cast,
+                "sub_cast":sub_cast,
+                "physically_challenged":physically_challenged,
+                "guardian_full_name":guardian_full_name,
+                "occupation_of_the_guardian":occupation_of_the_guardian,
+                "annual_income_of_the_guardian":annual_income_of_the_guardian,
+                "relationship_with_guardian":relationship_with_guardian,
+                "guardian_mobile_no":guardian_mobile_no,
+            },
+            success : function(response){
+                if (response == "success") {
+                    swal("Other Detail Updated Successfully!", {
+                        icon: "success",
+                        button: "Ok",
+                        closeOnClickOutside: false,
+                    }).then(function () {
+                        location.reload();
+                    });
+                }
+
+            }
+        })
+    }
+    }
+
+    $("#school_name").keyup(function () {
+        $("#err_schoolname").hide();
+    });$("#school_board").keyup(function () {
+        $("#err_schoolboard").hide();
+    });$("#school_place").keyup(function () {
+        $("#err_schoolplace").hide();
+    });$("#date_of_school_passing").change(function () {
+        $("#err_dateofschoolpassing").hide();
+    });$("#school_total_marks").keyup(function () {
+        $("#err_schooltotalmarks").hide();
+    });$("#school_marks_out_of").keyup(function () {
+        $("#err_schoolmarksoutof").hide();
+    });$("#school_percentage").keyup(function () {
+        $("#err_schoolpercentage").hide();
+    });$("#twelveth_or_diploma").change(function () {
+        $("#err_twelveth_or_diploma").hide();
+    });$("#college_name").keyup(function () {
+        $("#err_collegename").hide();
+    });$("#college_board_or_university").keyup(function () {
+        $("#err_collegeboardoruniversity").hide();
+    });$("#college_stream_or_field").change(function () {
+        $("#err_collegestreamorfield").hide();
+    });$("#college_place").keyup(function () {
+        $("#err_collegeplace").hide();
+    });$("#college_date_of_passing").change(function () {
+        $("#err_collegedateofpassing").hide();
+    });$("#college_total_marks").keyup(function () {
+        $("#err_collegetotalmarks").hide();
+    });$("#college_marks_out_of").keyup(function () {
+        $("#err_collegemarksoutof").hide();
+    });$("#college_percentage").keyup(function () {
+        $("#err_collegepercentage").hide();
+    });$("#degree").change(function () {
+        $("#err_degree").hide();
+    });$("#degree_college_name").keyup(function () {
+        $("#err_degreecollegename").hide();
+    });$("#degree_college_board_or_university").keyup(function () {
+        $("#err_degreecollegeboardoruniversity").hide();
+    });$("#degree_college_stream_or_field").change(function () {
+        $("#err_degreecollegestreamorfield").hide();
+    });$("#degree_college_place").keyup(function () {
+        $("#err_degreecollegeplace").hide();
+    });$("#degree_college_date_of_passing").change(function () {
+        $("#err_degreecollegedateofpassing").hide();
+    });$("#degree_college_total_marks").keyup(function () {
+        $("#err_degreecollegetotalmarks").hide();
+    });$("#degree_college_marks_out_of").keyup(function () {
+        $("#err_degreecollegemarksoutof").hide();
+    });$("#degree_college_percentage").keyup(function () {
+        $("#err_degreecollegepercentage").hide();
+    });
+    function SubmitDetail3() {
+        var school_name = $("#school_name").val();
+        var school_board = $("#school_board").val();
+        var school_place = $("#school_place").val();
+        var date_of_school_passing = $("#date_of_school_passing").val();
+        var school_total_marks = $("#school_total_marks").val();
+        var school_marks_out_of = $("#school_marks_out_of").val();
+        var school_percentage = $("#school_percentage").val();
+        var twelveth_or_diploma = $("#twelveth_or_diploma").val();
+        var college_name = $("#college_name").val();
+        var college_board_or_university = $("#college_board_or_university").val();
+        var college_stream_or_field = $("#college_stream_or_field").val();
+        var college_place = $("#college_place").val();
+        var college_date_of_passing = $("#college_date_of_passing").val();
+        var college_total_marks = $("#college_total_marks").val();
+        var college_marks_out_of = $("#college_marks_out_of").val();
+        var college_percentage = $("#college_percentage").val();
+        var degree = $("#degree").val();
+        var degree_college_name = $("#degree_college_name").val();
+        var degree_college_board_or_university = $("#degree_college_board_or_university").val();
+        var degree_college_stream_or_field = $("#degree_college_stream_or_field").val();
+        var degree_college_place = $("#degree_college_place").val();
+        var degree_college_date_of_passing = $("#degree_college_date_of_passing").val();
+        var degree_college_total_marks = $("#degree_college_total_marks").val();
+        var degree_college_marks_out_of = $("#degree_college_marks_out_of").val();
+        var degree_college_percentage = $("#degree_college_percentage").val();
+        if(school_name == ""){
+            $("#err_schoolname").show();
+        }else if(school_board == ""){
+            $("#err_schoolboard").show();
+        }else if(school_place == ""){
+            $("#err_schoolplace").show();
+        }else if(date_of_school_passing == ""){
+            $("#err_dateofschoolpassing").show();
+        }else if(school_total_marks == ""){
+            $("#err_schooltotalmarks").show();
+        }else if(school_marks_out_of == ""){
+            $("#err_schoolmarksoutof").show();
+        }else if(school_percentage == ""){
+            $("#err_schoolpercentage").show();
+        }else if(parseInt(school_percentage) > 100){
+            $("#err_schoolpercentagelessthan100").show();
+        }else if(twelveth_or_diploma == ""){
+            $("#err_twelveth_or_diploma").show();
+        }else if(college_name == ""){
+            $("#err_collegename").show();
+        }else if(college_board_or_university == ""){
+            $("#err_collegeboardoruniversity").show();
+        }else if(college_stream_or_field == ""){
+            $("#err_collegestreamorfield").show();
+        }else if(college_place == ""){
+            $("#err_collegeplace").show();
+        }else if(college_date_of_passing == ""){
+            $("#err_collegedateofpassing").show();
+        }else if(college_total_marks == ""){
+            $("#err_collegetotalmarks").show();
+        }else if(college_marks_out_of == ""){
+            $("#err_collegemarksoutof").show();
+        }else if(college_percentage == ""){
+            $("#err_collegepercentage").show();
+        }else if(parseInt(college_percentage) > 100){
+            $("#err_collegepercentagelessthan100").show();
+        }if(degree_college_percentage != "" && parseInt(degree_college_percentage) > 100){
+            $("#err_degreecollegepercentagelessthan100").show();
+        }
+<!--        else if(degree == ""){-->
+<!--            $("#err_degree").show();-->
+<!--        }else if(degree_college_name == ""){-->
+<!--            $("#err_degreecollegename").show();-->
+<!--        }else if(degree_college_board_or_university == ""){-->
+<!--            $("#err_degreecollegeboardoruniversity").show();-->
+<!--        }else if(degree_college_stream_or_field == ""){-->
+<!--            $("#err_degreecollegestreamorfield").show();-->
+<!--        }else if(degree_college_place == ""){-->
+<!--            $("#err_degreecollegeplace").show();-->
+<!--        }else if(degree_college_date_of_passing == ""){-->
+<!--            $("#err_degreecollegedateofpassing").show();-->
+<!--        }else if(degree_college_total_marks == ""){-->
+<!--            $("#err_degreecollegetotalmarks").show();-->
+<!--        }else if(degree_college_marks_out_of == ""){-->
+<!--            $("#err_degreecollegemarksoutof").show();-->
+<!--        }else if(degree_college_percentage == ""){-->
+<!--            $("#err_degreecollegepercentage").show();-->
+<!--        }-->
+        else{
+            $.ajax({
+                url : "/SaveAcademicDetails/",
+                method : "POST",
+                data : {
+                    "school_name":school_name,
+                    "school_board":school_board,
+                    "school_place":school_place,
+                    "date_of_school_passing":date_of_school_passing,
+                    "school_total_marks":school_total_marks,
+                    "school_marks_out_of":school_marks_out_of,
+                    "school_percentage":school_percentage,
+                    "twelveth_or_diploma":twelveth_or_diploma,
+                    "college_name":college_name,
+                    "college_board_or_university":college_board_or_university,
+                    "college_stream_or_field":college_stream_or_field,
+                    "college_place":college_place,
+                    "college_date_of_passing":college_date_of_passing,
+                    "college_total_marks":college_total_marks,
+                    "college_marks_out_of":college_marks_out_of,
+                    "college_percentage":college_percentage,
+                    "degree":degree,
+                    "degree_college_name":degree_college_name,
+                    "degree_college_board_or_university":degree_college_board_or_university,
+                    "degree_college_stream_or_field":degree_college_stream_or_field,
+                    "degree_college_place":degree_college_place,
+                    "degree_college_date_of_passing":degree_college_date_of_passing,
+                    "degree_college_total_marks":degree_college_total_marks,
+                    "degree_college_marks_out_of":degree_college_marks_out_of,
+                    "degree_college_percentage":degree_college_percentage,
+                },
+                success : function(response){
+                    if (response == "success") {
+                        swal("Academic Detail Updated Successfully!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+            })
+        }
+    }
+
+
+    var srcData
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+                reader.onload = function(e) {
+                $('#wizardPicturePreview').attr('src', e.target.result);
+                srcData = e.target.result;
+                $.ajax({
+                url : "/UpdateProfilePicture/",
+                method : "POST",
+                data:{
+                    "base64string" : srcData,
+                    },
+                    success : function(response){
+                        console.log(response)
+                        swal("Profile Photo Updated Successfully!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                            location.reload();
+                        });
+                    }
+                });
+        }
+        reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function reserved_enablediable(){
+        var category = $("#category option:selected").text();
+        if(category == "Reserved"){
+            $('#reserved').prop('disabled', false);
+        }
+        else {
+            $('#reserved').prop('disabled', 'disabled');
+            $("#reserved").val("");
+        }
+    }
+
+    function CheckPercentage(){
+        console.log("dcfcghjg")
+        var school_percentage = $("#school_percentage").val();
+        var college_percentage = $("#college_percentage").val();
+        var degree_college_percentage = $("#degree_college_percentage").val();
+        if(parseInt(school_percentage) > 100){
+            $("#err_schoolpercentagelessthan100").show();
+        }
+        else{
+            $("#err_schoolpercentagelessthan100").hide();
+        }
+        if(parseInt(college_percentage) > 100){
+            $("#err_collegepercentagelessthan100").show();
+        }
+        else{
+            $("#err_collegepercentagelessthan100").hide();
+        }
+        if(parseInt(degree_college_percentage) > 100){
+            $("#err_degreecollegepercentagelessthan100").show();
+        }
+        else{
+            $("#err_degreecollegepercentagelessthan100").hide();
+        }
+    }
+
+
+</script>
+{% endblock content %}
