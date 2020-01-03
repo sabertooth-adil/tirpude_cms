@@ -1,0 +1,17 @@
+.bootstrap-select.form-control-sm .dropdown-toggle {
+            padding: 0.10rem .5rem !important;
+        }
+        .borderless td,
+        .borderless th {
+            border: none;
+        }
+        .icon-size {
+            width: 20px;
+            height: 20px;
+        }
+        .nu-button-size {
+            padding: 3px 6px 3px 6px;
+        }
+        .nu-button-size:hover {
+            padding: 3px 6px 3px 6px;
+        }

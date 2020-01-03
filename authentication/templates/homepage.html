@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>Tripude Institute of Management Education</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700|Quicksand:300,400,700|Arvo:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type='text/css' href="{% static 'css/homepage/homepage.css' %}">
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#" style="padding-left: 1%"> <img src="{% static 'img/logo/tirpude-connect.png' %}"
+                                                                        style="height: 40px;" alt="tirpude"></a>
+    </nav>
+</header>
+
+<div class="row align-items-center" style="margin-top:25px;">
+    <div class="col-xl-4 col-lg-4 col-md-11 col-sm-11  content_homepage">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-10">
+                <div style="margin-bottom: -15px;">
+                    <h1 id="tir">tirpude</h1>
+                </div>
+                <div class="">
+                    <h1 id="ins">INSTITUTE</h1>
+                </div>
+                <div class="">
+                    <h1 id="ofm">OF&nbsp;&nbsp;MANAGEMENT</h1>
+                </div>
+                <div style="margin-top: -10px;">
+                    <h1 id="edu">EDUCATION</h1>
+                </div>
+                <p>We will be a unique education institute with strong regional roots, being a nationally influential
+                    education center imbibing moral and cultural values</p>
+                <div class="row button_class">
+                    <button type="button" class="btn btn-primary col-lg-5 col-sm-3 col-4" style="border-radius: 4px;"
+                            onclick="Admin_Login()">Login
+                    </button>
+                    <button type="button" class="btn btn-outline-primary col-lg-5 col-sm-3 col-4"
+                            style="border-radius: 4px; margin-left: 25px;" onclick="Admin_Signup()">Sign Up
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8 col-lg-8 col-md-11 col-sm-12">
+        <div class="row justify-content-center">
+            <img class="img-fluid" src="{% static 'img/logo/landimg.jpg' %}">
+        </div>
+    </div>
+</div>
+</body>
+<script src="{% static '/js/plugins/jquery/dist/jquery.min.js' %}"></script>
+<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+<script type="text/javascript" src="{% static 'js/homepage/homepage.js' %}"></script>
+</html>
