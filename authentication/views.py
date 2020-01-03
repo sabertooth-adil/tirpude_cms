@@ -137,7 +137,6 @@ def sign_out_user(request):
 @csrf_exempt
 def profile_user(request):
     session = request.session.get('user_id')
-    print(session)
     state_obj = State.objects.all()
     city_obj = City.objects.all()
     district_obj = District.objects.all()
@@ -177,7 +176,6 @@ def profile_user(request):
         else:
             user_operations_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
             subjects_obj = Subject.objects.all()
-            print("faculty")
             return render(request, "faculty_profile.html",
                           {"user_info_obj": user_info_obj, "subject_obj": subjects_obj, "state_obj": state_obj,
                            "city_obj": city_obj, "gender_obj": gender_obj, "mother_tongue_obj": mother_tongue_obj,
@@ -193,8 +191,6 @@ def change_password(request):
     session = request.session.get('user_id')
     old_password = request.POST.get("old_password")
     new_password = request.POST.get("new_password")
-    print(old_password)
-    print(new_password)
     if UserInfo.objects.filter(id=session).count() > 0:
         obj = UserInfo.objects.get(id=session)
         if old_password == obj.password:
@@ -216,14 +212,10 @@ def forgot_password(request):
         new_password = random_with_n_digits(8)
         obj.password = new_password
         obj.save()
-
-        print(new_password)
         send_psw = str(new_password)
         send_mail = str(input_forget_password)
-        print(send_mail)
         subject = "Request for password recovery"
         message = "Hello " + obj.first_name + " " + obj.last_name + ", \nYou have recently requested for forgot password.\n\nYour new password is " + send_psw + "\n\nThank you."
-
         from_mail = settings.EMAIL_HOST_USER
         email = EmailMessage(subject, message, to=[send_mail], from_email=from_mail)
         email.send()
@@ -257,7 +249,7 @@ def save_personal_info(request):
     address_detail_obj.tehsil = request.POST.get("permanent_tehsil")
     address_detail_obj.pin_code = request.POST.get("permanent_pincode")
     address_detail_obj.correspondence_address = request.POST.get("correspondence_address")
-    address_detail_obj.fk_correspondence_state_id = request.POST.get("correspondencead_state")
+    address_detail_obj.fk_correspondence_state_id = request.POST.get("correspondence_state")
     address_detail_obj.fk_correspondence_district_id = request.POST.get("correspondence_district")
     address_detail_obj.correspondence_tehsil = request.POST.get("correspondence_tehsil")
     address_detail_obj.fk_correspondence_city_id = request.POST.get("correspondence_city")
