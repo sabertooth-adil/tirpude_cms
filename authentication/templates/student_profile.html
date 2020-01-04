@@ -278,7 +278,7 @@
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <label class="form-control-label" for="input-city">State<span style="color:red">*</span>:</label>
-                                    <select name="correspondencead_state" class="form-control form-control-sm" id="correspondencead_state" onchange="get_city_district_correspondence('second')">
+                                    <select name="correspondence_state" class="form-control form-control-sm" id="correspondence_state" onchange="get_city_district_correspondence('second')">
                                         <option value="" selected>Select State</option>
                                         {% for i in state_obj %}
                                         {% if address_detail_obj.fk_correspondence_state.id == i.id %}
@@ -1086,7 +1086,7 @@
     }
     function get_city_district_correspondence(st) {
         console.log("vcxvbcxmnbmnb")
-        var state = $("#correspondencead_state").val();
+        var state = $("#correspondence_state").val();
         console.log(state)
         $.ajax({
             method: "POST",
@@ -1279,7 +1279,7 @@
         $("#err_permanentpincode").hide();
     });$("#correspondence_address").keyup(function () {
         $("#err_correspondenceaddress").hide();
-    });$("#correspondencead_state").change(function () {
+    });$("#correspondence_state").change(function () {
         $("#err_correspondenceadstate").hide();
     });$("#correspondence_district").change(function () {
         $("#err_correspondencedistrict").hide();
@@ -1308,7 +1308,7 @@
         var phone_no = $("#phone_no").val();
         var phone_no2 = $("#phone_no2").val();
         var correspondence_address = $("#correspondence_address").val();
-        var correspondencead_state = $("#correspondencead_state").val();
+        var correspondence_state = $("#correspondence_state").val();
         var correspondence_district = $("#correspondence_district").val();
         var correspondence_tehsil = $("#correspondence_tehsil").val();
         var correspondence_city = $("#correspondence_city").val();
@@ -1344,7 +1344,7 @@
             $("#err_permanentpincode").show();
         } else if (correspondence_address == "") {
             $("#err_correspondenceaddress").show();
-        } else if (correspondencead_state == "") {
+        } else if (correspondence_state == "") {
             $("#err_correspondenceadstate").show();
         } else if (correspondence_district == "") {
             $("#err_correspondencedistrict").show();
@@ -1383,7 +1383,7 @@
                     "permanent_city": permanent_city,
                     "permanent_pincode": permanent_pincode,
                     "correspondence_address": correspondence_address,
-                    "correspondencead_state": correspondencead_state,
+                    "correspondence_state": correspondence_state,
                     "correspondence_district": correspondence_district,
                     "correspondence_tehsil": correspondence_tehsil,
                     "correspondence_city": correspondence_city,

@@ -1,0 +1,97 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>OneUI - Bootstrap 4 Admin Template &amp; UI Framework</title>
+    <meta name="description"
+          content="OneUI - Bootstrap 4 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
+    <meta name="author" content="pixelcave">
+    <meta name="robots" content="noindex, nofollow">
+    <meta property="og:title" content="OneUI - Bootstrap 4 Admin Template &amp; UI Framework">
+    <meta property="og:site_name" content="OneUI">
+    <meta property="og:description"
+          content="OneUI - Bootstrap 4 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <link rel="shortcut icon" href="{% static 'media/favicons/favicon.png' %}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'media/favicons/favicon-192x192.' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'media/favicons/apple-touch-icon-180x180.png' %}">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7COpen+Sans:300,400,400italic,600,700">
+    <link rel="stylesheet" id="css-main" href="{% static 'css/oneui.min.css' %}">
+</head>
+<body>
+<div id="page-container">
+    <main id="main-container">
+        <div class="hero">
+            <div class="hero-inner text-center">
+                <div class="content content-full bg-white overflow-hidden">
+                    <div class="py-4" id="Error_div">
+                        <h1 class="display-1 text-default invisible" data-toggle="appear"
+                            data-class="animated bounceInDown">404 gfdg</h1>
+                        <h2 class="h3 font-w300 text-muted invisible mb-5" data-toggle="appear"
+                            data-class="animated fadeInUp">We are sorry but the page you are looking for was not
+                            found..</h2>
+                    </div>
+                    <div class="container" id="Error_box_div" style="display:none">
+                                <textarea type="text" id="error_detail" maxlength="995"
+                                          name="objective_question"
+                                          class="form-control form-control-sm  form-control-alternative"
+                                          placeholder="Enter Your Last Activity or Detail of error" value="" required
+                                          rows="5"></textarea>
+                        <nav class="text-left py-2">
+                            <div class="btn btn-info btn-sm" id="add_test_button" onclick="Send_Report()">Send
+                            </div>
+                            <div class="btn btn-primary btn-sm submit-btn" onclick="cancel_error_log()"
+                                 id="close_button">Cancel
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                <div class="content content-full font-size-sm text-muted">
+                    <p class="mb-1">
+                        Would you like to let us know about it?
+                    </p>
+                    <a class="link-fx" onclick="Error_log()">Report it</a> or <a class="link-fx"
+                                                                                 href="be_pages_error_all.html">Go Back
+                    to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<script src="{% static 'js/oneui.core.min.js' %}"></script>
+<script src="{% static 'js/oneui.app.min.js' %}"></script>
+</body>
+<script>
+    function Error_log() {
+        $("#Error_box_div").show()
+        $("#Error_div").hide()
+    }
+
+    function cancel_error_log() {
+        $("#Error_box_div").hide()
+        $("#Error_div").show()
+    }
+
+    function Send_Report() {
+        log_url = window.location.href
+        error_report = $("#error_detail").val()
+        console.log(log_url)
+        $.ajax({
+            url: "/send_error/",
+            method: "POST",
+            data: {
+                "error_url": log_url,
+                "error_report": error_report,
+            },
+            success: function (response) {
+                console.log(response)
+                window.location.reload()
+            }
+        })
+    }
+</script>
+</html>

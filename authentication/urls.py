@@ -6,6 +6,7 @@ from authentication.views import admin_home, admin_login, admin_signup, register
     update_profile_picture, get_city_district_list, get_sub_cast_list, get_stream_or_field_list, \
     get_degree_stream_or_field_list, forgot_password
 
+
 urlpatterns = [
     path('', admin_home,name='Admin_Home'),
     path('login/', admin_login,name='Admin_Login'),

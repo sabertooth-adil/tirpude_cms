@@ -13,10 +13,31 @@ from master_forms.models import City, District, SubCast, StreamOrField, DegreeSt
     Reserved, ApplyingConcession, PhysicallyChallenged, Degree, TwelvethOrDiploma, UserOperation, Subject, Cast
 
 
+def handler404(request, exception):
+    return render(request, '404.html')
+
+
+def handler400(request, exception):
+    return render(request, '400.html')
+
+
+def handler500(request):
+    return render(request, '500.html')
+
+
 def random_with_n_digits(n):
-    range_start = 10 ** (n - 1)
-    range_end = (10 ** n) - 1
-    return random.randint(range_start, range_end)
+    '''
+    Generate random n number digite
+    :param n:
+    :return:
+    '''
+    try:
+        range_start = 10 ** (n - 1)
+        range_end = (10 ** n) - 1
+        return random.randint(range_start, range_end)
+    except Exception as e:
+        with open("error_log.text", "a") as myfile:
+            myfile.write(e)
 
 
 @csrf_exempt
@@ -52,7 +73,11 @@ def get_degree_stream_or_field_list(request):
 
 
 def admin_home(request):
-    return render(request, 'homepage.html')
+    try:
+        return render(request, 'homepage.html')
+    except Exception as e:
+        with open("error_log.txt", "a") as myfile:
+            myfile.write(e)
 
 
 def admin_login(request):
