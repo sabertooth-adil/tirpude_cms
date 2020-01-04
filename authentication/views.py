@@ -13,16 +13,16 @@ from master_forms.models import City, District, SubCast, StreamOrField, DegreeSt
     Reserved, ApplyingConcession, PhysicallyChallenged, Degree, TwelvethOrDiploma, UserOperation, Subject, Cast
 
 
-def handler404(request, exception):
-    return render(request, '404.html')
-
-
-def handler400(request, exception):
-    return render(request, '400.html')
-
-
-def handler500(request):
-    return render(request, '500.html')
+# def handler404(request, exception):
+#     return render(request, '404.html')
+#
+#
+# def handler400(request, exception):
+#     return render(request, '400.html')
+#
+#
+# def handler500(request):
+#     return render(request, '500.html')
 
 
 def random_with_n_digits(n):
