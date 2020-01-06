@@ -89,8 +89,7 @@ DATABASES = {
         'NAME': 'tirpude_cms',
         'USER': 'root',
         'PASSWORD': 'Newuser@123',
-        # 'HOST': '35.154.219.250',
-        'HOST': '13.234.210.141',
+        'HOST': '15.206.60.193',
         'PORT': '3306',
     }
 }

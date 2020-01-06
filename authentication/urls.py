@@ -4,8 +4,7 @@ from django.urls import path
 from authentication.views import admin_home, admin_login, admin_signup, register_user, signup_user, sign_out_user, \
     profile_user, change_password, save_personal_info, save_other_details, save_academic_details, save_user_profile_pic, \
     update_profile_picture, get_city_district_list, get_sub_cast_list, get_stream_or_field_list, \
-    get_degree_stream_or_field_list, forgot_password
-
+    get_degree_stream_or_field_list, forgot_password, error_handler_500
 
 urlpatterns = [
     path('', admin_home,name='Admin_Home'),
@@ -26,4 +25,6 @@ urlpatterns = [
     path('GetStreamorFieldList/', get_stream_or_field_list, name='GetStreamorFieldList'),
     path('GetDegreeStreamorFieldList/', get_degree_stream_or_field_list, name='GetDegreeStreamorFieldList'),
     path('ForgotPassword/', forgot_password, name='ForgotPassword'),
+    path('error-page-500/', error_handler_500, name='error500'),
+
 ]
