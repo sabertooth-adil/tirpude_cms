@@ -1,0 +1,16 @@
+
+
+2020-01-07 12:03:27.695893
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 134, in admin_signup
+    obj_sections = Sections.objects.all()
+NameError: name 'Sections' is not defined
+
+
+2020-01-07 12:03:29.951968
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 134, in admin_signup
+    obj_sections = Sections.objects.all()
+NameError: name 'Sections' is not defined
+
+

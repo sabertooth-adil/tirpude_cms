@@ -6,6 +6,7 @@ from django.conf import settings
 from django.core.mail import EmailMessage
 import base64
 import datetime
+import traceback
 
 from authentication.models import UserInfo, AddressDetail, AcademicInfo
 from master_forms.models import City, District, SubCast, StreamOrField, DegreeStreamOrField, Course, Semester, Section, \
@@ -20,9 +21,16 @@ def handler404(request, exception):
 def handler400(request, exception):
     return render(request, "400.html")
 
-
 def error_handler_500(request):
-    return render(request, "500.html")
+    return render(request,"500.html")
+
+def error_save(error):
+    time = str(datetime.datetime.now())
+    with open("error_log.txt", "a") as myfile:
+        myfile.write(time+"\n")
+        myfile.write(error+"\n\n")
+    print(error)
+    return error
 
 
 def random_with_n_digits(n):
@@ -42,49 +50,73 @@ def random_with_n_digits(n):
 @csrf_exempt
 def get_city_district_list(request):
     """
-    Get Cities and districts list
-    
+        Get Cities and districts list
+
+    :param request:
+    :return:
     """
-    state_id = request.POST.get("state_id")
-    city_list = list(City.objects.filter(fk_state_id=state_id).values_list("id", "city"))
-    district_list = list(District.objects.filter(fk_state_id=state_id).values_list("id", "district"))
-    return JsonResponse({"city_list": city_list, "district_list": district_list})
+    try:
+        state_id = request.POST.get("state_id")
+        city_list = list(City.objects.filter(fk_state_id=state_id).values_list("id", "city"))
+        district_list = list(District.objects.filter(fk_state_id=state_id).values_list("id", "district"))
+        return JsonResponse({"city_list": city_list, "district_list": district_list})
+    except:
+        error_save(str(traceback.format_exc()))
+        return redirect('error_handler_500')
 
 
 @csrf_exempt
 def get_sub_cast_list(request):
     """
-    Get sub casts list
-    
+        Get sub casts list
+
+    :param request:
+    :return:
     """
-    cast = request.POST.get("cast")
-    sub_cast_list = list(SubCast.objects.filter(fk_cast_id=cast).values_list("id", "sub_cast"))
-    return JsonResponse({"sub_cast_list": sub_cast_list})
+    try:
+        cast = request.POST.get("cast")
+        sub_cast_list = list(SubCast.objects.filter(fk_cast_id=cast).values_list("id", "sub_cast"))
+        return JsonResponse({"sub_cast_list": sub_cast_list})
+    except:
+        error_save(str(traceback.format_exc()))
+        return redirect('error_handler_500')
 
 
 @csrf_exempt
 def get_stream_or_field_list(request):
     """
-    Get streams or fields list of twelveth or diploma
+        Get streams or fields list of twelveth or diploma
 
+    :param request:
+    :return:
     """
-    twelveth_or_diploma = request.POST.get("twelveth_or_diploma")
-    stream_or_field_list = list(
-        StreamOrField.objects.filter(fk_twelveth_or_diploma_id=twelveth_or_diploma).values_list("id",
-                                                                                                "stream_or_field_name"))
-    return JsonResponse({"stream_or_field_list": stream_or_field_list})
+    try:
+        twelveth_or_diploma = request.POST.get("twelveth_or_diploma")
+        stream_or_field_list = list(
+            StreamOrField.objects.filter(fk_twelveth_or_diploma_id=twelveth_or_diploma).values_list("id",
+                                                                                                    "stream_or_field_name"))
+        return JsonResponse({"stream_or_field_list": stream_or_field_list})
+    except:
+        error_save(str(traceback.format_exc()))
+        return redirect('error_handler_500')
 
 
 @csrf_exempt
 def get_degree_stream_or_field_list(request):
     """
-    Get streams or fields list of degree
-    
+        Get streams or fields list of twelveth or diploma
+
+    :param request:
+    :return:
     """
-    degree = request.POST.get("degree")
-    degree_stream_or_field_list = list(
-        DegreeStreamOrField.objects.filter(fk_degree_id=degree).values_list("id", "stream_or_field_name"))
-    return JsonResponse({"degree_stream_or_field_list": degree_stream_or_field_list})
+    try:
+        degree = request.POST.get("degree")
+        degree_stream_or_field_list = list(
+            DegreeStreamOrField.objects.filter(fk_degree_id=degree).values_list("id", "stream_or_field_name"))
+        return JsonResponse({"degree_stream_or_field_list": degree_stream_or_field_list})
+    except:
+        error_save(str(traceback.format_exc()))
+        return redirect('error_handler_500')
 
 
 def admin_home(request):
@@ -97,16 +129,20 @@ def admin_home(request):
 
 def admin_login(request):
     """
-    home page view
-    
+        home page view
+
+    :param request:
+    :return:
     """
     return render(request, "homepage_login.html")
 
 
 def admin_signup(request):
     """
-    Admin signup page view
-    
+        Admin signup page view
+
+    :param request:
+    :return:
     """
     try:
         obj_course = Course.objects.all()
@@ -119,15 +155,18 @@ def admin_signup(request):
                       {"obj_course": obj_course, "obj_semesters": obj_semesters, "obj_sections": obj_sections,
                        "obj_gender": obj_gender, "obj_user_type": obj_user_type,
                        "obj_year_of_admission": obj_year_of_admission})
-    except Exception as e:
-        return redirect('error500')
+    except:
+        error_save(str(traceback.format_exc()))
+        return redirect('error_handler_500')
 
 
 @csrf_exempt
 def register_user(request):
     """
-    Register new user
-    
+        Register new user
+
+    :param request:
+    :return:
     """
     try:
         registered_as = request.POST.get("registered_as")
@@ -165,13 +204,16 @@ def register_user(request):
             request.session["user_id"] = obj_user_info.id
             return JsonResponse({"msg": "Registed Successfully", "status": "1"})
     except Exception as e:
-        return redirect('error500')
+        error_save(str(traceback.format_exc()))
+        return redirect('error_handler_500')
 
 @csrf_exempt
 def signup_user(request):
     """
-    Login User
-    
+        Login User
+
+    :param request:
+    :return:
     """
     try:
         id_username = request.POST.get("id_username")
@@ -186,12 +228,14 @@ def signup_user(request):
         else:
             return HttpResponse("error")
     except Exception as e:
-        return redirect('error500')
+        return redirect('error_handler_500')
 
-def sign_out_user(request):
+def signout_user(request):
     """
-    Sign out user
-    
+        Sign out user
+
+    :param request:
+    :return:
     """
     try:
         session = request.session.get("user_id")
@@ -201,14 +245,17 @@ def sign_out_user(request):
         else:
             return redirect("/")
     except Exception as e:
-        return redirect('error500')
+        error_save(str(traceback.format_exc()))
+        return redirect('error_handler_500')
 
 
 @csrf_exempt
 def profile_user(request):
     """
-    User profile page view
-    
+        User profile page view
+
+    :param request:
+    :return:
     """
     try:
         session = request.session.get("user_id")
@@ -261,14 +308,17 @@ def profile_user(request):
         else:
             return redirect("/")
     except Exception as e:
-        return redirect('error500')
+        error_save(str(traceback.format_exc()))
+        return redirect('error_handler_500')
 
 
 @csrf_exempt
 def change_password(request):
     """
-    When user wants to change his/her account password
-    
+        When user wants to change his/her account password
+
+    :param request:
+    :return:
     """
     try:
         session = request.session.get("user_id")
@@ -286,7 +336,8 @@ def change_password(request):
             send_data = {"status": "0", "msg": "User Not Exists"}
         return JsonResponse(send_data)
     except Exception as e:
-        return redirect('error500')
+        error_save(str(traceback.format_exc()))
+        return redirect('error_handler_500')
 
 
 @csrf_exempt
@@ -294,7 +345,8 @@ def forgot_password(request):
     """
     Creating new password when user forget the
     password
-    
+    :param request:
+    :return:
     """
     try:
         input_forget_password = request.POST.get("input_forget_password")
@@ -319,14 +371,17 @@ def forgot_password(request):
             send_data = {"status": "0", "msg": "Email Not Exists"}
         return JsonResponse(send_data)
     except Exception as e:
-        return redirect('error500')
+        error_save(str(traceback.format_exc()))
+        return redirect('error_handler_500')
 
 
 @csrf_exempt
 def save_personal_info(request):
     """
-    Saving user personal info
-    
+        Saving user personal info
+
+    :param request:
+    :return:
     """
     try:
         session = request.session.get("user_id")
@@ -358,14 +413,17 @@ def save_personal_info(request):
         address_detail_obj.save()
         return HttpResponse("success")
     except Exception as e:
+        error_save(str(traceback.format_exc()))
         return redirect('error500')
 
 
 @csrf_exempt
 def save_other_details(request):
     """
-    Saving user other details
-    
+        Saving user personal info
+
+    :param request:
+    :return:
     """
     try:
         session = request.session.get("user_id")
@@ -386,14 +444,17 @@ def save_other_details(request):
         academic_info_obj.save()
         return HttpResponse("success")
     except Exception as e:
+        error_save(str(traceback.format_exc()))
         return redirect('error500')
 
 
 @csrf_exempt
 def save_academic_details(request):
     """
-    Saving user academic details
-    
+        Saving user academic details
+
+    :param request:
+    :return:
     """
     try:
         session = request.session.get("user_id")
@@ -444,14 +505,17 @@ def save_academic_details(request):
         academic_info_obj.save()
         return HttpResponse("success")
     except Exception as e:
+        error_save(str(traceback.format_exc()))
         return redirect('error500')
 
 
 @csrf_exempt
 def save_user_profile_pic(request):
     """
-    Saving user profile pic
-    
+        Saving user profile pic
+
+    :param request:
+    :return:
     """
     try:
         session = request.session.get("user_id")
@@ -460,8 +524,9 @@ def save_user_profile_pic(request):
         if company_logo_file:
             user_info_obj.profile_image = company_logo_file
         user_info_obj.save()
-        return redirect("Profile_user")
+        return redirect("profile_user")
     except Exception as e:
+        error_save(str(traceback.format_exc()))
         return redirect('error500')
 
 
@@ -481,14 +546,17 @@ def upload_profile(img):
         destination.close()
         return img_n
     except Exception as e:
+        error_save(str(traceback.format_exc()))
         return redirect('error500')
 
 
 @csrf_exempt
 def update_profile_picture(request):
     """
-    Updating user profile pic
-    
+        Updating user profile pic
+
+    :param request:
+    :return:
     """
     try:
         base64string = request.POST.get("base64string")
@@ -498,4 +566,5 @@ def update_profile_picture(request):
         user_info_obj.save()
         return HttpResponse("success")
     except Exception as e:
+        error_save(str(traceback.format_exc()))
         return redirect('error500')

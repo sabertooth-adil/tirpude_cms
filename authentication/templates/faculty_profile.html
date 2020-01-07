@@ -428,7 +428,7 @@ function get_city_district_permanent(st) {
     console.log(state)
     $.ajax({
         method: "POST",
-        url: "/GetCitysDistrictList/",
+        url: "/get-city-district-list/",
         data: {
             "state_id": state
         },
@@ -474,7 +474,7 @@ function get_city_district_correspondence(st) {
     console.log(state)
     $.ajax({
         method: "POST",
-        url: "/GetCitysDistrictList/",
+        url: "/get-city-district-list/",
         data: {
             "state_id": state
         },
@@ -622,7 +622,7 @@ function SubmitDetail1() {
     }
     else {
         $.ajax({
-            url: "/SavePersonalInfo/",
+            url: "/save-personal-info/",
             method: "POST",
             data: {
                 "first_name": first_name,
@@ -671,7 +671,7 @@ function readURL(input) {
             srcData = e.target.result;
             console.log(srcData)
             $.ajax({
-            url : "/UpdateProfilePicture/",
+            url : "/update-profile-picture/",
             method : "POST",
             data:{
                 "base64string" : srcData,

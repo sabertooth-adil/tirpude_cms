@@ -120,6 +120,6 @@ dmypy.json
 .pyre/
 
 # End of https://www.gitignore.io/api/django
-# /.idea
+/.idea
 /__pycache__
 .iml
