@@ -1045,7 +1045,7 @@
         console.log(state)
         $.ajax({
             method: "POST",
-            url: "/GetCitysDistrictList/",
+            url: "/get-city-district-list/",
             data: {
                 "state_id": state
             },
@@ -1090,7 +1090,7 @@
         console.log(state)
         $.ajax({
             method: "POST",
-            url: "/GetCitysDistrictList/",
+            url: "/get-city-district-list/",
             data: {
                 "state_id": state
             },
@@ -1136,7 +1136,7 @@
         console.log(cast)
         $.ajax({
             method: "POST",
-            url: "/GetSubCastList/",
+            url: "/get-sub-cast-list/",
             data: {
                 "cast": cast
             },
@@ -1168,7 +1168,7 @@
         console.log(cast)
         $.ajax({
             method: "POST",
-            url: "/GetStreamorFieldList/",
+            url: "/get-stream-or-field-list/",
             data: {
                 "twelveth_or_diploma": twelveth_or_diploma
             },
@@ -1200,7 +1200,7 @@
         console.log(cast)
         $.ajax({
             method: "POST",
-            url: "/GetDegreeStreamorFieldList/",
+            url: "/get_degree-stream-or-field-list/",
             data: {
                 "degree": degree
             },
@@ -1368,7 +1368,7 @@
 <!--        }-->
         else {
             $.ajax({
-                url: "/SavePersonalInfo/",
+                url: "/save-personal-info/",
                 method: "POST",
                 data: {
                     "first_name": first_name,
@@ -1472,7 +1472,7 @@
         $("#err_guardianmobileno_invalid").show();
     }else {
         $.ajax({
-            url : "/SaveOtherDetails/",
+            url : "/save-other-details/",
             method : "POST",
             data : {
                 "domicile_of_state":domicile_of_state,
@@ -1641,7 +1641,7 @@
 <!--        }-->
         else{
             $.ajax({
-                url : "/SaveAcademicDetails/",
+                url : "/save-academic-details/",
                 method : "POST",
                 data : {
                     "school_name":school_name,
@@ -1694,7 +1694,7 @@
                 $('#wizardPicturePreview').attr('src', e.target.result);
                 srcData = e.target.result;
                 $.ajax({
-                url : "/UpdateProfilePicture/",
+                url : "/update-profile-picture/",
                 method : "POST",
                 data:{
                     "base64string" : srcData,
