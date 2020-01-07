@@ -1,0 +1,30 @@
+
+
+ <table class="table table-vcenter" id="mydatatable">
+                        <thead class="thead-light">
+                        <tr>
+                            <th class="text-center" style="width: 7%;">Sr No.</th>
+                            <th style="width: 25%">Title</th>
+                            <th style="width: 18%">Author</th>
+                            <th style="width: 10%">Subject</th>
+                            <th style="width: 8%">ISBN</th>
+                            <th class="text-center" scope="col" style="width: 5%">Total Copies </th>
+                            <th class="text-center" scope="col" style="width: 5%">Scrapped Copies </th>
+                            <th class="text-center" scope="col" style="width: 8%">Scrapped date</th>
+                        </tr>
+                        </thead>
+                        <tbody id="bookbody">
+                        {% for i in Books_Scrapped_obj reversed %}
+                        <tr >
+                            <td class="text-center font-size-sm">{{forloop.counter}}</td>
+                            <td class="font-size-sm">{{i.fk_book_purchase.title}}</td>
+                            <td class="font-size-sm">{{i.fk_book_purchase.author}}</td>
+                            <td class="font-size-sm">{{i.fk_book_purchase.subject.subjects}}</td>
+                            <td class="font-size-sm">{{i.fk_book_purchase.isbn}}</td>
+                            <td class="text-center font-size-sm">{{i.fk_book_purchase.no_of_copies}}</td>
+                            <td class="text-center font-size-sm">{{i.scrap_copies}}</td>
+                            <td class="text-center font-size-sm">{{i.scrap_date|date:"d-M-Y"}}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>

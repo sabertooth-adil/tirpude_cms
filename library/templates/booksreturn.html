@@ -1,0 +1,1105 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+    .content .block, .content .items-push > div, .content .push, .content p {
+        margin-bottom: 0px !important;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2" id="h">Books Returned Details</h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+
+                <button class="btn btn-primary btn-sm submit-btn" onclick="IssueBook_Div()"
+                        id="IssueBook_Button">Return Book
+                </button>
+                <button class="btn btn-primary btn-sm submit-btn" onclick="SearchBook_Div()"
+                        id="SearchBook_Button" style="display:none;">View Issued Books
+                </button>
+                <button class="btn btn-primary btn-sm submit-btn" onclick="SearchBookEdit_Div()"
+                        id="SearchBookEdit_Button" style="display:none;">Search Books
+                </button>
+                <button class="btn btn-primary btn-sm submit-btn" onclick="BookIssuedDetails_Div()"
+                        id="BookIssuedDetails_Button" style="display:none;">Book Returned Details
+                </button>
+
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="{% static '/js/Chartnew.min.js' %}"></script>
+<style>
+    canvas {
+        height: 400px !important;
+    }
+</style>
+
+
+<div id="BookPurchaseFilter_Div">
+    <div class="content" style="padding: 10px !important;">
+        <div class="block block-rounde ink-pop border-left border-primary border-4x"
+           href="javascript:void(0)">
+            <div class="block-content block-content-full" style="padding-bottom: 0px !important;">
+                <div class="row">
+                     <div class="col-lg-2 col-md-2 col-xs-2">
+                            <div class="form-group">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">Subject</div>
+                        <div class="font-w400 font-w400 text-dark">
+                            <select class="form-control form-control-sm" data-style="btn-white" data-live-search="true" name="fsubject" id="fsubject" onchange="IssueChange()">
+                                <option value="" selected>Select Subject</option>
+                                {% for i in books_subject_obj %}
+                                <option value="{{i.id}}">{{i.subjects}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;"
+                                  id="err_fsubject">Please Select Subject</span>
+                        </div>
+                            </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2">
+                        <div class="form-group tab-responsive">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">Author</div>
+                        <div class="font-w400 font-w400 text-dark">
+                            <select class="form-control form-control-sm" data-style="btn-white" data-live-search="true" name="fauthor" id="fauthor" onchange="IssueChangeAuthor()" >
+                                <option value="" selected>Select Author</option>
+                                {% for i in books_purchase_obj %}
+                                <option value="{{i.author}}">{{i.author}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;"
+                                  id="err_fauthor">Please Select Author</span>
+                        </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3 col-md-2 col-xs-2">
+                            <div class="form-group">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">Title</div>
+                        <div class="font-w400 font-w400 text-dark">
+                            <select class="form-control form-control-sm" data-style="btn-white" data-live-search="true" name="ftitle" id="ftitle">
+                                <option value="" selected>Select Title</option>
+                                {% for i in books_purchase_obj %}
+                                <option value="{{i.title}}">{{i.title}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;"
+                                  id="err_ftitle">Please Select Title</span>
+                        </div>
+                            </div>
+                    </div>
+
+
+                    <div class="col-lg-2 col-md-2 col-xs-2">
+                        <div class="form-group">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">ISBN</div>
+                        <div class="font-w400 text-dark">
+
+                            <!--<select class="form-control form-control-sm" data-style="btn-white" data-live-search="true" name="fisbn" id="fisbn">-->
+                                <!--<option value="" selected >Select ISBN</option>-->
+                                <!--{% for i in books_issue_obj %}-->
+                                <!--<option value="{{i.isbn}}">{{i.isbn}}</option>-->
+                                <!--{% endfor %}-->
+                            <!--</select>-->
+
+                            <input type="text" maxlength="200" placeholder="Enter ISBN"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="fisbn" name="fisbn" required>
+                            <span style="display:none;color:red;font-size: 12px;"
+                                  id="err_fisbn">Please Enter ISBN</span>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-1 col-md-2 col-xs-2">
+                        <div class="form-group">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">From</div>
+                            <div class="font-w400 text-dark">
+                        <input name="ffromdate" id="ffromdate"
+                               class="form-control form-control-sm form-control-alternative js-datepicker"
+                               data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
+                        <span style="display:none;color:red;font-size: 12px;"
+                              id="err_ffromdate">Please Select From Date</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                        <div class="col-lg-1 col-md-2 col-xs-2">
+                        <div class="form-group">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">To</div>
+                        <input name="ftodate" id="ftodate"
+                               class="form-control form-control-sm form-control-alternative js-datepicker"
+                               data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
+                        <span style="display:none;color:red;font-size: 12px;"
+                              id="err_ftodate">Please Select To Date</span>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-1 col-md-1 col-xs-1">
+                        <div class="form-group">
+                            <div class="font-size-sm font-w600 text-uppercase text-muted">&nbsp;</div>
+                        <div class="font-w400 text-dark">
+                            <buttton class="btn btn-sm btn-primary submit-btn btn-block" onclick="Filterbook()"><i
+                                    class="fa fa-filter" aria-hidden="true"></i> Filter
+                            </buttton>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="content" style="padding: 10px !important;">
+    <div class="block">
+        <div class="block-content block-content-full">
+
+
+            <div id="ShowAddBook_Div" style="display: none;">
+                <div class="row">
+
+                    <div class="col-lg-12 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Title<span
+                                    class="text-danger">*</span>:</label>
+                            <input type="text" maxlength="200"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="title" name="title" required disabled>
+                            <span style="display:none;color:red;font-size: 12px;"
+                                  id="err_title">Please Enter Title</span>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Author<span
+                                    class="text-danger">*</span>:</label>
+                            <input type="text" maxlength="120"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="author" name="author" required disabled>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_author">Please Enter Author</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Publisher<span
+                                    class="text-danger">*</span>:</label>
+                            <input type="text" maxlength="120"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="publisher" name="publisher" required disabled>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_publisher">Please Enter Publisher</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Subject<span
+                                    class="text-danger">*</span>:</label>
+                            <input type="text" maxlength="120"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="subject" name="subject" required disabled>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_subject">Please Enter Subject</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">ISBN<span
+                                    class="text-danger">*</span>:</label>
+                            <input type="text" maxlength="50"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="isbn" name="isbn" required disabled>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_isbn">Please Enter ISBN</span>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="col-lg-3 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Course<span
+                                    class="text-danger">*</span>:</label>
+                            <select class="form-control form-control-sm" name="course" id="course" disabled>
+                                <option value="" selected >Select Course</option>
+                                {% for i in course_obj %}
+                                <option value="{{i.id}}">{{i.course}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_course">Please Select Course</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Semester<span
+                                    class="text-danger">*</span>:</label>
+                            <select class="form-control form-control-sm" name="semester" id="semester" disabled>
+                                <option value="" selected >Select Semester</option>
+                                {% for i in semesters_obj %}
+                                <option value="{{i.id}}">{{i.semester}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_semester">Please Select Semester </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Section<span
+                                    class="text-danger">*</span>:</label>
+                                <select class="form-control form-control-sm" name="section" id="section" disabled>
+                                <option value="" selected >Select Section</option>
+                                {% for i in sections_obj %}
+                                <option value="{{i.id}}">{{i.sections}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_section">Please Select Section</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Student Name<span
+                                    class="text-danger">*</span>:</label>
+                            <select class="form-control form-control-sm" name="studentname" id="studentname" disabled>
+                                <option value="" selected hidden>Select Student Name</option>
+                                {% for i in books_purchase_obj %}
+                                <option value="{{i.id}}">{{i.fk_user_info.first_name}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_studentname">Please Select Student Name</span>
+                        </div>
+                    </div>
+<br><br>
+                    <div class="col-lg-3 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Date of Issue<span
+                                    class="text-danger">*</span>:</label>
+                            <input name="dateofissue" id="dateofissue"
+                                   class="form-control form-control-sm form-control-alternative js-datepicker"
+                                   data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" disabled>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_dateofissue">Please Select Date of Issue</span>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+<div id="count" class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h6 my-2" id="h1" style="display:none;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb" >
+                <form action="" id="return_book" role="form" enctype="multipart/form-data" style="display: inline;">
+                <button class="btn btn-primary btn-sm submit-btn"
+                        id="Issue_Button" style="display:none;">Return
+                </button>
+                </form>
+            </nav>
+        </div>
+</div>
+
+
+<div id="ShowEditBook_Div" style="display: none;">
+                <div class="row">
+
+                    <div class="col-lg-12 col-sm-4 col-xs-4">
+                        <input type="hidden" id="book_issueedit_id" name="book_issueedit_id">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Title<span
+                                    class="text-danger">*</span>:</label>
+                            <input type="text" maxlength="200" form="return_book"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="edittitle" name="edittitle" required>
+                            <span style="display:none;color:red;font-size: 12px;"
+                                  id="err_edittitle">Please Enter Title</span>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Author<span
+                                    class="text-danger">*</span>:</label>
+                            <input type="text" maxlength="120" form="return_book"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="editauthor" name="editauthor" required>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editauthor">Please Enter Author</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-4 col-xs-4">
+
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Publisher<span
+                                    class="text-danger">*</span>:</label>
+                            <input type="text" maxlength="120" form="return_book"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="editpublisher" name="editpublisher" required>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editpublisher">Please Enter Publisher</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-4 col-xs-4">
+
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Subject<span
+                                    class="text-danger">*</span>:</label>
+                            <input type="text" maxlength="120" form="return_book"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="editsubject" name="editsubject" required>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editsubject">Please Enter Subject</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-4 col-xs-4">
+
+                        <div class="form-group">
+                            <label class="form-control-label text-right">ISBN<span
+                                    class="text-danger">*</span>:</label>
+                            <input type="text" maxlength="50" form="return_book"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="editisbn" name="editisbn" required>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editisbn">Please Enter ISBN</span>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="col-lg-3 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Course<span
+                                    class="text-danger">*</span>:</label>
+                            <input type="text" maxlength="50" form="return_book"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="editcourse" name="editcourse" required>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editcourse">Please Select Course</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Semester<span
+                                    class="text-danger">*</span>:</label>
+
+                            <input type="text" maxlength="50" form="return_book"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="editsemester" name="editsemester" required>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editsemester">Please Select Semester </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Section<span
+                                    class="text-danger">*</span>:</label>
+
+                             <input type="text" maxlength="50" form="return_book"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="editsection" name="editsection" required>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editsection">Please Select Section</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Student Name<span
+                                    class="text-danger">*</span>:</label>
+
+                            <input type="text" maxlength="50" form="return_book"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="editstudentname" name="editstudentname" required>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editstudentname">Please Select Student Name</span>
+                        </div>
+                    </div>
+<br><br>
+                    <div class="col-lg-3 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Issued Date<span
+                                    class="text-danger">*</span>:</label>
+                            <input name="editdateofissue" id="editdateofissue" form="return_book"
+                                   class="form-control form-control-sm form-control-alternative js-datepicker"
+                                   data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" required>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editdateofissue">Please Select Date of Issue</span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Due Date<span
+                                    class="text-danger">*</span>:</label>
+                            <input name="editduedate" id="editduedate" form="return_book"
+                                   class="form-control form-control-sm form-control-alternative js-datepicker"
+                                   data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" required>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editduedate">Please Select Due Date</span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Return Date<span
+                                    class="text-danger">*</span>:</label>
+                            <input name="editreturndate" id="editreturndate" form="return_book"
+                                   class="form-control form-control-sm form-control-alternative js-datepicker"
+                                   data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" required>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editreturndate">Please Select Return Date</span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+<input type="hidden" id="bookreturnid" name="bookreturnid">
+
+
+
+        </div>
+
+
+
+
+        <!-- col start -->
+        <div class="col">
+            <div class="show showInbox">
+                <div class="table-responsive" id="ShowBookTable_Div">
+                    <table class="table table-vcenter" id="mytable">
+                        <thead class="thead-light">
+                        <tr>
+                            <th class="text-center" style="width: 7%;" align="left">Sr No.</th>
+                            <th style="width: 20%" align="left">Title</th>
+                            <th style="width: 13%" align="left">Author</th>
+                            <th style="width: 10%" align="left">Subject</th>
+                            <th style="width: 5%" align="left">ISBN</th>
+                            <th class="text-center" scope="col" style="width: 8%" align="left">Student Name</th>
+                            <th class="text-center" scope="col" style="width: 5%" align="left">Issue<br>Date</th>
+                            <th class="text-center" scope="col" style="width: 5%" align="left">Due<br>Date</th>
+                            <th class="text-center" scope="col" style="width: 5%" align="left">Return<br>Date</th>
+
+                        </tr>
+                        </thead>
+                        <tbody id="bookissuebody">
+                        {% for i in books_returned_obj reversed %}
+                        <tr>
+                            <td class="text-center font-size-sm">{{forloop.counter}}</td>
+                            <td class="font-size-sm">{{i.fk_books_issue_data.fk_book_purchase.title}}</td>
+                            <td class="font-size-sm">{{i.fk_books_issue_data.fk_book_purchase.author}}</td>
+                            <td class="font-size-sm">{{i.fk_books_issue_data.fk_book_purchase.subject.subjects}}</td>
+                            <td class="font-size-sm">{{i.fk_books_issue_data.fk_book_purchase.isbn}}</td>
+                            <td class="text-center font-size-sm">{{i.fk_user_info.first_name}}&nbsp;{{i.fk_user_info.last_name}}</td>
+                            <td class="text-center font-size-sm">{{i.fk_books_issue_data.issue_date|date:"d-M-Y"}}</td>
+                            <td class="text-center font-size-sm">{{i.fk_books_issue_data.due_date|date:"d-M-Y"}}</td>
+                            <td class="text-center font-size-sm">{{i.return_date|date:"d-M-Y"}}</td>
+
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+
+<div id ="addappend">
+
+
+
+
+
+
+</div>
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div id="myModal" class="modal fade bd-example-modal-lg" role="dialog">
+    <div class="modal-dialog mw-100 w-75">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><b>Search Books</b></h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+
+
+
+<div>
+    <div class="content" style="padding: 10px !important;">
+        <div class="block block-rounde ink-pop border-left border-primary border-4x"
+           href="javascript:void(0)">
+            <div class="block-content block-content-full" style="padding-bottom: 0px !important;">
+                <div class="row">
+                     <div class="col-lg-2 col-md-2 col-xs-2">
+                            <div class="form-group">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">Subject</div>
+                        <div class="font-w400 font-w400 text-dark">
+                            <select class="form-control form-control-sm" data-style="btn-white" data-live-search="true" name="dsubject" id="dsubject" onchange="IssueDialogChange()">
+                                <option value="" selected>Select Subject</option>
+                                {% for i in books_subject_obj %}
+                                <option value="{{i.id}}">{{i.subjects}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;"
+                                  id="err_dsubject">Please Select Subject</span>
+                        </div>
+                            </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2">
+                        <div class="form-group tab-responsive">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">Author</div>
+                        <div class="font-w400 font-w400 text-dark">
+                            <select class="form-control form-control-sm" data-style="btn-white" data-live-search="true" name="dauthor" id="dauthor" onchange="IssueDialogChangeAuthor()" >
+                                <option value="" selected>Select Author</option>
+                                {% for i in books_purchase_obj %}
+                                <option value="{{i.author}}">{{i.author}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;"
+                                  id="err_dauthor">Please Select Author</span>
+                        </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3 col-md-2 col-xs-2">
+                            <div class="form-group">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">Title</div>
+                        <div class="font-w400 font-w400 text-dark">
+                            <select class="form-control form-control-sm" data-style="btn-white" data-live-search="true" name="dtitle" id="dtitle">
+                                <option value="" selected>Select Title</option>
+                                {% for i in books_purchase_obj %}
+                                <option value="{{i.title}}">{{i.title}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;"
+                                  id="err_dtitle">Please Select Title</span>
+                        </div>
+                            </div>
+                    </div>
+
+
+                    <div class="col-lg-2 col-md-2 col-xs-2">
+                        <div class="form-group">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">ISBN</div>
+                        <div class="font-w400 text-dark">
+
+
+                            <input type="text" maxlength="200" placeholder="Enter ISBN"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="disbn" name="disbn" required>
+                            <span style="display:none;color:red;font-size: 12px;"
+                                  id="err_disbn">Please Enter ISBN</span>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-1 col-md-2 col-xs-2">
+                        <div class="form-group">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">From</div>
+                            <div class="font-w400 text-dark">
+                        <input name="dfromdate" id="dfromdate"
+                               class="form-control form-control-sm form-control-alternative js-datepicker"
+                               data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
+                        <span style="display:none;color:red;font-size: 12px;"
+                              id="err_dfromdate">Please Select From Date</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                        <div class="col-lg-1 col-md-2 col-xs-2">
+                        <div class="form-group">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">To</div>
+                        <input name="dtodate" id="dtodate"
+                               class="form-control form-control-sm form-control-alternative js-datepicker"
+                               data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
+                        <span style="display:none;color:red;font-size: 12px;"
+                              id="err_dtodate">Please Select To Date</span>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-1 col-md-1 col-xs-1">
+                        <div class="form-group">
+                            <div class="font-size-sm font-w600 text-uppercase text-muted">&nbsp;</div>
+                        <div class="font-w400 text-dark">
+                            <buttton class="btn btn-sm btn-primary submit-btn btn-block" onclick="FilterDialogbook()"><i
+                                    class="fa fa-filter" aria-hidden="true"></i> Filter
+                            </buttton>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+            </div>
+
+
+            <div class="modal-body">
+                <h5 class="text-center"></h5>
+                <table class="table table-striped" id="searchtable">
+                    <thead id="tblHead">
+                    <tr>
+                        <th style="width: 7%;">Sr No.</th>
+                        <th style="width: 20%">Title</th>
+                        <th style="width: 15%">Author</th>
+                        <th style="width: 8%">Subject</th>
+                        <th class="text-center" scope="col" style="width: 10%">ISBN</th>
+                        <th style="width: 4%">Issue Date</th>
+                        <th class="text-center" scope="col" style="width: 8%">Student<br>Name</th>
+                        <th class="text-center" scope="col" style="width: 7%">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="searchissuetable">
+                    {% for i in books_issue_obj %}
+                    <tr>
+                        <td class="text-center font-size-sm">{{forloop.counter}}</td>
+                        <td class="font-size-sm">{{i.fk_book_purchase.title}}</td>
+                        <td class="font-size-sm">{{i.fk_book_purchase.author}}</td>
+                        <td class="font-size-sm">{{i.fk_book_purchase.subject.subjects}}</td>
+                        <td class="text-center font-size-sm">{{i.fk_book_purchase.isbn}}</td>
+                          <td class="font-size-sm">{{i.issue_date|date:"d-M-Y"}}</td>
+                        <td class="text-center font-size-sm">{{i.fk_user_info.first_name}}&nbsp;{{i.fk_user_info.last_name}}</td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-info js-tooltip-enabled"
+                                        data-toggle="tooltip" title="" data-original-title="Edit Client"
+                                        onclick="redirect({{i.id}})">
+                                    <i class="fa fa-fw fa-pencil-alt"></i>
+                                </button>
+
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="bookpurchaseid" name="bookpurchaseid">
+
+<input type="hidden" id="studentname_id" name="studentname_id">
+
+
+<script>
+    $(document).ready(function () {
+        $('#mytable').DataTable();
+        $('#searchtable').DataTable();
+
+        $('#dauthor').selectpicker({
+            maxOptions:2
+        });
+        $('#dtitle').selectpicker({
+            maxOptions:2
+        });
+        $('#disbn').selectpicker({
+            maxOptions:2
+        });
+        $('#dsubject').selectpicker({
+            maxOptions:2
+        });
+
+
+        $('#fauthor').selectpicker({
+            maxOptions:2
+        });
+        $('#ftitle').selectpicker({
+            maxOptions:2
+        });
+        $('#fisbn').selectpicker({
+            maxOptions:2
+        });
+        $('#fsubject').selectpicker({
+            maxOptions:2
+        });
+
+    });
+
+    function IssueBook_Div() {
+        $("#IssueBook_Button").hide();
+        $("#SearchBook_Button").show();
+        $("#SearchBookEdit_Button").hide();
+        $("#Issue_Button").hide();
+        $("#BookIssuedDetails_Button").show();
+        $("#BookPurchaseFilter_Div").hide();
+        $("#ShowAddBook_Div").show();
+        $("#ShowEditBook_Div").hide();
+        $("#ShowTableEditBook_Div").hide();
+        $("#ShowBookTable_Div").hide();
+        $("#AddStudentBookTable_Div").hide();
+        $("#Add_Button").show();
+        $("#h1").hide();
+        $("#h2").hide();
+        $("#printbutton").hide();
+        $("#excelbuttton").hide();
+
+
+    }
+    function BookIssuedDetails_Div() {
+        location.reload()
+
+    }
+
+
+
+
+
+
+function SearchBook_Div() {
+$('#myModal').modal('show');
+
+}
+
+function SearchBookEdit_Div() {
+$('#myModall').modal('show');
+
+
+}
+
+
+
+function redirect(id){
+        $('#myModal').modal('hide');
+        $("#IssueBook_Button").hide();
+        $("#SearchBook_Button").show();
+        $("#SearchBookEdit_Button").hide();
+        $("#Issue_Button").show();
+        $("#BookIssuedDetails_Button").show();
+        $("#BookPurchaseFilter_Div").hide();
+        $("#ShowAddBook_Div").hide();
+        $("#ShowEditBook_Div").show();
+        $("#ShowTableEditBook_Div").hide();
+        $("#ShowBookTable_Div").hide();
+        $("#AddStudentBookTable_Div").show();
+        $("#Add_Button").show();
+        $("#h1").show();
+        $("#h2").show();
+        $("#editreturndate").datepicker().datepicker("setDate", new Date());
+        $("#printbutton").hide();
+        $("#excelbuttton").hide();
+
+        $.ajax({
+             url: "/append_search_books_issue_details/",
+             method: "POST",
+             data: {
+                 "id": id
+             },
+             success: function (response) {
+                 console.log(response)
+                 $("#book_issueedit_id").val(response['list'][0]['id'])
+                 $("#edittitle").val(response['list'][0]['title'])
+                 $("#editauthor").val(response['list'][0]['author'])
+                 $("#editpublisher").val(response['list'][0]['publisher'])
+                 $("#editisbn").val(response['list'][0]['isbn'])
+                 $("#editsubject").val(response['list'][0]['subject'])
+                 $("#editcourse").val(response['list'][0]['course'])
+                 $("#editsemester").val(response['list'][0]['semester'])
+                 $("#editsection").val(response['list'][0]['section'])
+                 $("#editdateofissue").val(response['list'][0]['issuedate'])
+                 $("#editduedate").val(response['list'][0]['duedate'])
+                 $("#editstudentname").val(response['list'][0]['studentname'])
+                 console.log("purchase id ",response['list'][0]['fk_purchase_id'])
+                 console.log("issue id ",response['list'][0]['id'])
+                 $("#bookpurchaseid").val(response['list'][0]['fk_purchase_id'])
+                 $("#studentname_id").val(response['list'][0]['studentname_id'])
+
+             }
+         })
+
+    }
+
+
+    $("#return_book").submit(function (e) {
+                e.preventDefault();
+        var title = $("#edittitle").val();
+        var author = $("#editauthor").val();
+        var publisher = $("#editpublisher").val();
+        var isbn = $("#editisbn").val();
+        var subject = $("#editsubject").val();
+        var course = $("#editcourse").val();
+        var semester = $("#editsemester").val();
+        var section = $("#editsection").val();
+        var studentname = $("#editstudentname").val();
+        var dateofissue = $("#editdateofissue").val();
+        var duedate = $("#editduedate").val();
+        var returndate = $("#editreturndate").val();
+        var book_issueedit_id = $("#book_issueedit_id").val()
+        var fk_purchase_id = $("#bookpurchaseid").val()
+        var studentname_id = $("#studentname_id").val()
+
+            $.ajax({
+            url: "/add_return_books/",
+            method: "POST",
+            data: {
+                "title":title,
+                "student_name_id":studentname_id,
+                "fk_purchase_id":fk_purchase_id,
+                "book_issue_id":book_issueedit_id,
+                "return_date":returndate,
+
+            },
+                success: function (response) {
+                    console.log(response)
+                    swal(" Book has been Returned!", {
+                        icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+
+
+                        });
+                    $("#addappend").html("")
+                    $("#addappend").append(response)
+
+            }
+            })
+
+    }
+    )
+
+
+
+   function Filterbook() {
+        author = $("#fauthor").val()
+        title = $("#ftitle").val()
+        isbn = $("#fisbn").val()
+        subject = $("#fsubject").val()
+        fromdate = $("#ffromdate").val()
+        todate = $("#ftodate").val()
+        $.ajax({
+            url : "/filter_books_return/",
+            method : "POST",
+            data : {
+                "author":author,
+                "title":title,
+                "isbn":isbn,
+                "subject":subject,
+                "fromdate":fromdate,
+                "todate":todate,
+                },
+                success : function(response){
+                    console.log(response)
+                $("#ShowBookTable_Div").html("")
+                $("#ShowBookTable_Div").append(response)
+                }
+        })
+    }
+
+
+
+
+       function FilterDialogbook() {
+        author = $("#dauthor").val()
+        title = $("#dtitle").val()
+        isbn = $("#disbn").val()
+        subject = $("#dsubject").val()
+        fromdate = $("#dfromdate").val()
+        todate = $("#dtodate").val()
+        $.ajax({
+            url : "/filter_modal_books_return/",
+            method : "POST",
+            data : {
+                "author":author,
+                "title":title,
+                "isbn":isbn,
+                "subject":subject,
+                "fromdate":fromdate,
+                "todate":todate,
+                },
+                success : function(response){
+                    console.log(response)
+                $("#searchissuetable").html("")
+                $("#searchissuetable").append(response)
+                }
+        })
+    }
+
+
+        function IssueChangeAuthor(){
+        var fauthor = $("#fauthor").val();
+
+        $.ajax({
+            method: "POST",
+            url: "/books_return_filter_change_title/",
+            data: {
+                "author": fauthor,
+
+            },
+            success: function (response) {
+                console.log(response)
+
+                $("#ftitle").html("")
+
+                if (JSON.parse(response).length == 0) {
+                    $("#ftitle").html("<option value='' selected hidden>Title Not Found</option>")
+                    $("#ftitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
+
+                }
+                else {
+                    $("#ftitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
+
+                    }
+                for (i = 0; i < JSON.parse(response).length; i++) {
+                    tit = document.createElement('option');
+                    tit.value = JSON.parse(response)[i][1]
+                    tit.innerHTML = JSON.parse(response)[i][1]
+                    $("#ftitle").append(tit).selectpicker('refresh');
+
+                }
+            }
+        })
+    }
+
+
+        function IssueChange() {
+
+        var subject = $("#fsubject").val();
+
+        $.ajax({
+            method: "POST",
+            url: "/books_return_filter_change_title_author/",
+            data: {
+                "subject": subject,
+
+            },
+            success: function (response) {
+                console.log(response)
+
+                $("#ftitle").html("")
+                $("#fauthor").html("")
+                if (JSON.parse(response).length == 0) {
+                    $("#ftitle").html("<option value='' selected hidden>Title Not Found</option>")
+                    $("#ftitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
+                    $("#fauthor").html("<option value='' selected hidden>Author Not Found</option>")
+                    $("#fauthor").html("<option value='' selected hidden>Select Author</option><option value=''>Select Author</option>")
+                }
+                else {
+                    $("#ftitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
+                    $("#fauthor").html("<option value='' selected hidden>Select Author</option><option value=''>Select Author</option>")
+                }
+                for (i = 0; i < JSON.parse(response).length; i++) {
+                    tit = document.createElement('option');
+                    tit.value = JSON.parse(response)[i][1]
+                    tit.innerHTML = JSON.parse(response)[i][1]
+
+                    $("#ftitle").append(tit).selectpicker('refresh');
+                    auth = document.createElement('option');
+                    auth.value = JSON.parse(response)[i][2]
+                    auth.innerHTML = JSON.parse(response)[i][2]
+                    $("#fauthor").append(auth).selectpicker('refresh');
+                }
+            }
+        })
+    }
+
+
+        function IssueDialogChange() {
+
+        var subject = $("#dsubject").val();
+
+        $.ajax({
+            method: "POST",
+            url: "/books_return_modal_filter_change_title_author/",
+            data: {
+                "subject": subject,
+
+            },
+            success: function (response) {
+                console.log(response)
+
+                $("#dtitle").html("")
+                $("#dauthor").html("")
+                if (JSON.parse(response).length == 0) {
+                    $("#dtitle").html("<option value='' selected hidden>Title Not Found</option>")
+                    $("#dtitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
+                    $("#dauthor").html("<option value='' selected hidden>Author Not Found</option>")
+                    $("#dauthor").html("<option value='' selected hidden>Select Author</option><option value=''>Select Author</option>")
+                }
+                else {
+                    $("#dtitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
+                    $("#dauthor").html("<option value='' selected hidden>Select Author</option><option value=''>Select Author</option>")
+                }
+                for (i = 0; i < JSON.parse(response).length; i++) {
+                    tit = document.createElement('option');
+                    tit.value = JSON.parse(response)[i][1]
+                    tit.innerHTML = JSON.parse(response)[i][1]
+
+                    $("#dtitle").append(tit).selectpicker('refresh');
+                    auth = document.createElement('option');
+                    auth.value = JSON.parse(response)[i][2]
+                    auth.innerHTML = JSON.parse(response)[i][2]
+                    $("#dauthor").append(auth).selectpicker('refresh');
+                }
+            }
+        })
+    }
+
+
+        function IssueDialogChangeAuthor(){
+        var author = $("#dauthor").val();
+
+        $.ajax({
+            method: "POST",
+            url: "/books_return_modal_filter_change_title/",
+            data: {
+                "author": author,
+
+            },
+            success: function (response) {
+                console.log(response)
+
+                $("#dtitle").html("")
+                if (JSON.parse(response).length == 0) {
+                    $("#dtitle").html("<option value='' selected hidden>Title Not Found</option>")
+                    $("#dtitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
+
+                }
+                else {
+                    $("#dtitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
+
+                    }
+                for (i = 0; i < JSON.parse(response).length; i++) {
+                    tit = document.createElement('option');
+                    tit.value = JSON.parse(response)[i][1]
+                    tit.innerHTML = JSON.parse(response)[i][1]
+                    $("#dtitle").append(tit).selectpicker('refresh');
+
+
+                }
+            }
+        })
+    }
+
+
+
+
+</script>
+{% endblock content %}
