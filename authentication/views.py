@@ -21,14 +21,16 @@ def handler404(request, exception):
 def handler400(request, exception):
     return render(request, "400.html")
 
+
 def error_handler_500(request):
-    return render(request,"500.html")
+    return render(request, "500.html")
+
 
 def error_save(error):
     time = str(datetime.datetime.now())
     with open("error_log.txt", "a") as myfile:
-        myfile.write(time+"\n")
-        myfile.write(error+"\n\n")
+        myfile.write(time + "\n")
+        myfile.write(error + "\n\n")
     print(error)
     return error
 
@@ -207,6 +209,7 @@ def register_user(request):
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
+
 @csrf_exempt
 def signup_user(request):
     """
@@ -229,6 +232,7 @@ def signup_user(request):
             return HttpResponse("error")
     except Exception as e:
         return redirect('error_handler_500')
+
 
 def signout_user(request):
     """
@@ -394,7 +398,8 @@ def save_personal_info(request):
         user_info_obj.phone_no2 = request.POST.get("phone_no2")
         user_info_obj.fk_gender_id = request.POST.get("gender")
         user_info_obj.aadhar_no = request.POST.get("aadhar_no")
-        user_info_obj.dob = datetime.datetime.strptime(str(request.POST.get("dob_date")), "%d-%m-%Y").strftime("%Y-%m-%d")
+        user_info_obj.dob = datetime.datetime.strptime(str(request.POST.get("dob_date")), "%d-%m-%Y").strftime(
+            "%Y-%m-%d")
         user_info_obj.fk_nationality_id = request.POST.get("nationality")
         user_info_obj.fk_blood_group_id = request.POST.get("blood_group")
         user_info_obj.save()
