@@ -527,7 +527,7 @@
 
 
                 $.ajax({
-                    url: "/add_books_purchase/",
+                    url: "/add-books-purchase/",
                     method: "POST",
                     data: {
                         "title": title,
@@ -569,7 +569,7 @@
                 .then((willDelete) => {
                     if (willDelete) {
                         $.ajax({
-                            url: "/delete_books_purchase/",
+                            url: "/delete-books-purchase/",
                             method: "POST",
                             data: {
                                 "id": id
@@ -607,7 +607,7 @@
 
 
             $.ajax({
-                url: "/edit_books_purchase/",
+                url: "/edit-books-purchase/",
                 method: "POST",
                 data: {
                     "id": id
@@ -645,7 +645,7 @@
             fromdate = $("#ffromdate").val()
             todate = $("#ftodate").val()
             $.ajax({
-                url: "/filter_books_purchase/",
+                url: "/filter-books-purchase/",
                 method: "POST",
                 data: {
                     "author": author,
@@ -678,7 +678,7 @@
                 var editpurchasedate = $("#editpurchasedate").val();
 
                 $.ajax({
-                    url: "/update_books_purchase/",
+                    url: "/update-books-purchase/",
                     method: "POST",
                     data: {
                         "title_id": titleid,
@@ -716,7 +716,7 @@
 
             $.ajax({
                 method: "POST",
-                url: "/purchase_change_author_title/",
+                url: "/purchase-change-author-title/",
                 data: {
                     "subject": subject,
 
@@ -756,7 +756,7 @@
 
             $.ajax({
                 method: "POST",
-                url: "/purchase_change_title/",
+                url: "/purchase-change-title/",
                 data: {
                     "author": fauthor,
 

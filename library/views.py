@@ -23,6 +23,32 @@ def books_purchase(request):
 
 
 @csrf_exempt
+def filter_title(request):
+    """
+    Filtering title by on clicking author
+    """
+    author = request.POST.get("author")
+    if author:
+        title_list = list(BooksPurchase.objects.filter(author=author).values_list('id', 'title'))
+    else:
+        pass
+    return HttpResponse(json.dumps(title_list))
+
+
+@csrf_exempt
+def filter_author_title(request):
+    """
+    Filtering author and title by on clicking subject
+    """
+    subject = request.POST.get("subject")
+    if subject:
+        title_list = list(BooksPurchase.objects.filter(subject_id=subject).values_list('id', 'title', 'author'))
+    else:
+        pass
+    return HttpResponse(json.dumps(title_list))
+
+
+@csrf_exempt
 def purchase_change_title(request):
     """
     Filtering title by on clicking author

@@ -807,7 +807,7 @@ function redirect(id){
         $("#excelbuttton").hide();
 
         $.ajax({
-             url: "/append_search_books_issue_details/",
+             url: "/append-search-books-issue-details/",
              method: "POST",
              data: {
                  "id": id
@@ -856,7 +856,7 @@ function redirect(id){
         var studentname_id = $("#studentname_id").val()
 
             $.ajax({
-            url: "/add_return_books/",
+            url: "/add-return-books/",
             method: "POST",
             data: {
                 "title":title,
@@ -895,7 +895,7 @@ function redirect(id){
         fromdate = $("#ffromdate").val()
         todate = $("#ftodate").val()
         $.ajax({
-            url : "/filter_books_return/",
+            url : "/filter-books-return/",
             method : "POST",
             data : {
                 "author":author,
@@ -924,7 +924,7 @@ function redirect(id){
         fromdate = $("#dfromdate").val()
         todate = $("#dtodate").val()
         $.ajax({
-            url : "/filter_modal_books_return/",
+            url : "/filter-modal-books-return/",
             method : "POST",
             data : {
                 "author":author,
@@ -948,7 +948,7 @@ function redirect(id){
 
         $.ajax({
             method: "POST",
-            url: "/books_return_filter_change_title/",
+            url: "/books-return-filter-change-title/",
             data: {
                 "author": fauthor,
 
@@ -985,7 +985,7 @@ function redirect(id){
 
         $.ajax({
             method: "POST",
-            url: "/books_return_filter_change_title_author/",
+            url: "/books-return-filter-change-title-author/",
             data: {
                 "subject": subject,
 
@@ -1027,7 +1027,7 @@ function redirect(id){
 
         $.ajax({
             method: "POST",
-            url: "/books_return_modal_filter_change_title_author/",
+            url: "/books-return-modal-filter-change-title-author/",
             data: {
                 "subject": subject,
 
@@ -1068,7 +1068,7 @@ function redirect(id){
 
         $.ajax({
             method: "POST",
-            url: "/books_return_modal_filter_change_title/",
+            url: "/books-return-modal-filter-change-title/",
             data: {
                 "author": author,
 

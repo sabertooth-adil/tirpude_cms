@@ -903,7 +903,7 @@
             var editcourse = $("#editcourse").val()
             $.ajax({
                 method: "POST",
-                url: "/issue_filter_student_name/",
+                url: "/issue-filter-student-name/",
                 data: {
 
                     'edit_course': editcourse,
@@ -941,7 +941,7 @@
         function TotalCopiesCount(name) {
             console.log("name ", name)
             $.ajax({
-                url: "/library_copies_count/",
+                url: "/library-copies-count/",
                 method: "POST",
                 data: {
                     "edit_title": name,
@@ -980,7 +980,7 @@
 
 
             $.ajax({
-                url: "/append_search_purchase_books_details/",
+                url: "/append-search-purchase-books-details/",
                 method: "POST",
                 data: {
                     "id": id
@@ -1014,7 +1014,7 @@
                 var book_purchase_id = $("#book_purchase_id").val()
 
                 $.ajax({
-                    url: "/add_issue_books/",
+                    url: "/add-issue-books/",
                     method: "POST",
                     data: {
                         "title": title,
@@ -1070,7 +1070,7 @@
             var studentname = $("#editstudentname").val();
 
             $.ajax({
-                url: "/show_particular_students_books/",
+                url: "/show-particular-students-books/",
                 method: "POST",
                 data: {
                     "title": title,
@@ -1102,7 +1102,7 @@
                 .then((willDelete) => {
                     if (willDelete) {
                         $.ajax({
-                            url: "/delete_issued_books/",
+                            url: "/delete-issued-books/",
                             method: "POST",
                             data: {
                                 "id": id
@@ -1135,7 +1135,7 @@
             fromdate = $("#ffromdate").val()
             todate = $("#ftodate").val()
             $.ajax({
-                url: "/filter_books_issue/",
+                url: "/filter-books-issue/",
                 method: "POST",
                 data: {
                     "author": author,
@@ -1160,7 +1160,7 @@
 
             $.ajax({
                 method: "POST",
-                url: "/issue_books_filter_change_title_author/",
+                url: "/issue-books-filter-change-title-author/",
                 data: {
                     "subject": subject,
                 },
@@ -1199,7 +1199,7 @@
 
             $.ajax({
                 method: "POST",
-                url: "/issue_books_filter_change_title/",
+                url: "/issue-books-filter-change-title/",
                 data: {
                     "author": fauthor,
 
@@ -1236,7 +1236,7 @@
 
             $.ajax({
                 method: "POST",
-                url: "/issue_books_modal_filter_change_title_author/",
+                url: "/issue-books-modal-filter-change-title-author/",
                 data: {
                     "subject": subject,
 
@@ -1275,7 +1275,7 @@
 
             $.ajax({
                 method: "POST",
-                url: "/issue_books_modal_filter_change_title/",
+                url: "/issue-books-modal-filter-change-title/",
                 data: {
                     "author": author,
 
@@ -1313,7 +1313,7 @@
             fromdate = $("#dfromdate").val()
             todate = $("#dtodate").val()
             $.ajax({
-                url: "/filter_modal_books_issue/",
+                url: "/filter-modal-books-issue/",
                 method: "POST",
                 data: {
                     "author": author,
@@ -1346,7 +1346,7 @@
                 .then((willDelete) => {
                     if (willDelete) {
                         $.ajax({
-                            url: "/delete_issue_books/",
+                            url: "/delete-issue-books/",
                             method: "POST",
                             data: {
                                 "id": id,

@@ -246,7 +246,7 @@
         fromdate = $("#ffromdate").val()
         todate = $("#ftodate").val()
         $.ajax({
-            url : "/filter_issued_books_report/",
+            url : "/filter-issued-books-report/",
             method : "POST",
             data : {
                 "author":author,
@@ -271,7 +271,7 @@
 
         $.ajax({
             method: "POST",
-            url: "/IssueChanger/",
+            url: "/issue-books-filter-change-title-author/",
             data: {
                 "subject": subject,
 
@@ -311,7 +311,7 @@
 
         $.ajax({
             method: "POST",
-            url: "/IssueChangeAuthor/",
+            url: "/issue-books-filter-change-title/",
             data: {
                 "author": fauthor,
 
