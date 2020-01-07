@@ -14,3 +14,14 @@ Traceback (most recent call last):
 NameError: name 'Sections' is not defined
 
 
+2020-01-07 18:00:00.982726
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 283, in profile_user
+    address_detail_obj = AddressDetail.objects.get(fk_user_info_id=session)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+authentication.models.AddressDetail.DoesNotExist: AddressDetail matching query does not exist.
+
+

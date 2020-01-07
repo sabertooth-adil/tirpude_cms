@@ -58,8 +58,8 @@ def Attendance(request):
     base = datetime.datetime.today()
     date_list = [base - datetime.timedelta(days=x) for x in range(30)]
     if session:
-        userinfo_obj = UserInfo.objects.get(id=session)
-        if userinfo_obj.fk_user_type.user_type == "Student":
+        user_info_obj = UserInfo.objects.get(id=session)
+        if user_info_obj.fk_user_type.user_type == "Student":
             academicinfo_obj = AcademicInfo.objects.get(fk_user_info_id=session)
             subjects_obj = Subject.objects.filter(fk_course=academicinfo_obj.fk_course,
                                                   fk_semesters=academicinfo_obj.fk_semesters)
@@ -91,17 +91,17 @@ def Attendance(request):
                 totalpercentage = 0.0
             return render(request, "student_attendance.html",
                           {"subjects_obj": subjects_obj, "list": list, "totalpercentage": totalpercentage,
-                           "academicinfo_obj": academicinfo_obj, "userinfo_obj": userinfo_obj, "todate": date_list[0],
-                           "fromdate": date_list[-1]})
+                           "academicinfo_obj": academicinfo_obj, "user_info_obj": user_info_obj, "to_date": date_list[0],
+                           "from_date": date_list[-1]})
         else:
-            useroperations_obj = UserOperation.objects.filter(fk_user_role_id=userinfo_obj.fk_user_role.id)
+            user_operation_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
             course_obj = Course.objects.all()
             semesters_obj = Semester.objects.all()
             sections_obj = Section.objects.all()
             return render(request, "attendance.html",
-                          {"useroperations_obj": useroperations_obj, "course_obj": course_obj,
-                           "semesters_obj": semesters_obj, "sections_obj": sections_obj, "userinfo_obj": userinfo_obj,
-                           "todate": date_list[0], "fromdate": date_list[-1]})
+                          {"user_operation_obj": user_operation_obj, "course_obj": course_obj,
+                           "semesters_obj": semesters_obj, "sections_obj": sections_obj, "user_info_obj": user_info_obj,
+                           "to_date": date_list[0], "from_date": date_list[-1]})
     else:
         return redirect("/")
 
@@ -110,7 +110,7 @@ def Attendance(request):
 def FilterAttendance(request):
     session = request.session.get('user_id')
     userinfo_obj = UserInfo.objects.get(id=session)
-    useroperations_obj = UserOperation.objects.filter(fk_user_role_id=userinfo_obj.fk_user_role.id)
+    user_operation_obj = UserOperation.objects.filter(fk_user_role_id=userinfo_obj.fk_user_role.id)
     list = []
     dict = {}
     subjectlist = []
@@ -239,14 +239,14 @@ def FilterAttendance(request):
             subjectlist = []
             list.append(dict)
             dict = {}
-    render_string = render_to_string("attendance_filter.html", {"useroperations_obj": useroperations_obj, "list": list,
+    render_string = render_to_string("attendance_filter.html", {"user_operation_obj": user_operation_obj, "list": list,
                                                                 "distinctdate_obj": distinctdate_obj,
                                                                 "academicinfo_obj": academicinfo_obj,
                                                                 "subjects_obj": subjects_obj,
                                                                 "AllSubjectList": json.dumps(AllSubjectList),
                                                                 "ChartPercentageData": json.dumps(ChartPercentageData),
                                                                 "totalstudent": academicinfo_obj.count(),
-                                                                "todate": date_list[0], "fromdate": date_list[-1]})
+                                                                "to_date": date_list[0], "from_date": date_list[-1]})
     return HttpResponse(render_string)
 
 @csrf_exempt
