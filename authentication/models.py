@@ -7,9 +7,9 @@ from master_forms.models import UserType, UserRole, Gender, MotherTongue, Nation
 
 
 class UserInfo(models.Model):
-    '''
+    """
     Basic Detail Of User
-    '''
+    """
     status = models.CharField(default="Inactive", max_length=50, blank=True, null=True)
     first_name = models.CharField(max_length=30, blank=True, null=True)
     middle_name = models.CharField(max_length=30, blank=True, null=True)
@@ -35,9 +35,9 @@ class UserInfo(models.Model):
 
 
 class AddressDetail(models.Model):
-    '''
+    """
     Correspondence/Permanent Address of Users
-    '''
+    """
     fk_user_info = models.ForeignKey(UserInfo, blank=True, null=True, on_delete=models.CASCADE)
     address = models.CharField(max_length=200, blank=True)
     fk_city = models.ForeignKey(City, blank=True, null=True, on_delete=models.CASCADE, related_name='fk_city')
@@ -61,9 +61,9 @@ class AddressDetail(models.Model):
 
 
 class AcademicInfo(models.Model):
-    '''
+    """
     Academic information of Student
-    '''
+    """
     fk_user_info = models.ForeignKey(UserInfo, blank=True, null=True, on_delete=models.CASCADE)
     fk_course = models.ForeignKey(Course, blank=True, null=True, on_delete=models.CASCADE)
     fk_semesters = models.ForeignKey(Semester, blank=True, null=True, on_delete=models.CASCADE)

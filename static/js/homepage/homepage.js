@@ -2,7 +2,7 @@ function Admin_Login(){
     location.href = "/login/"
 }
 function Admin_Signup() {
-    location.href = "/Signup/"
+    location.href = "/signup/"
 }
 function Registered_As() {
     var registered_as = $("#registered_as option:selected").text();
@@ -140,7 +140,7 @@ function Register() {
     } else {
         $.ajax({
             method: "POST",
-            url: "/Register_user/",
+            url: "/register-user/",
             data: {
                 "registered_as": registered_as,
                 "registered_as_text": registered_as_text,
@@ -209,7 +209,7 @@ function signin() {
     } else {
         $.ajax({
             method: "POST",
-            url: "/Signup_user/",
+            url: "/signup-user/",
             data: {
                 "id_username": id_username,
                 "id_password": id_password
@@ -221,7 +221,7 @@ function signin() {
                 } else if (response == "unauthorized user") {
                     $("#err_unauthorized_user").show();
                 } else {
-                    location.href = "/Profile_user/"
+                    location.href = "/profile-user/"
                 }
             }
         })
@@ -246,7 +246,7 @@ function forget_password() {
     } else {
         $.ajax({
             method: "POST",
-            url: "/ForgotPassword/",
+            url: "/forgot-password/",
             data: {
                 "inputforgetpassword": inputforgetpassword
             },

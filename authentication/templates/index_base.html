@@ -88,7 +88,7 @@
                             <div class="p-2">
                                 <h5 class="dropdown-header text-uppercase">User Options</h5>
                                 <a class="dropdown-item d-flex align-items-center justify-content-between"
-                                    href="{% url 'Profile_user' %}">
+                                    href="{% url 'profile_user' %}">
                                     <span>My profile</span>
                                     <i class="si si-user ml-1"></i>
                                 </a>
@@ -100,7 +100,7 @@
                                 <div role="separator" class="dropdown-divider"></div>
                                 <h5 class="dropdown-header text-uppercase">Actions</h5>
                                 <a class="dropdown-item d-flex align-items-center justify-content-between"
-                                    href="{% url 'Signout_user' %}">
+                                    href="{% url 'signout_user' %}">
                                     <span>Log Out</span>
                                     <i class="si si-logout ml-1"></i>
                                 </a>
@@ -273,7 +273,7 @@
             }
             else {
                 $.ajax({
-                    url: "/ChangePassword/",
+                    url: "/change-password/",
                     method: "POST",
                     data: {
                         "old_password": old_password,
