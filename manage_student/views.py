@@ -187,3 +187,148 @@ def delete_notes(request):
     except:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
+
+
+def syllabus(request):
+    """
+    Syllabus page view
+    :param request:
+    :return:
+    """
+    try:
+        session = request.session.get('user_id')
+        user_info_obj = UserInfo.objects.get(id=session)
+        course_obj = Course.objects.all()
+        semesters_obj = Semester.objects.all()
+        subject_obj = Subject.objects.all()
+        if user_info_obj.fk_user_type.user_type == "Faculty":
+            user_operation_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
+            syllabus_obj = AcademicSyllabus.objects.all()
+            return render(request, "faculty_syllabus.html", {"user_operation_obj": user_operation_obj,
+                                                             "user_info_obj": user_info_obj, "syllabus_obj": syllabus_obj,
+                                                             "course_obj": course_obj, "semester_obj": semesters_obj,
+                                                             "subject_obj": subject_obj})
+        else:
+            semester_obj = AcademicInfo.objects.get(fk_user_info_id=session)
+            syllabus_obj = AcademicSyllabus.objects.filter(fk_course=semester_obj.fk_course,
+                                                           fk_semesters=semester_obj.fk_semesters)
+            return render(request, "academic_syllabus.html", {"user_info_obj": user_info_obj, "syllabus_obj": syllabus_obj})
+    except:
+        error_save(str(traceback.format_exc()))
+        return redirect('error_handler_500')
+
+@csrf_exempt
+def add_syllabus(request):
+    """
+    Add syllabus
+    :param request:
+    :return:
+    """
+    try:
+        date_today = date.today()
+        title = request.POST.get("title")
+        session = request.session.get('user_id')
+        info = request.POST.get("syllabus_info")
+        print(info)
+        file = request.FILES.get("file")
+        subject = request.POST.get("subject")
+        semester = request.POST.get("semester")
+        course = request.POST.get("course")
+        # Getting syllabus objects
+        user_info_obj = UserInfo.objects.get(id=session)
+        if user_info_obj.fk_user_type.user_type == "Faculty":
+            # Saving assignment details to database
+            if request.method == 'POST':
+                syllabus_obj = AcademicSyllabus(fk_user_info_id=session,
+                                                syllabus_title=title,
+                                                syllabus_detail=info,
+                                                syllabus_file=file,
+                                                date_post=date_today,
+                                                fk_subjects_id=subject,
+                                                fk_semesters_id=semester,
+                                                fk_course_id=course)
+                syllabus_obj.save()
+        return redirect("/syllabus")
+    except:
+        error_save(str(traceback.format_exc()))
+        return redirect('error_handler_500')
+
+
+@csrf_exempt
+def delete_syllabus(request):
+    """
+    Delete syllabus
+    :param request:
+    :return:
+    """
+    try:
+        syllabus_id = request.POST.get("id")
+        print(id)
+        syllabus_obj = AcademicSyllabus.objects.get(id=syllabus_id)
+        syllabus_obj.delete()
+        return HttpResponse("success")
+    except:
+        error_save(str(traceback.format_exc()))
+        return redirect('error_handler_500')
+
+
+@csrf_exempt
+def edit_syllabus(request):
+    """
+    edit syllabus
+    :param request:
+    :return:
+    """
+    try:
+        list_data = []
+        dict_data = {}
+        syllabus_id = request.POST.get("id")
+        syllabus_obj = AcademicSyllabus.objects.get(id=syllabus_id)
+        dict_data['id'] = syllabus_obj.id
+        dict_data['syllabus_title'] = syllabus_obj.syllabus_title
+        dict_data['syllabus_detail'] = syllabus_obj.syllabus_detail
+        dict_data['syllabus_file'] = str(syllabus_obj.syllabus_file.url)[16:]
+        dict_data['syllabus_file_name'] = str(syllabus_obj.syllabus_file.url)
+        dict_data['fk_semesters'] = syllabus_obj.fk_semesters.id
+        dict_data['fk_course'] = syllabus_obj.fk_course.id
+        list_data.append(dict_data)
+        return JsonResponse({"list": list_data})
+    except:
+        error_save(str(traceback.format_exc()))
+        return redirect('error_handler_500')
+
+
+@csrf_exempt
+def update_syllabus(request):
+    """
+    update syllabus
+    :param request:
+    :return:
+    """
+    try:
+        date_today = date.today()
+        syllabus_id = request.POST.get("syllabus_id")
+        title = request.POST.get("edit_title")
+        session = request.session.get('user_id')
+        info = request.POST.get("edit_syllabus_info")
+        file = request.FILES.get("edit_file")
+        subject = request.POST.get("edit_subject")
+        semester = request.POST.get("edit_semester")
+        course = request.POST.get("edit_course")
+        print(title)
+        print(file)
+        syllabus_obj = AcademicSyllabus.objects.get(id=syllabus_id)
+        syllabus_obj.fk_user_info_id = session
+        syllabus_obj.syllabus_title = title
+        syllabus_obj.syllabus_detail = info
+        syllabus_obj.date_post = date_today
+        if file:
+            syllabus_obj.syllabus_file = file
+        syllabus_obj.fk_subjects_id = subject
+        syllabus_obj.fk_semesters_id = semester
+        syllabus_obj.fk_course_id = course
+        syllabus_obj.save()
+        return redirect("/syllabus")
+    except:
+        error_save(str(traceback.format_exc()))
+        return redirect('error_handler_500')

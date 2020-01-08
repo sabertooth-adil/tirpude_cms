@@ -1,0 +1,127 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">Notes</h1>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="content" style="padding: 10px !important;">
+    <div class="block">
+        <div class="block-content block-content-full">
+            <table class="table align-items-center" id="mydatatable">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">
+                        Subject
+                    </th>
+                    <th scope="col">
+                        Topic
+                    </th>
+                    <th scope="col">
+                        Date Post
+                    </th>
+                    <th scope="col">
+                        Faculty
+                    </th>
+                    <th scope="col">
+                        Detail
+                    </th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody class="list">
+                {% for i in notes_obj %}
+                <tr>
+                    <td class="budget">
+                        {{ i.fk_subjects.subjects }}
+                    </td>
+                    <td scope="row" class="name">
+                        <b><a href='#' data-toggle="modal" data-target="#myModal{{ i.id }}">{{ i.notes_title }}</a></b>
+                    </td>
+                    <td class="budget">
+                        {{ i.date_post }}
+                    </td>
+                    <td>
+                        {{ i.fk_user_info.first_name }} {{ i.fk_user_info.last_name }}<br>
+                    </td>
+                    <td class="completion">
+                        <div style="text-overflow: ellipsis;width: 400px;overflow: hidden; white-space: nowrap;">
+                            {{ i.notes_detail }}
+                        </div>
+                    </td>
+                    <td class="text-right">
+
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% for i in notes_obj %}
+<div class="modal fade" id="myModal{{ i.id }}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><b>{{ i.notes_title }}</b></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <b>Detail :</b> {{ i.notes_detail }}
+                <br><br>
+                <b>Date Post :</b> {{ i.date_post }}
+                <br><br>
+                {% if i.notes_file %}
+                    <b>File :</b> <a target="_blank" href="{{i.notes_file.url}}">{{ i.notes_file }}</a>
+                {% else %}
+                    <b>File :</b> File deleted from Server. Please contact Administrator
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% for i in all_notes_obj %}
+<div class="modal fade" id="myModal{{ i.id }}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><b>{{ i.notes_title }}</b></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <b>Detail :</b> {{ i.notes_detail }}
+                <br><br>
+                <b>Date Post :</b> {{ i.date_post }}
+                <br><br>
+                <b>File :</b> <a target="_blank" href="{{ i.notes_file.url }}">{{ i.notes_file }}</a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+<script>
+    $(document).ready( function () {
+		$('#NotesNavPage').addClass('active');
+        $('#mydatatable').DataTable();
+    } );
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>
+{% endblock content %}

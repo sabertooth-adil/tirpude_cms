@@ -109,8 +109,8 @@ def Attendance(request):
 @csrf_exempt
 def FilterAttendance(request):
     session = request.session.get('user_id')
-    userinfo_obj = UserInfo.objects.get(id=session)
-    user_operation_obj = UserOperation.objects.filter(fk_user_role_id=userinfo_obj.fk_user_role.id)
+    user_info_obj = UserInfo.objects.get(id=session)
+    user_operation_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
     list = []
     dict = {}
     subjectlist = []

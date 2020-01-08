@@ -73,13 +73,25 @@
                             <span class="nav-main-link-name">&nbsp;&nbsp;Manage Student</span>
                         </a>
                         <ul class="nav-main-submenu">
-{#                            {% for i in  user_operation_obj %}#}
-{#                                {% if i.fk_screen.screen_url == "Notes" %}#}
-{#                                    {% if i.view_data == "Y" %}#}
-                                        <li class="nav-main-item">
-                                            <a class="nav-main-link" href="/notes/" id="NotesNavPage">
+                            {#                            {% for i in  user_operation_obj %}#}
+                            {#                                {% if i.fk_screen.screen_url == "Notes" %}#}
+                            {#                                    {% if i.view_data == "Y" %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="/notes/" id="NotesNavPage">
                                                 <span class="nav-main-link-name"
                                                       style="padding-left: 10px;">Notes</span>
+                                </a>
+                            </li>
+                            {#                                    {% endif %}#}
+                            {#                                {% endif %}#}
+                            {#                            {% endfor %}#}
+{#                            {% for i in  user_operation_obj %}#}
+{#                                {% if i.fk_screen.screen_url == "Syllabus" %}#}
+{#                                    {% if i.view_data == "Y" %}#}
+                                        <li class="nav-main-item">
+                                            <a class="nav-main-link" href="/syllabus/" id="SyllabusNavPage">
+                                                <span class="nav-main-link-name"
+                                                      style="padding-left: 10px;">Syllabus</span>
                                             </a>
                                         </li>
 {#                                    {% endif %}#}

@@ -14,12 +14,12 @@ from master_forms.models import City, District, SubCast, StreamOrField, DegreeSt
     Reserved, ApplyingConcession, PhysicallyChallenged, Degree, TwelvethOrDiploma, UserOperation, Subject, Cast
 
 
-def handler404(request, exception):
-    return render(request, "404.html")
-
-
-def handler400(request, exception):
-    return render(request, "400.html")
+# def handler404(request, exception):
+#     return render(request, "404.html")
+#
+#
+# def handler400(request, exception):
+#     return render(request, "400.html")
 
 
 def error_handler_500(request):

@@ -1,0 +1,711 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+{#{% for i in  user_operation_obj %}#}
+{#{% if i.fk_screen.screen_url == "notes" %}#}
+{#{% if i.view_data == "Y" %}#}
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">Notes</h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+{#                {% for u in  user_operation_obj %}#}
+{#                    {% if u.fk_screen.screen_url == "notes" %}#}
+{#                        {% if u.save_data == "Y" %}#}
+                            <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAddNotes_Div()" id="ShowAddNotes_Button">Add Notes</button>
+{#                        {% endif %}#}
+{#                    {% endif %}#}
+{#                {% endfor %}#}
+                <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAllNotes_Div()" id="ShowAllNotes_Button" style="display: none;">Show All Notes</button>
+                <button class="btn btn-success btn-sm" type="submit" form="SaveNotes" id="SaveNotes_button" style="display: none;" >Save</button>
+                <button class="btn btn-success btn-sm" type="submit" form="UpdateNotes" id="UpdateNotes_button" style="display: none;" >Update</button>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;" id="filterdata_div">
+    <a class="block block-rounded block-link-pop border-left border-primary border-4x"
+       style="width: 100%;margin-bottom: 0rem;">
+        <div class="block-content block-content-full" style="padding-bottom: 0px !important;">
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-xs-2">
+                    <div class="form-group tab-responsive">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">Course</div>
+                        <div class="font-w400 text-dark">
+                            <select class="form-control form-control-sm" id="filter_course" onchange="GetFilterSubjects()">
+                                <option value="" selected hidden>Select Course</option>
+                                {% for i in course_obj %}
+                                <option value="{{i.id}}">{{i.course}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_course">Please Select Course</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-xs-2">
+                    <div class="form-group">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">Semester</div>
+                        <div class="font-w400 text-dark">
+                            <select class="form-control form-control-sm" id="filter_semesters" onchange="GetFilterSubjects()">
+                                <option value="" selected hidden>Select Semester</option>
+                                {% for i in semester_obj %}
+                                <option value="{{i.id}}">{{i.semester}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_semesters">Please Select Semester</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-xs-2">
+                    <div class="form-group">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">Sections</div>
+                        <div class="font-w400 text-dark">
+                            <select class="form-control form-control-sm" id="filter_sections">
+                                <option value="" selected hidden>Select Section</option>
+                                {% for i in sections_obj %}
+                                <option value="{{i.id}}">{{i.sections}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_sections">Please Select Section</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-xs-2">
+                    <div class="form-group">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">Subject</div>
+                        <div class="font-w400 text-dark">
+                            <select class="form-control form-control-sm" id="filter_subject">
+                                <option value="" selected hidden>Select Subject</option>
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_subject">Please Select Subject</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-xs-6">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">From Date</div>
+                                <div class="font-w400 text-dark">
+                                    <input name="filter_chartfromdate" id="filter_chartfromdate"
+                                           class="form-control form-control-sm form-control-alternative datepicker"
+                                           data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY"
+                                           value="{{from_date|date:'d-m-Y'}}">
+                                    <span style="display:none;color:red;" id="err_specialization">Please Select From Date</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">To Date</div>
+                                <div class="font-w400 text-dark">
+                                    <input name="filter_charttodate" id="filter_charttodate"
+                                           class="form-control form-control-sm form-control-alternative datepicker"
+                                           data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY"
+                                           value="{{to_date|date:'d-m-Y'}}">
+                                    <span style="display:none;color:red;" id="err_semesters">Please Select To Date</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-1 col-md-1 col-xs-1">
+                    <div class="form-group">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted"></div>
+                        <div class="font-w400 text-dark">
+                           <buttton class="btn btn-warning submit-btn btn-block nu-orange-button btn-sm" onclick="FilterNotes()" style="margin: 10px;">
+                               <i class="fa fa-filter" aria-hidden="true"></i> Filter
+                           </buttton>
+                        </div>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+
+<div class="content" style="padding: 10px !important;">
+    <div class="block">
+        <div class="block-content block-content-full">
+            <div id="ShowAddNotes_Div" style="display: none;">
+                <form method="post" enctype="multipart/form-data" id="SaveNotes">
+                    <div class="pl-lg-4">
+                        <div class="row">
+                            <div class="col-lg-3 col-sm-4 col-xs-4">
+                                <div class="form-group clearfix">
+                                    <label class="form-control-label text-right">Course<span class="text-danger">*</span>:</label>
+                                    <select name="course" class="form-control form-control-sm form-control-alternative" id="course" required onchange="GetSubjects('second')">
+                                        <option value="" selected hidden>Select Course</option>
+                                        {% for i in course_obj %}
+                                        <option value="{{i.id}}">{{i.course}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-4 col-xs-4">
+                                <div class="form-group clearfix">
+                                    <label class="form-control-label text-right">Semester<span class="text-danger">*</span>:</label>
+                                    <select name="semester" class="form-control form-control-sm form-control-alternative" id="semester" required disabled="disabled" onchange="GetSubjects('second')">
+                                        <option value="" selected>Select Semester
+                                        </option>
+                                        {% for i in semester_obj %}
+                                        <option value="{{i.id}}">{{i.semester}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-2 col-xs-2">
+                                <div class="form-group">
+                                    <label class="form-control-label text-right">Section<span class="text-danger">*</span>:</label>
+                                    <select name="section" class="form-control form-control-sm form-control-alternative" id="sections" required disabled="disabled">
+                                        <option value="" selected>Select Section
+                                        </option>
+                                        {% for i in sections_obj %}
+                                        <option value="{{i.id}}">{{i.sections}}</option>
+                                        {% endfor %}
+                                        <option value="">All</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-xs-4">
+                                <div class="form-group">
+                                    <label class="form-control-label text-right">Subject<span class="text-danger">*</span>:</label>
+                                    <select name="subject" id="subject" class="form-control  form-control-sm form-control-alternative" required>
+                                        <option value="" selected>Select Subject</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-title">Topic<span style="color:red">*</span>:</label>
+                                    <input type="text" id="title" name="title" class="form-control form-control-sm  form-control-alternative" maxlength="195" placeholder="Notes Title" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="final_date">Upload File<span style="color:red">*</span>:</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="file" class="custom-file-input cfile form-control form-control-sm form-control-alternative" id="customFile" required>
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-xs-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="exampleFormControlTextarea1">Notes Info :</label>
+                                    <textarea class="form-control form-control-sm form-control-alternative" name="notesinfo" id="notesinfo" rows="5" maxlength="195" placeholder="Write a large text here ..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="ShowUpdateNotes_Div" style="display: none;">
+                <form method="post" enctype="multipart/form-data" id="UpdateNotes">
+                    <input type="hidden" id="academicnotesid" name="academicnotesid">
+                    <div class="pl-lg-4">
+                        <div class="row">
+                            <div class="col-lg-3 col-sm-4 col-xs-4">
+                                <div class="form-group clearfix">
+                                    <label class="form-control-label text-right">Course<span class="text-danger">*</span>:</label>
+                                    <select name="editcourse" class="form-control form-control-sm form-control-alternative" id="editcourse" required onchange="GetEditSubjects('second',1)">
+                                        <option value="" selected >Select Course</option>
+                                        {% for i in course_obj %}
+                                        <option value="{{i.id}}">{{i.course}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-4 col-xs-4">
+                                <div class="form-group clearfix">
+                                    <label class="form-control-label text-right">Semester<span class="text-danger">*</span>:</label>
+                                    <select name="editsemester" class="form-control form-control-sm form-control-alternative" id="editsemester" required onchange="GetEditSubjects('second',1)">
+                                        <option value="" selected >Select Semester
+                                        </option>
+                                        {% for i in semester_obj %}
+                                        <option value="{{i.id}}">{{i.semester}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-2 col-xs-2">
+                                <div class="form-group">
+                                    <label class="form-control-label text-right">Section<span class="text-danger">*</span>:</label>
+                                    <select name="editsection" class="form-control form-control-sm form-control-alternative" id="editsection" required>
+                                        <option value="" selected >Select Section
+                                        </option>
+                                        {% for i in sections_obj %}
+                                        <option value="{{i.id}}">{{i.sections}}</option>
+                                        {% endfor %}
+                                        <option value="">All</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-xs-4">
+                                <div class="form-group">
+                                    <label class="form-control-label text-right">Subject<span class="text-danger">*</span>:</label>
+                                    <select name="editsubject" id="editsubject" class="form-control  form-control-sm form-control-alternative" required>
+                                        <option value="" selected hidden>Select Subject</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-title">Topic<span style="color:red">*</span>:</label>
+                                    <input type="text" id="edittitle" name="edittitle" class="form-control form-control-sm  form-control-alternative" placeholder="Notes Title" maxlength="195" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="final_date">Upload File<span style="color:red">*</span>:</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="editfile" class="custom-file-input cfile form-control form-control-sm form-control-alternative" id="editcustomFile">
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                    <a id="editcustomFilename" target="_blank"></a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-xs-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="exampleFormControlTextarea1">Notes Info :</label>
+                                    <textarea class="form-control form-control-sm form-control-alternative" name="editnotesinfo" id="editnotesinfo" rows="5" maxlength="195" placeholder="Write a large text here ..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="table-responsive" id="ShowAllNotes_Div">
+                <table class="table table-vcenter dtable" id="mydatatable">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="text-center" style="width: 5% !important;">Sr No.</th>
+                            <th>Date Post</th>
+                            <th>For</th>
+                            <th>Topic</th>
+                            <th>File</th>
+                            <th>Detail</th>
+{#                            {% for u in  user_operation_obj %}#}
+{#                                {% if u.fk_screen.screen_url == "notes" %}#}
+{#                                    {% if u.edit_data == "Y" or i.delete_data == "Y" %}#}
+                                        <th class="text-center" style="width: 5% !important;">Actions</th>
+{#                                    {% endif %}#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+                        </tr>
+                    </thead>
+                    <tbody id="FilterNotesData_Div">
+                        {% for i in notes_obj %}
+                        <tr class="btn-light" >
+                            <td class="text-center font-size-sm">{{forloop.counter}}</td>
+                            <td class="font-w600 font-size-sm">{{ i.date_post|date:'d-m-Y'}}</td>
+                            <td class="font-w600 font-size-sm">
+                                    {{ i.fk_course.course }},<br>
+                                    {{ i.fk_subjects.subjects }},<br>
+                                    Semester {{ i.fk_semesters.semester }},<br>
+                                    Section {{ i.fk_sections.sections }}
+                            </td>
+                            <td class="font-w600 font-size-sm">{{ i.notes_title }}</td>
+                            <td class="font-w600 font-size-sm"><a target="_blank" href="{{i.notes_file.url}}">{{ i.notes_file }}</a></td>
+                            <td class="font-w600 font-size-sm">
+                                <div style="text-overflow: ellipsis;max-width: 400px;overflow: hidden; white-space: nowrap;">
+                                    {% if i.notes_detail %}
+                                    {{ i.notes_detail }}
+                                    {% else %}
+                                    No Detail Avaliable
+                                    {% endif %}
+                                </div>
+                            </td>
+{#                            {% for u in  user_operation_obj %}#}
+{#                                {% if u.fk_screen.screen_url == "notes" %}#}
+{#                                    {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                                        <td class="text-center">
+                                            <div class="btn-group">
+{#                                                {% if u.edit_data == "Y" %}#}
+                                                    <button type="button" class="btn btn-sm btn-outline-primary js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Edit Client" onclick="edit_notes({{i.id}})">
+                                                        <i class="fa fa-fw fa-pencil-alt"></i>
+                                                    </button>
+{#                                                {% endif %}#}
+{#                                                {% if u.delete_data == "Y" %}#}
+                                                    <button type="button" class="btn btn-sm btn-outline-danger js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Remove Client" onclick="delete_notes({{i.id}})">
+                                                        <i class="fa fa-fw fa-times"></i>
+                                                    </button>
+{#                                                {% endif %}#}
+                                            </div>
+                                        </td>
+{#                                    {% endif %}#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+	$(document).ready(function () {
+	  $(".datepicker").datepicker({autoclose: true});
+	  $('#NotesNavPage').addClass('active');
+	  $('#StudentManagementMainNavPage').addClass('open');
+	  $("#SaveNotes").submit(function(e) {
+        e.preventDefault();
+            var formdata = new FormData();
+            formdata.append("course", $("#course").val())
+            formdata.append("semester", $("#semester").val())
+            formdata.append("section", $("#sections").val())
+            formdata.append("subject", $("#subject").val())
+            formdata.append("title", $("#title").val())
+            formdata.append("notes_info", $("#notesinfo").val())
+            formdata.append("file", $("#customFile")[0].files[0])
+            $.ajax({
+                url:"/save-notes/",
+                method:"POST",
+                enctype: 'multipart/form-data',
+                async: false,
+                cache: false,
+                contentType: false,
+                enctype: 'multipart/form-data',
+                processData: false,
+                data: formdata,
+                success: function (response) {
+                    swal("The Note has been Added Successfully!!", {
+                    icon: "success",
+                    button: "Ok",
+                    closeOnClickOutside: false,
+                    }).then(function () {
+                        location.reload();
+                    });
+                }
+            })
+        })
+
+        $("#UpdateNotes").submit(function(e) {
+            e.preventDefault();
+                var formdata = new FormData();
+                formdata.append("academic_notes_id", $("#academicnotesid").val())
+                formdata.append("edit_course", $("#editcourse").val())
+                formdata.append("edit_semester", $("#editsemester").val())
+                formdata.append("edit_section", $("#editsection").val())
+                formdata.append("edit_subject", $("#editsubject").val())
+                formdata.append("edit_title", $("#edittitle").val())
+                formdata.append("edit_notes_info", $("#editnotesinfo").val())
+                formdata.append("edit_file", $("#editcustomFile")[0].files[0])
+                $.ajax({
+                    url:"/update-notes/",
+                    method:"POST",
+                    enctype: 'multipart/form-data',
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    data: formdata,
+                    success: function (response) {
+                        swal("The Note has been Updated Successfully!!", {
+                        icon: "success",
+                        button: "Ok",
+                        closeOnClickOutside: false,
+                        }).then(function () {
+                            location.reload();
+                        });
+                    }
+                })
+            })
+    });
+
+	function GetFilterSubjects() {
+        var course = $("#filter_course").val();
+        var semesters = $("#filter_semesters").val();
+        $.ajax({
+            method: "POST",
+            url: "/GetSubjects/",
+            data: {
+                "course": course,
+                "semesters": semesters
+            },
+            success: function (response) {
+                console.log(response)
+                $("#filter_subject").html("")
+                if (JSON.parse(response).length == 0) {
+                    $("#filter_subject").html("<option value='' selected hidden>Subjects Not Found</option>")
+                    $("#filter_subject").html("<option value='' selected hidden>Select Subject</option><option value='All'>All</option>")
+                }
+                else {
+                    $("#filter_subject").html("<option value='' selected hidden>Select Subject</option><option value='All'>All</option>")
+                }
+                for (i = 0; i < JSON.parse(response).length; i++) {
+                    cit = document.createElement('option');
+                    cit.value = JSON.parse(response)[i][0]
+                    cit.innerHTML = JSON.parse(response)[i][1]
+                    $("#filter_subject").append(cit)
+                }
+
+            }
+        })
+    }
+
+    function GetSubjects(st) {
+        var course = $("#course").val();
+        var semesters = $("#semester").val();
+        $.ajax({
+            method: "POST",
+            url: "/GetSubjects/",
+            data: {
+                "course": course,
+                "semesters": semesters
+            },
+            success: function (response) {
+                console.log(response)
+                $("#subject").html("")
+                if (JSON.parse(response).length == 0) {
+                    $("#subject").html("<option value='' selected hidden>Subjects Not Found</option>")
+                }
+                else {
+                }
+                for (i = 0; i < JSON.parse(response).length; i++) {
+                    cit = document.createElement('option');
+                    cit.value = JSON.parse(response)[i][0]
+                    cit.innerHTML = JSON.parse(response)[i][1]
+                    $("#subject").append(cit)
+                }
+
+            }
+        })
+    }
+
+    function GetEditSubjects(st,id) {
+	    console.log("cxzxcjhxzgj")
+        var course = $("#editcourse").val();
+        var semesters = $("#editsemester").val();
+        $.ajax({
+            method: "POST",
+            url: "/GetSubjects/",
+            data: {
+                "course": course,
+                "semesters": semesters
+            },
+            success: function (response) {
+                console.log(response)
+                $("#editsubject").html("")
+                if (JSON.parse(response).length == 0) {
+                    $("#editsubject").html("<option value='' selected hidden>Subjects Not Found</option>")
+                }
+                else {
+                }
+                for (i = 0; i < JSON.parse(response).length; i++) {
+                    cit = document.createElement('option');
+                    cit.value = JSON.parse(response)[i][0]
+                    cit.innerHTML = JSON.parse(response)[i][1]
+                    $("#editsubject").append(cit)
+                }
+                if(st == "first"){
+                    $("#editsubject").val(id);
+                }
+            }
+        })
+    }
+
+    function ShowAddNotes_Div() {
+        $("#ShowAddNotes_Div").show();
+        $("#ShowAllNotes_Div").hide();
+        $("#ShowAddNotes_Button").hide();
+        $("#ShowAllNotes_Button").show();
+        $("#SaveNotes_button").show();
+        $("#filterdata_div").hide();
+    }
+
+    function ShowAllNotes_Div() {
+        $("#ShowAddNotes_Div").hide();
+        $("#ShowAllNotes_Div").show();
+        $("#ShowAddNotes_Button").show();
+        $("#ShowAllNotes_Button").hide();
+        $("#ShowUpdateNotes_Div").hide();
+        $("#SaveNotes_button").hide();
+        $("#UpdateNotes_button").hide();
+        $("#filterdata_div").show();
+    }
+
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+
+    function delete_notes(id) {
+        console.log(id)
+        swal({
+            title: "Are you sure?",
+            text: "To delete this Notes!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+            if(willDelete) {
+                $.ajax({
+                    url: "/delete-notes/",
+                    method: "POST",
+                    data: {
+                        "id": id
+                    },
+                    success: function (response) {
+                        if (response == "success") {
+                            swal("The Notes has been successfully Deleted!", {
+                                icon: "success",
+                                button: "Ok",
+                                closeOnClickOutside: false,
+                            }).then(function () {
+                                location.reload();
+                            });
+                        }
+                    }
+                })
+            }
+            else {
+                swal("Notes is NOT deleted!"
+    )
+        ;
+    }
+    })
+        ;
+    }
+
+    function edit_notes(id) {
+        $("#ShowUpdateNotes_Div").show();
+        $("#ShowAddNotes_Div").hide();
+        $("#ShowAllNotes_Div").hide();
+        $("#ShowAllNotes_Button").show();
+        $("#ShowAddNotes_Button").hide();
+        $("#UpdateNotes_button").show();
+        $("#filterdata_div").hide();
+        $.ajax({
+            url : "/edit-notes",
+            method : "POST",
+            data : {
+                "id" : id
+            },
+            success : function(response){
+                console.log(response)
+                $("#academicnotesid").val(response['list'][0]['id'])
+                $("#editcourse").val(response['list'][0]['fk_course'])
+                $("#editsemester").val(response['list'][0]['fk_semesters'])
+                if (response['list'][0]['fk_sections']) {
+                    $("#editsection").val(response['list'][0]['fk_sections'])
+                }
+                else {
+                    $("#editsection option:last").attr("selected", "selected");
+                }
+                $("#editsubject").val(response['list'][0]['fk_subjects'])
+                $("#edittitle").val(response['list'][0]['notes_title'])
+                $("#editcustomFilename").text(response['list'][0]['notes_file'])
+                $("#editcustomFilename").attr("href", response['list'][0]['notes_file_url']);
+                $("#editnotesinfo").val(response['list'][0]['notes_detail'])
+                GetEditSubjects('first',response['list'][0]['fk_subjects']);
+            }
+        })
+    }
+
+    $(document).ready(function() {
+        $('.dtable').DataTable();
+
+        $("#course").change(function () {
+            if ($("#course").val().length != 0) {
+                $("#semester").removeAttr("disabled");
+            }
+            else {
+                $("#sections").val("");
+                $("#sections").attr('disabled', 'disabled');
+                $("#semester").val("");
+                $("#semester").attr('disabled', 'disabled');
+                $("#filter_button").hide()
+            }
+        });
+
+        $("#semester").change(function () {
+            if ($("#semester").val().length != 0) {
+                $("#sections").removeAttr("disabled");
+            }
+            else {
+                $("#sections").val("");
+                $("#sections").attr('disabled', 'disabled');
+                $("#filter_button").hide()
+            }
+        });
+
+        $("#sections").change(function () {
+            if ($("#sections").val().length != 0) {
+                $("#filter_button").show()
+            }
+            else {
+                $("#filter_button").hide()
+            }
+        });
+
+        $("#editcourse").change(function(){
+          if($("#editcourse").val().length != 0){
+              $("#editsemester").removeAttr("disabled");
+          }
+          else{
+              $("#editsection").val("");
+              $("#editsection").attr('disabled','disabled');
+              $("#editsemester").val("");
+              $("#editsemester").attr('disabled','disabled');
+              $("#edit_filter_button").hide()
+          }
+      });
+
+      $("#editsemester").change(function(){
+          if($("#editsemester").val().length != 0){
+              $("#editsection").removeAttr("disabled");
+          }
+          else{
+              $("#editsection").val("");
+              $("#editsection").attr('disabled','disabled');
+              $("#edit_filter_button").hide()
+          }
+      });
+
+        $("#editsection").change(function() {
+            if($("#editsection").val().length != 0){
+                $("#edit_filter_button").show()
+            }
+            else{
+                $("#edit_filter_button").hide()
+            }
+        });
+    });
+
+    function FilterNotes(){
+        var filter_course = $("#filter_course").val();
+        var filter_semesters = $("#filter_semesters").val();
+        var filter_sections = $("#filter_sections").val();
+        var filter_subject = $("#filter_subject").val();
+        var filter_chartfromdate = $("#filter_chartfromdate").val();
+        var filter_charttodate = $("#filter_charttodate").val();
+        $.ajax({
+            url : "/FilterNotes/",
+            method : "POST",
+            data : {
+                "filter_course":filter_course,
+                "filter_semesters":filter_semesters,
+                "filter_sections":filter_sections,
+                "filter_subject":filter_subject,
+                "filter_chartfromdate":filter_chartfromdate,
+                "filter_charttodate":filter_charttodate,
+            },
+            success : function(response){
+                console.log(response)
+                $("#ShowAllNotes_Div").html("");
+                $("#ShowAllNotes_Div").append(response);
+            }
+
+        })
+    }
+
+</script>
+{#{% endif %}#}
+{#{% endif %}#}
+{#{% endfor %}#}
+{% endblock content %}
