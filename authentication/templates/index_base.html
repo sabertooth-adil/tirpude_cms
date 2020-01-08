@@ -47,16 +47,16 @@
             </div>
             <div class="content-side content-side-full">
                 <ul class="nav-main">
-                    {% if userinfo_obj.fk_user_type.user_type == "Student" %}
+                    {% if user_info_obj.fk_user_type.user_type == "Student" %}
                         <li class="nav-main-item">
-                            <a class="nav-main-link" href="/Attendance/" id="AttendanceNavPage">
+                            <a class="nav-main-link" href="/attendance/" id="AttendanceNavPage">
                                 <img class="icon-size" src="{% static "media/dashboard-icons/icon-attendance.png" %}" alt="icon">
                                 <span class="nav-main-link-name">&nbsp;&nbsp;Attendance</span>
                             </a>
                         </li>
                     {% else %}
                         <li class="nav-main-item">
-                            <a class="nav-main-link" href="/Attendance/" id="AttendanceNavPage">
+                            <a class="nav-main-link" href="/attendance/" id="AttendanceNavPage">
                                 <img class="icon-size" src="{% static "media/dashboard-icons/icon-attendance.png" %}" alt="icon">
                                 <span class="nav-main-link-name">&nbsp; &nbsp;Attendance</span>
                             </a>
@@ -243,7 +243,7 @@
     <script>jQuery(function () { One.helpers(['datepicker','datetimepicker', 'colorpicker', 'maxlength', 'select2', 'rangeslider']); });</script>
     <script>jQuery(function () { One.helpers(['table-tools-checkable', 'table-tools-sections']); });</script>
     <script type="text/javascript">
-        $('.nav-main').on('click', 'li:has(a[href^="/Attendance/"])', function (e) {
+        $('.nav-main').on('click', 'li:has(a[href^="/attendance/"])', function (e) {
             $('.nav li').removeClass('active');
             $(this).addClass('active');
         });
