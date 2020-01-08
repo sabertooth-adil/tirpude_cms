@@ -77,6 +77,7 @@ def get_sub_cast_list(request):
         cast = request.POST.get("cast")
         sub_cast_list = list(SubCast.objects.filter(fk_cast_id=cast).values_list("id", "sub_cast"))
         return JsonResponse({"sub_cast_list": sub_cast_list})
+
     except:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')

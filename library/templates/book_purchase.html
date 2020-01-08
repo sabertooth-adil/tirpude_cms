@@ -1,11 +1,13 @@
 {% extends 'index_base.html' %}
 {% block content %}
     {% load static %}
+
     <style>
         .content .block, .content .items-push > div, .content .push, .content p {
             margin-bottom: 0px !important;
         }
     </style>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 
     <div class="bg-body-light">
@@ -13,12 +15,11 @@
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
                 <h1 class="flex-sm-fill h3 my-2">Books Purchase Details</h1>
                 <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
-
                     <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAddBook_Div()"
                             id="ShowAddBook_Button">Add Book
                     </button>
                     <form action="" id="save_book" role="form" enctype="multipart/form-data" style="display: inline;">
-                        <button class="btn btn-primary btn-sm submit-btn" onclick="ShowSaveBook_Div()"
+                        <button class="btn btn-primary btn-sm submit-btn"
                                 id="ShowSaveBook_Button" style="display:none;">Save
                         </button>
                     </form>
@@ -26,7 +27,7 @@
                             id="ShowAllBook_Button" style="display:none;">All Books
                     </button>
                     <form action="" id="update_book" role="form" enctype="multipart/form-data" style="display: inline;">
-                        <button class="btn btn-info btn-sm" onclick="updatebook()" id="updatebook_button"
+                        <button class="btn btn-info btn-sm" id="updatebook_button"
                                 style="display:none;">
                             Update
                         </button>
@@ -36,8 +37,8 @@
         </div>
     </div>
 
-
     <script src="{% static '/js/Chartnew.min.js' %}"></script>
+
     <style>
         canvas {
             height: 400px !important;
@@ -50,7 +51,6 @@
             <div class="block block-rounde ink-pop border-left border-primary border-4x"
                  href="javascript:void(0)">
                 <div class="block-content block-content-full" style="padding-bottom: 0px !important;">
-
                     <div class="row">
                         <div class="col-lg-2 col-md-2 col-xs-2">
                             <div class="form-group">
@@ -60,16 +60,13 @@
                                             data-live-search="true" name="fsubject" id="fsubject"
                                             onchange="PurchaseChange()">
                                         <option value="" selected>Select Subject</option>
-                                        {% for i in books_subject_obj %}
+                                        {% for i in book_subject_obj %}
                                             <option value="{{ i.id }}">{{ i.subjects }}</option>
                                         {% endfor %}
                                     </select>
-                                    <span style="display:none;color:red;font-size: 12px;"
-                                          id="err_fsubject">Please Select Subject</span>
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-lg-2 col-md-2 col-xs-2">
                             <div class="form-group">
                                 <div class="font-size-sm font-w600 text-uppercase text-muted">Author</div>
@@ -78,11 +75,10 @@
                                             data-live-search="true" name="fauthor" id="fauthor"
                                             onchange="PurchaseChangeAuthor()">
                                         <option value="" selected>Select Author</option>
-                                        {% for i in books_purchase_obj %}
+                                        {% for i in book_purchase_obj %}
                                             <option value="{{ i.author }}">{{ i.author }}</option>
                                         {% endfor %}
                                     </select>
-                                    <span style="display:none;color:red;font-size: 12px;" id="err_fauthor">Please Select Author</span>
                                 </div>
                             </div>
                         </div>
@@ -94,12 +90,10 @@
                                     <select class="form-control form-control-sm" data-style="btn-white"
                                             data-live-search="true" name="ftitle" id="ftitle">
                                         <option value="" selected>Select Title</option>
-                                        {% for i in books_purchase_obj %}
+                                        {% for i in book_purchase_obj %}
                                             <option value="{{ i.title }}">{{ i.title }}</option>
                                         {% endfor %}
                                     </select>
-                                    <span style="display:none;color:red;font-size: 12px;"
-                                          id="err_ftitle">Please Select Title</span>
                                 </div>
                             </div>
                         </div>
@@ -112,13 +106,9 @@
                                     <input type="text" maxlength="200" placeholder="Enter ISBN"
                                            class="form-control form-control-sm form-control-alternative"
                                            id="fisbn" name="fisbn" required>
-
-                                    <span style="display:none;color:red;font-size: 12px;"
-                                          id="err_fisbn">Please Enter ISBN</span>
                                 </div>
                             </div>
                         </div>
-
 
                         <div class="col-lg-1 col-md-2 col-xs-2">
                             <div class="form-group">
@@ -127,12 +117,9 @@
                                     <input name="ffromdate" id="ffromdate"
                                            class="form-control form-control-sm form-control-alternative js-datepicker"
                                            data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
-                                    <span style="display:none;color:red;font-size: 12px;"
-                                          id="err_ffromdate">Please Select From Date</span>
                                 </div>
                             </div>
                         </div>
-
 
                         <div class="col-lg-1 col-md-2 col-xs-2">
                             <div class="form-group">
@@ -140,19 +127,15 @@
                                 <input name="ftodate" id="ftodate"
                                        class="form-control form-control-sm form-control-alternative js-datepicker"
                                        data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
-                                <span style="display:none;color:red;font-size: 12px;"
-                                      id="err_ftodate">Please Select To Date</span>
                             </div>
                         </div>
-
 
                         <div class="col-lg-1 col-md-1 col-xs-1">
                             <div class="form-group">
                                 <div class="font-size-sm font-w600 text-uppercase text-muted">&nbsp;</div>
                                 <div class="font-w400 text-dark">
                                     <buttton class="btn btn-sm btn-primary submit-btn btn-block" onclick="Filterbook()">
-                                        <i
-                                                class="fa fa-filter" aria-hidden="true"></i> Filter
+                                        <i class="fa fa-filter" aria-hidden="true"></i> Filter
                                     </buttton>
                                 </div>
                             </div>
@@ -164,13 +147,11 @@
         </div>
     </div>
 
-
     <div class="content" style="padding: 10px !important;">
         <div class="block">
             <div class="block-content block-content-full">
                 <div id="ShowAddBook_Div" style="display: none;">
                     <div class="row">
-
                         <div class="col-lg-12 col-sm-4 col-xs-4">
                             <div class="form-group">
                                 <label class="form-control-label text-right">Title<span
@@ -178,8 +159,6 @@
                                 <input type="text" maxlength="200" form="save_book"
                                        class="form-control form-control-sm form-control-alternative"
                                        id="title" name="title" required>
-                                <span style="display:none;color:red;font-size: 12px;"
-                                      id="err_title">Please Enter Title</span>
                             </div>
                         </div>
                         <br><br>
@@ -190,7 +169,6 @@
                                 <input type="text" maxlength="120" form="save_book"
                                        class="form-control form-control-sm form-control-alternative"
                                        id="author" name="author" required>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_author">Please Enter Author</span>
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-4 col-xs-4">
@@ -200,7 +178,6 @@
                                 <input type="text" maxlength="120" form="save_book"
                                        class="form-control form-control-sm form-control-alternative"
                                        id="publisher" name="publisher" required>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_publisher">Please Enter Publisher</span>
                             </div>
                         </div>
                         <br><br>
@@ -208,18 +185,13 @@
                             <div class="form-group">
                                 <label class="form-control-label text-right">Subject<span
                                         class="text-danger">*</span>:</label>
-                                <!--<input type="text" maxlength="50"-->
-                                <!--class="form-control form-control-sm form-control-alternative"-->
-                                <!--id="subject" name="subject" required>-->
                                 <select class="form-control form-control-sm form-control-alternative" form="save_book"
                                         id="subject" name="subject" required>
                                     <option value="" selected hidden>Select Subject</option>
-                                    {% for i in books_subject_obj %}
+                                    {% for i in book_subject_obj %}
                                         <option value="{{ i.id }}">{{ i.subjects }}</option>
                                     {% endfor %}
                                 </select>
-
-                                <span style="display:none;color:red;font-size: 12px;" id="err_subject">Please Enter Subject</span>
                             </div>
                         </div>
                         <div class="col-lg-3 col-sm-4 col-xs-4">
@@ -229,7 +201,6 @@
                                 <input name="publisheddate" id="publisheddate" form="save_book"
                                        class="form-control form-control-sm form-control-alternative js-datepicker"
                                        data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" required>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_publisheddate">Please Enter Published Date</span>
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-4 col-xs-4">
@@ -239,8 +210,6 @@
                                 <input type="text" maxlength="50" form="save_book"
                                        class="form-control form-control-sm form-control-alternative"
                                        id="isbn" name="isbn" required>
-                                <span style="display:none;color:red;font-size: 12px;"
-                                      id="err_isbn">Please Enter ISBN</span>
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-4 col-xs-4">
@@ -253,8 +222,6 @@
                                            class="form-control form-control-sm form-control-alternative"
                                            id="price" name="price" required>
                                 </div>
-                                <span style="display:none;color:red;font-size: 12px;"
-                                      id="err_price">Please Enter Price</span>
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-4 col-xs-4">
@@ -264,7 +231,6 @@
                                 <input type="text" maxlength="120" form="save_book"
                                        class="form-control form-control-sm form-control-alternative"
                                        id="noofcopies" name="noofcopies" required>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_noofcopies">Please Enter No. of Copies</span>
                             </div>
                         </div>
                         <br><br>
@@ -275,19 +241,13 @@
                                 <input name="purchasedate" id="purchasedate" form="save_book"
                                        class="form-control form-control-sm form-control-alternative js-datepicker"
                                        data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" required>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_purchasedate">Please Enter Purchase Date</span>
                             </div>
                         </div>
-
-
                     </div>
-
-
                 </div>
 
                 <div id="ShowEditBook_Div" style="display: none;">
                     <div class="row">
-
                         <div class="col-lg-12 col-sm-4 col-xs-4">
                             <input type="hidden" id="titleid" name="titleid">
                             <div class="form-group">
@@ -296,8 +256,6 @@
                                 <input type="text" maxlength="200" form="update_book"
                                        class="form-control form-control-sm form-control-alternative"
                                        id="edittitle" name="edittitle" required>
-                                <span style="display:none;color:red;font-size: 12px;"
-                                      id="err_edittitle">Please Enter Title</span>
                             </div>
                         </div>
                         <br><br>
@@ -309,7 +267,6 @@
                                 <input type="text" maxlength="120" form="update_book"
                                        class="form-control form-control-sm form-control-alternative"
                                        id="editauthor" name="editauthor" required>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_editauthor">Please Enter Author</span>
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-4 col-xs-4">
@@ -320,7 +277,6 @@
                                 <input type="text" maxlength="120" form="update_book"
                                        class="form-control form-control-sm form-control-alternative"
                                        id="editpublisher" name="editpublisher" required>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_editpublisher">Please Enter Publisher</span>
                             </div>
                         </div>
                         <br><br>
@@ -328,16 +284,13 @@
                             <div class="form-group">
                                 <label class="form-control-label text-right">Subject<span
                                         class="text-danger">*</span>:</label>
-
                                 <select class="form-control form-control-sm form-control-alternative" form="update_book"
                                         id="editsubject" name="editsubject" required>
                                     <option value="" selected hidden>Select Subject</option>
-                                    {% for i in books_subject_obj %}
+                                    {% for i in book_subject_obj %}
                                         <option value="{{ i.id }}">{{ i.subjects }}</option>
                                     {% endfor %}
                                 </select>
-
-                                <span style="display:none;color:red;font-size: 12px;" id="err_editsubject">Please Enter Subject</span>
                             </div>
                         </div>
                         <div class="col-lg-3 col-sm-4 col-xs-4">
@@ -348,7 +301,6 @@
                                 <input name="editpublisheddate" id="editpublisheddate" form="update_book"
                                        class="form-control form-control-sm form-control-alternative js-datepicker"
                                        data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" required>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_editpublisheddate">Please Enter Published Date</span>
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-4 col-xs-4">
@@ -359,7 +311,6 @@
                                 <input type="text" maxlength="120" form="update_book"
                                        class="form-control form-control-sm form-control-alternative"
                                        id="editisbn" name="editisbn" required>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_editisbn">Please Enter ISBN</span>
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-4 col-xs-4">
@@ -373,7 +324,6 @@
                                            class="form-control form-control-sm form-control-alternative"
                                            id="editprice" name="editprice" required>
                                 </div>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_editprice">Please Enter Price</span>
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-4 col-xs-4">
@@ -384,7 +334,6 @@
                                 <input type="text" maxlength="120" form="update_book"
                                        class="form-control form-control-sm form-control-alternative"
                                        id="editnoofcopies" name="editnoofcopies" required>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_editnoofcopies">Please Enter No. of Copies</span>
                             </div>
                         </div>
                         <br><br>
@@ -396,20 +345,12 @@
                                 <input name="editpurchasedate" id="editpurchasedate" form="update_book"
                                        class="form-control form-control-sm form-control-alternative js-datepicker"
                                        data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
-                                <span style="display:none;color:red;font-size: 12px;" id="err_editpurchasedate">Please Enter Purchase Date</span>
                             </div>
                         </div>
-
-
                     </div>
-
-
                 </div>
-
             </div>
 
-
-            <!-- col start -->
             <div class="col">
                 <div class="show showInbox">
                     <div class="table-responsive" id="ShowBookTable_Div">
@@ -427,7 +368,7 @@
                             </tr>
                             </thead>
                             <tbody id="bookbody">
-                            {% for i in books_purchase_obj reversed %}
+                            {% for i in book_purchase_obj reversed %}
                                 <tr>
                                     <td class="text-center font-size-sm">{{ forloop.counter }}</td>
                                     <td class="font-size-sm">{{ i.title }}</td>
@@ -458,13 +399,9 @@
                         </table>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-
-
-
 
     <script>
         $(document).ready(function () {
@@ -475,9 +412,6 @@
             $('#ftitle').selectpicker({
                 maxOptions: 2
             });
-            // $('#fisbn').selectpicker({
-            //     maxOptions:2
-            // });
             $('#fsubject').selectpicker({
                 maxOptions: 2
             });
@@ -495,8 +429,6 @@
             $("#updatebook_button").hide();
             $("#printbutton").hide();
             $("#excelbutton").hide();
-
-
         }
 
         function ShowAllBook_Div() {
@@ -510,7 +442,6 @@
             $("#updatebook_button").hide();
             $("#printbutton").show();
             $("#excelbutton").show();
-
         }
 
         $("#save_book").submit(function (e) {
@@ -524,10 +455,8 @@
                 var noofcopies = $("#noofcopies").val();
                 var purchasedate = $("#purchasedate").val();
                 var subject = $("#subject").val();
-
-
                 $.ajax({
-                    url: "/add-books-purchase/",
+                    url: "/add-book-purchase/",
                     method: "POST",
                     data: {
                         "title": title,
@@ -553,7 +482,6 @@
                         }
                     }
                 })
-
             }
         )
 
@@ -569,7 +497,7 @@
                 .then((willDelete) => {
                     if (willDelete) {
                         $.ajax({
-                            url: "/delete-books-purchase/",
+                            url: "/delete-book-purchase/",
                             method: "POST",
                             data: {
                                 "id": id
@@ -604,10 +532,8 @@
             $("#updatebook_button").show();
             $("#printbutton").hide();
             $("#excelbutton").hide();
-
-
             $.ajax({
-                url: "/edit-books-purchase/",
+                url: "/edit-book-purchase/",
                 method: "POST",
                 data: {
                     "id": id
@@ -636,7 +562,6 @@
             })
         }
 
-
         function Filterbook() {
             author = $("#fauthor").val()
             title = $("#ftitle").val()
@@ -645,7 +570,7 @@
             fromdate = $("#ffromdate").val()
             todate = $("#ftodate").val()
             $.ajax({
-                url: "/filter-books-purchase/",
+                url: "/filter-book-purchase/",
                 method: "POST",
                 data: {
                     "author": author,
@@ -665,7 +590,6 @@
 
         $("#update_book").submit(function (e) {
                 e.preventDefault();
-
                 var titleid = $("#titleid").val();
                 var edittitle = $("#edittitle").val();
                 var editauthor = $("#editauthor").val();
@@ -676,9 +600,8 @@
                 var editprice = $("#editprice").val();
                 var editnoofcopies = $("#editnoofcopies").val();
                 var editpurchasedate = $("#editpurchasedate").val();
-
                 $.ajax({
-                    url: "/update-books-purchase/",
+                    url: "/update-book-purchase/",
                     method: "POST",
                     data: {
                         "title_id": titleid,
@@ -691,7 +614,6 @@
                         "edit_price": editprice,
                         "edit_no_of_copies": editnoofcopies,
                         "edit_purchase_date": editpurchasedate
-
                     },
                     success: function (response) {
                         console.log(response)
@@ -706,24 +628,19 @@
                         }
                     }
                 })
-
             }
         )
 
         function PurchaseChange() {
-
             var subject = $("#fsubject").val();
-
             $.ajax({
                 method: "POST",
-                url: "/purchase-change-author-title/",
+                url: "/filter-author-title/",
                 data: {
                     "subject": subject,
-
                 },
                 success: function (response) {
                     console.log(response)
-
                     $("#ftitle").html("");
                     $("#fauthor").html("");
                     if (JSON.parse(response).length == 0) {
@@ -753,13 +670,11 @@
 
         function PurchaseChangeAuthor() {
             var fauthor = $("#fauthor").val();
-
             $.ajax({
                 method: "POST",
-                url: "/purchase-change-title/",
+                url: "/filter-title/",
                 data: {
                     "author": fauthor,
-
                 },
                 success: function (response) {
                     console.log(response)
@@ -768,23 +683,19 @@
                     if (JSON.parse(response).length == 0) {
                         $("#ftitle").html("<option value='' selected hidden>Title Not Found</option>")
                         $("#ftitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
-
                     }
                     else {
                         $("#ftitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
-
                     }
                     for (i = 0; i < JSON.parse(response).length; i++) {
                         tit = document.createElement('option');
                         tit.value = JSON.parse(response)[i][1]
                         tit.innerHTML = JSON.parse(response)[i][1]
                         $("#ftitle").append(tit).selectpicker('refresh');
-
                     }
                 }
             })
         }
-
 
     </script>
 {% endblock content %}

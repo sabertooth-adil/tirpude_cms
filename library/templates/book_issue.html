@@ -1,11 +1,13 @@
 {% extends 'index_base.html' %}
 {% block content %}
     {% load static %}
+
     <style>
         .content .block, .content .items-push > div, .content .push, .content p {
             margin-bottom: 0px !important;
         }
     </style>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 
     <div class="bg-body-light">
@@ -13,7 +15,6 @@
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
                 <h1 class="flex-sm-fill h3 my-2" id="h">Books Issued Details</h1>
                 <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
-
                     <button class="btn btn-primary btn-sm submit-btn" onclick="IssueBook_Div()"
                             id="IssueBook_Button">Issue Book
                     </button>
@@ -23,26 +24,18 @@
                     <button class="btn btn-primary btn-sm submit-btn" onclick="BookIssuedDetails_Div()"
                             id="BookIssuedDetails_Button" style="display:none;">Book Issued Details
                     </button>
-
-
                 </nav>
             </div>
         </div>
     </div>
 
-
-
-
-
-
-
     <script src="{% static '/js/Chartnew.min.js' %}"></script>
+
     <style>
         canvas {
             height: 400px !important;
         }
     </style>
-
 
     <div id="BookPurchaseFilter_Div">
         <div class="content" style="padding: 10px !important;">
@@ -62,8 +55,6 @@
                                             <option value="{{ i.id }}">{{ i.subjects }}</option>
                                         {% endfor %}
                                     </select>
-                                    <span style="display:none;color:red;font-size: 12px;"
-                                          id="err_fsubject">Please Select Subject</span>
                                 </div>
                             </div>
                         </div>
@@ -79,11 +70,8 @@
                                             <option value="{{ i.author }}">{{ i.author }}</option>
                                         {% endfor %}
                                     </select>
-                                    <span style="display:none;color:red;font-size: 12px;"
-                                          id="err_fauthor">Please Select Author</span>
                                 </div>
                             </div>
-
                         </div>
                         <div class="col-lg-3 col-md-2 col-xs-2">
                             <div class="form-group">
@@ -96,34 +84,19 @@
                                             <option value="{{ i.title }}">{{ i.title }}</option>
                                         {% endfor %}
                                     </select>
-                                    <span style="display:none;color:red;font-size: 12px;"
-                                          id="err_ftitle">Please Select Title</span>
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="col-lg-2 col-md-2 col-xs-2">
                             <div class="form-group">
                                 <div class="font-size-sm font-w600 text-uppercase text-muted">ISBN</div>
                                 <div class="font-w400 text-dark">
-
-                                    <!--<select class="form-control form-control-sm" data-style="btn-white" data-live-search="true" name="fisbn" id="fisbn">-->
-                                    <!--<option value="" selected >Select ISBN</option>-->
-                                    <!--{% for i in books_issue_obj %}-->
-                                        <!--<option value="{{i.isbn}}">{{i.isbn}}</option>-->
-                                        <!--{% endfor %}-->
-                                    <!--</select>-->
-
                                     <input type="text" maxlength="200" placeholder="Enter ISBN"
                                            class="form-control form-control-sm form-control-alternative"
                                            id="fisbn" name="fisbn" required>
-                                    <span style="display:none;color:red;font-size: 12px;"
-                                          id="err_fisbn">Please Enter ISBN</span>
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-lg-1 col-md-2 col-xs-2">
                             <div class="form-group">
                                 <div class="font-size-sm font-w600 text-uppercase text-muted">From</div>
@@ -131,21 +104,15 @@
                                     <input name="ffromdate" id="ffromdate"
                                            class="form-control form-control-sm form-control-alternative js-datepicker"
                                            data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
-                                    <span style="display:none;color:red;font-size: 12px;"
-                                          id="err_ffromdate">Please Select From Date</span>
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="col-lg-1 col-md-2 col-xs-2">
                             <div class="form-group">
                                 <div class="font-size-sm font-w600 text-uppercase text-muted">To</div>
                                 <input name="ftodate" id="ftodate"
                                        class="form-control form-control-sm form-control-alternative js-datepicker"
                                        data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
-                                <span style="display:none;color:red;font-size: 12px;"
-                                      id="err_ftodate">Please Select To Date</span>
                             </div>
                         </div>
 
@@ -168,15 +135,11 @@
         </div>
     </div>
 
-
     <div class="content" style="padding: 10px !important;">
         <div class="block">
             <div class="block-content block-content-full">
-
-
                 <div id="ShowAddBook_Div" style="display: none;">
                     <div class="row">
-
                         <div class="col-lg-12 col-sm-4 col-xs-4">
                             <div class="form-group">
                                 <label class="form-control-label text-right">Title<span
@@ -184,8 +147,6 @@
                                 <input type="text" maxlength="200"
                                        class="form-control form-control-sm form-control-alternative"
                                        id="title" name="title" required disabled>
-                                <span style="display:none;color:red;font-size: 12px;"
-                                      id="err_title">Please Enter Title</span>
                             </div>
                         </div>
                         <br><br>
@@ -196,7 +157,6 @@
                                 <input type="text" maxlength="120"
                                        class="form-control form-control-sm form-control-alternative"
                                        id="author" name="author" required disabled>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_author">Please Enter Author</span>
                             </div>
                         </div>
                         <div class="col-lg-3 col-sm-4 col-xs-4">
@@ -206,7 +166,6 @@
                                 <input type="text" maxlength="120"
                                        class="form-control form-control-sm form-control-alternative"
                                        id="publisher" name="publisher" required disabled>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_publisher">Please Enter Publisher</span>
                             </div>
                         </div>
                         <div class="col-lg-3 col-sm-4 col-xs-4">
@@ -216,7 +175,6 @@
                                 <input type="text" maxlength="120"
                                        class="form-control form-control-sm form-control-alternative"
                                        id="subject" name="subject" required disabled>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_subject">Please Enter Subject</span>
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-4 col-xs-4">
@@ -226,8 +184,6 @@
                                 <input type="text" maxlength="50"
                                        class="form-control form-control-sm form-control-alternative"
                                        id="isbn" name="isbn" required disabled>
-                                <span style="display:none;color:red;font-size: 12px;"
-                                      id="err_isbn">Please Enter ISBN</span>
                             </div>
                         </div>
                         <br><br>
@@ -241,7 +197,6 @@
                                         <option value="{{ i.id }}">{{ i.course }}</option>
                                     {% endfor %}
                                 </select>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_course">Please Select Course</span>
                             </div>
                         </div>
                         <div class="col-lg-3 col-sm-4 col-xs-4">
@@ -254,7 +209,6 @@
                                         <option value="{{ i.id }}">{{ i.semester }}</option>
                                     {% endfor %}
                                 </select>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_semester">Please Select Semester </span>
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-4 col-xs-4">
@@ -267,7 +221,6 @@
                                         <option value="{{ i.id }}">{{ i.sections }}</option>
                                     {% endfor %}
                                 </select>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_section">Please Select Section</span>
                             </div>
                         </div>
                         <div class="col-lg-4 col-sm-4 col-xs-4">
@@ -281,7 +234,6 @@
                                         <option value="{{ i.id }}">{{ i.fk_user_info.first_name }}</option>
                                     {% endfor %}
                                 </select>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_studentname">Please Select Student Name</span>
                             </div>
                         </div>
                         <br><br>
@@ -292,16 +244,10 @@
                                 <input name="dateofissue" id="dateofissue"
                                        class="form-control form-control-sm form-control-alternative js-datepicker"
                                        data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" disabled>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_dateofissue">Please Select Date of Issue</span>
                             </div>
                         </div>
-
-
                     </div>
-
-
                 </div>
-
 
                 <div id="count" class="content" style="padding: 10px !important;">
                     <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
@@ -323,7 +269,6 @@
 
                 <div id="ShowEditBook_Div" style="display: none;">
                     <div class="row">
-
                         <div class="col-lg-12 col-sm-4 col-xs-4">
                             <input type="hidden" id="book_purchase_id" name="book_purchase_id">
                             <div class="form-group">
@@ -332,53 +277,43 @@
                                 <input type="text" maxlength="200" form="issue_book"
                                        class="form-control form-control-sm form-control-alternative"
                                        id="edittitle" name="edittitle" required>
-                                <span style="display:none;color:red;font-size: 12px;"
-                                      id="err_edittitle">Please Enter Title</span>
                             </div>
                         </div>
                         <br><br>
                         <div class="col-lg-4 col-sm-4 col-xs-4">
-
                             <div class="form-group">
                                 <label class="form-control-label text-right">Author<span
                                         class="text-danger">*</span>:</label>
                                 <input type="text" maxlength="120" form="issue_book"
                                        class="form-control form-control-sm form-control-alternative"
                                        id="editauthor" name="editauthor" required>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_editauthor">Please Enter Author</span>
                             </div>
                         </div>
                         <div class="col-lg-3 col-sm-4 col-xs-4">
-
                             <div class="form-group">
                                 <label class="form-control-label text-right">Publisher<span
                                         class="text-danger">*</span>:</label>
                                 <input type="text" maxlength="120" form="issue_book"
                                        class="form-control form-control-sm form-control-alternative"
                                        id="editpublisher" name="editpublisher" required>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_editpublisher">Please Enter Publisher</span>
                             </div>
                         </div>
                         <div class="col-lg-3 col-sm-4 col-xs-4">
-
                             <div class="form-group">
                                 <label class="form-control-label text-right">Subject<span
                                         class="text-danger">*</span>:</label>
                                 <input type="text" maxlength="120" form="issue_book"
                                        class="form-control form-control-sm form-control-alternative"
                                        id="editsubject" name="editsubject" required>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_editsubject">Please Enter Subject</span>
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-4 col-xs-4">
-
                             <div class="form-group">
                                 <label class="form-control-label text-right">ISBN<span
                                         class="text-danger">*</span>:</label>
                                 <input type="text" maxlength="50" form="issue_book"
                                        class="form-control form-control-sm form-control-alternative"
                                        id="editisbn" name="editisbn" required>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_editisbn">Please Enter ISBN</span>
                             </div>
                         </div>
                         <br><br>
@@ -393,35 +328,32 @@
                                         <option value="{{ i.id }}">{{ i.course }}</option>
                                     {% endfor %}
                                 </select>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_editcourse">Please Select Course</span>
                             </div>
                         </div>
                         <div class="col-lg-3 col-sm-4 col-xs-4">
                             <div class="form-group">
                                 <label class="form-control-label text-right">Semester<span
                                         class="text-danger">*</span>:</label>
-                                <select class="form-control form-control-sm" form="issue_book" name="editsemester"
+                                <select class="form-control form-control-sm" form="issue_book" name="editsemester" onchange="EditChange()"
                                         id="editsemester" required disabled>
                                     <option value="" selected>Select Semester</option>
                                     {% for i in semesters_obj %}
                                         <option value="{{ i.id }}">{{ i.semester }}</option>
                                     {% endfor %}
                                 </select>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_editsemester">Please Select Semester </span>
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-4 col-xs-4">
                             <div class="form-group">
                                 <label class="form-control-label text-right">Section<span
                                         class="text-danger">*</span>:</label>
-                                <select class="form-control form-control-sm" form="issue_book" name="editsection"
+                                <select class="form-control form-control-sm" form="issue_book" name="editsection" onchange="EditChange()"
                                         id="editsection" required disabled>
                                     <option value="" selected>Select Section</option>
                                     {% for i in sections_obj %}
                                         <option value="{{ i.id }}">{{ i.sections }}</option>
                                     {% endfor %}
                                 </select>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_editsection">Please Select Section</span>
                             </div>
                         </div>
                         <div class="col-lg-4 col-sm-4 col-xs-4">
@@ -436,7 +368,6 @@
                                         <option value="{{ i.id }}">{{ i.fk_user_info.first_name }}</option>
                                     {% endfor %}
                                 </select>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_editstudentname">Please Select Student Name</span>
                             </div>
                         </div>
                         <br><br>
@@ -447,21 +378,12 @@
                                 <input name="editdateofissue" id="editdateofissue" form="issue_book"
                                        class="form-control form-control-sm form-control-alternative js-datepicker"
                                        data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" required>
-                                <span style="display:none;color:red;font-size: 12px;" id="err_editdateofissue">Please Select Date of Issue</span>
                             </div>
                         </div>
-
-
                     </div>
-
-
                 </div>
-
-
             </div>
 
-
-            <!-- col start -->
             <div class="col">
                 <div class="show showInbox">
                     <div class="table-responsive" id="ShowBookTable_Div">
@@ -504,19 +426,15 @@
                         </table>
                     </div>
                 </div>
-
             </div>
-
 
             <div id="addappend">
                 <div class="content" style="padding: 10px !important;">
                     <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
                         <h1 class="flex-sm-fill h6 my-2" id="h2" style="display:none;">Allow Books : &nbsp;&nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Issued Books : <span id="issued_copies"></span></h1>
-
                     </div>
                 </div>
-
 
                 <div class="col">
                     <div class="show showInbox">
@@ -535,7 +453,6 @@
                                 </tr>
                                 </thead>
                                 <tbody id="">
-
                                 <tr>
                                     <td class="font-size-sm" style="width: 7%;"></td>
                                     <td class="font-size-sm" style="width: 20%"></td>
@@ -553,26 +470,14 @@
                                         </button>
                                     </td>
                                 </tr>
-
                                 </tbody>
                             </table>
                         </div>
                     </div>
-
                 </div>
             </div>
-
-
         </div>
     </div>
-
-
-
-
-
-
-
-
 
     <div id="myModal" class="modal fade bd-example-modal-lg" role="dialog">
         <div class="modal-dialog mw-100 w-75">
@@ -582,8 +487,6 @@
                     <button type="button" class="close" data-dismiss="modal">×</button>
                 </div>
                 <div class="modal-body">
-
-
                     <div>
                         <div class="content" style="padding: 10px !important;">
                             <div class="block block-rounde ink-pop border-left border-primary border-4x"
@@ -603,8 +506,6 @@
                                                             <option value="{{ i.id }}">{{ i.subjects }}</option>
                                                         {% endfor %}
                                                     </select>
-                                                    <span style="display:none;color:red;font-size: 12px;"
-                                                          id="err_dsubject">Please Select Subject</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -621,11 +522,8 @@
                                                             <option value="{{ i.author }}">{{ i.author }}</option>
                                                         {% endfor %}
                                                     </select>
-                                                    <span style="display:none;color:red;font-size: 12px;"
-                                                          id="err_dauthor">Please Select Author</span>
                                                 </div>
                                             </div>
-
                                         </div>
                                         <div class="col-lg-3 col-md-2 col-xs-2">
                                             <div class="form-group">
@@ -639,28 +537,19 @@
                                                             <option value="{{ i.title }}">{{ i.title }}</option>
                                                         {% endfor %}
                                                     </select>
-                                                    <span style="display:none;color:red;font-size: 12px;"
-                                                          id="err_dtitle">Please Select Title</span>
                                                 </div>
                                             </div>
                                         </div>
-
-
                                         <div class="col-lg-2 col-md-2 col-xs-2">
                                             <div class="form-group">
                                                 <div class="font-size-sm font-w600 text-uppercase text-muted">ISBN</div>
                                                 <div class="font-w400 text-dark">
-
-
                                                     <input type="text" maxlength="200" placeholder="Enter ISBN"
                                                            class="form-control form-control-sm form-control-alternative"
                                                            id="disbn" name="disbn" required>
-                                                    <span style="display:none;color:red;font-size: 12px;"
-                                                          id="err_disbn">Please Enter ISBN</span>
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="col-lg-1 col-md-2 col-xs-2">
                                             <div class="form-group">
                                                 <div class="font-size-sm font-w600 text-uppercase text-muted">From</div>
@@ -668,25 +557,17 @@
                                                     <input name="dfromdate" id="dfromdate"
                                                            class="form-control form-control-sm form-control-alternative js-datepicker"
                                                            data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
-                                                    <span style="display:none;color:red;font-size: 12px;"
-                                                          id="err_dfromdate">Please Select From Date</span>
                                                 </div>
                                             </div>
                                         </div>
-
-
                                         <div class="col-lg-1 col-md-2 col-xs-2">
                                             <div class="form-group">
                                                 <div class="font-size-sm font-w600 text-uppercase text-muted">To</div>
                                                 <input name="dtodate" id="dtodate"
                                                        class="form-control form-control-sm form-control-alternative js-datepicker"
                                                        data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
-                                                <span style="display:none;color:red;font-size: 12px;"
-                                                      id="err_dtodate">Please Select To Date</span>
                                             </div>
                                         </div>
-
-
                                         <div class="col-lg-1 col-md-1 col-xs-1">
                                             <div class="form-group">
                                                 <div class="font-size-sm font-w600 text-uppercase text-muted">&nbsp;
@@ -705,10 +586,7 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
 
                 <div class="modal-body">
                     <h5 class="text-center"></h5>
@@ -742,7 +620,6 @@
                                                 onclick="redirect({{ i.id }})">
                                             <i class="fa fa-fw fa-pencil-alt"></i>
                                         </button>
-
                                     </div>
                                 </td>
                             </tr>
@@ -750,8 +627,6 @@
                         </tbody>
                     </table>
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -761,7 +636,6 @@
             $('#mydatatable').DataTable();
             $('#mytable').DataTable();
             $('#searchtable').DataTable();
-
 
             $('#dauthor').selectpicker({
                 maxOptions: 2
@@ -775,8 +649,6 @@
             $('#dsubject').selectpicker({
                 maxOptions: 2
             });
-
-
             $('#fauthor').selectpicker({
                 maxOptions: 2
             });
@@ -790,7 +662,6 @@
                 maxOptions: 2
             });
 
-
             $("#course").change(function () {
                 console.log("course change")
                 if ($("#course").val().length != 0) {
@@ -800,35 +671,29 @@
                     $("#section").val("");
                     $("#section").attr('disabled', 'disabled');
                     $("#semester").val("");
-
                     $("#semester").attr('disabled', 'disabled');
                     $("#studentname").val("");
                     $("#studentname").attr('disabled', 'disabled');
-
                 }
             });
 
             $("#semester").change(function () {
                 if ($("#semester").val().length != 0) {
                     $("#section").removeAttr("disabled");
-
                 }
                 else {
                     $("#section").val("");
                     $("#section").attr('disabled', 'disabled');
-
                 }
             });
 
             $("#section").change(function () {
                 if ($("#section").val().length != 0) {
                     $("#studentname").removeAttr("disabled");
-
                 }
                 else {
                     $("#studentname").val("");
                     $("#studentname").attr('disabled', 'disabled');
-
                 }
             });
 
@@ -841,39 +706,31 @@
                     $("#editsection").val("");
                     $("#editsection").attr('disabled', 'disabled');
                     $("#editsemester").val("");
-
                     $("#editsemester").attr('disabled', 'disabled');
                     $("#editstudentname").val("");
                     $("#editstudentname").attr('disabled', 'disabled');
-
                 }
             });
 
             $("#editsemester").change(function () {
                 if ($("#editsemester").val().length != 0) {
                     $("#editsection").removeAttr("disabled");
-
                 }
                 else {
                     $("#editsection").val("");
                     $("#editsection").attr('disabled', 'disabled');
-
                 }
             });
 
             $("#editsection").change(function () {
                 if ($("#editsection").val().length != 0) {
                     $("#editstudentname").removeAttr("disabled");
-
                 }
                 else {
                     $("#editstudentname").val("");
                     $("#editstudentname").attr('disabled', 'disabled');
-
                 }
             });
-
-
         });
 
         function IssueBook_Div() {
@@ -888,26 +745,24 @@
             $("#AddStudentBookTable_Div").hide();
             $("#h1").hide();
             $("#h2").hide();
-
-
         }
 
         function BookIssuedDetails_Div() {
             location.reload()
-
         }
 
-
         function EditChange() {
-
             var editcourse = $("#editcourse").val()
+            var editsemester = $("#editsemester").val()
+            var editsection = $("#editsection").val()
+
             $.ajax({
                 method: "POST",
                 url: "/issue-filter-student-name/",
                 data: {
-
                     'edit_course': editcourse,
-
+                    'edit_semester': editsemester,
+                    'edit_section': editsection,
                 },
                 success: function (response) {
                     console.log(response)
@@ -915,7 +770,6 @@
                     if (JSON.parse(response).length == 0) {
                         $("#editstudentname").html("<option value='' selected hidden>Student Name Not Found</option>")
                         $("#editstudentname").html("<option value='' selected hidden>Select Student Name</option><option value='All'>Select Student Name</option>")
-
                     }
                     else {
                         $("#editstudentname").html("<option value='' selected hidden>Select Student Name</option><option value='All'>Select Student Name</option>")
@@ -930,13 +784,9 @@
             })
         }
 
-
         function SearchBook_Div() {
             $('#myModal').modal('show');
-
-
         }
-
 
         function TotalCopiesCount(name) {
             console.log("name ", name)
@@ -945,7 +795,6 @@
                 method: "POST",
                 data: {
                     "edit_title": name,
-
                 },
                 success: function (response) {
                     console.log(response)
@@ -955,8 +804,6 @@
                     $("#no_of_copies").append(response['books_no_copies'])
                     $("#no_of_issued_copies").append(response['issue_no_copies'])
                     $("#no_of_remaining_copies").append(response['remaining_copies'])
-
-
                 }
             })
         }
@@ -977,10 +824,8 @@
             $("#h1").show();
             $("#h2").show();
             $("#editdateofissue").datepicker().datepicker("setDate", new Date());
-
-
             $.ajax({
-                url: "/append-search-purchase-books-details/",
+                url: "/append-search-purchase-book-details/",
                 method: "POST",
                 data: {
                     "id": id
@@ -996,7 +841,6 @@
                     TotalCopiesCount(response['list'][0]['title'])
                 }
             })
-
         }
 
         $("#issue_book").submit(function (e) {
@@ -1012,9 +856,8 @@
                 var studentname = $("#editstudentname").val();
                 var dateofissue = $("#editdateofissue").val();
                 var book_purchase_id = $("#book_purchase_id").val()
-
                 $.ajax({
-                    url: "/add-issue-books/",
+                    url: "/add-issue-book/",
                     method: "POST",
                     data: {
                         "title": title,
@@ -1024,7 +867,6 @@
                         "section": section,
                         "student_name": studentname,
                         "date_of_issue": dateofissue,
-
                     },
                     success: function (response) {
                         console.log(response)
@@ -1039,8 +881,6 @@
                                 button: "Ok",
                                 closeOnClickOutside: false,
                             }).then(function () {
-
-
                             });
                         }
                         else if (response == "same_books_not_exits") {
@@ -1049,46 +889,34 @@
                                 button: "Ok",
                                 closeOnClickOutside: false,
                             }).then(function () {
-
-
                             });
                         }
                         else {
                             $("#addappend").html("")
                             $("#addappend").append(response)
-
                         }
                     }
                 })
-
             }
         )
-
 
         function appendintable() {
             var title = $("#edittitle").val();
             var studentname = $("#editstudentname").val();
-
             $.ajax({
-                url: "/show-particular-students-books/",
+                url: "/show-particular-student-book/",
                 method: "POST",
                 data: {
                     "title": title,
                     "student_name": studentname,
-
                 },
                 success: function (response) {
                     console.log(response)
-
-
                     $("#addappend").html("")
                     $("#addappend").append(response)
-
-
                 }
             })
         }
-
 
         function delete_book(id) {
             console.log(id)
@@ -1102,7 +930,7 @@
                 .then((willDelete) => {
                     if (willDelete) {
                         $.ajax({
-                            url: "/delete-issued-books/",
+                            url: "/delete-issued-book/",
                             method: "POST",
                             data: {
                                 "id": id
@@ -1126,7 +954,6 @@
                 });
         }
 
-
         function Filterbook() {
             author = $("#fauthor").val()
             title = $("#ftitle").val()
@@ -1135,7 +962,7 @@
             fromdate = $("#ffromdate").val()
             todate = $("#ftodate").val()
             $.ajax({
-                url: "/filter-books-issue/",
+                url: "/filter-book-issue/",
                 method: "POST",
                 data: {
                     "author": author,
@@ -1153,14 +980,11 @@
             })
         }
 
-
         function IssueChange() {
-
             var subject = $("#fsubject").val();
-
             $.ajax({
                 method: "POST",
-                url: "/issue-books-filter-change-title-author/",
+                url: "/filter-author-title/",
                 data: {
                     "subject": subject,
                 },
@@ -1183,7 +1007,6 @@
                         tit = document.createElement('option');
                         tit.value = JSON.parse(response)[i][1]
                         tit.innerHTML = JSON.parse(response)[i][1]
-
                         $("#ftitle").append(tit).selectpicker('refresh');
                         auth = document.createElement('option');
                         auth.value = JSON.parse(response)[i][2]
@@ -1196,54 +1019,42 @@
 
         function IssueChangeAuthor() {
             var fauthor = $("#fauthor").val();
-
             $.ajax({
                 method: "POST",
-                url: "/issue-books-filter-change-title/",
+                url: "/filter-title/",
                 data: {
                     "author": fauthor,
-
                 },
                 success: function (response) {
                     console.log(response)
-
                     $("#ftitle").html("")
                     if (JSON.parse(response).length == 0) {
                         $("#ftitle").html("<option value='' selected hidden>Title Not Found</option>")
                         $("#ftitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
-
                     }
                     else {
                         $("#ftitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
-
                     }
                     for (i = 0; i < JSON.parse(response).length; i++) {
                         tit = document.createElement('option');
                         tit.value = JSON.parse(response)[i][1]
                         tit.innerHTML = JSON.parse(response)[i][1]
                         $("#ftitle").append(tit).selectpicker('refresh');
-
-
                     }
                 }
             })
         }
 
-
         function IssueDialogChange() {
-
             var subject = $("#dsubject").val();
-
             $.ajax({
                 method: "POST",
-                url: "/issue-books-modal-filter-change-title-author/",
+                url: "/filter-author-title/",
                 data: {
                     "subject": subject,
-
                 },
                 success: function (response) {
                     console.log(response)
-
                     $("#dtitle").html("")
                     $("#dauthor").html("")
                     if (JSON.parse(response).length == 0) {
@@ -1272,13 +1083,11 @@
 
         function IssueDialogChangeAuthor() {
             var author = $("#dauthor").val();
-
             $.ajax({
                 method: "POST",
-                url: "/issue-books-modal-filter-change-title/",
+                url: "/filter-title/",
                 data: {
                     "author": author,
-
                 },
                 success: function (response) {
                     console.log(response)
@@ -1287,19 +1096,15 @@
                     if (JSON.parse(response).length == 0) {
                         $("#dtitle").html("<option value='' selected hidden>Title Not Found</option>")
                         $("#dtitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
-
                     }
                     else {
                         $("#dtitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
-
                     }
                     for (i = 0; i < JSON.parse(response).length; i++) {
                         tit = document.createElement('option');
                         tit.value = JSON.parse(response)[i][1]
                         tit.innerHTML = JSON.parse(response)[i][1]
                         $("#dtitle").append(tit).selectpicker('refresh');
-
-
                     }
                 }
             })
@@ -1313,7 +1118,7 @@
             fromdate = $("#dfromdate").val()
             todate = $("#dtodate").val()
             $.ajax({
-                url: "/filter-modal-books-issue/",
+                url: "/filter-modal-book-issue/",
                 method: "POST",
                 data: {
                     "author": author,
@@ -1346,7 +1151,7 @@
                 .then((willDelete) => {
                     if (willDelete) {
                         $.ajax({
-                            url: "/delete-issue-books/",
+                            url: "/delete-issue-book/",
                             method: "POST",
                             data: {
                                 "id": id,
@@ -1362,11 +1167,8 @@
                                 $("#no_of_issued_copies").html(response["issue_no_copies"])
                                 $("#no_of_remaining_copies").html("")
                                 $("#no_of_remaining_copies").html(response["remaining_copies"])
-
                                 $("#issued_copies").html("")
                                 $("#issued_copies").html(response["book_issue_copies_obj"])
-
-
                             }
                         })
                     }
@@ -1375,7 +1177,6 @@
                     }
                 });
         }
-
 
     </script>
 {% endblock content %}
