@@ -441,7 +441,7 @@ def add_issue_book(request):
     try:
         session = request.session.get('user_id')
         user_info_obj = UserInfo.objects.get(id=session)
-        user_operations_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
+        user_operation_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
         edit_title = request.POST.get("title")
         book_purchase_id = request.POST.get("book_purchase_id")
         course = request.POST.get("course")
@@ -477,7 +477,7 @@ def add_issue_book(request):
                     book_obj = BooksIssue.objects.filter(fk_user_info_id=student_name)
                     book_issue_copies_obj = BooksIssue.objects.filter(fk_user_info_id=student_name).count()
                     render_string = render_to_string("render_add_issue_book.html",
-                                                     {"user_operations_obj": user_operations_obj,
+                                                     {"user_operations_obj": user_operation_obj,
                                                       "book_issue_copies_obj": book_issue_copies_obj,
                                                       "books_obj": book_obj,
                                                       "books_no_copies": actual_copies,
@@ -852,7 +852,7 @@ def book_return(request):
     try:
         session = request.session.get('user_id')
         user_info_obj = UserInfo.objects.get(id=session)
-        user_operations_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
+        user_operation_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
         books_purchase_obj = BooksPurchase.objects.all()
         books_issue_obj = BooksIssue.objects.all().order_by('issue_date')
         books_subject_obj = Subject.objects.all()
@@ -861,7 +861,7 @@ def book_return(request):
         sections_obj = Section.objects.all()
         books_returned_obj = BooksReturned.objects.all().order_by('return_date')
         return render(request, "book_return.html",
-                      {"user_operations_obj": user_operations_obj, "books_returned_obj": books_returned_obj,
+                      {"user_operations_obj": user_operation_obj, "books_returned_obj": books_returned_obj,
                        "books_subject_obj": books_subject_obj,
                        "user_info_obj": user_info_obj, "books_issue_obj": books_issue_obj,
                        "books_purchase_obj": books_purchase_obj,
@@ -1289,12 +1289,12 @@ def book_scrap(request):
     try:
         session = request.session.get('user_id')
         user_info_obj = UserInfo.objects.get(id=session)
-        user_operations_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
+        user_operation_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
         books_purchase_obj = BooksPurchase.objects.all().order_by('published_date')
         books_subject_obj = Subject.objects.all()
         books_scrapped_obj = BooksScrapped.objects.all().order_by('scrap_date')
         return render(request, "book_scrap.html",
-                      {"user_operations_obj": user_operations_obj, "user_info_obj": user_info_obj,
+                      {"user_operations_obj": user_operation_obj, "user_info_obj": user_info_obj,
                        "books_scrapped_obj": books_scrapped_obj,
                        "books_subject_obj": books_subject_obj,
                        "books_purchase_obj": books_purchase_obj})
@@ -1315,7 +1315,6 @@ def edit_book_scrap(request):
         list = []
         dict = {}
         id = request.POST.get("id")
-        print(id)
         book_obj = BooksPurchase.objects.get(id=id)
         dict['id'] = book_obj.id
         dict['title'] = book_obj.title
@@ -1620,11 +1619,11 @@ def available_book_report(request):
     try:
         session = request.session.get('user_id')
         user_info_obj = UserInfo.objects.get(id=session)
-        user_operations_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
+        user_operation_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
         books_purchase_obj = BooksPurchase.objects.all().order_by('purchase_date')
         books_subject_obj = Subject.objects.all()
         return render(request, "available_book_report.html",
-                      {"user_operations_obj": user_operations_obj, "user_info_obj": user_info_obj,
+                      {"user_operations_obj": user_operation_obj, "user_info_obj": user_info_obj,
                        "books_subject_obj": books_subject_obj,
                        "books_purchase_obj": books_purchase_obj})
     except:
@@ -1642,12 +1641,12 @@ def issued_book_report(request):
     try:
         session = request.session.get('user_id')
         user_info_obj = UserInfo.objects.get(id=session)
-        user_operations_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
+        user_operation_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
         book_obj = BooksPurchase.objects.all()
         books_data_obj = BooksIssueData.objects.all().order_by('issue_date')
         books_subject_obj = Subject.objects.all()
         return render(request, "issued_book_report.html",
-                      {"user_operations_obj": user_operations_obj, "books_data_obj": books_data_obj,
+                      {"user_operations_obj": user_operation_obj, "books_data_obj": books_data_obj,
                        "books_subject_obj": books_subject_obj,
                        "user_info_obj": user_info_obj, "books_obj": book_obj})
     except:
@@ -1665,12 +1664,12 @@ def returned_book_report(request):
     try:
         session = request.session.get('user_id')
         user_info_obj = UserInfo.objects.get(id=session)
-        user_operations_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
+        user_operation_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
         book_obj = BooksPurchase.objects.all()
         books_subject_obj = Subject.objects.all()
         books_returned_obj = BooksReturned.objects.all().order_by('return_date')
         return render(request, "returned_book_report.html",
-                      {"user_operations_obj": user_operations_obj, "books_returned_obj": books_returned_obj,
+                      {"user_operations_obj": user_operation_obj, "books_returned_obj": books_returned_obj,
                        "books_subject_obj": books_subject_obj,
                        "user_info_obj": user_info_obj, "books_obj": book_obj})
     except:
@@ -1688,12 +1687,12 @@ def scrapped_book_report(request):
     try:
         session = request.session.get('user_id')
         user_info_obj = UserInfo.objects.get(id=session)
-        user_operations_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
+        user_operation_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
         books_purchase_obj = BooksPurchase.objects.all().order_by('published_date')
         books_subject_obj = Subject.objects.all()
         books_scrapped_obj = BooksScrapped.objects.all().order_by('scrap_date')
         return render(request, "scrapped_book_report.html",
-                      {"user_operations_obj": user_operations_obj, "user_info_obj": user_info_obj,
+                      {"user_operations_obj": user_operation_obj, "user_info_obj": user_info_obj,
                        "books_scrapped_obj": books_scrapped_obj,
                        "books_subject_obj": books_subject_obj, "books_purchase_obj": books_purchase_obj})
     except:
