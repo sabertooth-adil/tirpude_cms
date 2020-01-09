@@ -1,7 +1,6 @@
 from django.urls import path
 
-from manage_student.views import save_notes, notes, edit_notes, update_notes, delete_notes, add_syllabus, syllabus, \
-    delete_syllabus, edit_syllabus, update_syllabus
+from manage_student.views import *
 
 urlpatterns = [
     path('save-notes/', save_notes, name='save_notes'),

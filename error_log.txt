@@ -1,0 +1,534 @@
+2020-01-09 10:31:45.882187
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 199, in _get_session
+    return self._session_cache
+AttributeError: 'SessionStore' object has no attribute '_session_cache'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 197, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 233, in get_new_connection
+    return Database.connect(**conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\__init__.py", line 84, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 179, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+MySQLdb._exceptions.OperationalError: (2002, "Can't connect to MySQL server on '15.206.60.193' (10060)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 265, in profile_user
+    session = request.session.get("user_id")
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 75, in get
+    return self._session.get(key, default)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 204, in _get_session
+    self._session_cache = self.load()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\db.py", line 43, in load
+    s = self._get_session_from_db()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\db.py", line 34, in _get_session_from_db
+    expire_date__gt=timezone.now()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 411, in get
+    num = len(clone)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 258, in __len__
+    self._fetch_all()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 1261, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 57, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1135, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 260, in cursor
+    return self._cursor()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 236, in _cursor
+    self.ensure_connection()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 197, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 233, in get_new_connection
+    return Database.connect(**conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\__init__.py", line 84, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 179, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (2002, "Can't connect to MySQL server on '15.206.60.193' (10060)")
+
+
+2020-01-09 10:31:47.643353
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 199, in _get_session
+    return self._session_cache
+AttributeError: 'SessionStore' object has no attribute '_session_cache'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 197, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 233, in get_new_connection
+    return Database.connect(**conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\__init__.py", line 84, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 179, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+MySQLdb._exceptions.OperationalError: (2002, "Can't connect to MySQL server on '15.206.60.193' (10060)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 265, in profile_user
+    session = request.session.get("user_id")
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 75, in get
+    return self._session.get(key, default)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 204, in _get_session
+    self._session_cache = self.load()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\db.py", line 43, in load
+    s = self._get_session_from_db()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\db.py", line 34, in _get_session_from_db
+    expire_date__gt=timezone.now()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 411, in get
+    num = len(clone)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 258, in __len__
+    self._fetch_all()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 1261, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 57, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1135, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 260, in cursor
+    return self._cursor()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 236, in _cursor
+    self.ensure_connection()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 197, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 233, in get_new_connection
+    return Database.connect(**conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\__init__.py", line 84, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 179, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (2002, "Can't connect to MySQL server on '15.206.60.193' (10060)")
+
+
+2020-01-09 15:40:25.539271
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 283, in profile_user
+    address_detail_obj = AddressDetail.objects.get(fk_user_info_id=session)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+authentication.models.AddressDetail.DoesNotExist: AddressDetail matching query does not exist.
+
+
+2020-01-09 15:43:17.603642
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 283, in profile_user
+    address_detail_obj = AddressDetail.objects.get(fk_user_info_id=session)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+authentication.models.AddressDetail.DoesNotExist: AddressDetail matching query does not exist.
+
+
+2020-01-09 18:29:43.800556
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 199, in _get_session
+    return self._session_cache
+AttributeError: 'SessionStore' object has no attribute '_session_cache'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 197, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 233, in get_new_connection
+    return Database.connect(**conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\__init__.py", line 84, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 179, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+MySQLdb._exceptions.OperationalError: (2002, "Can't connect to MySQL server on '3.6.127.100' (10060)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\aptitude\views.py", line 33, in aptitude_test
+    session = request.session.get('user_id')
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 75, in get
+    return self._session.get(key, default)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 204, in _get_session
+    self._session_cache = self.load()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\db.py", line 43, in load
+    s = self._get_session_from_db()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\db.py", line 34, in _get_session_from_db
+    expire_date__gt=timezone.now()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 411, in get
+    num = len(clone)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 258, in __len__
+    self._fetch_all()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 1261, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 57, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1135, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 260, in cursor
+    return self._cursor()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 236, in _cursor
+    self.ensure_connection()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 197, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 233, in get_new_connection
+    return Database.connect(**conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\__init__.py", line 84, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 179, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (2002, "Can't connect to MySQL server on '3.6.127.100' (10060)")
+
+
+2020-01-09 18:30:47.136055
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.OperationalError: (2013, 'Lost connection to MySQL server during query')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\aptitude\views.py", line 60, in aptitude_test
+    dict_data['total'] = AllottedQuestion.objects.filter(fk_aptitude_set_id=i.id).count()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 397, in count
+    return self.query.get_count(using=self.db)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 516, in get_count
+    number = obj.get_aggregation(using, ['__count'])['__count']
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 501, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1137, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 100, in execute
+    return super().execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 68, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 77, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+django.db.utils.OperationalError: (2013, 'Lost connection to MySQL server during query')
+
+
+2020-01-09 18:31:01.528633
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 199, in _get_session
+    return self._session_cache
+AttributeError: 'SessionStore' object has no attribute '_session_cache'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 197, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 233, in get_new_connection
+    return Database.connect(**conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\__init__.py", line 84, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 179, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+MySQLdb._exceptions.OperationalError: (2002, "Can't connect to MySQL server on '3.6.127.100' (10060)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\aptitude\views.py", line 33, in aptitude_test
+    session = request.session.get('user_id')
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 75, in get
+    return self._session.get(key, default)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 204, in _get_session
+    self._session_cache = self.load()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\db.py", line 43, in load
+    s = self._get_session_from_db()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\db.py", line 34, in _get_session_from_db
+    expire_date__gt=timezone.now()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 411, in get
+    num = len(clone)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 258, in __len__
+    self._fetch_all()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 1261, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 57, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1135, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 260, in cursor
+    return self._cursor()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 236, in _cursor
+    self.ensure_connection()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 197, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 233, in get_new_connection
+    return Database.connect(**conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\__init__.py", line 84, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 179, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (2002, "Can't connect to MySQL server on '3.6.127.100' (10060)")
+
+
+2020-01-09 18:34:50.870237
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 199, in _get_session
+    return self._session_cache
+AttributeError: 'SessionStore' object has no attribute '_session_cache'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 264, in _set_autocommit
+    self.connection.autocommit(autocommit)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 224, in autocommit
+    _mysql.connection.autocommit(self, on)
+MySQLdb._exceptions.OperationalError: (2013, 'Lost connection to MySQL server during query')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\aptitude\views.py", line 33, in aptitude_test
+    session = request.session.get('user_id')
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 75, in get
+    return self._session.get(key, default)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 204, in _get_session
+    self._session_cache = self.load()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\db.py", line 43, in load
+    s = self._get_session_from_db()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\db.py", line 34, in _get_session_from_db
+    expire_date__gt=timezone.now()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 411, in get
+    num = len(clone)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 258, in __len__
+    self._fetch_all()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 1261, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 57, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1135, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 260, in cursor
+    return self._cursor()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 236, in _cursor
+    self.ensure_connection()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 198, in connect
+    self.set_autocommit(self.settings_dict['AUTOCOMMIT'])
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 416, in set_autocommit
+    self._set_autocommit(autocommit)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 264, in _set_autocommit
+    self.connection.autocommit(autocommit)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 264, in _set_autocommit
+    self.connection.autocommit(autocommit)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 224, in autocommit
+    _mysql.connection.autocommit(self, on)
+django.db.utils.OperationalError: (2013, 'Lost connection to MySQL server during query')
+
+
+2020-01-09 18:35:12.874937
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 199, in _get_session
+    return self._session_cache
+AttributeError: 'SessionStore' object has no attribute '_session_cache'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 197, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 233, in get_new_connection
+    return Database.connect(**conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\__init__.py", line 84, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 179, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+MySQLdb._exceptions.OperationalError: (2002, "Can't connect to MySQL server on '3.6.127.100' (10051)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\aptitude\views.py", line 33, in aptitude_test
+    session = request.session.get('user_id')
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 75, in get
+    return self._session.get(key, default)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 204, in _get_session
+    self._session_cache = self.load()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\db.py", line 43, in load
+    s = self._get_session_from_db()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\db.py", line 34, in _get_session_from_db
+    expire_date__gt=timezone.now()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 411, in get
+    num = len(clone)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 258, in __len__
+    self._fetch_all()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 1261, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 57, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1135, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 260, in cursor
+    return self._cursor()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 236, in _cursor
+    self.ensure_connection()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 197, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 233, in get_new_connection
+    return Database.connect(**conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\__init__.py", line 84, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 179, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (2002, "Can't connect to MySQL server on '3.6.127.100' (10051)")
+
+

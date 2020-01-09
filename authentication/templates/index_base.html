@@ -99,6 +99,44 @@
 {#                            {% endfor %}#}
                         </ul>
                     </li>
+{#                    {% for i in  user_operation_obj %}#}
+{#                    {% if i.fk_modules.module_name == "Aptitude" and i.status == "master_module" %}#}
+{#                    {% if i.special_data == "Y" %}#}
+                    <li class="nav-main-item" id="AptitudeMainNavPage">
+                        <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                            aria-expanded="false" href="#">
+                           <img class="icon-size" src="{% static "media/dashboard-icons/icons-aptitude.png" %}" alt="icon">
+                            <span class="nav-main-link-name">&nbsp;&nbsp;Aptitude</span>
+                        </a>
+                        <ul class="nav-main-submenu">
+{#                            {% for i in  user_operation_obj %}#}
+{#                            {% if i.fk_screen.screen_url == "aptitude_test" %}#}
+{#                            {% if i.view_data == "Y" %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'aptitude_test' %}" id="AptitudeTestNavPage">
+                                    <span class="nav-main-link-name" style="padding-left: 10px;">Create / Edit
+                                        Test</span>
+                                </a>
+                            </li>
+{#                            {% endif %}#}
+{#                            {% endif %}#}
+{#                            {% endfor %}#}
+{#                            {% for i in  user_operation_obj %}#}
+{#                            {% if i.fk_screen.screen_url == "aptitude_score" %}#}
+{#                            {% if i.view_data == "Y" %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'aptitude_score' %}" id="AptitudeScoreNavPage">
+                                    <span class="nav-main-link-name" style="padding-left: 10px;">Test Score</span>
+                                </a>
+                            </li>
+{#                            {% endif %}#}
+{#                            {% endif %}#}
+{#                            {% endfor %}#}
+                        </ul>
+                    </li>
+{#                    {% endif %}#}
+{#                    {% endif %}#}
+{#                    {% endfor %}#}
                 {% endif %}
             </ul>
         </div>

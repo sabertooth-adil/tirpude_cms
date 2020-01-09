@@ -205,14 +205,16 @@ def syllabus(request):
             user_operation_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
             syllabus_obj = AcademicSyllabus.objects.all()
             return render(request, "faculty_syllabus.html", {"user_operation_obj": user_operation_obj,
-                                                             "user_info_obj": user_info_obj, "syllabus_obj": syllabus_obj,
+                                                             "user_info_obj": user_info_obj,
+                                                             "syllabus_obj": syllabus_obj,
                                                              "course_obj": course_obj, "semester_obj": semesters_obj,
                                                              "subject_obj": subject_obj})
         else:
             semester_obj = AcademicInfo.objects.get(fk_user_info_id=session)
             syllabus_obj = AcademicSyllabus.objects.filter(fk_course=semester_obj.fk_course,
                                                            fk_semesters=semester_obj.fk_semesters)
-            return render(request, "academic_syllabus.html", {"user_info_obj": user_info_obj, "syllabus_obj": syllabus_obj})
+            return render(request, "academic_syllabus.html", {"user_info_obj": user_info_obj,
+                                                              "syllabus_obj": syllabus_obj})
     except:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')

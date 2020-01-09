@@ -31,5 +31,6 @@ urlpatterns = [
                   path('', include('authentication.urls')),
                   path('', include('manage_student.urls')),
                   path('', include('attendance.urls')),
+                  path('', include('aptitude.urls'))
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
