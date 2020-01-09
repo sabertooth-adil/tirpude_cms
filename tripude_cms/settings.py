@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'authentication',
     'master_forms',
     'attendance',
+    'time_table',
 ]
 
 MIDDLEWARE = [

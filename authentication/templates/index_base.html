@@ -54,12 +54,50 @@
                                 <span class="nav-main-link-name">&nbsp;&nbsp;Attendance</span>
                             </a>
                         </li>
+                        <li class="nav-main-item">
+                            <a class="nav-main-link" href="{% url 'time-table' %}" id="TimeTableNavPage">
+                                <img class="icon-size" src="{% static "media/dashboard-icons/icon-timetable.png" %}" alt="icon">
+                                <span class="nav-main-link-name">&nbsp;&nbsp;Time Table</span>
+                            </a>
+                        </li>
                     {% else %}
                         <li class="nav-main-item">
                             <a class="nav-main-link" href="/attendance/" id="AttendanceNavPage">
                                 <img class="icon-size" src="{% static "media/dashboard-icons/icon-attendance.png" %}" alt="icon">
                                 <span class="nav-main-link-name">&nbsp; &nbsp;Attendance</span>
                             </a>
+                        </li>
+                        <li class="nav-main-item" id="TimeTableMainNavPage">
+                            <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                                aria-expanded="false" href="#">
+                                <img class="icon-size" src="{% static "media/dashboard-icons/icon-timetable.png" %}" alt="icon">
+                                <span class="nav-main-link-name">&nbsp; &nbsp;Time Table</span>
+                            </a>
+                            <ul class="nav-main-submenu">
+                                <li class="nav-main-item">
+                                    <a class="nav-main-link" href="{% url 'time-table' %}" id="TimeTableNavPage">
+                                        <span class="nav-main-link-name" style="padding-left: 10px;">Time Table</span>
+                                    </a>
+                                </li>
+                                <li class="nav-main-item">
+                                    <a class="nav-main-link" href="{% url 'faculty-workload' %}" id="FacultyWorkloadNavPage">
+                                        <span class="nav-main-link-name" style="padding-left: 10px;">My WorkLoad</span>
+                                    </a>
+                                </li>
+                                <li class="nav-main-item">
+                                    <a class="nav-main-link" href="{% url 'all-time-table' %}" id="AllTimeTableNavPage">
+                                        <span class="nav-main-link-name" style="padding-left: 10px;">View All
+                                            TimeTable</span>
+                                    </a>
+                                </li>
+                                <li class="nav-main-item">
+                                    <a class="nav-main-link" href="{% url 'all-faculty-workload' %}"
+                                        id="AllFacultyWorkloadNavPage">
+                                        <span class="nav-main-link-name" style="padding-left: 10px;">View All
+                                            WorkLoad</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     {% endif %}
                 </ul>
