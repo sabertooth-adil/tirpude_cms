@@ -5,7 +5,7 @@ import sys
 
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tripude_cms.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tirpude_cms.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

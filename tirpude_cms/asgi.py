@@ -1,5 +1,5 @@
 """
-ASGI config for tripude_cms project.
+ASGI config for tirpude_cms project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tripude_cms.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tirpude_cms.settings')
 
 application = get_asgi_application()
