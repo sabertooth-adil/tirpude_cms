@@ -1,0 +1,41 @@
+<div class="block-header">
+<table class="table align-items-center table-flush">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Roll No.</th>
+        <th scope="col">Student Name</th>
+        <th scope="col">Submission</th>
+        <th scope="col">Select</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for i in student_list %}
+        {% for j in academic_info_obj %}
+            {% if i.fk_user_info.id ==  j.fk_user_info.id %}
+      <tr>
+        <td>
+          {{ j.roll_no }}
+        </td>
+        <td scope="row">
+          <div class="media align-items-center">
+            <div class="media-body">
+              <span class="mb-0 text-sm">{{i.fk_user_info.first_name}} {{i.fk_user_info.last_name}}</span>
+            </div>
+          </div>
+        </td>
+        <td>
+        {% if i.submission_date %}
+            Submitted
+        {% else %}
+
+        {% endif %}
+        </td>
+        <td>
+           <label><input name="student{{i.fk_user_info_id}}" id="studentselect" type="checkbox" value="{{ i.fk_user_info_id }}" checked  {% if i.submission_date %} disabled {% endif %}></label>
+        </td>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    </tbody>
+</table>
+</div>

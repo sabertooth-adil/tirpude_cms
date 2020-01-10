@@ -1,0 +1,29 @@
+<div class="block-header">
+<table class="table align-items-center table-flush">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Roll No.</th>
+        <th scope="col">Student Name</th>
+        <th scope="col">Select</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for i in academic_info_obj %}
+      <tr>
+        <td>
+          {{i.roll_no}}
+        </td>
+        <td scope="row">
+          <div class="media align-items-center">
+            <div class="media-body">
+              <span class="mb-0 text-sm">{{i.fk_user_info.first_name}} {{i.fk_user_info.middle_name}} {{i.fk_user_info.last_name}}</span>
+            </div>
+          </div>
+        </td>
+        <td>
+           <label><input name="student{{i.fk_user_info_id}}" id="studentselect" type="checkbox" value="{{ i.fk_user_info_id }}" checked></label>
+        </td>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
