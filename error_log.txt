@@ -532,3 +532,1550 @@ Traceback (most recent call last):
 django.db.utils.OperationalError: (2002, "Can't connect to MySQL server on '3.6.127.100' (10051)")
 
 
+2020-01-10 11:10:03.849191
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 199, in _get_session
+    return self._session_cache
+AttributeError: 'SessionStore' object has no attribute '_session_cache'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 197, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 233, in get_new_connection
+    return Database.connect(**conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\__init__.py", line 84, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 179, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+MySQLdb._exceptions.OperationalError: (2013, "Lost connection to MySQL server at 'handshake: reading inital communication packet', system error: 0")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\aptitude\views.py", line 33, in aptitude_test
+    session = request.session.get('user_id')
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 75, in get
+    return self._session.get(key, default)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 204, in _get_session
+    self._session_cache = self.load()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\db.py", line 43, in load
+    s = self._get_session_from_db()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\db.py", line 34, in _get_session_from_db
+    expire_date__gt=timezone.now()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 411, in get
+    num = len(clone)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 258, in __len__
+    self._fetch_all()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 1261, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 57, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1135, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 260, in cursor
+    return self._cursor()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 236, in _cursor
+    self.ensure_connection()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 197, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 233, in get_new_connection
+    return Database.connect(**conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\__init__.py", line 84, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 179, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (2013, "Lost connection to MySQL server at 'handshake: reading inital communication packet', system error: 0")
+
+
+2020-01-10 11:14:55.834739
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.OperationalError: (1053, 'Server shutdown in progress')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 283, in profile_user
+    address_detail_obj = AddressDetail.objects.get(fk_user_info_id=session)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 411, in get
+    num = len(clone)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 258, in __len__
+    self._fetch_all()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 1261, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 57, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1137, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 100, in execute
+    return super().execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 68, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 77, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+django.db.utils.OperationalError: (1053, 'Server shutdown in progress')
+
+
+2020-01-10 11:14:55.866726
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.OperationalError: (1053, 'Server shutdown in progress')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 311, in profile_user
+    "address_detail_obj": address_detail_obj, "user_operation_obj": user_operation_obj})
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\defaulttags.py", line 166, in render
+    len_values = len(values)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 258, in __len__
+    self._fetch_all()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 1261, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 57, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1137, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 100, in execute
+    return super().execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 68, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 77, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+django.db.utils.OperationalError: (1053, 'Server shutdown in progress')
+
+
+2020-01-10 11:14:55.866726
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.OperationalError: (1053, 'Server shutdown in progress')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 311, in profile_user
+    "address_detail_obj": address_detail_obj, "user_operation_obj": user_operation_obj})
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\defaulttags.py", line 166, in render
+    len_values = len(values)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 258, in __len__
+    self._fetch_all()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 1261, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 57, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1137, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 100, in execute
+    return super().execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 68, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 77, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+django.db.utils.OperationalError: (1053, 'Server shutdown in progress')
+
+
+2020-01-10 11:14:55.865717
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.OperationalError: (1053, 'Server shutdown in progress')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 311, in profile_user
+    "address_detail_obj": address_detail_obj, "user_operation_obj": user_operation_obj})
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\defaulttags.py", line 166, in render
+    len_values = len(values)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 258, in __len__
+    self._fetch_all()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 1261, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 57, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1137, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 100, in execute
+    return super().execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 68, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 77, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+django.db.utils.OperationalError: (1053, 'Server shutdown in progress')
+
+
+2020-01-10 11:14:55.866726
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.OperationalError: (1053, 'Server shutdown in progress')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 311, in profile_user
+    "address_detail_obj": address_detail_obj, "user_operation_obj": user_operation_obj})
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\template\defaulttags.py", line 166, in render
+    len_values = len(values)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 258, in __len__
+    self._fetch_all()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 1261, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 57, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1137, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 100, in execute
+    return super().execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 68, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 77, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+django.db.utils.OperationalError: (1053, 'Server shutdown in progress')
+
+
+2020-01-10 11:16:10.816460
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 199, in _get_session
+    return self._session_cache
+AttributeError: 'SessionStore' object has no attribute '_session_cache'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 197, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 233, in get_new_connection
+    return Database.connect(**conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\__init__.py", line 84, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 179, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+MySQLdb._exceptions.OperationalError: (2002, "Can't connect to MySQL server on '3.6.127.100' (10060)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 265, in profile_user
+    session = request.session.get("user_id")
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 75, in get
+    return self._session.get(key, default)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 204, in _get_session
+    self._session_cache = self.load()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\db.py", line 43, in load
+    s = self._get_session_from_db()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\db.py", line 34, in _get_session_from_db
+    expire_date__gt=timezone.now()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 411, in get
+    num = len(clone)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 258, in __len__
+    self._fetch_all()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 1261, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 57, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1135, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 260, in cursor
+    return self._cursor()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 236, in _cursor
+    self.ensure_connection()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 197, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 233, in get_new_connection
+    return Database.connect(**conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\__init__.py", line 84, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 179, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (2002, "Can't connect to MySQL server on '3.6.127.100' (10060)")
+
+
+2020-01-10 11:16:12.576990
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 199, in _get_session
+    return self._session_cache
+AttributeError: 'SessionStore' object has no attribute '_session_cache'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 197, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 233, in get_new_connection
+    return Database.connect(**conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\__init__.py", line 84, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 179, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+MySQLdb._exceptions.OperationalError: (2002, "Can't connect to MySQL server on '3.6.127.100' (10060)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 265, in profile_user
+    session = request.session.get("user_id")
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 75, in get
+    return self._session.get(key, default)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 204, in _get_session
+    self._session_cache = self.load()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\db.py", line 43, in load
+    s = self._get_session_from_db()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\db.py", line 34, in _get_session_from_db
+    expire_date__gt=timezone.now()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 411, in get
+    num = len(clone)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 258, in __len__
+    self._fetch_all()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 1261, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 57, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1135, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 260, in cursor
+    return self._cursor()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 236, in _cursor
+    self.ensure_connection()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 197, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 233, in get_new_connection
+    return Database.connect(**conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\__init__.py", line 84, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 179, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (2002, "Can't connect to MySQL server on '3.6.127.100' (10060)")
+
+
+2020-01-10 11:16:15.205672
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 199, in _get_session
+    return self._session_cache
+AttributeError: 'SessionStore' object has no attribute '_session_cache'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 197, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 233, in get_new_connection
+    return Database.connect(**conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\__init__.py", line 84, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 179, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+MySQLdb._exceptions.OperationalError: (2002, "Can't connect to MySQL server on '3.6.127.100' (10060)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 265, in profile_user
+    session = request.session.get("user_id")
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 75, in get
+    return self._session.get(key, default)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\base.py", line 204, in _get_session
+    self._session_cache = self.load()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\db.py", line 43, in load
+    s = self._get_session_from_db()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\contrib\sessions\backends\db.py", line 34, in _get_session_from_db
+    expire_date__gt=timezone.now()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 411, in get
+    num = len(clone)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 258, in __len__
+    self._fetch_all()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 1261, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 57, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1135, in execute_sql
+    cursor = self.connection.cursor()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 260, in cursor
+    return self._cursor()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 236, in _cursor
+    self.ensure_connection()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 220, in ensure_connection
+    self.connect()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\base\base.py", line 197, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\backends\mysql\base.py", line 233, in get_new_connection
+    return Database.connect(**conn_params)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\__init__.py", line 84, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\MySQLdb\connections.py", line 179, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (2002, "Can't connect to MySQL server on '3.6.127.100' (10060)")
+
+
+2020-01-10 11:44:25.786411
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 117, in get_degree_stream_or_field_list
+    DegreeStreamOrField.objects.filter(fk_degree_id=degree).values_list("id", "stream_or_field_name"))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 11:44:25.787412
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 62, in get_city_district_list
+    city_list = list(City.objects.filter(fk_state_id=state_id).values_list("id", "city"))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 11:44:25.787412
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 80, in get_sub_cast_list
+    sub_cast_list = list(SubCast.objects.filter(fk_cast_id=cast).values_list("id", "sub_cast"))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 11:44:25.787412
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 98, in get_stream_or_field_list
+    StreamOrField.objects.filter(fk_twelveth_or_diploma_id=twelveth_or_diploma).values_list("id",
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 11:44:25.788412
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 62, in get_city_district_list
+    city_list = list(City.objects.filter(fk_state_id=state_id).values_list("id", "city"))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 11:51:11.873587
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\manage_student\views.py", line 206, in syllabus
+    user_info_obj = UserInfos.objects.get(id=session)
+NameError: name 'UserInfos' is not defined
+
+
+2020-01-10 13:07:31.283596
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 80, in get_sub_cast_list
+    sub_cast_list = list(SubCast.objects.filter(fk_cast_id=cast).values_list("id", "sub_cast"))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 13:07:31.284595
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 98, in get_stream_or_field_list
+    StreamOrField.objects.filter(fk_twelveth_or_diploma_id=twelveth_or_diploma).values_list("id",
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 13:07:31.284595
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 62, in get_city_district_list
+    city_list = list(City.objects.filter(fk_state_id=state_id).values_list("id", "city"))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 13:07:31.282595
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 62, in get_city_district_list
+    city_list = list(City.objects.filter(fk_state_id=state_id).values_list("id", "city"))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 13:07:31.285609
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 117, in get_degree_stream_or_field_list
+    DegreeStreamOrField.objects.filter(fk_degree_id=degree).values_list("id", "stream_or_field_name"))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 13:09:33.360009
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 62, in get_city_district_list
+    city_list = list(City.objects.filter(fk_state_id=state_id).values_list("id", "city"))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 13:09:33.363003
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 62, in get_city_district_list
+    city_list = list(City.objects.filter(fk_state_id=state_id).values_list("id", "city"))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 13:09:33.363003
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 80, in get_sub_cast_list
+    sub_cast_list = list(SubCast.objects.filter(fk_cast_id=cast).values_list("id", "sub_cast"))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 13:09:33.367002
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 98, in get_stream_or_field_list
+    StreamOrField.objects.filter(fk_twelveth_or_diploma_id=twelveth_or_diploma).values_list("id",
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 13:09:33.367002
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 117, in get_degree_stream_or_field_list
+    DegreeStreamOrField.objects.filter(fk_degree_id=degree).values_list("id", "stream_or_field_name"))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 14:46:37.506152
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 62, in get_city_district_list
+    city_list = list(City.objects.filter(fk_state_id=state_id).values_list("id", "city"))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 14:46:37.506152
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 80, in get_sub_cast_list
+    sub_cast_list = list(SubCast.objects.filter(fk_cast_id=cast).values_list("id", "sub_cast"))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 14:46:37.506152
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 117, in get_degree_stream_or_field_list
+    DegreeStreamOrField.objects.filter(fk_degree_id=degree).values_list("id", "stream_or_field_name"))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 14:46:37.506152
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 62, in get_city_district_list
+    city_list = list(City.objects.filter(fk_state_id=state_id).values_list("id", "city"))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 14:46:37.506152
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 98, in get_stream_or_field_list
+    StreamOrField.objects.filter(fk_twelveth_or_diploma_id=twelveth_or_diploma).values_list("id",
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 14:48:02.676205
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 62, in get_city_district_list
+    city_list = list(City.objects.filter(fk_state_id=state_id).values_list("id", "city"))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 14:48:02.676205
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 80, in get_sub_cast_list
+    sub_cast_list = list(SubCast.objects.filter(fk_cast_id=cast).values_list("id", "sub_cast"))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 14:48:02.675230
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 62, in get_city_district_list
+    city_list = list(City.objects.filter(fk_state_id=state_id).values_list("id", "city"))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 14:48:02.677199
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 98, in get_stream_or_field_list
+    StreamOrField.objects.filter(fk_twelveth_or_diploma_id=twelveth_or_diploma).values_list("id",
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 14:48:02.678199
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 117, in get_degree_stream_or_field_list
+    DegreeStreamOrField.objects.filter(fk_degree_id=degree).values_list("id", "stream_or_field_name"))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\New folder\tripude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+

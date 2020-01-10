@@ -62,7 +62,7 @@
                         <div class="font-w400 text-dark">
                             <select class="form-control form-control-sm" id="filter_sections">
                                 <option value="" selected hidden>Select Section</option>
-                                {% for i in sections_obj %}
+                                {% for i in section_obj %}
                                 <option value="{{i.id}}">{{i.sections}}</option>
                                 {% endfor %}
                             </select>
@@ -160,7 +160,7 @@
                                     <select name="section" class="form-control form-control-sm form-control-alternative" id="sections" required disabled="disabled">
                                         <option value="" selected>Select Section
                                         </option>
-                                        {% for i in sections_obj %}
+                                        {% for i in section_obj %}
                                         <option value="{{i.id}}">{{i.sections}}</option>
                                         {% endfor %}
                                         <option value="">All</option>
@@ -234,7 +234,7 @@
                                     <select name="editsection" class="form-control form-control-sm form-control-alternative" id="editsection" required>
                                         <option value="" selected >Select Section
                                         </option>
-                                        {% for i in sections_obj %}
+                                        {% for i in section_obj %}
                                         <option value="{{i.id}}">{{i.sections}}</option>
                                         {% endfor %}
                                         <option value="">All</option>
@@ -682,7 +682,7 @@
         var filter_semesters = $("#filter_semesters").val();
         var filter_sections = $("#filter_sections").val();
         var filter_subject = $("#filter_subject").val();
-        var filter_chartfromdate = $("#filter_chartfromdate").val();
+        var filter_chartfrom_date = $("#filter_chartfromdate").val();
         var filter_charttodate = $("#filter_charttodate").val();
         $.ajax({
             url : "/FilterNotes/",

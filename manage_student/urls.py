@@ -13,5 +13,10 @@ urlpatterns = [
     path('delete_syllabus/', delete_syllabus, name='delete_syllabus'),
     path('edit_syllabus/', edit_syllabus, name='edit_syllabus'),
     path('update_syllabus/', update_syllabus, name='update_syllabus'),
-
+    path('assignment/', assignment, name='assignment'),
+    path('save-assignment/', save_assignment, name='save_assignment'),
+    path('edit-assignment/', edit_assignment, name='edit_assignment'),
+    path('assignment-get-student-list/', assignment_get_student_list, name='assignment_get_student_list'),
+    path('delete-assignment/', delete_assignment, name='delete_assignment'),
+    path('edit-student-list/', edit_assignment, name='edit_student_list'),
 ]

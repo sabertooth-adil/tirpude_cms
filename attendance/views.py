@@ -60,9 +60,9 @@ def Attendance(request):
     if session:
         user_info_obj = UserInfo.objects.get(id=session)
         if user_info_obj.fk_user_type.user_type == "Student":
-            academicinfo_obj = AcademicInfo.objects.get(fk_user_info_id=session)
-            subjects_obj = Subject.objects.filter(fk_course=academicinfo_obj.fk_course,
-                                                  fk_semesters=academicinfo_obj.fk_semesters)
+            academic_info_obj = AcademicInfo.objects.get(fk_user_info_id=session)
+            subjects_obj = Subject.objects.filter(fk_course=academic_info_obj.fk_course,
+                                                  fk_semesters=academic_info_obj.fk_semesters)
             for i in subjects_obj:
                 dict['presentinsubject'] = StudentAttendance.objects.filter(fk_student_user_info_id=session,
                                                                             fk_subjects_id=i.id,
@@ -91,16 +91,16 @@ def Attendance(request):
                 totalpercentage = 0.0
             return render(request, "student_attendance.html",
                           {"subjects_obj": subjects_obj, "list": list, "totalpercentage": totalpercentage,
-                           "academicinfo_obj": academicinfo_obj, "user_info_obj": user_info_obj, "to_date": date_list[0],
+                           "academic_info_obj": academic_info_obj, "user_info_obj": user_info_obj, "to_date": date_list[0],
                            "from_date": date_list[-1]})
         else:
             user_operation_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
             course_obj = Course.objects.all()
             semesters_obj = Semester.objects.all()
-            sections_obj = Section.objects.all()
+            section_obj = Section.objects.all()
             return render(request, "attendance.html",
                           {"user_operation_obj": user_operation_obj, "course_obj": course_obj,
-                           "semesters_obj": semesters_obj, "sections_obj": sections_obj, "user_info_obj": user_info_obj,
+                           "semesters_obj": semesters_obj, "section_obj": section_obj, "user_info_obj": user_info_obj,
                            "to_date": date_list[0], "from_date": date_list[-1]})
     else:
         return redirect("/")
@@ -125,7 +125,7 @@ def FilterAttendance(request):
     semesters = request.POST.get("semesters")
     sections = request.POST.get("sections")
     subject = request.POST.get("subject")
-    academicinfo_obj = AcademicInfo.objects.filter(fk_course_id=course, fk_semesters_id=semesters,
+    academic_info_obj = AcademicInfo.objects.filter(fk_course_id=course, fk_semesters_id=semesters,
                                                    fk_sections_id=sections)
     chartfromdate = request.POST.get("chartfromdate")
     charttodate = request.POST.get("charttodate")
@@ -146,7 +146,7 @@ def FilterAttendance(request):
         startdate_range = str(date_list[0].strftime('%Y-%m-%d'))
         enddate_range = str(date_list[-1].strftime('%Y-%m-%d'))
     print (date_list)
-    print ("academicinfo_obj", academicinfo_obj)
+    print ("academic_info_obj", academic_info_obj)
     subjects_obj = Subject.objects.filter(fk_course_id=course, fk_semesters_id=semesters)
     for s in subjects_obj:
         datelist = []
@@ -180,7 +180,7 @@ def FilterAttendance(request):
                 attcount = attcount + 1
                 a = a + AllSubjectList['datasets'][i]['data'][k]
         try:
-            presentstudentlist.append(round((a / (academicinfo_obj.count() * attcount)) * 100, 2))
+            presentstudentlist.append(round((a / (academic_info_obj.count() * attcount)) * 100, 2))
         except:
             presentstudentlist.append(0.0)
         a = 0
@@ -241,11 +241,11 @@ def FilterAttendance(request):
             dict = {}
     render_string = render_to_string("attendance_filter.html", {"user_operation_obj": user_operation_obj, "list": list,
                                                                 "distinctdate_obj": distinctdate_obj,
-                                                                "academicinfo_obj": academicinfo_obj,
+                                                                "academic_info_obj": academic_info_obj,
                                                                 "subjects_obj": subjects_obj,
                                                                 "AllSubjectList": json.dumps(AllSubjectList),
                                                                 "ChartPercentageData": json.dumps(ChartPercentageData),
-                                                                "totalstudent": academicinfo_obj.count(),
+                                                                "totalstudent": academic_info_obj.count(),
                                                                 "to_date": date_list[0], "from_date": date_list[-1]})
     return HttpResponse(render_string)
 
@@ -259,10 +259,10 @@ def AddAttendanceDetail(request):
     print ("course", course)
     print ("semesters", semesters)
     print ("sections", sections)
-    academicinfo_obj = AcademicInfo.objects.filter(fk_course_id=course, fk_semesters_id=semesters,
+    academic_info_obj = AcademicInfo.objects.filter(fk_course_id=course, fk_semesters_id=semesters,
                                                    fk_sections_id=sections)
-    if academicinfo_obj:
-        render_string = render_to_string("add_attendance_div.html", {"academicinfo_obj": academicinfo_obj})
+    if academic_info_obj:
+        render_string = render_to_string("add_attendance_div.html", {"academic_info_obj": academic_info_obj})
     else:
         render_string = "error"
     return HttpResponse(render_string)

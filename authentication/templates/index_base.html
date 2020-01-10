@@ -20,7 +20,7 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <link rel="stylesheet" id="css-main" href="{% static 'css/oneui.min.css' %}">
     <script src="{% static '/js/plugins/jquery/dist/jquery.min.js' %}"></script>
-    <link rel="stylesheet" href="{% static '/css/indexbase/index_base.css' %}">
+    <link rel="stylesheet" href="{% static '/css/index_base/index_base.css' %}">
 </head>
 <body>
 <div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-fixed page-header-dark">
@@ -95,6 +95,17 @@
                             </li>
                             {#                                    {% endif %}#}
                             {#                                {% endif %}#}
+                            {#                            {% endfor %}#}
+                            {#                            {% for i in  user_operation_obj %}#}
+                            {#                            {% if i.fk_screen.screen_url == "assignment" %}#}
+                            {#                            {% if i.view_data == "Y" %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="/assignment/" id="AssignmentNavPage">
+                                    <span class="nav-main-link-name" style="padding-left: 10px;">Assignment</span>
+                                </a>
+                            </li>
+                            {#                            {% endif %}#}
+                            {#                            {% endif %}#}
                             {#                            {% endfor %}#}
                         </ul>
                     </li>
@@ -171,6 +182,17 @@
                             </li>
                             {#                                    {% endif %}#}
                             {#                                {% endif %}#}
+                            {#                            {% endfor %}#}
+                            {#                            {% for i in  user_operation_obj %}#}
+                            {#                            {% if i.fk_screen.screen_url == "assignment" %}#}
+                            {#                            {% if i.view_data == "Y" %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="/assignment/" id="AssignmentNavPage">
+                                    <span class="nav-main-link-name" style="padding-left: 10px;">Assignment</span>
+                                </a>
+                            </li>
+                            {#                            {% endif %}#}
+                            {#                            {% endif %}#}
                             {#                            {% endfor %}#}
                         </ul>
                     </li>
