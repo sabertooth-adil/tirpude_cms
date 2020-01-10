@@ -1,16 +1,189 @@
-
-
-2020-01-07 12:03:27.695893
+2020-01-10 11:53:23.247700
 Traceback (most recent call last):
-  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 134, in admin_signup
-    obj_sections = Sections.objects.all()
-NameError: name 'Sections' is not defined
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.IntegrityError: (1451, 'Cannot delete or update a parent row: a foreign key constraint fails (`tirpude_cms`.`aptitude_aptitudesession`, CONSTRAINT `aptitude_aptitudeses_fk_user_info_id_b01abb8b_fk_authentic` FOREIGN KEY (`fk_user_info_id`) REFERENCES `authentication_userinfo` (`id`))')
 
+The above exception was the direct cause of the following exception:
 
-2020-01-07 12:03:29.951968
 Traceback (most recent call last):
-  File "D:\CMS\New folder\tripude_cms\authentication\views.py", line 134, in admin_signup
-    obj_sections = Sections.objects.all()
-NameError: name 'Sections' is not defined
+  File "D:\GIT CMS TIRPUDE\authenticate_user\views.py", line 154, in delete_register_request
+    user_info_detail_obj.delete()
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\base.py", line 937, in delete
+    return collector.delete()
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\deletion.py", line 332, in delete
+    count = query.delete_batch(pk_list, self.using)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\subqueries.py", line 41, in delete_batch
+    num_deleted += self.do_query(self.get_meta().db_table, self.where, using=using)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\subqueries.py", line 24, in do_query
+    cursor = self.get_compiler(using).execute_sql(CURSOR)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1137, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\backends\utils.py", line 100, in execute
+    return super().execute(sql, params)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\backends\utils.py", line 68, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\backends\utils.py", line 77, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+django.db.utils.IntegrityError: (1451, 'Cannot delete or update a parent row: a foreign key constraint fails (`tirpude_cms`.`aptitude_aptitudesession`, CONSTRAINT `aptitude_aptitudeses_fk_user_info_id_b01abb8b_fk_authentic` FOREIGN KEY (`fk_user_info_id`) REFERENCES `authentication_userinfo` (`id`))')
+
+
+2020-01-10 12:06:32.961499
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\authentication\views.py", line 62, in get_city_district_list
+    city_list = list(City.objects.filter(fk_state_id=state_id).values_list("id", "city"))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+
+2020-01-10 12:06:32.962501
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\authentication\views.py", line 62, in get_city_district_list
+    city_list = list(City.objects.filter(fk_state_id=state_id).values_list("id", "city"))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 12:06:32.962501
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\authentication\views.py", line 98, in get_stream_or_field_list
+    StreamOrField.objects.filter(fk_twelveth_or_diploma_id=twelveth_or_diploma).values_list("id",
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-10 12:06:32.961499
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\authentication\views.py", line 117, in get_degree_stream_or_field_list
+    DegreeStreamOrField.objects.filter(fk_degree_id=degree).values_list("id", "stream_or_field_name"))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
 
 
