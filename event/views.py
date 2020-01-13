@@ -602,12 +602,12 @@ def manage_finance_modal(request):
         my_list_data = []
         dict_data = {}
         e_total = 0
-        for i in activity_obj:
+        for activity in activity_obj:
             total = 0
-            dict_data["id"] = i.id
-            for j in ActivityItem.objects.filter(fk_activity=i.id):
-                total += j.item_quantity * j.item_cost
-                e_total += j.item_quantity * j.item_cost
+            dict_data["id"] = activity.id
+            for item in ActivityItem.objects.filter(fk_activity=activity.id):
+                total += item.item_quantity * item.item_cost
+                e_total += item.item_quantity * item.item_cost
             dict_data["total"] = total
             my_list_data.append(dict_data)
             dict_data = {}
@@ -827,7 +827,7 @@ def save_event_registration(request):
 
         try:
             event_registration_obj.fk_user_info_id = UserInfo.objects.get(id=session).id
-        except:
+        except Exception:
             pass
         event_registration_obj.first_name = first_name
         event_registration_obj.last_name = last_name
@@ -890,8 +890,7 @@ def event_registration_login(request):
                     "city": address_obj.fk_city.city
                 }
 
-                list_data = []
-                list_data.append(dict_data)
+                list_data = [dict_data]
                 return JsonResponse({"success": "success", "list": list_data})
             else:
                 return JsonResponse({"success": "unauthorized user"})

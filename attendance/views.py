@@ -43,6 +43,7 @@ def GetSubjects(request):
         subject_list = list(Subject.objects.filter(fk_semesters_id=semesters).values_list('id', 'subjects'))
     else:
         pass
+        subject_list = ""
     return HttpResponse(json.dumps(subject_list))
 
 def daterange(date1, date2):
