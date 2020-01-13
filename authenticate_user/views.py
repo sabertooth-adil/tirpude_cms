@@ -16,6 +16,11 @@ from attendance.views import date_range
 
 
 def authenticate_user(request):
+    """
+     Call Authenticate User Page
+    :param request:
+    :return:
+    """
     try:
         session = request.session.get('user_id')
         if session:
@@ -43,6 +48,11 @@ def authenticate_user(request):
 
 @csrf_exempt
 def activate_deactivate_user(request):
+    """
+    Activate or Deactivate User
+    :param request:
+    :return:
+    """
     try:
         id = request.POST.get("id")
         change_status = request.POST.get("change_status")
@@ -60,6 +70,11 @@ def activate_deactivate_user(request):
 
 @csrf_exempt
 def filter_authenticate_user(request):
+    """
+    Filter Authenticate User by user_type, status, to_date, from_date
+    :param request:
+    :return:
+    """
     try:
         session = request.session.get('user_id')
         if session:
@@ -146,6 +161,11 @@ def filter_authenticate_user(request):
 
 @csrf_exempt
 def delete_register_request(request):
+    """
+    Delete Register User
+    :param request:
+    :return:
+    """
     try:
         id = request.POST.get("id")
         print("id",id)
@@ -160,6 +180,11 @@ def delete_register_request(request):
 
 @csrf_exempt
 def assign_user_role(request):
+    """
+    Assign Role to User only registed as Faculty
+    :param request:
+    :return:
+    """
     try:
         id = request.POST.get("id")
         print(id)

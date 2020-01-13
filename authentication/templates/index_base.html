@@ -63,6 +63,27 @@
                             <span class="nav-main-link-name">&nbsp;&nbsp;Time Table</span>
                         </a>
                     </li>
+                    <li class="nav-main-item" id="PlacementMainNavPage">
+                        <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                            aria-expanded="false" href="#">
+                            <img class="icon-size" src="{% static "media/dashboard-icons/icons-aptitude.png" %}" alt="icon">
+                            <span class="nav-main-link-name">&nbsp;&nbsp;Placement</span>
+                        </a>
+                        <ul class="nav-main-submenu">
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="/StudentCompanyAppearances/" id="CompanyAppearanceNavPage">
+                                    <img class="icon-size" src="{% static "media/dashboard-icons/icon-exam.png" %}" alt="icon">
+                                    <span class="nav-main-link-name">&nbsp;&nbsp;&nbsp;Company Visited</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="/StudentMyPerformance/" id="StudentMyPerformanceNavPage">
+                                    <img class="icon-size" src="{% static "media/dashboard-icons/icon-exam.png" %}" alt="icon">
+                                    <span class="nav-main-link-name">&nbsp;&nbsp;&nbsp;My Performance</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 {% else %}
                     <li class="nav-main-item">
                         <a class="nav-main-link" href="/attendance/" id="AttendanceNavPage">
@@ -110,6 +131,38 @@
                             <img class="icon-size" src="https://img.icons8.com/ios/50/000000/approval.png">
                             <span class="nav-main-link-name">&nbsp;&nbsp;Authenticate User</span>
                         </a>
+                    </li>
+                    <li class="nav-main-item" id="PlacementMainNavPage">
+                        <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                           aria-expanded="false" href="#">
+                            <img class="icon-size" src="{% static "media/dashboard-icons/icons-aptitude.png" %}"
+                                 alt="icon">
+                            <span class="nav-main-link-name">&nbsp;&nbsp;Placement</span>
+                        </a>
+                        <ul class="nav-main-submenu">
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="/company/" id="CompanyNavPage">
+                                    <img class="icon-size" src="{% static "media/dashboard-icons/icon-exam.png" %}"
+                                         alt="icon">
+                                    <span class="nav-main-link-name">&nbsp;&nbsp;&nbsp;Company</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="/company-appearances/" id="CompanyAppearanceNavPage">
+                                    <img class="icon-size" src="{% static "media/dashboard-icons/icon-exam.png" %}"
+                                         alt="icon">
+                                    <span class="nav-main-link-name">&nbsp;&nbsp;&nbsp;Company Visited</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="/SearchStudentPerformance/"
+                                   id="SearchStudentPerformanceNavPage">
+                                    <img class="icon-size" src="{% static "media/dashboard-icons/icon-exam.png" %}"
+                                         alt="icon">
+                                    <span class="nav-main-link-name">&nbsp;&nbsp;&nbsp;Students Performance</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 {% endif %}
             </ul>

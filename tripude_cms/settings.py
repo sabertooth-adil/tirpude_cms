@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'attendance',
     'time_table',
     'authenticate_user',
+    'placement',
 ]
 
 MIDDLEWARE = [

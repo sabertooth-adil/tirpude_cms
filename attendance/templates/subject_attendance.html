@@ -1,0 +1,54 @@
+<table class="table table-striped table-hover table-borderless table-vcenter font-size-sm mb-0" id="mydatatable">
+    <thead class="thead-light">
+    <tr class="text-uppercase">
+        <th class="text-center" style="width: 10% !important;">Sr No.</th>
+        <th class="text-center" style="width: 10% !important;">Roll No.</th>
+        <th>Student Name</th>
+        <th style="width: 10%;">Action</th>
+        <th style="width: 10%;">View Detail</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for i in academic_info_date_wise_obj %}
+    <tr>
+        <td class="text-center">{{forloop.counter}}</td>
+        <td class="text-center">{{i.roll_no}}</td>
+        <td scope="row">
+            <div class="media align-items-center">
+                <div class="media-body">
+                    <span class="mb-0 text-sm">{{i.fk_user_info.first_name}} {% if i.fk_user_info.middle_name%}{{i.fk_user_info.middle_name}}{% endif %} {{i.fk_user_info.last_name}} {{i.attendance_status}}</span>
+                </div>
+            </div>
+        </td>
+        {% for j in student_attendance_obj %}
+        {% if i.fk_user_info.id == j.fk_student_user_info.id %}
+        {% if j.attendance_status == "P" %}
+        <td>
+            <label class="switch">
+                <div class="custom-control custom-switch custom-control-lg mb-2">
+                    <input type="checkbox" class="custom-control-input" id="PresentAbsentButton"
+                           name="PresentAbsentButton" value="{{i.fk_user_info.id}}" checked>
+                    <label class="custom-control-label switch-lg" for="example-sw-custom-lg1"></label>
+                </div>
+            </label>
+        </td>
+        {% else %}
+        <td>
+            <label class="switch">
+                <div class="custom-control custom-switch custom-control-lg mb-2">
+                    <input type="checkbox" class="custom-control-input" id="PresentAbsentButton"
+                           name="PresentAbsentButton" value="{{i.fk_user_info.id}}">
+                    <label class="custom-control-label switch-lg" for="example-sw-custom-lg1"></label>
+                </div>
+            </label>
+        </td>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        <td class="text-right">
+            <a class="btn btn-outline-primary btn-sm" href="#" onclick="StudentAttendanceDeatil({{i.fk_user_info.id}})">View Detail</a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

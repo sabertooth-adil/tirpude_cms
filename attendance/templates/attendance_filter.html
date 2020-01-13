@@ -1,0 +1,309 @@
+<!--<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>-->
+{% load static %}
+<script src="{% static '/js/Chartnew.min.js' %}"></script>
+<style>
+canvas{
+  height:400px !important;
+}
+.input-group-text {
+    padding: 4px 5px !important;
+    font-size: 11px !important;
+}
+.nu-green-button{
+    border-color: #009170;
+    color: #009170;
+    padding: 3px 6px 3px 6px;
+}
+.nu-green-button:hover{
+    background-color: #009170;
+    border-color: #009170;
+    padding: 3px 6px 3px 6px;
+}
+</style>
+<div class="content" style="padding: 0px !important;">
+    <div class="block">
+        <div class="block-content block-content-full" style="padding: 10px !important;">
+            <ul id="tabsJustified" class="nav nav-tabs nav-tabs-alt js-tabs-enabled">
+                <li class="nav-item"><a href="#PersonalInfo" data-toggle="tab" class="nav-link small text-uppercase active PersonalInfo">Attendance</a></li>
+                <li class="nav-item"><a href="#TuesdayInfo" data-toggle="tab" class="nav-link small text-uppercase TuesdayInfo">Charts</a></li>
+                <li class="nav-item ml-auto">
+                    <a href="#" class="btn btn-sm mr-2">Total Student : {{total_student}}</a>
+{#                    {% for u in user_operation_obj %}#}
+{#                        {% if u.fk_module.module_url == "Attendance"%}#}
+{#                            {% if u.save_data == "Y" %}#}
+                                <a href="#" class="btn btn-sm btn-primary" id="ShowAttendance_Button" onclick="AddAttendance_Div()">Add Attendance</a>
+{#                            {% endif %}#}
+{#                        {% endif %}#}
+{#                    {% endfor %}#}
+                    <button class="btn btn-sm btn-outline-primary" id="ShowAttendanceCharts_Button" onclick="ShowAttendanceCharts_Div()" style="display:none;">Show Attendance & Charts</button>
+                    <button class="btn btn-sm btn-outline-success nu-green-button" id="SaveAttendance_Button" style="display:none;" onclick="SaveAttendance()">Save</button>
+                    <button class="btn btn-sm btn-outline-primary nu-green-button" id="UpdateAttendance_Button" style="display:none;" onclick="UpdateAttendance()">Update</button>
+                </li>
+            </ul>
+            <br>
+            <div id="ShowAttendanceCharts_Div">
+            <div id="DateRangeFilter_Div">
+                <div id="tabsJustifiedContent" class="tab-content">
+                <div id="PersonalInfo" class="tab-pane fade active show">
+                    <div class="table-responsive">
+                        <table class="table table-vcenter">
+                            <thead class="thead-light">
+                            <tr>
+                                <th class="text-center" style="width: 10% !important;">Sr No.</th>
+                                <th class="text-center" style="width: 10% !important;">Date</th>
+                                <th class="text-center" style="width: 10% !important;">Subject</th>
+                                <th class="text-center" style="width: 10% !important;">Attendance</th>
+                                <th class="text-center" style="width: 10% !important;">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for i in list_data %}
+                            <tr>
+                                <td class="text-center font-size-sm">{{forloop.counter}}</td>
+                                <td class="text-center" scope="row">
+                                    <div class="media align-items-center">
+                                        <div class="media-body">
+                                            <span class="mb-0 text-sm">{{i.date}}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center" style="padding: 0rem !important;">
+                                    {% for j in i.subject_attendance_count %}
+                                        <span class="mb-0 text-sm">{{j.subject_name}}</span><br>
+                                    {% endfor %}
+                                </td>
+                                <td class="text-center font-size-sm">
+                                    {% for j in i.subject_attendance_count %}
+                                        <span class="mb-0 text-sm">{{j.subject_attendance_count}}</span><br>
+                                    {% endfor %}
+                                </td>
+                                <td class="text-center font-size-sm">
+                                    {% for j in i.subject_attendance_count %}
+{#                                        {% for u in user_operation_obj %}#}
+{#                                            {% if u.fk_module.module_url == "Attendance"%}#}
+{#                                                {% if u.edit_data == "Y" %}#}
+                                                    <button class="btn btn-sm btn-outline-primary mb-1" onclick="EditAttendance('{{j.subject_id}}','{{i.date|date:'Y-m-d'}}')"><i class="fa fa-edit fa-xs" aria-hidden="true"></i></button>
+{#                                                {% endif %}#}
+{#                                            {% endif %}#}
+{#                                        {% endfor %}#}
+                                    <br>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="TuesdayInfo" class="tab-pane fade">
+                    <div id="Chart_Div">
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+                            <canvas id="myChart" class="chartjs" max-height="500" style="display: block; height: 500px;"></canvas>
+                        </div>
+                        <br>
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+                            <canvas id="myChart2" class="chartjs" max-height="500" style="display: block; height: 500px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+            <div id="ShowAttendance_Div" style="display:none;">
+                <div class="row align-items-center">
+                    <div class="col text-right">
+                        <div class="row">
+                            <div class="col-lg-7">
+                            </div>
+                            <div class="col-lg-3">
+                                <select class="form-control form-control-sm" id="attendancesubject" name="subject">
+                                    <option value="" selected hidden>Select Subject</option>
+                                    {% for i in subjects_obj %}
+                                    <option value="{{i.id}}">{{i.subjects}}</option>
+                                    {% endfor %}
+                                </select>
+                                <span style="display:none;color:red;" id="err_attendancesubject">Please Select Subject</span>
+                            </div>
+                            <div class="col-lg-2">
+                                <input name="attendance_date" id="attendance_date" class="form-control form-control-sm form-control-alternative datepicker" data-date-end-date="0d" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" value="{{user_info_obj.dob|date:'Y-m-d'}}">
+                                <span style="display:none;color:red;" id="err_attendancedate">Please Select Date</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="table-responsive" id="studentlist_div">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$(document).ready( function () {
+    $('#mydatatable').DataTable();
+});
+$("#attendancesubject").change(function(){
+    $("#err_attendancesubject").hide();
+});
+$("#attendance_date").change(function(){
+    $("#err_attendancedate").hide();
+});
+$("#datepicker").datepicker({
+    autoclose: true
+});
+new Chart(document.getElementById("myChart2"),{
+  "type":"line",
+  "data":{{all_subject_list| safe}},
+  "options":{
+      responsive:true,
+      maintainAspectRatio: false
+  }
+});
+new Chart(document.getElementById("myChart"),{
+  "type":"line",
+  "data":{{chart_percentage_data| safe}},
+  "options":{
+      responsive:true,
+      maintainAspectRatio: false
+  }
+});
+$(function() {
+ $(".datepicker").datepicker({autoclose: true});
+});
+function AddAttendance_Div(){
+    var course = $("#course").val();
+    var semesters = $("#semesters").val();
+    var sections = $("#sections").val();
+    if(subject == ""){
+    $("#err_attendancesubject").show();
+    }
+    else if(attendance_date == ""){
+    $("#err_attendancedate").show();
+    }
+    else {
+        $("#loading").show();
+        $.ajax({
+          method : "POST",
+          url : "/add-attendance-detail/",
+          data : {
+            "course":course,
+            "semesters":semesters,
+            "sections":sections,
+          },
+          success:function(response){
+            console.log(response)
+            $("#loading").hide();
+            if(response == "error"){
+              swal("Sorry No Attendance Found for this Subject and Date!", {
+              icon: "success",
+              button: "Ok"
+              });
+            }
+            else{
+                $("#studentlist_div").html("");
+                $("#studentlist_div").append(response);
+                $(".custom-control-input").prop("checked", true);
+                $('#attendancesubject').attr('disabled', false);
+                $('#attendance_date').attr('disabled', false);
+                $('#attendancesubject').val("");
+                $('#attendance_date').val("");
+                $('#ShowAttendanceCharts_Div').hide();
+                $('#ShowAttendance_Div').show();
+                $('#ShowAttendance_Button').hide();
+                $('#SaveAttendance_Button').show();
+                $('#ShowAttendanceCharts_Button').show();
+                $(".TuesdayInfo").hide();
+                $(".PersonalInfo").hide();
+            }
+          }
+        })
+    }
+
+}
+function ShowAttendanceCharts_Div(){
+  $('#ShowAttendanceCharts_Div').show();
+  $('#ShowAttendanceCharts_Button').hide();
+  $('#ShowAttendance_Div').hide();
+  $('#UpdateAttendance_Button').hide();
+  $('#SaveAttendance_Button').hide();
+  $('#ShowAttendance_Button').show();
+  $(".TuesdayInfo").show();
+  $(".PersonalInfo").show();
+}
+function EditAttendance(subject_id,date){
+  var course = $("#course").val();
+  var semesters = $("#semesters").val();
+  var sections = $("#sections").val();
+  if(subject == ""){
+    $("#err_attendancesubject").show();
+  }
+  else if(attendance_date == ""){
+    $("#err_attendancedate").show();
+  }
+  else{
+    $("#loading").show();
+    $.ajax({
+      method : "POST",
+      url : "/filter-attendance-detail/",
+      data : {
+        "course":course,
+        "semesters":semesters,
+        "sections":sections,
+        "subject":subject_id,
+        "attendance_date":date
+      },
+      success:function(response){
+        console.log(response)
+        $("#loading").hide();
+        if(response == "error"){
+          swal("Sorry No Attendance Found for this Subject and Date!", {
+          icon: "success",
+          button: "Ok"
+          });
+        }
+        else{
+            $("#ShowAttendance_Div").show();
+            $("#studentlist_div").html("");
+            $("#studentlist_div").append(response);
+            $('#attendancesubject').attr('disabled', 'disabled');
+            $('#attendance_date').attr('disabled', 'disabled');
+            $("#ShowAttendanceCharts_Div").hide();
+            $("#ShowAttendance_Button").hide();
+            $("#ShowAttendanceCharts_Button").show();
+            $("#UpdateAttendance_Button").show();
+            $("#SaveAttendance_Button").hide();
+            $("#attendancesubject").val(subject_id);
+            $("#attendance_date").val(date);
+        }
+      }
+    })
+  }
+}
+function FilterChartAttendance(){
+    var chartsubject = $("#chartsubject").val();
+    var chart_from_date = $("#chart_from_date").val();
+    var chart_to_date = $("#chart_to_date").val();
+    var course = $("#course").val();
+    var semesters = $("#semesters").val();
+    var sections = $("#sections").val();
+    var subject = $("#subject").val();
+    $.ajax({
+        url : "/FilterChartAttendance/",
+        method : "POST",
+        data : {
+            "course":course,
+            "semesters":semesters,
+            "sections":sections,
+            "chartsubject":chartsubject,
+            "chart_from_date":chart_from_date,
+            "chart_to_date":chart_to_date,
+            "subject":subject
+        },
+        success:function(response){
+          console.log(response)
+            $("#DateRangeFilter_Div").html("")
+            $("#DateRangeFilter_Div").append(response)
+        }
+    })
+}
+</script>

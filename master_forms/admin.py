@@ -3,7 +3,7 @@ from django.contrib import admin
 from master_forms.models import AcademicSession, Module, Screen, UserType, UserRole, YearOfAdmission, UserOperation, \
     Nationality, State, City, District, Tehsil, PostalCode, Religion, Gender, BloodGroup, Course, Semester, Section, \
     TwelvethOrDiploma, StreamOrField, Subject, Day, Time, Lecture, Category, Reserved, ApplyingConcession, Cast, \
-    SubCast, Degree, DegreeStreamOrField, PhysicallyChallenged, MotherTongue
+    SubCast, Degree, DegreeStreamOrField, PhysicallyChallenged, MotherTongue, CompanyType, JobType, SelectionProcessTest
 
 
 class AcademicSessionAdmin(admin.ModelAdmin):
@@ -242,3 +242,24 @@ class PhysicallyChallengedAdmin(admin.ModelAdmin):
 
 
 admin.site.register(PhysicallyChallenged, PhysicallyChallengedAdmin)
+
+
+class CompanyTypeAdmin(admin.ModelAdmin):
+    list_display = ('company_type', 'id')
+
+
+admin.site.register(CompanyType, CompanyTypeAdmin)
+
+
+class JobTypeAdmin(admin.ModelAdmin):
+    list_display = ('job_type', 'id')
+
+
+admin.site.register(JobType, JobTypeAdmin)
+
+
+class SelectionProcessTestAdmin(admin.ModelAdmin):
+    list_display = ('test_name', 'id')
+
+
+admin.site.register(SelectionProcessTest, SelectionProcessTestAdmin)
