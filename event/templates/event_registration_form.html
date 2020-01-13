@@ -1,0 +1,507 @@
+{% load static %}
+<div class="sign-up-form">
+    <div class="row clearfix">
+        <div class="form-column order-12 col-lg-7 col-md-12 col-sm-12">
+            <div class="inner-column">
+                <div class="title-box">
+                    <h3 style="display:inline">{{ event_obj.event_title }} Registration</h3><span style="float: right;">Tirpude College Student:
+                    <input type="checkbox" onclick="open_login_form(this)"></span>
+                    <div class="text" id="login_message" style="display: none;">Welcome Back, Please login <br>to Tirpude college account</div>
+                </div>
+                <div class="text-center text-muted mb-4">
+              <span style="color: red; font-size: 12px; display:none" id="err_invalid_credentials">Username or Password is
+                Invalid.</span>
+                    <span style="display:none;color:red;font-size: 12px;" id="err_unauthorized_user">Profile is Not Activated.
+                Please Contact Administrator.</span>
+                </div>
+                <!--Login Form-->
+                <div id="registration_form_div">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                </div>
+                                <input type="text" class="form-control"
+                                       aria-label="Small" id="first_name"
+                                       aria-describedby="inputGroup-sizing-sm"
+                                       placeholder="First Name" form="save_event_registration" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                </div>
+                                <input type="text" class="form-control"
+                                       aria-label="Small" id="last_name"
+                                       aria-describedby="inputGroup-sizing-sm"
+                                       placeholder="Last Name" form="save_event_registration" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8 col-md-12 col-sm-12">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                </div>
+                                <input type="text" class="form-control"
+                                       aria-label="Small" id="college_name"
+                                       aria-describedby="inputGroup-sizing-sm"
+                                       placeholder="Your College" form="save_event_registration" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12 col-sm-12">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                </div>
+                                <select class="form-control form-control-sm"
+                                        id="course_year" name="blood_group"
+                                        form="save_event_registration" required>
+                                    <option value="" hidden selected>
+                                        Course Year
+                                    </option>
+                                    <option value="1">1st Year
+                                    </option>
+                                    <option value="2">2nd Year</option>
+                                    <option value="3">3rd Year</option>
+                                    <option value="3">4rth Year</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                </div>
+                                <input type="email" class="form-control"
+                                       aria-label="Small" id="email"
+                                       aria-describedby="inputGroup-sizing-sm"
+                                       placeholder="Email" form="save_event_registration" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                </div>
+                                <input type="text" class="form-control"
+                                       aria-label="Small" id="contact_no"
+                                       aria-describedby="inputGroup-sizing-sm"
+                                       maxlength="10"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                       placeholder="Mobile No." form="save_event_registration" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-9 col-md-12 col-sm-12">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                </div>
+                                <input type="text" class="form-control"
+                                       aria-label="Small" id="address"
+                                       aria-describedby="inputGroup-sizing-sm"
+                                       placeholder="Your Address" form="save_event_registration" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-12 col-sm-12">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                </div>
+                                <input type="text" class="form-control"
+                                       aria-label="Small" id="city"
+                                       aria-describedby="inputGroup-sizing-sm"
+                                       placeholder="City" form="save_event_registration" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group option-box">
+                        <span>I am</span>
+                        <div class="radio-box">
+                            <input type="radio" name="gender_select" id="maler" value="Male" form="save_event_registration"
+                                   required>&nbsp;
+                            <label for="male">Male</label>
+                        </div>
+                        <div class="radio-box">
+                            <input type="radio" name="gender_select" id="femaler" value="Female" form="save_event_registration"
+                                   required>&nbsp;
+                            <label for="female">Female</label>
+                        </div>
+                        <div class="radio-box">
+                            <input type="radio" name="gender_select" id="otherr" value="Other" form="save_event_registration"
+                                   required>
+                            <label for="other">Other</label>
+                        </div>
+                    </div>
+                    <table class="table table-sm table-bordered" id="activity_table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Activities</th>
+                            <th scope="col">Venue</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Duration</th>
+                            <th scope="col">Members</th>
+                            <th scope="col">Register</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for j in activity_obj %}
+                            <tr>
+                                <td>{{ j.activity_name }} </td>
+                                <td>{{ j.activity_venue }}</td>
+                                <td>{{ j.schedule_date|date:'d/m/Y' }}</td>
+                                <td>{{ j.start_time }} to {{ j.end_time }}</td>
+                                <td style="text-align: center">{% if j.activity_type == "Group 2" %} 2
+                                {% elif j.activity_type == "Group 3" %} 3
+                                {% elif j.activity_type == "Group 4" %} 4
+                                {% elif j.activity_type == "Group 5" %} 5
+                                {% elif j.activity_type == "Group 6" %} 6
+                                {% elif j.activity_type == "Group 7" %} 7
+                                {% elif j.activity_type == "Group 8" %} 8
+                                {% elif j.activity_type == "Group 9" %} 9
+                                {% elif j.activity_type == "Group 10" %} 10
+                                {% elif j.activity_type == "Group 11" %} 11
+                                {% elif j.activity_type == "Single" %} 1 {% endif %} </td>
+                                <td style="text-align: center"><input type="checkbox" id="checkbox{{ j.id }}"
+                                                                      name="activity_select" value="{{ j.id }}"
+                                                                      onclick="add_group_members({{ j.id }},'{{ j.activity_type }}',this)">
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <div id="grp_member_table" style="display:none;">
+                        <div class="block-header">
+                            <p class="block-title border" style="margin-bottom: 0rem;"><b style="padding-left: 0.3rem;">Group
+                                Members</b><span onclick="close_button()"
+                                                 style="float: right; padding-right: 0.5rem; cursor: pointer">×</span>
+                            </p>
+                        </div>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                            <tr>
+                                <th scope="col" style="width: 4rem;">Sr No.</th>
+                                <th scope="col">Name</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <input type="text" hidden id="activity_id">
+                            {#                            <tr>#}
+                            {#                                <td><input type="text" hidden id="activity_id"></td>#}
+                            {#                                <td><input type="text" id="grp_member" name="title"#}
+                            {#                                           class="form-control form-control-sm  form-control-alternative"#}
+                            {#                                           placeholder="Enter Group Member Name" required>#}
+                            {#                                    <span style="color: red;display: none" id="grp_member_name_error">Please Enter Name !</span>#}
+                            {#                                </td>#}
+                            {#                                <td style="text-align: center;">#}
+                            {#                                    <div class="btn btn-primary btn-sm" onclick="add_group_member()">Add Member#}
+                            {#                                    </div>#}
+                            {#                                </td>#}
+                            {#                            </tr>#}
+                            </tbody>
+                            <tbody id="activity_grp_member_tbody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="form-group btn-box">
+                        <form action="" id="save_event_registration" method="post" role="form"
+                              enctype="multipart/form-data">
+                            <button class="theme-btn btn-style-three"
+                                    type="submit"
+                                    name="submit-form" id="register_button">Register
+                            </button>
+                        </form>
+                        <form action="" id="save_grp_member" method="post" role="form" enctype="multipart/form-data">
+                            <button class="theme-btn btn-style-five"
+                                    type="submit" id="add_member_button"
+                                    style="display:none;text-align: center; border-radius: 0.8rem"
+                                    name="submit-form">Add Member
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div style="display:none;" id="login_form">
+                    <div class="form-group">
+                        <input type="text" name="username" id="email_id" placeholder="Email Address" required="" form="save_event_login" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" name="password" id="password" placeholder="Password" required="" form="save_event_login" required>
+                    </div>
+
+                    <div class="form-group check-box">
+                        <input type="checkbox" name="shipping-option" id="account-option-1" >&nbsp;
+                        <label for="account-option-1">Remember Password</label>
+                    </div>
+
+                    <div class="form-group btn-box">
+                        <form action="" id="save_event_login" method="post" role="form"
+                              enctype="multipart/form-data">
+                            <button class="theme-btn btn-style-three" type="submit" name="submit-form">Sign In</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="image-column col-lg-5 col-sm-12 col-sm-12"
+             style="background-image:url({% static 'Events/images/resource/sign-up.jpg' %})">
+        </div>
+    </div>
+</div>
+<script>
+    function add_group_members(id, type, e) {
+        console.log("function")
+        if (e.checked) {
+            console.log("in if")
+            if (type != "Single") {
+                $("#activity_id").val(id)
+                $("#activity_table").hide()
+                $("#grp_member_table").show()
+                $("#add_member_button").show()
+                $("#register_button").hide()
+                $("#activity_grp_member_tbody").html("")
+                if (type == "Group 2") {
+                    var lmt = 1
+                }
+                if (type == "Group 3") {
+                    var lmt = 2
+                }
+                if (type == "Group 4") {
+                    var lmt = 3
+                }
+                if (type == "Group 5") {
+                    var lmt = 4
+                }
+                if (type == "Group 6") {
+                    var lmt = 5
+                }
+                if (type == "Group 7") {
+                    var lmt = 6
+                }
+                if (type == "Group 8") {
+                    var lmt = 7
+                }
+                if (type == "Group 9") {
+                    var lmt = 8
+                }
+                if (type == "Group 10") {
+                    var lmt = 9
+                }
+                if (type == "Group 11") {
+                    var lmt = 10
+                }
+                var i;
+                for (i = 0; i < lmt; i++) {
+                    $("#activity_grp_member_tbody").append('<tr><td>' + (i + 1) + '.</td><td><input type="text" name="title"\n' +
+                        'class="form-control form-control-sm member-name  form-control-alternative"\n' +
+                        'placeholder="Enter Group Member Name" form="save_grp_member" required></td></tr>')
+                }
+            }
+        }
+        else {
+            console.log("in else")
+            var activity_id = $("#activity_id").val()
+            var event_registration_id = {{ event_registration_id }}
+                $.ajax({
+                    url: '/remove-grp-member/',
+                    method: "POST",
+                    data: {
+                        "activity_id": activity_id,
+                        "event_registration_id": event_registration_id,
+                    },
+                    success: function (response) {
+                        console.log(response)
+                    }
+                })
+        }
+    }
+
+    function close_button() {
+        var activity_id = $("#activity_id").val()
+        $("#activity_table").show()
+        $("#grp_member_table").hide()
+        $("#add_member_button").hide()
+        $("#register_button").show()
+        $("#checkbox" + activity_id).prop("checked", false)
+    }
+
+    $("#save_grp_member").submit(function (e) {
+        e.preventDefault();
+        var activity_id = $("#activity_id").val()
+        var event_registration_id =
+        {{ event_registration_id }}
+        var grp_member_name = $(".member-name")
+        var grp_member_list = []
+        for (var i = 0; i < grp_member_name.length; i++) {
+            grp_member_list.push($(grp_member_name[i]).val())
+        }
+
+        var formdata = new FormData();
+        formdata.append("activity_id", activity_id)
+        formdata.append("grp_member_list", grp_member_list)
+        formdata.append("event_registration_id", event_registration_id)
+
+        $.ajax({
+            url: "/add-grp-member/",
+            method: "POST",
+            enctype: 'multipart/form-data',
+            async: false,
+            cache: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            processData: false,
+            data: formdata,
+            success: function (response) {
+                console.log(response)
+                $("#activity_table").show()
+                $("#grp_member_table").hide()
+                $("#add_member_button").hide()
+                $("#register_button").show()
+                new jBox('Notice', {
+                    content: 'Group Members Added Successfully !',
+                    color: 'green',
+                    postition: '$(".image-column")'
+                });
+            }
+        })
+    })
+
+    $("#save_event_registration").submit(function (e) {
+        e.preventDefault();
+        var event_registration_id =
+        {{ event_registration_id }}
+        var first_name = $("#first_name").val()
+        var event_id = {{ event_obj.id }}
+        var last_name = $("#last_name").val()
+        var college = $("#college_name").val()
+        var course_year = $("#course_year").val()
+        var email = $("#email").val()
+        var contact_no = $("#contact_no").val()
+        var address = $("#address").val()
+        var city = $("#city").val()
+        var gender = $('input[name=gender_select]:checked').val()
+        var activity_selected_list = []
+        $('input[name=activity_select]:checked').each(function () {
+            activity_selected_list.push($(this).val());
+        });
+
+        var formdata = new FormData();
+        formdata.append("event_registration_id", event_registration_id)
+        formdata.append("event_id", event_id)
+        formdata.append("first_name", first_name)
+        formdata.append("last_name", last_name)
+        formdata.append("college", college)
+        formdata.append("course_year", course_year)
+        formdata.append("email", email)
+        formdata.append("contact_no", contact_no)
+        formdata.append("address", address)
+        formdata.append("city", city)
+        formdata.append("gender", gender)
+        formdata.append("activity_selected_list", activity_selected_list)
+        if (activity_selected_list.length == 0) {
+            console.log('in activity if')
+            new jBox('Notice', {
+                content: 'Pleas, Select atleast one activity !',
+                color: 'red',
+                postition: '$(".image-column")'
+            });
+        }
+        else {
+            $.ajax({
+                url: "/save-event-registration/",
+                method: "POST",
+                enctype: 'multipart/form-data',
+                async: false,
+                cache: false,
+                contentType: false,
+                enctype: 'multipart/form-data',
+                processData: false,
+                data: formdata,
+                success: function (response) {
+                    console.log(response)
+                    $("#register_button").attr("disabled", true);
+                    new jBox('Notice', {
+                        onOpen: function () {
+                            $(".mfp-content").hide()
+                            new jBox('Notice', {content: 'Pleas check your email for Event Pass', color: 'orange'});
+                            new jBox('Notice', {content: 'Registration successful!', color: 'green'});
+                        },
+                        onClose: function () {
+                            window.location.reload()
+                        }
+                    });
+                }
+            })
+        }
+    })
+
+    function open_login_form(e) {
+        if (e.checked) {
+            $("#login_form").show()
+            $("#registration_form_div").hide()
+            $("#login_message").show()
+        }
+        else {
+            $("#registration_form_div").show()
+            $("#login_form").hide()
+            $("#login_message").hide()
+            $("#err_invalid_credentials").hide();
+        }
+    }
+
+    $("#save_event_login").submit(function (e) {
+        e.preventDefault();
+        var email_id = $("#email_id").val()
+        var password = $("#password").val()
+
+
+        $.ajax({
+            method: "POST",
+            url: "/event-registration-login/",
+            data: {
+                "id_username": email_id,
+                "id_password": password
+            },
+            success: function (response) {
+                console.log(response)
+                if (response['success'] == "error") {
+                    $("#err_invalid_credentials").show();
+                }
+                else if (response['success'] == "unauthorized user") {
+                    $("#err_unauthorized_user").show();
+                }
+                else {
+                    $("#registration_form_div").show()
+                    $("#login_form").hide()
+                    $("#login_message").hide()
+                    $("#err_invalid_credentials").hide();
+                    $("#first_name").val(response['list']['0']['first_name'])
+                    $("#first_name").prop("disabled", true);
+                    $("#last_name").val(response['list']['0']['last_name'])
+                    $("#last_name").prop("disabled", true);
+                    $("#college_name").val("Tirpude College of Management")
+                    $("#college_name").prop("disabled", true)
+                    $("#email").val(response['list']['0']['email'])
+                    $("#email").prop("disabled", true)
+                    $("#course_year").val(response['list']['0']['year'])
+                    $("#course_year").prop("disabled", true)
+                    $("#contact_no").val(response['list']['0']['phone_no'])
+                    $("#contact_no").prop("disabled", true)
+                    $("#address").val(response['list']['0']['address'])
+                    $("#address").prop("disabled", true)
+                    $("#city").val(response['list']['0']['city'])
+                    $("#city").prop("disabled", true)
+                    if (response['list']['0']['gender'] == "Male"){
+                        $("#maler").prop("checked", true)
+                    }
+                    else if (response['list']['0']['gender'] == "Female"){
+                        $("#femaler").prop("checked", true)
+                    }
+                }
+            }
+        })
+
+    })
+
+
+</script>

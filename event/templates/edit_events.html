@@ -1,0 +1,1557 @@
+{% load static %}
+<style type="text/css" media="print">
+    @media print {
+  body {
+    background: none;
+    -ms-zoom: 1.665;
+  }
+  div.portrait, div.landscape {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+  }
+  div.landscape {
+    transform: rotate(270deg) translate(-276mm, 0);
+    transform-origin: 0 0;
+  }
+}
+</style>
+<div class="container-fluid mt--7" style="padding-top: 0.7rem" id="Event_content">
+    <div class="block" style="margin-bottom: 0;">
+        <div class="block-header">
+            <h3 class="block-title border-bottom pb-2">Event</h3>
+        </div>
+        <input id="event_id" type="hidden" value="{{ event_obj.id }}">
+            <div id="tabsJustifiedContent" class="tab-content">
+                <div id="PersonalInfo" class="tab-pane fade active show">
+                    <div class="card-body">
+                        <input type="hidden" name="assigementid" id="assigementid">
+                        <form action="" id="save_event" method="post" role="form" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="pl-lg-4">
+                                <div class="row">
+                                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                                        <div class="form-group">
+
+                                            <label class="form-control-label" for="input-title">Event Title<span
+                                                    class="text-danger">*</span>:</label>
+                                            <input type="text" id="title" name="title" maxlength="50"
+                                                   class="form-control form-control-sm  form-control-alternative"
+                                                   placeholder="Enter Event Title" value="{{ event_obj.event_title }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-sm-6 col-xs-6">
+                                        <div class="row">
+                                            <div class="input-daterange btn-group" data-date-format="yyyy-mm-dd"
+                                                 data-week-start="1" data-autoclose="true" data-today-highlight="true"
+                                                 style="margin-right: -1rem !important;">
+                                                <div style="padding-right: 5%;">
+                                                    <label>Start Date<span class="text-danger">*</span>:</label>
+                                                    <input type="text" autocomplete="off"
+                                                           class="form-control form-control-sm form-control-alternative"
+                                                           id="start_date" style="text-align: left;" name="start"
+                                                           placeholder="From" data-week-start="1" data-autoclose="true"
+                                                           data-today-highlight="true"
+                                                           value="{{ event_obj.start_date|date:'Y-m-d' }}" required>
+                                                </div>
+                                                <div>
+                                                    <label>End Date<span class="text-danger">*</span>:</label>
+                                                    <input type="text" autocomplete="off"
+                                                           class="form-control form-control-sm" id="end_date"
+                                                           name="end_date" style="text-align: left;" placeholder="To"
+                                                           data-week-start="1" data-autoclose="true"
+                                                           data-today-highlight="true" value="{{ event_obj.end_date|date:'Y-m-d' }}"
+                                                           required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-title">Event Type</label>
+                                            <select class="form-control form-control-sm" id="event_type" value="{{ event_obj.event_type }}">
+                                            <option value="" selected hidden>Select Event Type</option>
+                                            <option value="Curricular Activities" {% if event_obj.event_type == "Curricular Activities" %} selected {% endif %}>Curricular Activities</option>
+                                            <option value="Co-Curricular Activities" {% if event_obj.event_type == "Co-Curricular Activities" %} selected {% endif %}>Co-Curricular Activities</option>
+                                            <option value="Extra-Curricular Activities" {% if event_obj.event_type == "Extra-Curricular Activities" %} selected {% endif %}>Extra-Curricular Activities</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-sm-4 col-xs-3">
+                                         <label class="form-control-label" for="input-title">Inter / Intra College Event<span class="text-danger">*</span>:</label>
+                                            <select class="form-control form-control-sm" id="event_form" value="{{ event_obj.event_form }}">
+                                            <option value="" selected hidden>Select</option>
+                                            <option value="Intra-College Event" {% if event_obj.event_form == "Intra-College Event" %} selected {% endif %}>Intra-College Event</option>
+                                            <option value="Inter-College Event" {% if event_obj.event_form == "Inter-College Event" %} selected {% endif %}>Inter-College Event</option>
+                                            </select>
+                                    </div>
+                                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                                        <label class="form-control-label text-right">Details:</label>
+                                        <textarea
+                                                    class="form-control form-control-sm form-control-alternative"
+                                                    name="assignment info" id="exampleFormControlTextarea1"
+                                                    rows="1" maxlength="480"
+                                                    placeholder="Write a large text here ...">{{ event_obj.event_details }}</textarea>
+                                    </div>
+                                    <div class="col-lg-1 col-sm-1 col-xs-1">
+                                    </div>
+                                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                                        <label class="form-control-label text-right">&nbsp;</label>
+                                        <nav class="text-right">
+                                            <div class="btn btn-primary btn-sm" onclick="manage_finance_modal()">Manage Finance
+                                            </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <div class="btn btn-primary  btn-sm" id="add_member" onclick="add_event_member()">Add Member
+                                                    </div>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+    </div>
+</div>
+<div style="padding: 0.7rem" id="Activity_list">
+    <div class="block">
+        <div class="block-header">
+            <h3 class="block-title border-bottom pb-2">Activity List</h3>
+            <nav class="text-right">
+                <button class="btn btn-primary btn-sm" id="add_activity_button">Add Activity
+                </button>
+            </nav>
+        </div>
+        <div class="table-responsive">
+            <div>
+                <table class="table align-items-center dtable">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">
+                            Activity Name
+                        </th>
+                        <th scope="col">
+                            Date
+                        </th>
+                        <th scope="col">
+                            From
+                        </th>
+                        <th scope="col">
+                            To
+                        </th>
+                        <th scope="col">
+                            Activity Detail
+                        </th>
+                        <th scope="col">
+                            Type
+                        </th>
+                        <th scope="col">
+                            Participant
+                        </th>
+                        <th scope="col">
+                            Venue
+                        </th>
+                        <th scope="col">
+                            Team
+                        </th>
+                        <th scope="col">
+                            Guest
+                        </th>
+                        <th scope="col" style="width: 10%;">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="activity_list_div">
+                    <tr class="btn-light" style="display:none" id="add_activity_row">
+                        <td class="status"
+                            style="text-overflow: ellipsis;width: 200px;overflow: hidden; white-space: nowrap;padding-left: 1rem">
+                            <input type="text" id="activity_name" name="activity_name" maxlength="30"
+                                   class="form-control form-control-sm  form-control-alternative"
+                                   placeholder="Enter Activity Name" value="" form="save_activity_edit" required>
+                        </td>
+                        <td scope="row">
+                            <input id="activity_date" style="width:115px"
+                                   class="form-control form-control-sm form-control-alternative js-datepicker"
+                                   data-date-format="yyyy-mm-dd" placeholder="YYYY/MM/DD" required autocomplete="off"
+                                   form="save_activity_edit"
+                                   value="{{ fromdate|date:'Y-m-d' }}">
+                            <span style="color:red" id="date_error"></span>
+                        </td>
+                        <td scope="row">
+                            <input type="time" id="activity_from" name="schedule" style="width:115px"
+                                   class="form-control form-control form-control-sm form-control-alternative"
+                                   placeholder=""
+                                   value=""
+                                   form="save_activity_edit"
+                                   required>
+                            <span style="color:red" id="from_error"></span>
+                        </td>
+                        <td scope="row">
+                            <input type="time" id="activity_to" name="schedule" style="width:115px"
+                                   class="form-control form-control form-control-sm form-control-alternative"
+                                   placeholder=""
+                                   value=""
+                                   form="save_activity_edit"
+                                   required>
+                            <span style="color:red" id="to_error"></span>
+                        </td>
+                        <td scope="row"
+                            style="text-overflow: ellipsis;width: 200px;overflow: hidden; white-space: nowrap">
+                                <textarea class="form-control form-control-sm form-control-alternative" maxlength="450"
+                                          name="assignment info" id="exampleFormControlTextarea11" rows="1"
+                                          placeholder="Write a large text here ..." form="save_activity_edit"></textarea>
+                        </td>
+                        <td scope="row" style="width: 110px;">
+                            <select class="form-control form-control-sm" id="activity_type" form="save_activity_edit">
+                                <option value="Single">Single</option>
+                                <option value="Group 2">Group 2</option>
+                                <option value="Group 3">Group 3</option>
+                                <option value="Group 4">Group 4</option>
+                                <option value="Group 5">Group 5</option>
+                                <option value="Group 6">Group 6</option>
+                                <option value="Group 7">Group 7</option>
+                                <option value="Group 8">Group 8</option>
+                                <option value="Group 9">Group 9</option>
+                                <option value="Group 10">Group 10</option>
+                                <option value="Group 11">Group 11</option>
+                            </select>
+                        </td>
+                        <td>
+
+                        </td>
+                        <td scope="row">
+                            <input type="text" id="activity_venue" maxlength="20"
+                                   class="form-control form-control form-control-sm  form-control-alternative"
+                                   placeholder="Venue"
+                                   value=""
+                                   form="save_activity_edit"
+                                   required>
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            <form action="" id="save_activity_edit" method="post" role="form"
+                                  enctype="multipart/form-data">
+                                <div class="btn-group">
+                                    <button class="btn btn-sm btn-outline-info js-tooltip-enabled">
+                                        <i class="fa fa-fw fa-save"></i>
+                                    </button>
+                                    <div class="btn btn-sm btn-outline-danger js-tooltip-enabled"  id="cancel_activity_button">
+                                        <i class="fa fa-fw fa-times"></i>
+                                    </div>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                    {% for i in activity_obj %}
+                        <tr class="btn-light" id="activit_row{{ i.id }}">
+                            <td class="status"
+                                style="text-overflow: ellipsis;width: 200px;overflow: hidden; white-space: nowrap;padding-left: 1rem">
+                                {{ i.activity_name }}
+                            </td>
+                            <td scope="row">
+                                {{ i.schedule_date|date:'d/m/Y' }}
+                            </td>
+                            <td scope="row">
+                                {{ i.start_time }}
+                            </td>
+                            <td scope="row">
+                                {{ i.end_time }}
+                            </td>
+                            <td scope="row">
+                                {{ i.activity_details }}
+                            </td>
+                            <td scope="row">
+                                {{ i.activity_type }}
+                            </td>
+                            <td>
+                                <div class="btn btn-sm btn-outline-primary" style="text-align: center" onclick="activity_participant_modal({{ i.id }})">
+                                    View
+                                </div>
+                            </td>
+                            <td scope="row">
+                                {{ i.activity_venue }}
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary"  onclick="manage_member_modal({{ i.id }})">
+                                    Manage
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary" onclick="manage_guest_modal({{ i.id }})">
+                                    Manage
+                                </button>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <div class="btn btn-sm btn-outline-primary js-tooltip-enabled"
+                                         data-toggle="tooltip" title="" data-original-title="Edit Client"
+                                         onclick="edit_activity({{ i.id }})">
+                                        <i class="fa fa-fw fa-pencil-alt"></i>
+                                    </div>
+                                    <div class="btn btn-sm btn-outline-danger js-tooltip-enabled"
+                                         data-toggle="tooltip" title="" data-original-title="Remove Client"
+                                         onclick="delete_activity({{ i.id }})">
+                                        <i class="far fa-trash-alt"></i>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="btn-light" id="activit_edit_row{{ i.id }}" style="display:none">
+                            <td class="status"
+                                style="text-overflow: ellipsis;width: 200px;overflow: hidden; white-space: nowrap;padding-left: 1rem">
+                                <input type="text" id="activity_name{{ i.id }}" name="activity_name{{ i.id }}" maxlength="30"
+                                       class="form-control form-control-sm  form-control-alternative"
+                                       placeholder="Enter Activity Name" value="{{ i.activity_name }}" required>
+
+                                <span style="color:red;display:none" id="activity_name_error{{ i.id }}">Please Enter Name !</span>
+                            </td>
+                            <td scope="row">
+                                <input type="date" id="activity_date{{ i.id }}"
+                                       class="form-control form-control-sm form-control-alternative js-datepicker"
+                                       data-date-format="yyyy-mm-dd" placeholder="YYYY/MM/DD" required
+                                       autocomplete="off"
+                                       value="{{ i.schedule_date|date:'Y-m-d' }}">
+                                <span style="color:red;display:none" id="activity_date_error{{ i.id }}">Please Enter Date !</span>
+
+                            </td>
+                            <td scope="row">
+                                <input type="time" id="activity_from{{ i.id }}" name="schedule"
+                                       style="width:115px"
+                                       class="form-control form-control form-control-sm form-control-alternative"
+                                       placeholder=""
+                                       value="{{ i.start_time|date:'H:i' }}"
+                                       required>
+                                <span style="color:red;display:none" id="activity_from_error{{ i.id }}">Please Enter Time !</span>
+
+                            </td>
+                            <td scope="row">
+                                <input type="time" id="activity_to{{ i.id }}" name="schedule"
+                                       style="width:115px"
+                                       class="form-control form-control form-control-sm form-control-alternative"
+                                       placeholder=""
+                                       value="{{ i.end_time|date:'H:i' }}"
+                                       required>
+                                <span style="color:red;;display:none" id="activity_to_error{{ i.id }}">Please Enter Time !</span>
+                            </td>
+                            <td scope="row">
+            <textarea class="form-control form-control-sm form-control-alternative" maxlength="450"
+                      name="assignment info" id="exampleFormControlTextarea11{{ i.id }}" rows="1"
+                      placeholder="Write a large text here ...">{{ i.activity_details }}</textarea>
+                            </td>
+                            <td scope="row" style="width: 110px;">
+                                <select class="form-control form-control-sm" id="activity_type{{ i.id }}"
+                                        value="{{ i.activity_type }}">
+                                    <option value="Single" {% if i.activity_type == "Single" %}
+                                            selected {% endif %}>Single
+                                    </option>
+                                    <option value="Group 2" {% if i.activity_type == "Group 2" %}
+                                            selected {% endif %}>Group 2
+                                    </option>
+                                    <option value="Group 3" {% if i.activity_type == "Group 3" %}
+                                            selected {% endif %}>Group 3
+                                    </option>
+                                    <option value="Group 4" {% if i.activity_type == "Group 4" %}
+                                            selected {% endif %}>Group 4
+                                    </option>
+                                    <option value="Group 5" {% if i.activity_type == "Group 5" %}
+                                            selected {% endif %}>Group 5
+                                    </option>
+                                    <option value="Group 6" {% if i.activity_type == "Group 6" %}
+                                            selected {% endif %}>Group 6
+                                    </option>
+                                    <option value="Group 7" {% if i.activity_type == "Group 7" %}
+                                            selected {% endif %}>Group 7
+                                    </option>
+                                    <option value="Group 8" {% if i.activity_type == "Group 8" %}
+                                            selected {% endif %}>Group 8
+                                    </option>
+                                    <option value="Group 9" {% if i.activity_type == "Group 9" %}
+                                            selected {% endif %}>Group 9
+                                    </option>
+                                    <option value="Group 10" {% if i.activity_type == "Group 10" %}
+                                            selected {% endif %}>Group 10
+                                    </option>
+                                    <option value="Group 11" {% if i.activity_type == "Group 11" %}
+                                            selected {% endif %}>Group 11
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                            </td>
+                            <td scope="row">
+                                <input type="text" id="activity_venue{{ i.id }}" maxlength="30"
+                                       class="form-control form-control form-control-sm  form-control-alternative"
+                                       placeholder="Venue"
+                                       value="{{ i.activity_venue }}"
+                                       required>
+                                <span style="color:red;;display:none" id="activity_venue_error{{ i.id }}">Please Enter Venue !</span>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <div class="btn btn-sm btn-outline-primary js-tooltip-enabled"
+                                         data-toggle="tooltip" title="" data-original-title="Edit Client"
+                                         onclick="update_activity({{ i.id }})">
+                                        <i class="fa fa-fw fa-save"></i>
+                                    </div>
+                                    <div class="btn btn-sm btn-outline-danger js-tooltip-enabled"
+                                         data-toggle="tooltip" title="" data-original-title="Remove Client"
+                                         onclick="cancel_activity({{ i.id }})">
+                                        <i class="fa fa-fw fa-times"></i>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <script>
+                            $(document).ready(function () {
+                                $("#activity_type" +{{ i.id }}).val("{{ i.activity_type }}")
+                            })
+                        </script>
+                    {% endfor %}
+                    </tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="AddEventMemberModel" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" style="max-width:80%!important">
+        <div class="shadow-lg modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header bg-primary-dark" style="padding: 0.5rem;">
+                <div class="col-md-8">
+                    <h4 class="modal-title text-white"><b>Add Member</b></h4>
+                </div>
+                <div class="col-md-3">
+                    {#                    <div class="btn btn-info btn-sm" data-toggle="modal" id="add_selected_question"#}
+                    {#                         onclick="add_selected_questions()" style="display: none">#}
+                    {#                        Add Selected Member#}
+                    {#                    </div>#}
+                    {#                    <div class="btn btn-danger btn-sm" data-toggle="modal" id="close_selectquestions"#}
+                    {#                         onclick="close_selectquestions()" style="display: none">#}
+                    {#                        Back#}
+                    {#                    </div>#}
+
+                </div>
+                <button type="button" class="btn btn-sm" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+
+            <div class="col-lg-12 col-sm-12 col-xs-12" id="selectquestions">
+            </div>
+
+            <!-- Modal footer -->
+            <div id="footer_div">
+                <div id="filter_div">
+                    <div class="row">
+                        <div class="col-6 col-md-3 col-lg-6 col-xl-2"
+                             style="padding-left: 0px;">
+                            <div class="block-content block-content-full">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">
+                                    Student / Faculty
+                                </div>
+                                <div class="font-size-h2 font-w400 text-dark">
+                                    <select class="form-control form-control-sm"
+                                            id="member_key">
+                                        <option value="" selected hidden>Select
+                                        </option>
+                                        <option value="Student">Student</option>
+                                        <option value="Faculty">Faculty</option>
+                                    </select>
+                                    <span style="display:none;color:red;"
+                                          id="err_course">Please Select</span>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-3 col-lg-6 col-xl-3">
+                            <div class="block-content block-content-full">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">
+                                    Course
+                                </div>
+                                <div class="font-size-h2 font-w400 text-dark">
+                                    <select class="form-control form-control-sm"
+                                            id="coursem" disabled>
+                                        <option value="" selected hidden>Select
+                                            Course
+                                        </option>
+                                        {% for i in course_obj %}
+                                            <option value="{{ i.id }}">{{ i.course }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <span style="display:none;color:red;"
+                                          id="err_sections">Please Select Course</span>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-3 col-lg-6 col-xl-3">
+                            <div class="block-content block-content-full">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">
+                                    Semester
+                                </div>
+                                <div class="font-size-h2 font-w400 text-dark">
+                                    <select class="form-control form-control-sm"
+                                            id="semesterm" disabled>
+                                        <option value="" selected hidden>Select
+                                            Semester
+                                        </option>
+                                        {% for i in semesters_obj %}
+                                            <option value="{{ i.id }}">{{ i.semester }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <span style="display:none;color:red;"
+                                          id="err_sections">Please Select Sections</span>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-3 col-lg-6 col-xl-2">
+                            <div class="block-content block-content-full">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">
+                                    Sections
+                                </div>
+                                <div class="font-size-h2 font-w400 text-dark">
+                                    <select class="form-control form-control-sm"
+                                            id="sectionm" disabled>
+                                        <option value="" selected hidden>Select
+                                            Sections
+                                        </option>
+                                        {% for i in section_obj %}
+                                            <option value="{{ i.id }}">{{ i.sections }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <span style="display:none;color:red;"
+                                          id="err_sections">Please Select Sections</span>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-3 col-lg-6 col-xl-2"
+                             style="padding-right: 0px;">
+                            <div class="block-content block-content-full">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">
+                                    &nbsp;
+                                </div>
+                                <div class="font-size-h2 font-w400 text-dark">
+                                    <buttton
+                                            class="btn btn-sm btn-primary submit-btn btn-block"
+                                            onclick="filtermember({{ event_obj.id }})">
+                                        <i class="fa fa-filter" aria-hidden="true"></i>
+                                        Filter
+                                    </buttton>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="pl-1  bg-body-dark">&nbsp;</div>
+                <div class="block" id="filter_members_list" style="display: none">
+                    <div class="block-header">
+                        <h3 class="block-title border-bottom pb-2">Members</h3>
+                        <nav class="text-right">
+                            <div class="btn btn-primary btn-sm" onclick="add_member()">Add Selected Members
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="table-responsive">
+                        <div>
+                            <table class="table align-items-center dtable">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">
+                                        Select
+                                    </th>
+                                    <th scope="col">
+                                        Name
+                                    </th>
+                                    <th scope="col">
+                                        Roll No.
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="Member_list_div">
+                                {% for i in member_obj %}
+                                    <tr class="btn-light" id="activit_row{{ i.id }}">
+                                        <td class="status"
+                                            style="text-overflow: ellipsis;width: 200px;overflow: hidden; white-space: nowrap;padding-left: 1rem">
+                                            <input type="checkbox" class="custom-control-input">
+                                        </td>
+                                        <td scope="row">
+                                            {{ i.schedule_date }}
+                                        </td>
+                                        <td scope="row">
+                                            {{ i.start_time }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="pl-1  bg-body-dark">&nbsp;</div>
+                <div class="block" id="event_member_div">
+                    <div class="block-header">
+                        <h3 class="block-title border-bottom pb-2">Selected Members</h3>
+                        <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                            <button type="button" class="btn btn-sm btn-primary p_hide" onclick='print_event_members()'><i
+                                    class="fa fa-print" aria-hidden="true"></i>Print
+                            </button>
+                            <button type="button" class="btn btn-sm btn-primary p_hide" onclick="EventMemberExcel()"><i
+                                    class="fa fa-print" aria-hidden="true"></i>Excel
+                            </button>
+                        </nav>
+                    </div>
+                    <div class="table-responsive">
+                        <div class="block-header">
+                            <table class="table align-items-center" id="event_member_table">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">
+                                        Sr no.
+                                    </th>
+                                    <th scope="col">
+                                        Name
+                                    </th>
+                                    <th scope="col">
+                                        Member Type
+                                    </th>
+                                    <th scope="col">
+                                        Course
+                                    </th>
+                                    <th scope="col">
+                                        Semester
+                                    </th>
+                                    <th scope="col">
+                                        Section
+                                    </th>
+                                    <th scope="col">
+                                        Email id
+                                    </th>
+                                    <th scope="col">
+                                        Contact No.
+                                    </th>
+                                    <th style="text-align: center" class="p_hide">
+                                        Action
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="Selected_Member_list_div">
+                                {% for i in event_member_obj reversed %}
+                                    <tr id="event_member_row{{ i.id }}">
+                                        <td>
+                                            {{ forloop.counter }}
+                                        </td>
+                                        <td scope="row">
+                                            <div class="media align-items-center">
+                                                <div class="media-body">
+                                                    <span class="mb-0 text-sm">{{ i.fk_user_info.first_name }} {{ i.fk_user_info.middle_name }} {{ i.fk_user_info.last_name }}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td scope="row">
+                                            {{ i.fk_user_info.fk_user_type.user_type }}
+                                        </td>
+                                        <td scope="row">
+                                            {{ i.fk_course.course }}
+                                        </td>
+                                        <td scope="row">
+                                            {{ i.fk_semesters.semester }}
+                                        </td>
+                                        <td>
+                                            {{ i.fk_sections.sections }}
+                                        </td>
+                                        <td>
+                                            {{ i.fk_user_info.email }}
+                                        </td>
+                                        <td>
+                                            {{ i.fk_user_info.phone_no }}
+                                        </td>
+                                        <td style="text-align: center">
+                                            <div class="btn btn-sm btn-outline-danger js-tooltip-enabled p_hide"
+                                                 data-toggle="tooltip" title="" data-original-title="Remove Client"
+                                                 onclick="delete_event_member({{ i.id }})">
+                                                <i class="far fa-trash-alt"></i>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ActivityMembersModal" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" style="max-width:80%!important">
+        <div class="shadow-lg modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header bg-primary-dark" style="padding: 0.5rem;">
+                <div class="col-md-8">
+                    <h4 class="modal-title text-white"><b>Manage Member</b></h4>
+                </div>
+                <div class="col-md-3">
+                    {#                    <div class="btn btn-info btn-sm" data-toggle="modal" id="add_selected_question"#}
+                    {#                         onclick="add_selected_questions()" style="display: none">#}
+                    {#                        Add Selected Member#}
+                    {#                    </div>#}
+                    {#                    <div class="btn btn-danger btn-sm" data-toggle="modal" id="close_selectquestions"#}
+                    {#                         onclick="close_selectquestions()" style="display: none">#}
+                    {#                        Back#}
+                    {#                    </div>#}
+
+                </div>
+                <button type="button" class="btn btn-sm" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+
+            <!-- Modal footer -->
+            <div id="footer_div">
+                <div class="pl-1  bg-body-dark">&nbsp;</div>
+                <div class="block" id="activity_member_div">
+                    <div class="block-header">
+                        <h3 class="block-title border-bottom pb-2"><span id="activity_name_span"></span> Activity Members</h3>
+                        <nav class="text-right">
+                            <button type="button" class="btn btn-sm btn-primary p_hide" onclick='print_activity_members()'><i
+                                    class="fa fa-print" aria-hidden="true"></i>Print
+                            </button>
+                            <button type="button" class="btn btn-sm btn-primary p_hide" onclick='ActivityMembersExcel()'><i
+                                    class="fa fa-print" aria-hidden="true"></i>Excel
+                            </button>
+                            <div class="btn btn-primary btn-sm p_hide" onclick="add_activity_member()">Add Member
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="table-responsive">
+                        <div class="block-header">
+                            <table class="table align-items-center" id="activity_member_table">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">
+                                        Name
+                                    </th>
+                                    <th scope="col">
+                                        Roles
+                                    </th>
+                                    <th scope="col">
+                                        Task
+                                    </th>
+                                    <th scope="col">
+                                        Email id
+                                    </th>
+                                    <th scope="col">
+                                        Contact No.
+                                    </th>
+                                    <th scope="col" style="text-align: center;" class="p_hide">
+                                        Action
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="activity_Member_list">
+                                </tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ActivityGuestModal" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" style="max-width:80%!important">
+        <div class="shadow-lg modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header bg-primary-dark" style="padding: 0.5rem;">
+                <div class="col-md-8">
+                    <h4 class="modal-title text-white"><b>Manage Guest</b></h4>
+                </div>
+                <div class="col-md-3">
+                </div>
+                <button type="button" class="btn btn-sm" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+
+            <!-- Modal footer -->
+            <div id="footer_div">
+                <div class="pl-1  bg-body-dark">&nbsp;</div>
+                <div class="block" id="activity_guest_div">
+                    <div class="block-header">
+                        <h3 class="block-title border-bottom pb-2"><span id="activity_guest_span"></span> Guests</h3>
+                        <nav class="text-right">
+                            <button type="button" class="btn btn-sm btn-primary p_hide" onclick='print_activity_guests()'><i
+                                    class="fa fa-print" aria-hidden="true"></i>Print
+                            </button>
+                            <button type="button" class="btn btn-sm btn-primary p_hide" onclick='ActivityGuestExcel()'><i
+                                    class="fa fa-print" aria-hidden="true"></i>Excel
+                            </button>
+                            <div class="btn btn-primary btn-sm p_hide" onclick="add_activity_guest()">Add Guest
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="table-responsive">
+                        <div class="block-header">
+                            <table class="table align-items-center" id="activity_guest_table">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">
+                                        Name
+                                    </th>
+                                    <th scope="col">
+                                        College
+                                    </th>
+                                    <th scope="col">
+                                        Purpose
+                                    </th>
+                                    <th scope="col">
+                                        Email id
+                                    </th>
+                                    <th scope="col">
+                                        Contact No.
+                                    </th>
+                                    <th scope="col" style="text-align: center;" class="p_hide">
+                                        Action
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="activity_guest_list">
+                                </tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ActivityParticipantModal" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="shadow-lg modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header bg-primary-dark" style="padding: 0.5rem;">
+                <div class="col-md-8">
+                    <h4 class="modal-title text-white"><b>Activity Participants</b></h4>
+                </div>
+                <div class="col-md-3">
+                </div>
+                <button type="button" class="btn btn-sm" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+
+            <!-- Modal footer -->
+            <div id="footer_div">
+                <div class="pl-1  bg-body-dark">&nbsp;</div>
+                <div class="block" id="activity_participant_div">
+                    <div class="block-header">
+                        <h3 class="block-title border-bottom pb-2"><span id="activity_participant_span"></span> Participant List</h3>
+                        <nav class="text-right">
+                            <button type="button" class="btn btn-sm btn-primary p_hide" onclick='print_activity_participants()'><i
+                                    class="fa fa-print" aria-hidden="true"></i>Print
+                            </button>
+                            <button type="button" class="btn btn-sm btn-primary p_hide" onclick='ActivityParticipantExcel()'><i
+                                    class="fa fa-print" aria-hidden="true"></i>Excel
+                            </button>
+                        </nav>
+                    </div>
+                    <div class="table-responsive">
+                        <div>
+                            <table class="table align-items-center dtable" id="activity_participant_table">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th scopte="col" style="text-align: center">
+                                        Sr no.
+                                    </th>
+                                    <th scope="col">
+                                        Name
+                                    </th>
+                                    <th scope="col">
+                                        College
+                                    </th>
+                                    <th scope="col">
+                                        Email
+                                    </th>
+                                    <th scope="col">
+                                        Contact no.
+                                    </th>
+                                    <th scope="col">
+                                        Group Members
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="activity_participant_list">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ManageFinanceModal" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" style="max-width:80%!important">
+        <div class="shadow-lg modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header bg-primary-dark" style="padding: 0.5rem;">
+                <div class="col-md-8">
+                    <h4 class="modal-title text-white"><b>Manage Finance</b></h4>
+                </div>
+                <div class="col-md-3">
+                </div>
+                <button type="button" class="btn btn-sm" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+
+            <!-- Modal footer -->
+            <div id="footer_div">
+                <div class="pl-1  bg-body-dark">&nbsp;</div>
+                <div class="block" id="event_budget_div">
+                    <div class="block-header">
+                        <h3 class="block-title border-bottom pb-2">Event Budget</h3>
+                        <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                            <button type="button" class="btn btn-sm btn-primary p_hide" onclick='printDiv()'><i
+                                    class="fa fa-print" aria-hidden="true"></i>Print
+                            </button>
+                        </nav>
+                    </div>
+                    <div class="table-responsive  landscape block-header" id="budget_table">
+                        <div>
+                            <table class="table align-items-center">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th scope="col"  style="width: 16rem">
+                                        Activity
+                                    </th>
+                                    <th scope="col" style="width: 12rem">
+                                        Items
+                                    </th>
+                                    <th scope="col" style="width: 8rem">
+                                        Cost
+                                    </th>
+                                    <th scope="col" style="width: 10rem">
+                                        Qty
+                                    </th>
+                                    <th scope="col" style="width: 15rem">
+                                        Total Items Cost
+                                    </th>
+                                    <th scope="col" style="width: 2rem">
+                                    </th>
+                                    <th scope="col" style="width: 14rem">
+                                        Proposed
+                                    </th>
+                                    <th scope="col" style="width: 12rem">
+                                        Allotted
+                                    </th>
+                                    <th scope="col" style="width: 12rem">
+                                        Actual
+                                    </th>
+                                    <th scope="col" style="text-align: center;" class="p_hide">
+                                        Action
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="activity_budget_list">
+                                </tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#start_date").datepicker({
+            format: 'yyyy-mm-dd',
+            startDate: new Date()
+        });
+
+        $("#course").val("{{ event_obj.fk_course.id }}")
+    })
+    $(function () {
+        $('table').find('.datepicker').datepicker("option", "dateFormat", "dd-mm-yy");
+        $.datepicker.setDefaults({dateFormat: 'yyyy-mm-dd'}); // Defaults for all datepickers
+        $('.js-datepicker').datepicker(); // Initialisation
+    });
+
+    function edit_activity(id) {
+        $("#activit_row" + id).hide()
+        $("#activit_edit_row" + id).show()
+    }
+
+    function cancel_activity(id) {
+        $("#activit_row" + id).show()
+        $("#activit_edit_row" + id).hide()
+    }
+
+    function delete_activity(id) {
+        console.log(id)
+        swal({
+            title: "Are you sure?",
+            text: "To Delete This Activity!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: "/delete-activity/",
+                        method: "POST",
+                        data: {
+                            "activity_id": id
+                        },
+                        success: function (response) {
+                            if (response == "success") {
+                                swal("The activity deleted successfully", {
+                                    icon: "success",
+                                    button: "Ok",
+                                    closeOnClickOutside: false,
+                                }).then(function () {
+                                    $("#activit_row" + id).remove();
+                                });
+                            }
+                        }
+                    })
+                }
+                else {
+                    swal("Activity is not deleted!"
+                    )
+                    ;
+                }
+            })
+        ;
+    }
+
+    $(document).ready(function() {
+        $('.dtable').DataTable();
+        $('#Add_Event_button').click(function () {
+            $.ajax({
+                url: "/add-event/",
+                method: "POST",
+                success: function (response) {
+                    console.log(response)
+                    $('#event_id').val(response['event_id'])
+                    $('#Event_content').show()
+                    $('#Cancle_button').show()
+                    $('#Add_Event_button').hide()
+                    $('#save_button').show()
+                    $('#Activity_list').show()
+                    $('#Event_list').hide()
+                }
+            })
+        })
+        $('#Cancle_button').click(function () {
+            location.reload()
+        })
+        $('#add_activity_button').click(function () {
+            console.log($("#start_date").val(),$("#end_date").val())
+            $('#add_activity_row').show()
+            $('#add_activity_button').hide()
+            $('#cancel_activity_button').show()
+            $("#activity_date").datepicker(
+                'setStartDate',$("#start_date").val()
+            );
+            $("#activity_date").datepicker(
+                'setEndDate',$("#end_date").val()
+            );
+        })
+        $('#cancel_activity_button').click(function () {
+            $('#add_activity_row').hide()
+            $('#add_activity_button').show()
+            $('#cancel_activity_button').hide()
+        })
+    })
+
+    $("#member_key").change(function () {
+        if ($("#member_key").val() == "Student") {
+            $("#coursem").removeAttr("disabled");
+            $("#Member_list_div").html("")
+        }
+        else {
+            $("#coursem").val("");
+            $("#coursem").attr('disabled', 'disabled');
+            $("#sectionm").val("");
+            $("#sectionm").attr('disabled', 'disabled');
+            $("#semesterm").val("");
+            $("#semesterm").attr('disabled', 'disabled');
+            $("#Member_list_div").html("")
+        }
+    })
+
+    $("#coursem").change(function () {
+        if ($("#coursem").val().length != 0) {
+            $("#semesterm").removeAttr("disabled");
+            $("#Member_list_div").html("")
+        }
+        else {
+            $("#sectionm").val("");
+            $("#sectionm").attr('disabled', 'disabled');
+            $("#semesterm").val("");
+            $("#semesterm").attr('disabled', 'disabled');
+        }
+    });
+
+    $("#semesterm").change(function () {
+        if ($("#semesterm").val().length != 0) {
+            $("#sectionm").removeAttr("disabled");
+            $("#Member_list_div").html("")
+        }
+        else {
+            $("#sectionm").val("");
+            $("#sectionm").attr('disabled', 'disabled');
+        }
+    });
+
+    $(document).ready(function() {
+        $('.dtable').DataTable();
+        $('#Add_Event_button').click(function () {
+            $.ajax({
+                url: "/add-event/",
+                method: "POST",
+                success: function (response) {
+                    console.log(response)
+                    $('#event_id').val(response['event_id'])
+                    $('#Event_content').show()
+                    $('#Cancle_button').show()
+                    $('#Add_Event_button').hide()
+                    $('#save_button').show()
+                    $('#Activity_list').show()
+                    $('#Event_list').hide()
+                }
+            })
+        })
+        $('#Cancle_button').click(function () {
+            location.reload()
+        })
+        $('#add_activity_button').click(function () {
+            $('#add_activity_row').show()
+            $('#add_activity_button').hide()
+            $('#cancel_activity_button').show()
+        })
+        $('#cancel_activity_button').click(function () {
+            $('#add_activity_row').hide()
+            $('#add_activity_button').show()
+            $('#cancel_activity_button').hide()
+        })
+    })
+
+    $("#save_event").submit(function (e) {
+        e.preventDefault();
+        var id = $("#event_id").val();
+        var title = $("#title").val();
+        var start_date = $("#start_date").val();
+        var end_date = $("#end_date").val();
+        var event_details = $("#exampleFormControlTextarea1").val();
+        var departments = $("#course").val();
+        var event_type = $("#event_type").val();
+        var event_form = $("#event_form").val();
+        $.ajax({
+            url: "/save-event/",
+            method: "POST",
+            data: {
+                "id": id,
+                "title": title,
+                "start_date": start_date,
+                "end_date": end_date,
+                "event_details": event_details,
+                "departments": departments,
+                "event_type":event_type,
+                "event_form":event_form,
+            },
+            success: function (response) {
+                console.log(response)
+                location.reload()
+            }
+        })
+
+    })
+
+    $("#save_activity_edit").submit(function (e) {
+        e.preventDefault();
+        var id = $("#event_id").val();
+        var activity_name = $("#activity_name").val();
+        var activity_date = $("#activity_date").val();
+        var activity_from = $("#activity_from").val();
+        var activity_to = $("#activity_to").val();
+        var activity_detail = $("#exampleFormControlTextarea11").val()
+        var activity_type = $("#activity_type").val()
+        var activity_venue = $("#activity_venue").val()
+        console.log("activity_detail ",activity_detail)
+        if (new Date('1/1/1999 ' + activity_from).getTime() > new Date('1/1/1999 ' + activity_to).getTime()) {
+            $("#from_error").html("Invalid Time Range !")
+        }
+        else {
+            $.ajax({
+                url: "/save-activity/",
+                method: "POST",
+                data: {
+                    "id": id,
+                    "activity_name": activity_name,
+                    "activity_start_date": activity_date,
+                    "activity_from": activity_from,
+                    "activity_to": activity_to,
+                    "activity_type": activity_type,
+                    "activity_venue": activity_venue,
+                    "activity_detail": activity_detail,
+                },
+                success: function (response) {
+                    console.log("event id ", id)
+                    $("#activity_list_div").html("");
+                    $("#activity_list_div").append(response);
+                    $("#activity_name").val("");
+                    $("#activity_start_date").val("");
+                    $("#activity_end_date").val("");
+                    $("#exampleFormControlTextarea11").val("");
+                    $('#add_activity_row').hide()
+                    $('#add_activity_button').show()
+                    $('#cancel_activity_button').hide()
+                    $("#activity_name").val("")
+                    $("#activity_date").val("")
+                    $("#activity_from").val("")
+                    $("#activity_to").val("")
+                    $("#exampleFormControlTextarea11").val("")
+                    $("#activity_type").val("")
+                    $("#activity_venue").val("")
+                }
+            })
+        }
+    })
+    function update_activity(id) {
+        var id = id
+        var activity_name = $("#activity_name"+id).val()
+        var activity_date = $("#activity_date"+id).val()
+        var activity_from = $("#activity_from"+id).val()
+        var activity_to = $("#activity_to"+id).val()
+        var activity_type = $("#activity_type"+id).val()
+        var activity_venue = $("#activity_venue"+id).val()
+        var activity_detail = $("#exampleFormControlTextarea11"+id).val()
+
+        if (activity_name.length == 0){
+            $("#activity_name_error"+id).show()
+        }
+        else if(activity_date.length == 0){
+            $("#activity_date_erro"+id).show()
+        }
+        else if(activity_from.length == 0){
+            $("#activity_from_error"+id).show()
+        }
+        else if(activity_to.length == 0){
+            $("#activity_to_error"+id).show()
+        }
+        else if(activity_venue.length == 0){
+            $("#activity_venue_error"+id).show()
+        }
+        else {
+            $.ajax({
+                url: "/update-activity/",
+                method: "POST",
+                data: {
+                    "activity_id": id,
+                    "activity_name": activity_name,
+                    "activity_date": activity_date,
+                    "activity_from": activity_from,
+                    "activity_to": activity_to,
+                    "activity_type": activity_type,
+                    "activity_venue": activity_venue,
+                    "activity_detail": activity_detail,
+                },
+                success: function (response) {
+                    $("#activity_list_div").html("");
+                    $("#activity_list_div").append(response);
+                }
+            })
+        }
+    }
+
+    function edit_event(id) {
+        var id = id
+        $.ajax({
+            url:"/edit-event/",
+            method:"POST",
+            data: {
+                "event_id":id,
+            },
+            success: function (response) {
+                console.log(response)
+                $('#event_id').val(response['event_id'])
+                $('#Cancle_button').show()
+                $('#Event_list').hide()
+                $('#Add_Event_button').hide()
+                $('#save_button').show()
+                $('#edit_event').html("");
+                $('#edit_event').append(response);
+                {#$('#Activity_list').show()#}
+                {#$('#Event_list').hide()#}
+                {#$('#title').val(response['event_title'])#}
+                {#$('#start_date').val(response['start_date'])#}
+                {#$('#end_date').val(response['end_date'])#}
+                {#$('#course').val(response['event_course'])#}
+                {#$('#exampleFormControlTextarea1').val(response['event_details'])#}
+            }
+        })
+
+    }
+
+
+    function add_event_member(){
+        $(".p_hide").show()
+        $("#AddEventMemberModel").modal('show')
+    }
+    function delete_event_member(id) {
+        console.log(id)
+        swal({
+            title: "Are you sure?",
+            text: "To Remove this member!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: "/delete-event-member",
+                        method: "POST",
+                        data: {
+                            "id": id
+                        },
+                        success: function (response) {
+                            if (response == "success") {
+                                swal("The member remove successfully", {
+                                    icon: "success",
+                                    button: "Ok",
+                                    closeOnClickOutside: false,
+                                }).then(function () {
+                                    $("#event_member_row" + id).remove();
+                                });
+                            }
+                        }
+                    })
+                }
+                else {
+                    swal("Member is not removed!"
+                    )
+                    ;
+                }
+            })
+        ;
+    }
+    function add_activity_member(){
+        $("#add_activity_member_row").show()
+    }
+    function manage_member_modal(id) {
+        var activity_id = id
+        $.ajax({
+            url: "/manage-activity-member/",
+            method: "POST",
+            data: {
+              "activity_id":activity_id
+            },
+            success: function (response) {
+                console.log(response["render_string"])
+                $("#activity_Member_list").html("")
+                $("#activity_Member_list").html(response["render_string"])
+                $("#activity_name_span").html(response["activity_name"])
+                $(".p_hide").show()
+                $("#ActivityMembersModal").modal("show")
+            }
+        })
+    }
+    function add_activity_guest(){
+        $("#add_activity_guest_row").show()
+    }
+    function manage_guest_modal(id){
+        var activity_id = id
+        $.ajax({
+            url:"/manage-activity-guest/",
+            method: "POST",
+            data:{
+                "activity_id":activity_id
+            },
+            success: function (response) {
+                $("#activity_guest_list").html("")
+                $("#activity_guest_list").html(response['render_string'])
+                $(".p_hide").show()
+                $("#ActivityGuestModal").modal("show")
+                $("#activity_guest_span").html(response['activity_name'])
+            }
+        })
+    }
+
+    function activity_participant_modal(id) {
+        var activity_id = id
+        $.ajax({
+            url:"/activity-participant-modal/",
+            method:"POST",
+            data: {
+                "activity_id":activity_id
+            },
+            success: function (response) {
+                console.log(response)
+                $("#activity_participant_list").html("")
+                $("#activity_participant_list").html(response['render_string'])
+                $(".p_hide").show()
+                $("#ActivityParticipantModal").modal("show")
+                $("#activity_participant_span").html(response['activity_name'])
+            }
+        })
+
+    }
+
+    function manage_finance_modal(){
+        var id = $("#event_id").val();
+        $.ajax({
+            url:"/manage-finance-modal/",
+            method: "POST",
+            data:{
+                "event_id":id
+            },
+            success: function (response){
+                console.log(response)
+                $("#activity_budget_list").html("")
+                $("#activity_budget_list").html(response)
+                $("#ManageFinanceModal").modal("show")
+                $(".p_hide").show()
+            }
+        })
+    }
+
+    function save_budget(id) {
+        var activity_id = id
+        var proposed = $("#proposed" + id).val()
+        var allotted = $("#allotted" + id).val()
+        var actual = $("#actual" + id).val()
+        if (proposed.length == 0){
+            proposed = 0
+        }
+        if (allotted.length == 0){
+            allotted = 0
+        }
+        if (actual.length == 0){
+            actual = 0
+        }
+        $.ajax({
+            url:"/save-activity-budget/",
+            method: "POST",
+            data:{
+                "activity_id":activity_id,
+                "proposed":proposed,
+                "allotted":allotted,
+                "actual":actual
+            },
+            success: function (response) {
+                manage_finance_modal()
+            }
+        })
+    }
+
+    function printDiv(id) {
+        $(".p_hide").hide(0).delay(3000).show(0)
+        $("#event_budget_div").printThis({
+            importCSS: true,
+            header: "{{ event_obj.event_title }} Event Budget Report"
+        });
+    }
+
+    function print_event_members(id) {
+        $(".p_hide").hide(0).delay(3000).show(0)
+        $("#event_member_div").printThis({
+            orientation: 'Landscape',
+            importCSS: true,
+            header: "{{ event_obj.event_title }} Event Members"
+        });
+    }
+
+    function print_activity_members() {
+        $(".p_hide").hide(0).delay(3000).show(0)
+        $("#activity_member_div").printThis({
+            orientation: 'Landscape',
+            importCSS: true,
+        });
+    }
+
+    function print_activity_guests() {
+        $(".p_hide").hide(0).delay(3000).show(0)
+        $("#activity_guest_div").printThis({
+            orientation: 'Landscape',
+            importCSS: true,
+        });
+    }
+
+    function print_activity_participants() {
+        $(".p_hide").hide(0).delay(3000).show(0)
+        $("#activity_participant_div").printThis()
+    }
+
+    function EventMemberExcel(){
+
+       var htmltable= document.getElementById('event_member_table');
+       var html = htmltable.outerHTML;
+       window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
+
+    }
+
+    function ActivityParticipantExcel() {
+        var htmltable = document.getElementById('activity_participant_table');
+        var html = htmltable.outerHTML;
+        window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
+
+    }
+    function ActivityMembersExcel() {
+        var htmltable = document.getElementById('activity_member_table');
+        var html = htmltable.outerHTML;
+        window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
+
+    }
+    function ActivityGuestExcel() {
+        var htmltable = document.getElementById('activity_guest_table');
+        var html = htmltable.outerHTML;
+        window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
+
+    }
+</script>
+<script src="{% static 'NewTheme/assets/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
+<script>jQuery(function(){ One.helpers(['datepicker', 'colorpicker', 'maxlength', 'select2', 'rangeslider']); });</script>
+<script type="text/javascript">
+$(function () {
+    $("#datepicker").datepicker({autoclose: true, format: 'yyyy-mm-dd'})
+})
+</script>

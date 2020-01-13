@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'attendance',
     'manage_student',
     'aptitude',
+    'event',
 ]
 
 MIDDLEWARE = [

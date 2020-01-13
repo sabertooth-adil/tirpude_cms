@@ -14,6 +14,11 @@ from master_forms.models import Semester, Section, Course, UserOperation
 
 
 def error_save(error):
+    """
+    Redirecting to error page
+    :param error:
+    :return:
+    """
     time = str(datetime.datetime.now())
     with open("error_log.txt", "a") as my_file:
         my_file.write(time + "\n")
@@ -126,26 +131,19 @@ def aptitude_test_details(request):
 
         print("Time extend ", time_extend)
 
-        if schedule:
-            pass
-        else:
+        if not schedule:
             schedule = None
-        if course:
-            pass
-        else:
+        if not course:
             course = None
-        if sem:
-            pass
-        else:
+        if not sem:
             sem = None
-        if section:
-            pass
-        else:
+        if not section:
             section = None
 
         # if test id is 1 ,create new test.
         if test_id == "1":
-            if AptitudeSet.objects.filter(test_name=test_name, schedule=schedule, fk_course_id=course, fk_semesters_id=sem,
+            if AptitudeSet.objects.filter(test_name=test_name, schedule=schedule, fk_course_id=course,
+                                          fk_semesters_id=sem,
                                           fk_sections_id=section).exists():
                 render_string = render_to_string("aptitidetestmaster_div.html", {"test_obj": test_obj})
                 return JsonResponse({"render_string": render_string, "id": "0", "status": "0"})
@@ -208,6 +206,7 @@ def aptitude_test_details(request):
     except:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
+
 
 @csrf_exempt
 def delete_master_aptitude_details(request):
@@ -276,6 +275,7 @@ def edit_master_aptitude_details(request):
     except:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
+
 
 @csrf_exempt
 def add_question(request):
@@ -462,13 +462,15 @@ def start_aptitude_test(request, id):
             apt_session_obj = apt_session
             student_apt_answer_obj = StudentAptitudeAnswer.objects.filter(fk_aptitude_session_id=apt_session_obj.id)
         duration = duration.strftime("%Y-%m-%d %H:%M")
-        return render(request, "student_aptitude_test.html", {"aptitude_obj": aptitude_obj, "question_obj": question_obj,
-                                                              "duration": duration, "apt_session_obj": apt_session_obj,
-                                                              "student_apt_answer_obj": student_apt_answer_obj,
-                                                              "user_info_obj": user_info_obj})
+        return render(request, "student_aptitude_test.html",
+                      {"aptitude_obj": aptitude_obj, "question_obj": question_obj,
+                       "duration": duration, "apt_session_obj": apt_session_obj,
+                       "student_apt_answer_obj": student_apt_answer_obj,
+                       "user_info_obj": user_info_obj})
     except:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
+
 
 @csrf_exempt
 def select_answer(request):
@@ -482,7 +484,8 @@ def select_answer(request):
         question_id = request.POST.get('question_id')
         answer = request.POST.get('answer')
         aptitude_test_id = request.POST.get('aptitude_test_id')
-        if StudentAptitudeAnswer.objects.filter(fk_aptitude_session_id=apt_session_id, fk_aptitude_question_id=question_id):
+        if StudentAptitudeAnswer.objects.filter(fk_aptitude_session_id=apt_session_id,
+                                                fk_aptitude_question_id=question_id):
             StudentAptitudeAnswer.objects.filter(fk_aptitude_session_id=apt_session_id,
                                                  fk_aptitude_question_id=question_id).update(answer=answer)
         else:
@@ -491,7 +494,8 @@ def select_answer(request):
                                                        fk_aptitude_question_id=question_id,
                                                        answer=answer)
             student_apt_answer.save()
-        count = StudentAptitudeAnswer.objects.filter(fk_aptitude_session_id=apt_session_id, answer__isnull=False).count()
+        count = StudentAptitudeAnswer.objects.filter(fk_aptitude_session_id=apt_session_id,
+                                                     answer__isnull=False).count()
         return JsonResponse({"questions_attempt": count})
     except:
         error_save(str(traceback.format_exc()))

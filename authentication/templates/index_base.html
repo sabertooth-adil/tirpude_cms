@@ -142,6 +142,12 @@
                             {#                            {% endfor %}#}
                         </ul>
                     </li>
+                     <li class="nav-main-item">
+                            <a class="nav-main-link" href="/students-event/" id="NoticeNavPage">
+                                <i class="nav-main-link-icon si si-note"></i>
+                                <span class="nav-main-link-name">Events</span>
+                            </a>
+                        </li>
                 {% else %}
                     <li class="nav-main-item">
                         <a class="nav-main-link" href="/Attendance/" id="AttendanceNavPage">
@@ -235,6 +241,13 @@
                     {#                    {% endif %}#}
                     {#                    {% endif %}#}
                     {#                    {% endfor %}#}
+                     <li class="nav-main-item">
+                            <a class="nav-main-link" href="/students-event/" id="NoticeNavPage">
+                                <img class="icon-size" src="{% static "media/dashboard-icons/icon-events.png" %}"
+                                 alt="icon">
+                                <span class="nav-main-link-name">Events</span>
+                            </a>
+                     </li>
                 {% endif %}
             </ul>
         </div>

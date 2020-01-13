@@ -1,0 +1,38 @@
+from django.urls import path
+
+from event.views import *
+
+urlpatterns = [
+    path('students-event/', students_event, name='students_event'),
+    path('save-event/', save_event, name='save_event'),
+    path('add-event/', add_event, name='add_event'),
+    path('edit-event/', edit_event, name='edit_event'),
+    path('delete-event', delete_event, name='delete_event'),
+    path('cancel-event/', cancel_event, name='cancel_event'),
+    path('save-activity/', save_activity, name='save_activity'),
+    path('delete-activity/', delete_activity, name='delete_activity'),
+    path('update-activity/', update_activity, name='update_activity'),
+    path('filter-member/', filter_member, name='filter_member'),
+    path('add-event-member/', add_event_member, name='add_event_member'),
+    path('delete-event-member', delete_event_member, name='delete_event_member'),
+    path('manage-activity-member/', manage_activity_member, name='manage_activity_member'),
+    path('save-activity-member/', save_activity_member, name='save_activity_member'),
+    path('update-activity-member/', update_activity_member, name='update_activity_member'),
+    path('delete-activity-member/', delete_activity_member, name='delete_activity_member'),
+    path('manage-activity-guest/', manage_activity_guest, name='manage_activity_guest'),
+    path('save-activity-guest/', save_activity_guest, name='save_activity_guest'),
+    path('update-activity-guest/', update_activity_guest, name='update_activity_guest'),
+    path('delete-activity-guest/', delete_activity_guest, name='delete_activity_guest'),
+    path('manage-finance-modal/', manage_finance_modal, name='manage_finance_modal'),
+    path('save-item/', save_item, name='save_item'),
+    path('update-activity-item/', update_activity_item, name='update_activity_item'),
+    path('delete-activity-item/', delete_activity_item, name='delete_activity_item'),
+    path('save-activity-budget/', save_activity_budget, name='save_activity_budget'),
+    path('Events/', events, name='events'),
+    path('event-registration-form/', event_registration_form, name='event_registration_form'),
+    path('add-grp-member/', add_grp_member, name='add_grp_member'),
+    path('remove-grp-member/', remove_grp_member, name='remove_grp_member'),
+    path('save-event-registration/', save_event_registration, name='save_event_registration'),
+    path('event-registration-login/', event_registration_login, name='event_registration_login'),
+    path('activity-participant-modal/', activity_participant_modal, name='activity_participant_modal'),
+]

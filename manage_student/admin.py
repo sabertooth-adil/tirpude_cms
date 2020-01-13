@@ -5,24 +5,24 @@ from manage_student.models import *
 
 # Register your models here.
 
-class assignments(admin.ModelAdmin):
-    list_display = ('assignment_title', 'assignment_info', 'fk_subjects', 'fk_user_info')
+class Assignments(admin.ModelAdmin):
+    list_display = ("assignment_title", "assignment_info", "fk_subjects", "fk_user_info")
 
 
-admin.site.register(Assignment, assignments)
+admin.site.register(Assignment, Assignments)
 
 
-class submittedassignments(admin.ModelAdmin):
-    list_display = ('submission_date', 'submitted_file', 'fk_user_info', 'fk_assignment_title')
+class SubmittedAssignments(admin.ModelAdmin):
+    list_display = ("submission_date", "submitted_file", "fk_user_info", "fk_assignment_title")
 
 
-admin.site.register(SubmittedAssignment, submittedassignments)
+admin.site.register(SubmittedAssignment, SubmittedAssignments)
 
 
-class academicnotes(admin.ModelAdmin):
+class AcademicNotes(admin.ModelAdmin):
     list_display = (
-    'notes_title', 'notes_detail', 'date_post', 'fk_user_info', 'fk_subjects', 'fk_sections', 'fk_semesters',
-    'fk_course')
+        "notes_title", "notes_detail", "date_post", "fk_user_info", "fk_subjects", "fk_sections", "fk_semesters",
+        "fk_course")
 
 
-admin.site.register(AcademicNote, academicnotes)
+admin.site.register(AcademicNote, AcademicNotes)

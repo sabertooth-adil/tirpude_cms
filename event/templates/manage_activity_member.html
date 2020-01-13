@@ -1,0 +1,223 @@
+<tr class="btn-light" style="display: none" id="add_activity_member_row">
+    <td class="status"
+        style="text-overflow: ellipsis;width: 200px;overflow: hidden; white-space: nowrap;padding-left: 1rem">
+        <select class="form-control form-control-sm" id="select_activity_member"
+        form="save_activity_member" required>
+            <option value="" selected hidden>Select Member</option>
+            {% for i in event_member_obj %}
+                <option value="{{ i.id }}">{{ i.fk_user_info.first_name }} {{ i.fk_user_info.last_name }}</option>
+            {% endfor %}
+        </select>
+    </td>
+    <td scope="row">
+        <input type="text" id="member_role" name="schedule" maxlength="30"
+               class="form-control form-control form-control-sm form-control-alternative"
+               placeholder="Assign Role"
+               value=""
+               form="save_activity_member"
+               required>
+    </td>
+    <td scope="row" style="text-overflow: ellipsis;width:30%;overflow: hidden; white-space: nowrap">
+                                        <textarea class="form-control form-control-sm form-control-alternative" maxlength="199"
+                                                  name="assignment info" id="member_task" rows="1"
+                                                  placeholder="Define Task"
+                                        form="save_activity_member"></textarea>
+    </td>
+    <td scope="row">
+    </td>
+    <td scope="row">
+    </td>
+    <td style="text-align: center">
+        <form action="" id="save_activity_member" method="post" role="form"
+              enctype="multipart/form-data">
+            <button class="btn btn-sm btn-outline-info js-tooltip-enabled"
+                    data-toggle="tooltip" title="" data-original-title="Edit Client">
+                <i class="fa fa-fw fa-save"></i>
+            </button>
+            <div class="btn btn-sm btn-outline-danger js-tooltip-enabled"
+                 data-toggle="tooltip" title="" data-original-title="Remove Client"
+                 id="cancel_member_save_button">
+                <i class="fa fa-fw fa-times"></i>
+            </div>
+        </form>
+    </td>
+</tr>
+{% for i in activity_member_obj reversed %}
+    <tr class="btn-light" id="activity_member_row{{ i.id }}">
+        <td class="status">
+            &nbsp;&nbsp;{{ i.fk_event_member.fk_user_info.first_name }} {{ i.fk_event_member.fk_user_info.last_name }}
+        </td>
+        <td scope="row">
+            {{ i.roles }}
+        </td>
+        <td scope="row" style="text-overflow: ellipsis;width:30%;overflow: hidden; white-space: nowrap">
+            {{ i.task }}
+        </td>
+        <td scope="row">
+            {{ i.fk_event_member.fk_user_info.email }}
+        </td>
+        <td scope="row">
+            {{ i.fk_event_member.fk_user_info.phone_no }}
+        </td>
+        <td scope="row" style="text-align: center">
+            <div class="btn-group">
+                <div class="btn btn-sm btn-outline-info js-tooltip-enabled p_hide"
+                     data-toggle="tooltip" title="" data-original-title="Edit Client"
+                     onclick="edit_activity_member({{ i.id }})">
+                    <i class="fa fa-fw fa-pencil-alt"></i>
+                </div>
+                <div class="btn btn-sm btn-outline-danger js-tooltip-enabled p_hide"
+                     data-toggle="tooltip" title="" data-original-title="Remove Client"
+                     onclick="delete_activity_member({{ i.id }})">
+                    <i class="far fa-trash-alt"></i>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+
+    <tr class="btn-light" style="display: none" id="edit_activity_member_row{{ i.id }}">
+        <td class="status"
+            style="text-overflow: ellipsis;width: 200px;overflow: hidden; white-space: nowrap;padding-left: 1rem">
+            <select class="form-control form-control-sm" id="select_activity_member{{ i.id }}"
+                    form="save_activity_member" required>
+                <option value="" hidden>Select Member</option>
+                {% for j in event_member_obj %}
+                    <option value="{{ j.id }}" {% if j.id == i.fk_event_member.id %} selected {% endif %}>{{ j.fk_user_info.first_name }} {{ j.fk_user_info.last_name }}</option>
+                {% endfor %}
+            </select>
+        </td>
+        <td scope="row">
+            <input type="text" id="member_role{{ i.id }}" name="schedule" maxlength="30"
+                   class="form-control form-control form-control-sm form-control-alternative"
+                   placeholder="Assign Role"
+                   value="{{ i.roles }}"
+                   form="save_activity_member"
+                   required>
+            <span style="color: red;display:none" id="member_role_error{{ i.id }}">Please Enter Role !</span>
+        </td>
+        <td scope="row" style="text-overflow: ellipsis;width:30%;overflow: hidden; white-space: nowrap">
+                                        <textarea class="form-control form-control-sm form-control-alternative"
+                                                  name="assignment info" id="member_task{{ i.id }}" rows="1"
+                                                  placeholder="Define Task" maxlength="199"
+                                                  form="save_activity_member">{{ i.task }}</textarea>
+        </td>
+        <td scope="row">
+        </td>
+        <td scope="row">
+        </td>
+        <td style="text-align: center">
+                <button class="btn btn-sm btn-outline-info js-tooltip-enabled"
+                        data-toggle="tooltip" title="" data-original-title="Edit Client"
+                onclick="update_activity_member({{ i.id }})">
+                    <i class="fa fa-fw fa-save"></i>
+                </button>
+                <div class="btn btn-sm btn-outline-danger js-tooltip-enabled"
+                     data-toggle="tooltip" title="" data-original-title="Remove Client"
+                onclick="cancel_edit_activity_member({{ i.id }})">
+                    <i class="fa fa-fw fa-times"></i>
+                </div>
+        </td>
+    </tr>
+{% endfor %}
+<script>
+    $(document).ready(function () {
+        $("#save_activity_member").submit(function (e) {
+            e.preventDefault();
+            var event_member_id = $("#select_activity_member").val();
+            var member_role = $("#member_role").val();
+            var member_task = $("#member_task").val();
+            $.ajax({
+                url: "/save-activity-member/",
+                method: "POST",
+                data: {
+                    "activity_id":"{{ activity_id }}",
+                    "event_member_id": event_member_id,
+                    "member_role": member_role,
+                    "member_task": member_task,
+                },
+                success: function (response) {
+                    $("#activity_Member_list").html("");
+                    $("#activity_Member_list").append(response);
+                }
+            })
+        })
+        $("#cancel_member_save_button").click(function () {
+            $("#add_activity_member_row").hide()
+        })
+    })
+
+    function edit_activity_member(id) {
+        $("#activity_member_row" + id).hide()
+        $("#edit_activity_member_row" + id).show()
+    }
+    function cancel_edit_activity_member(id) {
+        $("#activity_member_row" + id).show()
+        $("#edit_activity_member_row" + id).hide()
+    }
+    function update_activity_member(id) {
+        var id = id
+        var event_member_id = $("#select_activity_member"+id).val()
+        var member_role = $("#member_role"+id).val()
+        var member_task = $("#member_task"+id).val()
+        if (member_role.length == 0){
+            $("#member_role_error"+id).show()
+        }
+        else {
+            $.ajax({
+                url: "/update-activity-member/",
+                method: "POST",
+                data: {
+                    "activity_member_id": id,
+                    "event_member_id": event_member_id,
+                    "member_role": member_role,
+                    "member_task": member_task,
+                },
+                success: function (response) {
+                    $("#activity_Member_list").html("");
+                    $("#activity_Member_list").append(response);
+                }
+            })
+        }
+    }
+
+    function delete_activity_member(id) {
+        console.log(id)
+        swal({
+            title: "Are you sure?",
+            text: "To Remove this member!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: "/delete-activity-member/",
+                        method: "POST",
+                        data: {
+                            "activity_member_id": id
+                        },
+                        success: function (response) {
+                            if (response == "success") {
+                                swal("The member remove successfully", {
+                                    icon: "success",
+                                    button: "Ok",
+                                    closeOnClickOutside: false,
+                                }).then(function () {
+                                    $("#activity_member_row" + id).remove();
+                                });
+                            }
+                        }
+                    })
+                }
+                else {
+                    swal("Member is not removed!"
+                    )
+                    ;
+                }
+            })
+        ;
+    }
+
+</script>

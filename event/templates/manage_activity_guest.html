@@ -1,0 +1,268 @@
+<tr class="btn-light" style="display:none" id="add_activity_guest_row">
+    <td class="status"
+        style="text-overflow: ellipsis;width: 200px;overflow: hidden; white-space: nowrap;padding-left: 1rem">
+        <input type="text" id="guest_name" name="schedule"
+               class="form-control form-control form-control-sm form-control-alternative"
+               placeholder="Enter Guest Name"
+               value="" maxlength="30"
+               form="save_activity_guest"
+               required>
+    </td>
+    <td scope="row">
+        <input type="text" id="college" name="schedule" maxlength="49"
+               class="form-control form-control form-control-sm form-control-alternative"
+               placeholder="Enter College Name"
+               value=""
+               form="save_activity_guest"
+               required>
+    </td>
+    <td scope="row" style="text-overflow: ellipsis;width:30%;overflow: hidden; white-space: nowrap">
+                                        <textarea class="form-control form-control-sm form-control-alternative"
+                                                  name="assignment info" id="purpose" rows="1"
+                                                  placeholder="Define Purpose" maxlength="199"
+                                        form="save_activity_member"></textarea>
+    </td>
+    <td scope="row">
+        <input type="email" id="email" name="schedule" maxlength="29"
+               class="form-control form-control form-control-sm form-control-alternative"
+               placeholder="Enter Guest Email"
+               value=""
+               form="save_activity_guest"
+               required>
+        <span style="color: red;display:none" id="email_error{{ i.id }}">Please Enter Email !</span>
+    </td>
+    <td scope="row">
+        <input type="text" id="contact_no" name="schedule"
+               class="form-control form-control form-control-sm form-control-alternative"
+               placeholder="Enter Guest Contact No."
+               value=""
+               form="save_activity_guest"
+               maxlength="10"
+               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+               required>
+        <span style="color: red;display:none" id="contactno_error{{ i.id }}">Please Enter Contact no !</span>
+    </td>
+    <td style="text-align: center">
+        <form action="" id="save_activity_guest" method="post" role="form"
+              enctype="multipart/form-data">
+            <button class="btn btn-sm btn-outline-info js-tooltip-enabled"
+                    data-toggle="tooltip" title="" data-original-title="Edit Client">
+                <i class="fa fa-fw fa-save"></i>
+            </button>
+            <div class="btn btn-sm btn-danger js-tooltip-enabled"
+                 data-toggle="tooltip" title="" data-original-title="Remove Client"
+                 id="cancel_guest_save_button">
+                <i class="fa fa-fw fa-times"></i>
+            </div>
+        </form>
+    </td>
+</tr>
+{% for i in activity_guest_obj reversed %}
+    <tr class="btn-light" id="activity_guest_row{{ i.id }}">
+        <td class="status">
+            &nbsp;&nbsp;{{ i.name }}
+        </td>
+        <td scope="row">
+            {{ i.college }}
+        </td>
+        <td scope="row" style="text-overflow: ellipsis;width:30%;overflow: hidden; white-space: nowrap">
+            {{ i.purpose }}
+        </td>
+        <td scope="row">
+            {{ i.email }}
+        </td>
+        <td scope="row">
+            {{ i.contact_no }}
+        </td>
+        <td scope="row" style="text-align: center">
+            <div class="btn-group p_hide">
+                <div class="btn btn-sm btn-outline-info js-tooltip-enabled"
+                     data-toggle="tooltip" title="" data-original-title="Edit Client"
+                     onclick="edit_activity_guest({{ i.id }})">
+                    <i class="fa fa-fw fa-pencil-alt"></i>
+                </div>
+                <div class="btn btn-sm btn-outline-danger js-tooltip-enabled"
+                     data-toggle="tooltip" title="" data-original-title="Remove Client"
+                     onclick="delete_activity_guest({{ i.id }})">
+                    <i class="far fa-trash-alt"></i>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+
+    <tr class="btn-light" style="display: none" id="edit_activity_guest_row{{ i.id }}">
+        <td class="status"
+            style="text-overflow: ellipsis;width: 200px;overflow: hidden; white-space: nowrap;padding-left: 1rem">
+            <input type="text" id="guest_name{{ i.id }}" name="schedule" maxlength="30"
+               class="form-control form-control form-control-sm form-control-alternative"
+               placeholder="Enter Guest Name"
+               value="{{ i.name }}"
+               required>
+            <span style="color: red;display:none" id="guest_name_error{{ i.id }}">Please Enter Name !</span>
+        </td>
+        <td scope="row">
+            <input type="text" id="college{{ i.id }}" name="schedule" maxlength="49"
+                   class="form-control form-control form-control-sm form-control-alternative"
+                   placeholder="Enter College"
+                   value="{{ i.college }}"
+                   required>
+            <span style="color: red;display:none" id="college_error{{ i.id }}">Please Enter College !</span>
+        </td>
+        <td scope="row" style="text-overflow: ellipsis;width:30%;overflow: hidden; white-space: nowrap">
+                                        <textarea class="form-control form-control-sm form-control-alternative"
+                                                  name="assignment info" id="purpose{{ i.id }}" rows="1"
+                                                  placeholder="Define Task"
+                                                  form="save_activity_member">{{ i.purpose }}</textarea>
+        </td>
+        <td scope="row">
+            <input type="email" id="email{{ i.id }}" name="schedule" maxlength="29"
+               class="form-control form-control form-control-sm form-control-alternative"
+               placeholder="Enter Guest Email"
+               value="{{ i.email }}"
+               required>
+            <span style="color: red;display:none" id="email_error{{ i.id }}">Please Enter Email !</span>
+        </td>
+        <td scope="row">
+            <input type="text" id="contact_no{{ i.id }}" name="schedule"
+               class="form-control form-control form-control-sm form-control-alternative"
+               placeholder="Enter Guest Contact No."
+               value="{{ i.contact_no }}"
+                   maxlength="10"
+               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+               required>
+            <span style="color: red;display:none" id="contactno_error{{ i.id }}">Please Enter Contact no !</span>
+        </td>
+        <td style="text-align: center">
+                <button class="btn btn-sm btn-outline-info js-tooltip-enabled"
+                        data-toggle="tooltip" title="" data-original-title="Edit Client"
+                onclick="update_activity_guest({{ i.id }})">
+                    <i class="fa fa-fw fa-save"></i>
+                </button>
+                <div class="btn btn-sm btn-outline-danger js-tooltip-enabled"
+                     data-toggle="tooltip" title="" data-original-title="Remove Client"
+                onclick="cancel_edit_activity_guest({{ i.id }})">
+                    <i class="fa fa-fw fa-times"></i>
+                </div>
+        </td>
+    </tr>
+{% endfor %}
+<script>
+    $(document).ready(function () {
+        $("#save_activity_guest").submit(function (e) {
+            e.preventDefault();
+            var name = $("#guest_name").val();
+            var college = $("#college").val();
+            var purpose = $("#purpose").val();
+            var email = $("#email").val();
+            var contact_no = $("#contact_no").val();
+            $.ajax({
+                url: "/save-activity-guest/",
+                method: "POST",
+                data: {
+                    "activity_id":"{{ activity_id }}",
+                    "name": name,
+                    "college": college,
+                    "purpose": purpose,
+                    "email": email,
+                    "contact_no": contact_no,
+                },
+                success: function (response) {
+                    $("#activity_guest_list").html("");
+                    $("#activity_guest_list").append(response);
+                }
+            })
+        })
+        $("#cancel_guest_save_button").click(function () {
+            $("#add_activity_guest_row").hide()
+        })
+    })
+
+    function edit_activity_guest(id) {
+        $("#activity_guest_row" + id).hide()
+        $("#edit_activity_guest_row" + id).show()
+    }
+    function cancel_edit_activity_guest(id) {
+        $("#activity_guest_row" + id).show()
+        $("#edit_activity_guest_row" + id).hide()
+    }
+    function update_activity_guest(id) {
+        console.log("guest_id ",id)
+        var id = id
+        var name = $("#guest_name"+id).val()
+        var college = $("#college"+id).val()
+        var purpose = $("#purpose"+id).val()
+        var email = $("#email"+id).val()
+        var contact_no = $("#contact_no"+id).val()
+        if (name.length == 0){
+            $("#guest_name_error"+id).show()
+        }
+        else if (college.length == 0){
+            $("#college_error"+id).show()
+        }
+        else if (email.length == 0){
+            $("#email_error" +id).show()
+        }
+        else if (contact_no.length == 0){
+            $("#contactno_error"+id).show()
+        }
+        else {
+            $.ajax({
+                url: "/update-activity-guest/",
+                method: "POST",
+                data: {
+                    "activity_guest_id": id,
+                    "name": name,
+                    "college": college,
+                    "purpose": purpose,
+                    "email": email,
+                    "contact_no": contact_no,
+                },
+                success: function (response) {
+                    $("#activity_guest_list").html("");
+                    $("#activity_guest_list").append(response);
+                }
+            })
+        }
+    }
+
+    function delete_activity_guest(id) {
+        console.log(id)
+        swal({
+            title: "Are you sure?",
+            text: "To Remove this Guest!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: "/delete-activity-guest/",
+                        method: "POST",
+                        data: {
+                            "activity_guest_id": id
+                        },
+                        success: function (response) {
+                            if (response == "success") {
+                                swal("The Guest remove successfully", {
+                                    icon: "success",
+                                    button: "Ok",
+                                    closeOnClickOutside: false,
+                                }).then(function () {
+                                    $("#activity_guest_row" + id).remove();
+                                });
+                            }
+                        }
+                    })
+                }
+                else {
+                    swal("Guest is not removed!"
+                    )
+                    ;
+                }
+            })
+        ;
+    }
+
+</script>

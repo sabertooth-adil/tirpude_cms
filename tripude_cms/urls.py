@@ -18,19 +18,12 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-# from django.conf.urls import url, include, handler404, handler500, handler400
-
-# from authentication.views import handler404, handler400, handler500
-#
-# handler404 = handler404
-# handler400 = handler400
-# handler500 = handler500
-
 urlpatterns = [
                   path('admin/', admin.site.urls),
                   path('', include('authentication.urls')),
                   path('', include('manage_student.urls')),
                   path('', include('attendance.urls')),
-                  path('', include('aptitude.urls'))
+                  path('', include('aptitude.urls')),
+                  path('', include('event.urls')),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
