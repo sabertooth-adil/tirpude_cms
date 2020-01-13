@@ -1,0 +1,384 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+<!--{#% for u in  useroperations_obj #%}-->
+<!--{#% if u.FK_modules.module_url == "leave-application" #%}-->
+<!--{#% if u.view_data == "Y" #%}-->
+<style>
+.content .block, .content .items-push>div, .content .push, .content p{
+    margin-bottom: 0px !important;
+}
+.nu-orange-button{
+                    background-color: #F6743D;
+                    border-color: #F6743D;
+                    padding: 3px 6px 3px 6px;
+                }
+
+                .nu-orange-button:hover{
+                    background-color: #F6743D;
+                    border-color: #F6743D;
+                    padding: 3px 6px 3px 6px;
+                }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+<div class="content" style="padding: 10px !important;">
+    <div class="row">
+        <div class="col-6 col-md-2 col-lg-6 col-xl-2" style="padding-left: 0px;">
+            <a class="block block-rounded block-link-pop border-left border-primary border-4x" href="javascript:void(0)">
+                <div class="block-content block-content-full">
+                    <div class="font-size-sm font-w600 text-uppercase text-muted">Course</div>
+                    <div class="font-size-h2 font-w400 text-dark">
+                        <select class = "form-control form-control-sm" id="course_filter" name="course_filter">
+                            <option value ="" selected hidden>Select Course</option>
+                            <option value>All</option>
+                            {% for i in course_obj %}
+                            <option value="{{i.id}}">{{i.course}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-2 col-lg-6 col-xl-2" style="padding-left: 0px;">
+                    <a class="block block-rounded block-link-pop border-left border-primary border-4x" href="javascript:void(0)">
+                       <div class="block-content block-content-full">
+                           <div class="font-size-sm font-w600 text-uppercase text-muted">Faculty</div>
+                    <div class="font-size-h2 font-w400 text-dark">
+                                    <select class="form-control form-control-sm" id="faculty_filter" name="faculty_filter">
+                                         <option value ="" selected hidden>Select Faculty</option>
+                                         <option value>All</option>
+                                        {% for i in faculty_obj %}
+                                        <option value="{{i.id}}">{{i.first_name}} {{i.last_name}}</option>
+                                        {% endfor %}
+
+                                    </select>
+                                </div>
+                            </div>
+                    </a>
+        </div>
+
+                <div class="col-6 col-md-2 col-lg-6 col-xl-2">
+                    <a class="block block-rounded block-link-pop border-left border-primary border-4x" href="javascript:void(0)">
+                       <div class="block-content block-content-full">
+                                    <div class="font-size-sm font-w600 text-uppercase text-muted">From Date</div>
+                           <div class="font-size-h3 font-w400 text-dark">
+                               <input type="text" class="js-datepicker form-control form-control-sm" id="start_date_filter" name="start_date_filter" data-week-start="1" data-autoclose="true" data-today-highlight="true" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
+                           </div>
+                       </div>
+                    </a>
+                </div>
+
+                <div class="col-6 col-md-2 col-lg-6 col-xl-2">
+                    <a class="block block-rounded block-link-pop border-left border-primary border-4x" href="javascript:void(0)">
+                       <div class="block-content block-content-full">
+                                    <div class="font-size-sm font-w600 text-uppercase text-muted">To Date</div>
+                           <div class="font-size-h2 font-w200 text-dark">
+                               <input class="js-datepicker form-control form-control-sm"  data-week-start="1" data-autoclose="true" data-today-highlight="true" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" id="end_date_filter" name="end_date_filter">
+                           </div>
+                            </div>
+                    </a>
+                        </div>
+                <div class="col-6 col-md-2 col-lg-6 col-xl-2" style="padding-left: 0px;">
+                    <a class="block block-rounded block-link-pop border-left border-primary border-4x" href="javascript:void(0)">
+                       <div class="block-content block-content-full">
+                                    <div class="font-size-sm font-w600 text-uppercase text-muted">Status</div>
+                            <div class="font-size-h2 font-w400 text-dark">
+                                    <select class="form-control form-control-sm" id="status_filter" name="status_filter">
+                                        <option value ="" selected hidden>Select Status</option>
+                                            <option value>All</option>
+                                            <option value="Approved">Approved</option>
+                                            <option value="Disapproved">Disapproved</option>
+                                            <option value="Pending">Pending</option>
+                                    </select>
+                                </div>
+                            </div>
+                    </a>
+                </div>
+
+        <div class="col-6 col-md-2 col-lg-6 col-xl-2">
+            <a href="javascript:void(0)">
+                <div class="block-content block-content-full">
+                    <div class="font-size-h2 font-w400 text-dark">
+                      <button class="btn btn-primary submit-btn btn-block nu-orange-button" id="filterapplications" onclick="FilterApplications()"><i class="fa fa-filter" aria-hidden="true"></i> Filter</button>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+</div>
+<script src="{% static '/js/Chartnew.min.js' %}"></script>
+<style>
+canvas{
+  height:400px !important;
+}
+</style>
+<div class="content" style="padding: 10px !important;">
+    <div class="block" style="width: 99%;">
+        <div class="block-content block-content-full">
+                        <div class="block-header">
+                            <h3 class="block-title">Leave Applications</h3>
+                        </div>
+                <div class="table-responsive">
+                    <div id="leaveapplicationtable">
+                        <table class="table table-vcenter" id="mydatatable">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Student Name</th>
+                                <th scope="col">Faculty</th>
+                                <th scope="col">Semester</th>
+                                <th scope="col">Date of <br/>Application</th>
+                                <th scope="col">Start Date</th>
+                                <th scope="col">End Date</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Current <br/>Status</th>
+                                <th scope="col" >View Details</th>
+<!--                                {#% for u in  useroperations_obj #%}-->
+<!--                                    {#% if u.FK_modules.module_url == "leave-application" #%}-->
+<!--                                        {#% if u.edit_data == "Y" #%}-->
+                                            <th scope="col" style="width: 10%;">Change Status</th>
+<!--                                        {#% endif #%}-->
+<!--                                    {#% endif #%}-->
+<!--                                {#% endfor #%}-->
+                            </tr>
+                            </thead>
+                            <tbody class="list">
+                            {% for i in leave_application_obj %}
+                            <tr {%if i.action_status == "Pending" %}style="background-color: antiquewhite;"{% else %}{% endif %}>
+                                 <td scope="row">
+                                    <div class="media align-items-center">
+                                        <div class="media-body">
+                                            <span class="mb-0 text-sm">
+                                    {% for j in academic_info_obj %}
+                                    {% if i.fk_user_info.id == j.fk_user_info.id %}
+                                    {{ i.fk_user_info.first_name}} {{ i.fk_user_info.last_name}}</span>
+                                        </div>
+                                    </div>
+                                 </td>
+                            <td>
+                                <div class="media align-items-center">
+                                        <div class="media-body">
+                                            <span class="mb-0 text-sm">{{i.fk_faculty_user.first_name}} {{ i.fk_faculty_user.last_name}}</span>
+                                        </div>
+                                 </div>
+                            </td>
+
+                                <td>
+                                <div class="media align-items-center">
+                                        <div class="media-body">
+                                            <span class="mb-0 text-sm">Semester: {{ j.fk_course.course}}
+                                    {{ j.fk_semesters.semester}},<br/>
+                                    Section: {{j.fk_sections.sections }}</span>
+                                        </div>
+                                 </div>
+                                </td>
+                                <td>
+                                <div class="media align-items-center">
+                                        <div class="media-body">
+                                            <span class="mb-0 text-sm">{{ i.date_post|date:'d-m-Y'}}</span>
+                                        </div>
+                                 </div>
+                                </td>
+                                 <td>
+                                <div class="media align-items-center">
+                                        <div class="media-body">
+                                            <span class="mb-0 text-sm">{{i.start_date|date:'d-m-Y' }}</span>
+                                        </div>
+                                 </div>
+                                </td>
+                                <td>
+                                <div class="media align-items-center">
+                                        <div class="media-body">
+                                            <span class="mb-0 text-sm">{{i.end_date|date:'d-m-Y' }}</span>
+                                        </div>
+                                 </div>
+                                </td>
+                                <td>
+                                <div class="media align-items-center">
+                                        <div class="media-body">
+                                            <span class="mb-0 text-sm">{{i.fk_leave_reason.reason_to_leave}}</span>
+                                        </div>
+                                 </div>
+                                </td>
+                                 <td>
+                                <div class="media align-items-center">
+                                        <div class="media-body">
+                                            {% if i.action_status == "Approved" %}
+                                                <span class="mb-0 text-sm" style="color:green;">{{ i.action_status }}</span>
+                                            {% else %}
+                                                <span class="mb-0 text-sm" style="color:red ;">{{ i.action_status }}</span>
+                                            {% endif %}
+                                        </div>
+                                 </div>
+                                </td>
+
+                                {% endif %}
+                                {% endfor %}
+                                 <td>
+                                <div class="media align-items-center">
+                                        <div class="media-body">
+                                            <span class="mb-0 text-sm"><button type="button" class="btn btn-outline-primary btn-sm" onclick="ViewLeaveApplicationDetail({{i.id}},this)">View Detail</button></span>
+                                        </div>
+                                 </div>
+                                </td>
+<!--                                {#% for u in  useroperations_obj #%}-->
+<!--                                    {#% if u.FK_modules.module_url == "leave-application" #%}-->
+<!--                                        {#% if u.edit_data == "Y" #%}-->
+                                            <td>
+                                            <div class="media align-items-center">
+                                                <div class="media-body">
+                                                    <span class="mb-0 text-sm">
+                                                        <select class="form-control form-control-sm form-control-alternative" onchange="ApproveDisApproveApplication({{i.id}},'{{i.action_status}}')">
+                                                            <option value="" selected hidden>Select Action</option>
+                                                            <option value="{{i.action_status}}">Approve</option>
+                                                            <option value="{{i.action_status}}">Disapprove</option>
+                                                        </select>
+                                                    </span>
+                                                </div>
+                                             </div>
+                                            </td>
+<!--                                        {#% endif #%}-->
+<!--                                    {#% endif #%}-->
+<!--                                {#% endfor #%}-->
+                            </tr>
+                    {% endfor %}
+                    </tbody>
+                    </table>
+                    </div>
+                    <div id="myModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title"><b>Application Details</b></h4>
+                                    <button type="button" class="close" data-dismiss="modal">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div>
+                                        <label style="float: right;">Date of Application : <b><span id="leaveapplicationdate_post"></span></b></label><br>
+                                        <label><b>Applicant Name : </b><span id="leaveapplicationstudentname"></span></label><br>
+                                        <label><b>Applicant Detail : </b>Course : <span id="leaveapplicationcourse"></span>, Semester : <span id="leaveapplicationsemester"></span>, Section : <span id="leaveapplicationsections"></span></label><br>
+                                        <label><b>Application Title : </b><span id="leaveapplicationtitle"></span></label><br>
+                                        <label><b>Leave Dates : </b> From : <span id="leaveapplicationstart_date"></span> To : <span id="leaveapplicationend_date"></span> </label><br>
+                                        <label><b>Application Detail : </b></label>
+                                        <div style="max-height: 400px;overflow-x: auto;">
+                                            <span id="leaveapplicationreason"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+$(document).ready(function () {
+	$('#LeaveApplicationNavPage').addClass('active');
+    $('#mydatatable').DataTable();
+});
+
+function ApproveDisApproveApplication(id, action_status) {
+    if (action_status == "Approved") {
+        currstatus = "Disapproved"
+    } else {
+        currstatus = "Approved"
+    }
+    swal({
+        title: "Are you sure?" ,
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willDelete) => {
+        if(willDelete) {
+            $.ajax({
+                method: "POST",
+                url: "/approve-disapprove-application/",
+                data: {
+                    'id': id,
+                    'action_status': action_status,
+                },
+                success: function (response) {
+                    if (response == "success") {
+                        swal("Application is " + currstatus + "!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                        location.reload();
+                        });
+                    }
+                    else {
+                        swal("Application is Disapproved !", {
+                            icon: "warning",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                        location.reload();
+                        });
+                    }
+                }
+            })
+        }
+    });
+}
+
+function ViewLeaveApplicationDetail(id,e) {
+$('#myModal').modal('show');
+console.log(id)
+console.log($(e).parent().find('td').css("background-color", "white"))
+    $(e).closest('tr').css("background-color", "white")
+$.ajax({
+    url: "/view-leave-application-detail/",
+    method: "POST",
+    data: {
+        "id": id
+    },
+    success: function (response) {
+        console.log(response)
+        console.log(response['student_name'])
+        $("#leaveapplicationstudentname").text(response['student_name'])
+        $("#leaveapplicationsemester").text(response['semester'])
+        $("#leaveapplicationsections").text(response['sections'])
+        $("#leaveapplicationcourse").text(response['course'])
+        $("#leaveapplicationtitle").text(response['leave_reason'])
+        $("#leaveapplicationreason").text(response['reason'])
+        $("#leaveapplicationstart_date").text(response['start_date'])
+        $("#leaveapplicationend_date").text(response['end_date'])
+        $("#leaveapplicationdate_post").text(response['date_post'])
+    }
+})
+}
+function FilterApplications(){
+  var course_filter = $("#course_filter").val();
+  var faculty_filter = $("#faculty_filter").val();
+  var start_date_filter = $("#start_date_filter").val();
+  var end_date_filter = $("#end_date_filter").val();
+  var status_filter = $("#status_filter").val();
+  console.log(start_date_filter)
+  $.ajax({
+          method: "POST",
+          url: "/filter-applications/",
+          data: {
+              "course_filter":course_filter,
+              "faculty_filter":faculty_filter,
+              "start_date_filter": start_date_filter,
+              "end_date_filter": end_date_filter,
+              "status_filter": status_filter,
+          },
+          success: function (response) {
+              console.log(response)
+              $("#leaveapplicationtable").show();
+              $("#leaveapplicationtable").html("")
+              $("#leaveapplicationtable").append(response)
+
+          }
+      })
+}
+
+</script>
+<!--{#% endif #%}-->
+<!--{#% endif #%}-->
+<!--{#% endfor #%}-->
+{% endblock content %}

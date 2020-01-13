@@ -1,0 +1,358 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+<style>
+    .content .block,
+    .content .items-push>div,
+    .content .push,
+    .content p {
+        margin-bottom: 0px !important;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">Your Applications</h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                <form id="LeaveApplicationForm" method="post" role="form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="btn btn-primary btn-sm" onclick="ShowAddApplication_Div()"
+                        id="ShowAddApplication_Button">Add Leave Application</div>
+                    <div class="block-options">
+                        <div class="btn btn-primary btn-sm" onclick="ShowAllApplication_Div()"
+                            id="ShowAllApplication_Button" style="display:none;">All Leave Applications</div>
+                        <button class="btn btn-success btn-sm" id="Submit_Button" type="submit"
+                            style="display:none;">Submit</button>
+                    </div>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <div class="block">
+        <div class="block-content block-content-full">
+            <div id="ShowAddApplication_Div" style=" display: none;">
+                <div class="row">
+                    <div id="PersonalInfo" class="tab-pane fade active show" style=" width:1600px">
+                        <div class="card-body">
+
+
+                            <div class="pl-lg-4">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-5 col-xs-5">
+                                        <div class="form-group clearfix">
+                                            <label class="form-control-label text-right">Reason To Leave<span
+                                                    style="color:red">*</span>:</label>
+                                            <select name="reason" id="reason"
+                                                class="form-control form-control-sm form-control-alternative" required>
+                                                <option value="" selected hidden>Select reason</option>
+                                                {% for i in reason_obj %}
+                                                <option value="{{i.id}}">{{i.reason_to_leave}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="form-group clearfix">
+                                            <label class="form-control-label">Select Faculty<span
+                                                    style="color:red">*</span>:</label>
+                                            <select name="faculty" id="faculty"
+                                                class="form-control form-control-sm form-control-alternative" required>
+                                                <option value="" selected hidden>Select faculty</option>
+                                                {% for i in faculty_obj %}
+                                                <option value="{{i.id}}">{{i.first_name}} {{i.last_name}}</option>
+                                                {% endfor %}
+                                            </select>
+
+                                        </div>
+                                        <div class="form-group clearfix">
+                                            <label class="form-control-label">Duration<span
+                                                    style="color:red">*</span>:</label>
+                                            <div class="row">
+                                                <div class="input-daterange input-group" data-date-format="dd-mm-yyyy"
+                                                    data-week-start="1" data-autoclose="true"
+                                                    data-today-highlight="true">
+                                                    <div class="col-lg-4" style="padding-left: 0%;">
+                                                        <label>Start Date:</label>
+                                                        <input type="text"
+                                                            class="form-control form-control-sm form-control-alternative"
+                                                            id="start" style="text-align: left;" name="start"
+                                                            placeholder="From" data-week-start="1" data-autoclose="true"
+                                                            data-today-highlight="true" required>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <label>End Date:</label>
+                                                        <input type="text" class="form-control form-control-sm" id="end"
+                                                            name="end" style="text-align: left;" placeholder="To"
+                                                            data-week-start="1" data-autoclose="true"
+                                                            data-today-highlight="true" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-left: -12px;">
+                                            <div class="col-lg-10">
+                                                <div class="form-group clearfix" style="left: -3px;">
+                                                    <label class="form-control-label">File:</label>
+                                                    <div class="custom-file">
+                                                        <input type="file" name="file"
+                                                            class="custom-file-input cfile form-control form-control-sm form-control-alternative"
+                                                            id="customFile">
+                                                        <label class="custom-file-label" for="customFile"
+                                                            style="width: 123%; left: -3px;">Choose file</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-6" style="width: 100%; margin: 0 auto;">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Reason Detail<span
+                                                    style="color:red">*</span>:</label>
+                                            <textarea class="form-control form-control-sm form-control-alternative"
+                                                style="min-height:252px; width: 100%;" name="reason_detail"
+                                                id="reason_detail" placeholder="Write a Reason here ..."
+                                                required></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive" id="ShowAllApplication_Div">
+                <table class="table table-vcenter" id="mydatatable" style="padding: 10px !important;">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col" style="width: 12%;">Status</th>
+                            <th scope="col" style="width: 12%;">Date of<br /> Application</th>
+                            <th scope="col" style="width: 12%;">Start Date</th>
+                            <th scope="col" style="width: 12%;">End Date</th>
+                            <th scope="col" style="width: 20%;">View Details</th>
+                            <th scope="col"style="width: 7%;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="list">
+                        {% if leave_application_obj %}
+                        {% for i in leave_application_obj %}
+                        <tr>
+                            <td scope="row">
+                                <div class="media align-items-center">
+                                    <div class="media-body">
+                                        <span class="mb-0 text-sm">{{i.fk_leave_reason.reason_to_leave}}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td scope="row">
+                                <div class="media align-items-center">
+                                    <div class="media-body">
+                                        <span class="mb-0 text-sm">{{i.action_status}}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td scope="row">
+                                <div class="media align-items-left">
+                                    <div class="media-body">
+                                        <span class="mb-0 text-sm"> {{i.date_post|date:'d-m-Y'}}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td scope="row">
+                                <div class="media align-items-center">
+                                    <div class="media-body">
+                                        <span class="mb-0 text-sm">{{i.start_date|date:'d-m-Y'}}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td scope="row">
+                                <div class="media align-items-center">
+                                    <div class="media-body">
+                                        <span class="mb-0 text-sm">{{i.end_date|date:'d-m-Y'}}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td scope="row"
+                                style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px;">
+                                <div class="media align-items-center">
+                                    <div class="media-body">
+                                        <span class="mb-0 text-sm">{{i.reason}}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td scope="row">
+                                <div class="media align-items-center" style="float: right; margin-right: 25%;">
+                                    <div class="media-body">
+                                        <span class="mb-0 text-sm"><button type="button" class="btn btn-sm btn-outline-danger"
+                                                onclick="DeleteApplication({{i.id}})"><i class="fa fa-fw fa-times"
+                                                    aria-hidden="true"></i></button></span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <th colspan="3" scope="row" class="name">No Data Avaliable</th>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pl-lg-4">
+    <div class="row">
+        <div class="col-lg-4 col-sm-4 col-xs-4">
+            <br />
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#LeaveApplicationNavPage').addClass('active');
+    });
+    $('#customFile').change(function () {
+        var i = $(this).prev('label').clone();
+        var file = $('#customFile')[0].files[0].name;
+        $(this).prev('label').text(file);
+    });
+
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+
+
+
+    $(document).ready(function () {
+        $('#mydatatable').DataTable();
+    });
+
+
+
+    function ShowAddApplication_Div() {
+        $("#ShowAddApplication_Div").show();
+        $("#ShowAllApplication_Div").hide();
+        $("#ShowAddApplication_Button").hide();
+        $("#ShowAllApplication_Button").show();
+        $("#Submit_Button").show();
+    }
+
+    function ShowAllApplication_Div() {
+        $("#ShowAddApplication_Div").hide();
+        $("#ShowAllApplication_Div").show();
+        $("#ShowAddApplication_Button").show();
+        $("#ShowAllApplication_Button").hide();
+        $("#Submit_Button").hide();
+    }
+
+
+    $(document).ready(function () {
+        $("#LeaveApplicationForm").submit(function (e) {
+            e.preventDefault();
+
+            var fd = new FormData();
+            fd.append('file', $("#customFile")[0].files[0]);
+            fd.append('reason', $("#reason").val());
+            fd.append('faculty', $("#faculty").val());
+            fd.append('start', $("#start").val());
+            fd.append('end', $("#end").val());
+            fd.append('reason_detail', $("#reason_detail").val());
+
+            $.ajax({
+                url: "/leave-application-submit/",
+                method: "POST",
+                async: false,
+                cache: false,
+                contentType: false,
+                enctype: 'multipart/form-data',
+                processData: false,
+                data: fd,
+                success: function (response) {
+                    window.location.href = '/leave-application/'
+
+                }
+            })
+        });
+    });
+
+    jQuery(function () { One.helpers(['datepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider']); });
+
+    function changereson() {
+        var reason = $("#reason").val();
+        console.log(reason)
+        if (reason == "6") {
+            $("#otherreson").show();
+        }
+        else {
+            $("#otherreson").hide();
+        }
+    }
+
+    function getleavedetail() {
+        var leaveApplicationlist = $("#leaveApplicationlist").val();
+        console.log(leaveApplicationlist)
+        $.ajax({
+            url: "/leave-application-detail/",
+            method: "POST",
+            data: {
+                "leaveApplicationlist_id": leaveApplicationlist
+            },
+            success: function (response) {
+                console.log(response)
+                $("#leaveapplicationdetail_div").show();
+                $("#leaveapplicationdetail").html("");
+                $("#leaveapplicationstatus").html("");
+                $("#leaveapplicationdetail").text(response['detail']);
+                $("#leaveapplicationstatus").text(response['status']);
+            }
+        })
+    }
+
+    function DeleteApplication(id) {
+        console.log(id)
+        swal({
+            title: "Are you sure?",
+            text: "To delete this Application!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: "/delete-leave-application/",
+                        method: "POST",
+                        data: {
+                            "id": id
+                        },
+                        success: function (response) {
+                            if (response == "success") {
+                                swal("The Application has been successfully Deleted!", {
+                                    icon: "success",
+                                    button: "Ok",
+                                    closeOnClickOutside: false,
+                                }).then(function () {
+                                    location.reload();
+                                });
+                            }
+                        }
+                    })
+                }
+                else {
+                    swal("Application is NOT deleted!");
+                }
+            });
+    }
+</script>
+
+
+
+{% endblock content %}
