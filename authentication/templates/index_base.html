@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Tripude Institute of Management Education</title>
+    <title>Tirpude Institute of Management Education</title>
     <link rel="shortcut icon" href="{% static 'media/favicons/favicon.png' %}">
     <link rel="icon" type="image/png" sizes="192x192" href="{% static 'assets/media/favicons/favicon-192x192.png' %}">
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'media/favicons/apple-touch-icon-180x180.png' %}">
@@ -47,11 +47,17 @@
             </div>
             <div class="content-side content-side-full">
                 <ul class="nav-main">
-                    {% if userinfo_obj.fk_user_type.user_type == "Student" %}
+                    {% if user_info_obj.fk_user_type.user_type == "Student" %}
                         <li class="nav-main-item">
                             <a class="nav-main-link" href="/Attendance/" id="AttendanceNavPage">
                                 <img class="icon-size" src="{% static "media/dashboard-icons/icon-attendance.png" %}" alt="icon">
                                 <span class="nav-main-link-name">&nbsp;&nbsp;Attendance</span>
+                            </a>
+                        </li>
+                    <li class="nav-main-item">
+                            <a class="nav-main-link" href="/leave-application/" id="LeaveApplicationNavPage">
+                                <img class="icon-size" src="{% static "media/dashboard-icons/icon-leaveapplication.png" %}" alt="icon">
+                                <span class="nav-main-link-name">&nbsp;&nbsp;Leave Application</span>
                             </a>
                         </li>
                     {% else %}
@@ -61,7 +67,31 @@
                                 <span class="nav-main-link-name">&nbsp; &nbsp;Attendance</span>
                             </a>
                         </li>
+                    <li class="nav-main-item">
+                            <a class="nav-main-link" href="/leave-application/" id="LeaveApplicationNavPage">
+                                <img class="icon-size" src="{% static "media/dashboard-icons/icon-leaveapplication.png" %}" alt="icon">
+                                <span class="nav-main-link-name">&nbsp;&nbsp;Leave Application</span>
+                            </a>
+                        </li>
                     {% endif %}
+                    <li class="nav-main-item">
+                         <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+                            <img class="icon-size" src="{% static "media/dashboard-icons/icon-exam.png" %}" alt="icon">
+                                    <span class="nav-main-link-name">&nbsp;Exams</span>
+                         </a>
+                            <ul class="nav-main-submenu">
+                                <li class="nav-main-item">
+                                    <a class="nav-main-link" href="/exam-schedule/" id="ExamScheduleNavPage">
+                                        <span class="nav-main-link-name">Internal Exam Schedule</span>
+                                    </a>
+                                </li>
+                                <li class="nav-main-item">
+                                    <a class="nav-main-link" href="/exam-result/" id="ExamResultNavPage">
+                                        <span class="nav-main-link-name">Internal Exam Results</span>
+                                    </a>
+                                </li>
+                            </ul>
+                    </li>
                 </ul>
             </div>
         </nav>
