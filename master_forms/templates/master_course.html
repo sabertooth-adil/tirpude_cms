@@ -1,0 +1,270 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+{#{% for u in  user_operation_obj %}#}
+{#{% if u.fk_screen.screen_url == "Courses" %}#}
+{#{% if u.view_data == "Y" %}#}
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">Course</h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+{#                {% for u in  user_operation_obj %}#}
+{#                    {% if u.fk_screen.screen_url == "Courses" %}#}
+{#                        {% if u.save_data == "Y" %}#}
+                            <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAddCourse_Div()" id="ShowAddCourse_Button">Add Course</button>
+{#                        {% endif %}#}
+{#                    {% endif %}#}
+{#                {% endfor %}#}
+                <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAllCourse_Div()" id="ShowAllCourse_Button" style="display: none;">All Course</button>
+                <button class="btn btn-success btn-sm" onclick="addcourse()" id="addcourse_button" style="display:none;">Save</button>
+                <button class="btn btn-success btn-sm" onclick="updatecourse()" id="updatecourse_button" style="display:none;">Update</button>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <div class="block">
+        <div class="block-content block-content-full">
+            <div id="ShowAddCourse_Div" style="display: none;">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Course<span
+                                    class="text-danger">*</span>:</label>
+                            <input type="text"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="course" name="course" required>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_course">Please Enter Course</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                    </div>
+                </div>
+            </div>
+            <div id="ShowUpdateCourse_Div" style="display: none;">
+                <div class="pl-lg-4">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-4 col-xs-4">
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-xs-4">
+                            <input type="hidden" id="courseid" name="courseid">
+                            <div class="form-group">
+                                <label class="form-control-label text-right">Course<span
+                                        class="text-danger">*</span>:</label>
+                                <input type="text"
+                                       class="form-control form-control-sm form-control-alternative"
+                                       id="editcourse" name="editcourse" required>
+                                <span style="display:none;color:red;font-size: 12px;"
+                                      id="err_editcourse">Please Enter Course</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-xs-4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive" id="ShowAllCourse_Div">
+                <table class="table table-vcenter" id="mydatatable">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="text-center" style="width: 10% !important;">Sr No.</th>
+                            <th>Course</th>
+{#                            {% for u in  user_operation_obj %}#}
+{#                                {% if u.fk_screen.screen_url == "Courses" %}#}
+{#                                    {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                                        <th class="text-center" style="width: 10% !important;">Actions</th>
+{#                                    {% endif %}#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in course_obj %}
+                        <tr>
+                            <td class="text-center font-size-sm">{{forloop.counter}}</td>
+                            <td class="font-w600 font-size-sm">{{ i.course }}</td>
+{#                            {% for u in  user_operation_obj %}#}
+{#                                {% if u.fk_screen.screen_url == "Courses" %}#}
+{#                                    {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                                        <td class="text-center">
+                                            <div class="btn-group">
+{#                                                {% if u.edit_data == "Y" %}#}
+                                                    <button type="button" class="btn btn-sm btn-outline-primary js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Edit Client" onclick="edit_course({{i.id}})">
+                                                        <i class="fa fa-fw fa-pencil-alt"></i>
+                                                    </button>
+{#                                                {% endif %}#}
+{#                                                {% if u.delete_data == "Y" %}#}
+                                                    <button type="button" class="btn btn-sm btn-outline-danger js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Remove Client" onclick="delete_course({{i.id}})">
+                                                        <i class="fa fa-fw fa-times"></i>
+                                                    </button>
+{#                                                {% endif %}#}
+                                            </div>
+                                        </td>
+{#                                    {% endif %}#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+		$('#MastersMainNavPage').addClass('open');
+		$('#CoursesNavPage').addClass('active');
+        $('#mydatatable').DataTable();
+        $("#AssignmentModal").on("hidden.bs.modal", function () {
+            location.reload();
+        });
+    });
+    function delete_course(id){
+    console.log(id)
+    swal({
+        title: "Are you sure?",
+        text: "To delete this Course!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,})
+        .then((willDelete) => {
+        if(willDelete) {
+            $.ajax({
+                url: "/delete-course/",
+                method: "POST",
+                data: {
+                    "id": id
+                },
+                success: function (response) {
+                    if (response == "success") {
+                        swal("The Course has been successfully Deleted!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+            })
+        }
+        else {
+            swal("Course is NOT deleted!");
+        }
+    });
+    }
+    function ShowAddCourse_Div(){
+        $("#ShowAddCourse_Div").show();
+        $("#ShowAllCourse_Div").hide();
+        $("#ShowAddCourse_Button").hide();
+        $("#ShowAllCourse_Button").show();
+        $("#addcourse_button").show();
+        $("#updatecourse_button").hide();
+    }
+
+    function ShowAllCourse_Div(){
+        $("#ShowAddCourse_Div").hide();
+        $("#ShowAllCourse_Div").show();
+        $("#ShowAddCourse_Button").show();
+        $("#ShowAllCourse_Button").hide();
+        $("#ShowUpdateCourse_Div").hide();
+        $("#addcourse_button").hide();
+        $("#updatecourse_button").hide();
+    }
+
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+
+
+    function edit_course(id){
+        $("#ShowUpdateCourse_Div").show();
+        $("#ShowAllCourse_Div").hide();
+        $("#ShowAddCourse_Button").hide();
+        $("#ShowAllCourse_Button").show();
+        $("#addcourse_button").hide();
+        $("#updatecourse_button").show();
+        $.ajax({
+             url: "/edit-course/",
+             method: "POST",
+             data: {
+                 "id": id
+             },
+             success: function (response) {
+                 console.log(response)
+                 $("#courseid").val(response['list'][0]['id'])
+                 $("#editcourse").val(response['list'][0]['course'])
+             }
+         })
+    }
+    $("#course").keyup(function () {
+        $("#err_course").hide();
+    });
+    function addcourse(){
+        var course = $("#course").val();
+        if(course == ""){
+            $("#err_course").show();
+        }else{
+            $.ajax({
+            url: "/add-course/",
+            method: "POST",
+            data: {
+                "course":course
+            },
+            success: function(response){
+                console.log(response)
+                if (response == "success") {
+                    swal("The Course has been Added successfully!", {
+                        icon: "success",
+                        button: "Ok",
+                        closeOnClickOutside: false,
+                    }).then(function () {
+                        location.reload();
+                    });
+                }
+            }
+            })
+        }
+    }
+    $("#editcourse").keyup(function () {
+        $("#err_editcourse").hide();
+    });
+    function updatecourse(){
+        var courseid = $("#courseid").val();
+        var editcourse = $("#editcourse").val();
+        if(editcourse == ""){
+            $("#err_editcourse").show();
+        }else{
+            $.ajax({
+            url: "/update-course/",
+            method: "POST",
+            data: {
+                "course_id":courseid,
+                "edit_course":editcourse,
+            },
+            success: function(response){
+                console.log(response)
+                if (response == "success") {
+                    swal("The Course has been Updated successfully!", {
+                        icon: "success",
+                        button: "Ok",
+                        closeOnClickOutside: false,
+                    }).then(function () {
+                        location.reload();
+                    });
+                }
+            }
+            })
+        }
+    }
+
+</script>
+{#{% endif %}#}
+{#{% endif %}#}
+{#{% endfor %}#}
+{% endblock content %}

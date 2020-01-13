@@ -1,0 +1,71 @@
+<div class="table-responsive">
+    <table class="table table-vcenter" id="mydatatable">
+        <thead class="thead-light">
+        <tr>
+            <th class="text-center" style="width: 7% !important;">Sr No.</th>
+            <th scope="col" style="width: 8% !important;">Date</th>
+            <th style="width: 6% !important;">Audience</th>
+            <th style="width: 8% !important;">Course</th>
+            <th style="width: 8% !important;">Semester</th>
+            <th style="width: 8% !important;">Section</th>
+            <th>Title</th>
+            {#                {% for i in  user_operation_obj %}#}
+            {#                {% if i.fk_modules.module_url == "notice" %}#}
+            {#                {% if i.delete_data == "Y" %}#}
+            <th scope="col" style="width: 5%;">Action</th>
+            {#                {% endif %}#}
+            {#                {% endif %}#}
+            {#                {% endfor %}#}
+        </tr>
+        </thead>
+        <tbody>
+        {% for i in show_notice %}
+            <tr>
+                <td class="text-center font-size-sm">{{ forloop.counter }}</td>
+                <td>
+                    {{ i.date|date:'d-m-Y' }}
+                </td>
+                <td class="text-center font-size-sm">{{ i.audience }}</td>
+                <td scope="row" class="name">
+                    {% if i.fk_course.course %}
+                        Course {{ i.fk_course.course }}
+                    {% endif %}
+                </td>
+                <td scope="row" class="name">
+                    {% if i.fk_semester.semester %}
+                        Semester {{ i.fk_semester.semester }}
+                    {% endif %}
+                </td>
+                <td scope="row" class="name">
+                    {% if i.fk_section.sections %}
+                        Section {{ i.fk_section.sections }}
+                    {% endif %}
+                </td>
+                <td scope="row">
+                    <a href="#" onclick="showdetail({{ i.id }})" data-toggle="modal" data-target="#myModal">
+                        <div class="media align-items-center">
+                            <div class="media-body">
+                                <span class="mb-0 text-sm">{{ i.notice_title }}</span>
+                            </div>
+                        </div>
+                    </a>
+                </td>
+                {#                {% for i in  user_operation_obj %}#}
+                {#                {% if i.fk_modules.module_url == "notice" %}#}
+                {#                {% if i.delete_data == "Y" %}#}
+                <td>
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="delete_notice({{ i.id }})"><i
+                            class="fa fa-fw fa-times"></i></button>
+                </td>
+                {#                {% endif %}#}
+                {#                {% endif %}#}
+                {#                {% endfor %}#}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#mydatatable').DataTable();
+    });

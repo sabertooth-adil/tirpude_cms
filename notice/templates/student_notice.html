@@ -1,0 +1,81 @@
+{% extends 'index_base.html' %}
+{% block content %}
+    {% load static %}
+    <div class="bg-body-light">
+        <div class="content" style="padding: 10px !important;">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+                <h1 class="flex-sm-fill h3 my-2">Notice</h1>
+            </div>
+        </div>
+    </div>
+    <div class="content" style="padding: 10px !important;">
+        <div class="block">
+            <div class="block-content block-content-full">
+                <div class="table-responsive">
+                    <table class="table table-vcenter" id="mydatatable">
+                        <thead class="thead-light">
+                        <tr>
+                            <th class="text-center" style="width: 10% !important;">Sr No.</th>
+                            <th>Title</th>
+                            <th class="text-center" style="width: 10% !important;">Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in show_notice %}
+                            <tr>
+                                <td class="text-center font-size-sm">{{ forloop.counter }}</td>
+                                <td class="font-w600 font-size-sm">
+                                    <a href="#" onclick="showdetail({{ i.id }})" data-toggle="modal"
+                                       data-target="#myModal">
+                                        <div class="media align-items-center">
+                                            <div class="media-body">
+                                                <span class="mb-0 text-sm">{{ i.notice_title }}</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </td>
+                                <td class="text-center font-size-sm">{{ i.date }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="noticebody_div">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#mydatatable').DataTable();
+            $('#NoticeNavPage').addClass('active');
+        });
+
+        function showdetail(id) {
+            console.log(id)
+            $.ajax({
+                url: "/get-single-notice-detail/",
+                method: "POST",
+                data: {
+                    "id": id
+                },
+                success: function (response) {
+                    console.log(response)
+                    $("#noticebody_div").html("")
+                    $("#noticebody_div").append(response['notice_body'])
+                }
+            })
+        }
+    </script>
+{% endblock content %}

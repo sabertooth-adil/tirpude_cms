@@ -1,0 +1,302 @@
+{% extends 'index_base.html' %}
+{% block content %}
+    {% load static %}
+    <div class="bg-body-light">
+        <div class="content" style="padding: 10px !important;">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+                <h1 class="flex-sm-fill h3 my-2">Academic Session</h1>
+                <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                    <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAddCourse_Div()"
+                            id="ShowAddCourse_Button">Add Academic Session
+                    </button>
+                    <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAllCourse_Div()"
+                            id="ShowAllCourse_Button" style="display: none;">All Academic Session
+                    </button>
+                    <button class="btn btn-success btn-sm" onclick="addacademicsession()" id="addcourse_button"
+                            style="display:none;">Save
+                    </button>
+                    <button class="btn btn-success btn-sm" onclick="updateacademicsession()" id="updatecourse_button"
+                            style="display:none;">Update
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="content" style="padding: 10px !important;">
+        <div class="block">
+            <div class="block-content block-content-full">
+                <div id="ShowAddCourse_Div" style="display: none;">
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-3 col-xs-3">
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-xs-6">
+                            <div class="input-daterange input-group" data-date-format="dd-mm-yyyy" data-week-start="1"
+                                 data-autoclose="true" data-today-highlight="true">
+                                <div class="col-lg-6 col-sm-6 col-xs-6">
+                                    <label class="form-control-label text-right">Academic Session Start Date<span
+                                            class="text-danger">*</span>:</label>
+                                    <input type="text" class="form-control form-control-sm form-control-alternative"
+                                           id="academic_session_start_date" style="text-align: left;"
+                                           name="academic_session_start_date" placeholder="From" data-week-start="1"
+                                           data-autoclose="true" data-today-highlight="true" required>
+                                    <span style="display:none;color:red;font-size: 12px;"
+                                          id="err_academic_session_start_date">Please Select Academic Session Start Date</span>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-xs-6">
+                                    <label class="form-control-label text-right">Academic Session End Date<span
+                                            class="text-danger">*</span>:</label>
+                                    <input type="text" class="form-control form-control-sm"
+                                           id="academic_session_end_date" name="academic_session_end_date"
+                                           style="text-align: left;" placeholder="To" data-week-start="1"
+                                           data-autoclose="true" data-today-highlight="true" required>
+                                    <span style="display:none;color:red;font-size: 12px;"
+                                          id="err_academic_session_end_date">Please Select Academic Session End Date</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-xs-3">
+                        </div>
+                    </div>
+                </div>
+                <div id="ShowUpdateCourse_Div" style="display: none;">
+                    <input type="hidden" id="academic_session_id">
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-3 col-xs-3">
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-xs-6">
+                            <div class="input-daterange input-group" id="datepicker" data-date-format="dd-mm-yyyy"
+                                 data-week-start="1" data-autoclose="true" data-today-highlight="true">
+                                <div class="col-lg-6 col-sm-6 col-xs-6">
+                                    <label class="form-control-label text-right">Academic Session Start Date<span
+                                            class="text-danger">*</span>:</label>
+                                    <input type="text" class="form-control form-control-sm form-control-alternative"
+                                           id="edit_academic_session_start_date" style="text-align: left;"
+                                           name="edit_academic_session_start_date" placeholder="From"
+                                           data-week-start="1" data-autoclose="true" data-today-highlight="true"
+                                           required>
+                                    <span style="display:none;color:red;font-size: 12px;"
+                                          id="err_edit_academic_session_start_date">Please Select Academic Session Start Date</span>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-xs-6">
+                                    <label class="form-control-label text-right">Academic Session End Date<span
+                                            class="text-danger">*</span>:</label>
+                                    <input type="text" class="form-control form-control-sm"
+                                           id="edit_academic_session_end_date" name="edit_academic_session_end_date"
+                                           style="text-align: left;" placeholder="To" data-week-start="1"
+                                           data-autoclose="true" data-today-highlight="true" required>
+                                    <span style="display:none;color:red;font-size: 12px;"
+                                          id="err_edit_academic_session_end_date">Please Select Academic Session End Date</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-xs-3">
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive" id="ShowAllCourse_Div">
+                    <table class="table table-vcenter" id="mydatatable">
+                        <thead class="thead-light">
+                        <tr>
+                            <th class="text-center" style="width: 10% !important;">Sr No.</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th class="text-center" style="width: 10% !important;">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in academic_session_obj %}
+                            <tr>
+                                <td class="text-center font-size-sm">{{ forloop.counter }}</td>
+                                <td class="font-w600 font-size-sm">{{ i.start_date|date:'d-m-Y' }}</td>
+                                <td class="font-w600 font-size-sm">{{ i.end_date|date:'d-m-Y' }}</td>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-primary js-tooltip-enabled"
+                                                data-toggle="tooltip" title="" data-original-title="Edit Client"
+                                                onclick="edit_academicsession({{ i.id }})">
+                                            <i class="fa fa-fw fa-pencil-alt"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-danger js-tooltip-enabled"
+                                                data-toggle="tooltip" title="" data-original-title="Remove Client"
+                                                onclick="delete_academicsession({{ i.id }})">
+                                            <i class="fa fa-fw fa-times"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#MastersMainNavPage').addClass('open');
+            $('#Academic_SessionNavPage').addClass('active');
+            $('#mydatatable').DataTable();
+            $("#AssignmentModal").on("hidden.bs.modal", function () {
+                location.reload();
+            });
+        });
+
+        function delete_academicsession(id) {
+            console.log(id)
+            swal({
+                title: "Are you sure?",
+                text: "To delete this Academic Session!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: "/delete-academic-session/",
+                            method: "POST",
+                            data: {
+                                "id": id
+                            },
+                            success: function (response) {
+                                if (response == "success") {
+                                    swal("The Academic Session has been successfully Deleted!", {
+                                        icon: "success",
+                                        button: "Ok",
+                                        closeOnClickOutside: false,
+                                    }).then(function () {
+                                        location.reload();
+                                    });
+                                }
+                            }
+                        })
+                    }
+                    else {
+                        swal("Caste is NOT deleted!");
+                    }
+                });
+        }
+
+        function ShowAddCourse_Div() {
+            $("#ShowAddCourse_Div").show();
+            $("#ShowAllCourse_Div").hide();
+            $("#ShowAddCourse_Button").hide();
+            $("#ShowAllCourse_Button").show();
+            $("#addcourse_button").show();
+            $("#updatecourse_button").hide();
+        }
+
+        function ShowAllCourse_Div() {
+            $("#ShowAddCourse_Div").hide();
+            $("#ShowAllCourse_Div").show();
+            $("#ShowAddCourse_Button").show();
+            $("#ShowAllCourse_Button").hide();
+            $("#ShowUpdateCourse_Div").hide();
+            $("#addcourse_button").hide();
+            $("#updatecourse_button").hide();
+        }
+
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+        function edit_academicsession(id) {
+            $("#ShowUpdateCourse_Div").show();
+            $("#ShowAllCourse_Div").hide();
+            $("#ShowAddCourse_Button").hide();
+            $("#ShowAllCourse_Button").show();
+            $("#addcourse_button").hide();
+            $("#updatecourse_button").show();
+            $.ajax({
+                url: "/edit-academic-session/",
+                method: "POST",
+                data: {
+                    "id": id
+                },
+                success: function (response) {
+                    console.log(response)
+                    $("#academic_session_id").val(response['list'][0]['id'])
+                    $('#edit_academic_session_start_date').datepicker("setDate", new Date(response['list'][0]['start_date'].replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
+                    $('#edit_academic_session_end_date').datepicker("setDate", new Date(response['list'][0]['end_date'].replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")));
+                }
+            })
+        }
+
+
+        $("#academic_session_start_date").change(function () {
+            $("#err_academic_session_start_date").hide();
+        });
+        $("#academic_session_end_date").change(function () {
+            $("#err_academic_session_end_date").hide();
+        });
+
+        function addacademicsession() {
+            var academic_session_start_date = $("#academic_session_start_date").val();
+            var academic_session_end_date = $("#academic_session_end_date").val();
+            if (academic_session_start_date == "") {
+                $("#err_academic_session_start_date").show();
+            } else if (academic_session_end_date == "") {
+                $("#err_academic_session_end_date").show();
+            } else {
+                $.ajax({
+                    url: "/add-academic-session/",
+                    method: "POST",
+                    data: {
+                        "academic_session_start_date": academic_session_start_date,
+                        "academic_session_end_date": academic_session_end_date,
+                    },
+                    success: function (response) {
+                        console.log(response)
+                        if (response == "success") {
+                            swal("The Academic Session has been Added successfully!", {
+                                icon: "success",
+                                button: "Ok",
+                                closeOnClickOutside: false,
+                            }).then(function () {
+                                location.reload();
+                            });
+                        }
+                    }
+                })
+            }
+        }
+
+        $("#editcast").keyup(function () {
+            $("#err_editcast").hide();
+        });
+
+        function updateacademicsession() {
+            var academic_session_id = $("#academic_session_id").val();
+            var edit_academic_session_start_date = $("#edit_academic_session_start_date").val();
+            var edit_academic_session_end_date = $("#edit_academic_session_end_date").val();
+            if (edit_academic_session_start_date == "") {
+                $("#err_edit_academic_session_start_date").show();
+            } else if (edit_academic_session_end_date == "") {
+                $("#err_edit_academic_session_end_date").show();
+            } else {
+                $.ajax({
+                    url: "/update-academic-session/",
+                    method: "POST",
+                    data: {
+                        "academic_session_id": academic_session_id,
+                        "edit_academic_session_start_date": edit_academic_session_start_date,
+                        "edit_academic_session_end_date": edit_academic_session_end_date,
+                    },
+                    success: function (response) {
+                        console.log(response)
+                        if (response == "success") {
+                            swal("The Academic Session has been Updated successfully!", {
+                                icon: "success",
+                                button: "Ok",
+                                closeOnClickOutside: false,
+                            }).then(function () {
+                                location.reload();
+                            });
+                        }
+                    }
+                })
+            }
+        }
+    </script>
+{% endblock content %}

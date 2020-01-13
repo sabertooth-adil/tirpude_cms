@@ -1,0 +1,300 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+{#{% for u in  user_operation_obj %}#}
+{#{% if u.fk_screen.screen_url == "Subcasts" %}#}
+{#{% if u.view_data == "Y" %}#}
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">Sub Castes</h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+{#                {% for u in  user_operation_obj %}#}
+{#                    {% if u.fk_screen.screen_url == "Subcasts" %}#}
+{#                        {% if u.save_data == "Y" %}#}
+                            <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAddCourse_Div()" id="ShowAddCourse_Button">Add Sub Castes</button>
+{#                        {% endif %}#}
+{#                    {% endif %}#}
+{#                {% endfor %}#}
+                <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAllCourse_Div()" id="ShowAllCourse_Button" style="display: none;">All Sub Castes</button>
+                <button class="btn btn-success btn-sm" onclick="addsubcasts()" id="addcourse_button" style="display:none;">Save</button>
+                <button class="btn btn-success btn-sm" onclick="updatesubcasts()" id="updatecourse_button" style="display:none;">Update</button>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <div class="block">
+        <div class="block-content block-content-full">
+            <div id="ShowAddCourse_Div" style="display: none;">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Caste<span
+                                    class="text-danger">*</span>:</label>
+                            <select name="cast"
+                                    class="form-control form-control-sm form-control-alternative"
+                                    id="cast" required>
+                                <option value="" selected hidden>Select Caste</option>
+                                {% for i in cast_obj %}
+                                <option value="{{i.id}}">{{i.cast}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_casts">Please Enter Caste</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Sub Caste<span
+                                    class="text-danger">*</span>:</label>
+                            <input type="text"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="subcasts" name="subcasts" required>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_subcasts">Please Enter Sub Caste</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                    </div>
+                </div>
+            </div>
+            <div id="ShowUpdateCourse_Div" style="display: none;">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <input type="hidden" id="subcastsid" name="subcastsid">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Caste<span
+                                    class="text-danger">*</span>:</label>
+                            <select name="editcast"
+                                    class="form-control form-control-sm form-control-alternative"
+                                    id="editcast" required>
+                                <option value="" selected hidden>Select Caste</option>
+                                {% for i in cast_obj %}
+                                <option value="{{i.id}}">{{i.cast}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editcasts">Please Enter Caste</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Sub Caste<span class="text-danger">*</span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="editsubcast" name="editsubcast" required>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editsubcast">Please Enter Sub Caste</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive" id="ShowAllCourse_Div">
+                <table class="table table-vcenter" id="mydatatable">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="text-center" style="width: 10% !important;">Sr No.</th>
+                            <th>Castes</th>
+                            <th>Sub Castes</th>
+{#                            {% for u in  user_operation_obj %}#}
+{#                                {% if u.fk_screen.screen_url == "Subcasts" %}#}
+{#                                    {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                                        <th class="text-center" style="width: 10% !important;">Actions</th>
+{#                                    {% endif %}#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in subcast_obj %}
+                        <tr>
+                            <td class="text-center font-size-sm">{{forloop.counter}}</td>
+                            <td class="font-w600 font-size-sm">{{ i.fk_cast.cast }}</td>
+                            <td class="font-w600 font-size-sm">{{ i.sub_cast }}</td>
+{#                            {% for u in  user_operation_obj %}#}
+{#                                {% if u.fk_screen.screen_url == "Subcasts" %}#}
+{#                                    {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                                        <td class="text-center">
+                                            <div class="btn-group">
+{#                                                {% if u.edit_data == "Y" %}#}
+                                                    <button type="button" class="btn btn-sm btn-outline-primary js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Edit Client" onclick="edit_subcast({{i.id}})">
+                                                        <i class="fa fa-fw fa-pencil-alt"></i>
+                                                    </button>
+{#                                                {% endif %}#}
+{#                                                {% if u.delete_data == "Y" %}#}
+                                                    <button type="button" class="btn btn-sm btn-outline-danger js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Remove Client" onclick="delete_subcast({{i.id}})">
+                                                        <i class="fa fa-fw fa-times"></i>
+                                                    </button>
+{#                                                {% endif %}#}
+                                            </div>
+                                        </td>
+{#                                    {% endif %}#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+		$('#MastersMainNavPage').addClass('open');
+		$('#SubcastsNavPage').addClass('active');
+        $('#mydatatable').DataTable();
+        $("#AssignmentModal").on("hidden.bs.modal", function () {
+            location.reload();
+        });
+    });
+    function delete_subcast(id){
+    console.log(id)
+    swal({
+        title: "Are you sure?",
+        text: "To delete this Sub Cast!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,})
+        .then((willDelete) => {
+        if(willDelete) {
+            $.ajax({
+                url: "/delete-sub-caste/",
+                method: "POST",
+                data: {
+                    "id": id
+                },
+                success: function (response) {
+                    if (response == "success") {
+                        swal("The Sub Caste has been successfully Deleted!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+            })
+        }
+        else {
+            swal("Sub Caste is NOT deleted!");
+        }
+    });
+    }
+    function ShowAddCourse_Div(){
+        $("#ShowAddCourse_Div").show();
+        $("#ShowAllCourse_Div").hide();
+        $("#ShowAddCourse_Button").hide();
+        $("#ShowAllCourse_Button").show();
+        $("#addcourse_button").show();
+        $("#updatecourse_button").hide();
+    }
+    function ShowAllCourse_Div(){
+        $("#ShowAddCourse_Div").hide();
+        $("#ShowAllCourse_Div").show();
+        $("#ShowAddCourse_Button").show();
+        $("#ShowAllCourse_Button").hide();
+        $("#ShowUpdateCourse_Div").hide();
+        $("#addcourse_button").hide();
+        $("#updatecourse_button").hide();
+    }
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+    function edit_subcast(id){
+        $("#ShowUpdateCourse_Div").show();
+        $("#ShowAllCourse_Div").hide();
+        $("#ShowAddCourse_Button").hide();
+        $("#ShowAllCourse_Button").show();
+        $("#addcourse_button").hide();
+        $("#updatecourse_button").show();
+        $.ajax({
+             url: "/edit-sub-caste/",
+             method: "POST",
+             data: {
+                 "id": id
+             },
+             success: function (response) {
+                 console.log(response)
+                 $("#subcastsid").val(response['list'][0]['id'])
+                 $("#editcast").val(response['list'][0]['fk_cast'])
+                 $("#editsubcast").val(response['list'][0]['sub_cast'])
+             }
+         })
+    }
+    $("#cast").keyup(function () {
+        $("#err_casts").hide();
+    });$("#subcasts").keyup(function () {
+        $("#err_subcasts").hide();
+    });
+    function addsubcasts(){
+        var cast = $("#cast").val();
+        var subcasts = $("#subcasts").val();
+        if(cast == ""){
+            $("#err_casts").show();
+        }else if(subcasts == ""){
+            $("#err_subcasts").show();
+        }else{
+            $.ajax({
+            url: "/add-sub-caste/",
+            method: "POST",
+            data: {
+                "cast":cast,
+                "subcasts":subcasts,
+            },
+            success: function(response){
+                console.log(response)
+                if (response == "success") {
+                    swal("The Sub Caste has been Added successfully!", {
+                        icon: "success",
+                        button: "Ok",
+                        closeOnClickOutside: false,
+                    }).then(function () {
+                        location.reload();
+                    });
+                }
+            }
+            })
+        }
+    }
+    $("#editcast").keyup(function () {
+        $("#err_editcasts").hide();
+    });$("#editsubcast").keyup(function () {
+        $("#err_editsubcast").hide();
+    });
+    function updatesubcasts(){
+        var subcastsid = $("#subcastsid").val();
+        var editcast = $("#editcast").val();
+        var editsubcast = $("#editsubcast").val();
+        if(editcast == ""){
+            $("#err_editcasts").show();
+        }else if(editsubcast == ""){
+            $("#err_editsubcast").show();
+        }else{
+            $.ajax({
+            url: "/update-sub-caste/",
+            method: "POST",
+            data: {
+                "sub_caste_id":subcastsid,
+                "master_edit_caste":editcast,
+                "master_edit_sub_caste":editsubcast,
+            },
+            success: function(response){
+                console.log(response)
+                if (response == "success") {
+                    swal("The Sub Caste has been Updated successfully!", {
+                        icon: "success",
+                        button: "Ok",
+                        closeOnClickOutside: false,
+                    }).then(function () {
+                        location.reload();
+                    });
+                }
+            }
+            })
+        }
+    }
+</script>
+{#{% endif %}#}
+{#{% endif %}#}
+{#{% endfor %}#}
+{% endblock content %}

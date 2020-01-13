@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'authentication',
     'master_forms',
     'library',
+    'notice',
+
 ]
 
 MIDDLEWARE = [
@@ -90,7 +92,7 @@ DATABASES = {
         'NAME': 'tirpude_cms',
         'USER': 'root',
         'PASSWORD': 'Newuser@123',
-        'HOST': '15.206.60.193',
+        'HOST': '3.6.127.100',
         'PORT': '3306',
     }
 }

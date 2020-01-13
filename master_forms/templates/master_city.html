@@ -1,0 +1,399 @@
+{% extends 'index_base.html' %}
+{% block content %}
+    {% load static %}
+    {#{% for u in  user_operation_obj %}#}
+    {#{% if u.fk_screen.screen_url == "Citys" %}#}
+    {#{% if u.view_data == "Y" %}#}
+    <style>
+        .pagination {
+            text-align: center;
+            margin-top: 0em;
+        }
+
+        .pagination-number {
+            padding: 0.5em 0.8em;
+            border-radius: 2px;
+            color: #fff;
+            background-color: #6D85C7;
+        }
+
+        .pagination-number:hover, .pagination-current {
+            background-color: #3354AA;
+        }
+
+        .pagination-action {
+            margin: 0 0.1em;
+            display: inline-block;
+            padding: 0.5em 0.5em;
+            color: #B9B9B9;
+            font-size: 1.3em;
+        }
+
+        .pagination-action:hover, .pagination-previous, .pagination-next {
+            color: #3354AA;
+        }
+
+        .pagination {
+            display: -ms-flexbox;
+            float: right;
+            display: initial;
+            padding-left: 0px;
+            list-style: none;
+            border-radius: .25rem;
+        }
+    </style>
+    <div class="bg-body-light">
+        <div class="content" style="padding: 10px !important;">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+                <h1 class="flex-sm-fill h3 my-2">Cities</h1>
+                <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                    {#                {% for u in  user_operation_obj %}#}
+                    {#                    {% if u.fk_screen.screen_url == "Citys" %}#}
+                    {#                        {% if u.save_data == "Y" %}#}
+                    <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAddCourse_Div()"
+                            id="ShowAddCourse_Button">Add City
+                    </button>
+                    {#                        {% endif %}#}
+                    {#                    {% endif %}#}
+                    {#                {% endfor %}#}
+                    <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAllCourse_Div()"
+                            id="ShowAllCourse_Button" style="display: none;">All City
+                    </button>
+                    <button class="btn btn-success btn-sm" onclick="addcity()" id="addcourse_button"
+                            style="display:none;">Save
+                    </button>
+                    <button class="btn btn-success btn-sm" onclick="updatecity()" id="updatecourse_button"
+                            style="display:none;">Update
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="content" style="padding: 10px !important;">
+        <div class="block">
+            <div class="block-content block-content-full">
+                <div id="ShowAddCourse_Div" style="display: none;">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-4 col-xs-4">
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-xs-4">
+                            <div class="form-group clearfix">
+                                <label class="form-control-label text-right">State<span
+                                        class="text-danger">*</span>:</label>
+                                <select name="state" class="form-control form-control-sm form-control-alternative"
+                                        id="state" required>
+                                    <option value="" selected hidden>Select State</option>
+                                    {% for i in state_obj %}
+                                        <option value="{{ i.id }}">{{ i.state }}</option>
+                                    {% endfor %}
+                                </select>
+                                <span style="display:none;color:red;font-size:12px;"
+                                      id="err_state">Please Enter State</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label text-right">City<span
+                                        class="text-danger">*</span>:</label>
+                                <input type="text" class="form-control form-control-sm form-control-alternative"
+                                       id="city" name="city" required>
+                                <span style="display:none;color:red;font-size: 12px;"
+                                      id="err_city">Please Enter City</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-xs-4">
+                        </div>
+                    </div>
+                </div>
+                <div id="ShowUpdateCourse_Div" style="display: none;">
+                    <div class="pl-lg-4">
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-4 col-xs-4">
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-xs-4">
+                                <input type="hidden" id="cityid" name="cityid">
+                                <div class="form-group clearfix">
+                                    <label class="form-control-label text-right">State<span class="text-danger">*</span>:</label>
+                                    <select name="editstate"
+                                            class="form-control form-control-sm form-control-alternative" id="editstate"
+                                            required>
+                                        <option value="" selected hidden>Select State</option>
+                                        {% for i in state_obj %}
+                                            <option value="{{ i.id }}">{{ i.state }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <span style="display:none;color:red;font-size:12px;" id="err_editstate">Please Enter State</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label text-right">City<span class="text-danger">*</span>:</label>
+                                    <input type="text" class="form-control form-control-sm form-control-alternative"
+                                           id="editcity" name="editcity" required>
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_editcity">Please Enter City</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-xs-4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive" id="ShowAllCourse_Div">
+                    <table class="table table-vcenter" id="mydatatable">
+                        <thead class="thead-light">
+                        <tr>
+                            <th class="text-center" style="width: 10% !important;">Sr No.</th>
+                            <th>State</th>
+                            <th>City</th>
+                            {#                            {% for u in  user_operation_obj %}#}
+                            {#                                {% if u.fk_screen.screen_url == "Citys" %}#}
+                            {#                                    {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                            <th class="text-center" style="width: 10% !important;">Actions</th>
+                            {#                                    {% endif %}#}
+                            {#                                {% endif %}#}
+                            {#                            {% endfor %}#}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in city_obj %}
+                            <tr>
+                                <td class="text-center font-size-sm">{{ forloop.counter }}</td>
+                                <td class="font-w600 font-size-sm">{{ i.fk_state.state }}</td>
+                                <td class="font-w600 font-size-sm">{{ i.city }}</td>
+                                {#                            {% for u in  user_operation_obj %}#}
+                                {#                                {% if u.fk_screen.screen_url == "Citys" %}#}
+                                {#                                    {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        {#                                                {% if u.edit_data == "Y" %}#}
+                                        <button type="button" class="btn btn-sm btn-outline-primary js-tooltip-enabled"
+                                                data-toggle="tooltip" title="" data-original-title="Edit Client"
+                                                onclick="edit_city({{ i.id }})">
+                                            <i class="fa fa-fw fa-pencil-alt"></i>
+                                        </button>
+                                        {#                                                {% endif %}#}
+                                        {#                                                {% if u.delete_data == "Y" %}#}
+                                        <button type="button" class="btn btn-sm btn-outline-danger js-tooltip-enabled"
+                                                data-toggle="tooltip" title="" data-original-title="Remove Client"
+                                                onclick="delete_city({{ i.id }})">
+                                            <i class="fa fa-fw fa-times"></i>
+                                        </button>
+                                        {#                                                {% endif %}#}
+                                    </div>
+                                </td>
+                                {#                                    {% endif %}#}
+                                {#                                {% endif %}#}
+                                {#                            {% endfor %}#}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="pagination">
+
+                        {% if city_obj.has_previous %}
+                            <a class="pagination-action" href="?page=1">
+                                <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+                            </a>
+                            <a class="pagination-action" href="?page={{ city_obj.previous_page_number }}">
+                                <i class="fa fa-angle-left" aria-hidden="true"></i>
+                            </a>
+                        {% endif %}
+
+                        {% for num in city_obj.paginator.page_range %}
+
+                            {% if posts.number == num %}
+                                <span class="pagination-number pagination-current">{{ num }}</span>
+                            {% elif num > city_obj.number|add:'-3' and num < city_obj.number|add:'3' %}
+                                <a class="pagination-number" href="?page={{ num }}">{{ num }}</a>
+                            {% endif %}
+
+                        {% endfor %}
+
+                        {% if city_obj.has_next %}
+                            <a class="pagination-action" href="?page={{ city_obj.next_page_number }}">
+                                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                            </a>
+                            <a class="pagination-action" href="?page={{ city_obj.paginator.num_pages }}">
+                                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                            </a>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#MastersMainNavPage').addClass('open');
+            $('#CitysNavPage').addClass('active');
+            $('#mydatatable').DataTable({
+                "paging": false,
+                "bInfo": false
+            });
+            $("#AssignmentModal").on("hidden.bs.modal", function () {
+                location.reload();
+            });
+        });
+
+        function delete_city(id) {
+            console.log(id)
+            swal({
+                title: "Are you sure?",
+                text: "To delete this City!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: "/delete-city/",
+                            method: "POST",
+                            data: {
+                                "id": id
+                            },
+                            success: function (response) {
+                                if (response == "success") {
+                                    swal("The City has been successfully Deleted!", {
+                                        icon: "success",
+                                        button: "Ok",
+                                        closeOnClickOutside: false,
+                                    }).then(function () {
+                                        location.reload();
+                                    });
+                                }
+                            }
+                        })
+                    }
+                    else {
+                        swal("City is NOT deleted!");
+                    }
+                });
+        }
+
+        function ShowAddCourse_Div() {
+            $("#ShowAddCourse_Div").show();
+            $("#ShowAllCourse_Div").hide();
+            $("#ShowAddCourse_Button").hide();
+            $("#ShowAllCourse_Button").show();
+            $("#addcourse_button").show();
+            $("#updatecourse_button").hide();
+        }
+
+        function ShowAllCourse_Div() {
+            $("#ShowAddCourse_Div").hide();
+            $("#ShowAllCourse_Div").show();
+            $("#ShowAddCourse_Button").show();
+            $("#ShowAllCourse_Button").hide();
+            $("#ShowUpdateCourse_Div").hide();
+            $("#addcourse_button").hide();
+            $("#updatecourse_button").hide();
+        }
+
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+
+        function edit_city(id) {
+            $("#ShowUpdateCourse_Div").show();
+            $("#ShowAllCourse_Div").hide();
+            $("#ShowAddCourse_Button").hide();
+            $("#ShowAllCourse_Button").show();
+            $("#addcourse_button").hide();
+            $("#updatecourse_button").show();
+            $.ajax({
+                url: "/edit-city/",
+                method: "POST",
+                data: {
+                    "id": id
+                },
+                success: function (response) {
+                    console.log(response)
+                    $("#cityid").val(response['list'][0]['id'])
+                    $("#editstate").val(response['list'][0]['fk_state'])
+                    $("#editcity").val(response['list'][0]['city'])
+                }
+            })
+        }
+
+        $("#state").change(function () {
+            $("#err_state").hide();
+        });
+        $("#city").keyup(function () {
+            $("#err_city").hide();
+        });
+
+        function addcity() {
+            var state = $("#state").val();
+            var city = $("#city").val();
+            if (state == "") {
+                $("#err_state").show();
+            } else if (city == "") {
+                $("#err_city").show();
+            } else {
+                $.ajax({
+                    url: "/add-city/",
+                    method: "POST",
+                    data: {
+                        "master_state": state,
+                        "city": city
+                    },
+                    success: function (response) {
+                        console.log(response)
+                        if (response == "success") {
+                            swal("The City has been Added successfully!", {
+                                icon: "success",
+                                button: "Ok",
+                                closeOnClickOutside: false,
+                            }).then(function () {
+                                location.reload();
+                            });
+                        }
+                    }
+                })
+            }
+        }
+
+        $("#editstate").keyup(function () {
+            $("#err_editstate").hide();
+        });
+        $("#editcity").keyup(function () {
+            $("#err_editcity").hide();
+        });
+
+        function updatecity() {
+            var cityid = $("#cityid").val();
+            var editstate = $("#editstate").val();
+            var editcity = $("#editcity").val();
+            if (editstate == "") {
+                $("#err_editstate").show();
+            } else if (editcity == "") {
+                $("#err_editcity").show();
+            } else {
+                $.ajax({
+                    url: "/update-city/",
+                    method: "POST",
+                    data: {
+                        "city_id": cityid,
+                        "master_edit_state": editstate,
+                        "master_edit_city": editcity,
+                    },
+                    success: function (response) {
+                        console.log(response)
+                        if (response == "success") {
+                            swal("The City has been Updated successfully!", {
+                                icon: "success",
+                                button: "Ok",
+                                closeOnClickOutside: false,
+                            }).then(function () {
+                                location.reload();
+                            });
+                        }
+                    }
+                })
+            }
+        }
+    </script>
+    {#{% endif %}#}
+    {#{% endif %}#}
+    {#{% endfor %}#}
+{% endblock content %}
