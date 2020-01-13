@@ -417,7 +417,7 @@ def add_selected_question(request):
 
         render_string = render_to_string("aptitude_question_list.html", {"question_obj": question_obj})
         return HttpResponse(render_string)
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -467,7 +467,7 @@ def start_aptitude_test(request, id):
                        "duration": duration, "apt_session_obj": apt_session_obj,
                        "student_apt_answer_obj": student_apt_answer_obj,
                        "user_info_obj": user_info_obj})
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -497,7 +497,7 @@ def select_answer(request):
         count = StudentAptitudeAnswer.objects.filter(fk_aptitude_session_id=apt_session_id,
                                                      answer__isnull=False).count()
         return JsonResponse({"questions_attempt": count})
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -536,7 +536,7 @@ def submit_aptitude_test(request):
         aptitudescore_obj.save()
 
         return HttpResponse("Success")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -592,7 +592,7 @@ def aptitude_score(request):
                                                               "user_info_obj": user_info_obj})
         else:
             return redirect("/")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -612,7 +612,7 @@ def student_score_list(request):
         render_string = render_to_string("student_score_list.html", {"aptitudescore_obj": aptitude_score_obj,
                                                                      "academic_obj": academic_obj})
         return HttpResponse(render_string)
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -636,6 +636,6 @@ def view_student_answer(request):
                                          {"student_apt_answer_obj": student_apt_answer_obj,
                                           "question_obj": question_obj})
         return HttpResponse(render_string)
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')

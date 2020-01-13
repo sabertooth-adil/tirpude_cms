@@ -70,7 +70,7 @@ def students_event(request):
         else:
             return render(request, "Events.html",
                           {"event_obj": event_obj, "activity_obj": activity_obj, "time_now": time_now})
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -90,7 +90,7 @@ def events(request):
 
         return render(request, "Events.html", {"event_obj": event_obj, "activity_obj": activity_obj,
                                                "time_now": time_now})
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -107,7 +107,7 @@ def add_event(request):
         students_event_obj = StudentEvent(fk_user_info_id=session)
         students_event_obj.save()
         return JsonResponse({"event_id": students_event_obj.id})
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -143,7 +143,7 @@ def edit_event(request):
                                                               "semesters_obj": semesters_obj,
                                                               "event_registration_obj": event_registration_obj})
         return HttpResponse(render_string)
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -159,7 +159,7 @@ def cancel_event(request):
         event_id = request.POST.get("event_id")
         StudentEvent.objects.filter(id=event_id).delete()
         return HttpResponse("success")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -190,7 +190,7 @@ def save_event(request):
         students_event_obj.event_form = event_form
         students_event_obj.save()
         return HttpResponse("Success")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -206,7 +206,7 @@ def delete_event(request):
         event_id = request.POST.get("event_id")
         StudentEvent.objects.get(id=event_id).delete()
         return HttpResponse("success")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -239,7 +239,7 @@ def save_activity(request):
         activity_obj = EventActivity.objects.filter(fk_student_events_id=event_id)
         render_string = render_to_string("activity_list.html", {"activity_obj": activity_obj})
         return HttpResponse(render_string)
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -255,7 +255,7 @@ def delete_activity(request):
         activity_id = request.POST.get("activity_id")
         EventActivity.objects.get(id=activity_id).delete()
         return HttpResponse("success")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -287,7 +287,7 @@ def update_activity(request):
         activity_obj = EventActivity.objects.filter(fk_student_events_id=event_id)
         render_string = render_to_string("activity_list.html", {"activity_obj": activity_obj})
         return HttpResponse(render_string)
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -358,7 +358,7 @@ def add_event_member(request):
         event_member_obj = EventMember.objects.filter(fk_student_events=event_id)
         render_string = render_to_string("event_Members.html", {"event_member_obj": event_member_obj})
         return HttpResponse(render_string)
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -374,7 +374,7 @@ def delete_event_member(request):
         event_id = request.POST.get("id")
         EventMember.objects.get(id=event_id).delete()
         return HttpResponse("success")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -396,7 +396,7 @@ def manage_activity_member(request):
                                                                          "activity_member_obj": activity_member_obj})
         return JsonResponse(
             {"render_string": render_string, "activity_name": EventActivity.objects.get(id=activity_id).activity_name})
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -427,7 +427,7 @@ def save_activity_member(request):
                                                                          "activity_member_obj": activity_member_obj,
                                                                          "activity_id": activity_id})
         return HttpResponse(render_string)
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -461,7 +461,7 @@ def update_activity_member(request):
                                                                          "activity_member_obj": activity_member_obj,
                                                                          "activity_id": activity_id})
         return HttpResponse(render_string)
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -477,7 +477,7 @@ def delete_activity_member(request):
         activity_member_id = request.POST.get("activity_member_id")
         ActivityMember.objects.get(id=activity_member_id).delete()
         return HttpResponse("success")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -497,7 +497,7 @@ def manage_activity_guest(request):
                                                                         "activity_guest_obj": activity_guest_obj})
         return JsonResponse(
             {"render_string": render_string, "activity_name": EventActivity.objects.get(id=activity_id).activity_name})
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -529,7 +529,7 @@ def save_activity_guest(request):
         render_string = render_to_string("manage_activity_guest.html", {"activity_guest_obj": activity_guest_obj,
                                                                         "activity_id": activity_id})
         return HttpResponse(render_string)
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -564,7 +564,7 @@ def update_activity_guest(request):
         render_string = render_to_string("manage_activity_guest.html", {"activity_guest_obj": activity_guest_obj,
                                                                         "activity_id": activity_id})
         return HttpResponse(render_string)
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -580,7 +580,7 @@ def delete_activity_guest(request):
         activity_guest_id = request.POST.get("activity_guest_id")
         ActivityGuest.objects.get(id=activity_guest_id).delete()
         return HttpResponse("success")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -628,7 +628,7 @@ def manage_finance_modal(request):
                                                                          "my_list_data": my_list_data,
                                                                          "total_dict": total_dict})
         return HttpResponse(render_string)
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -656,7 +656,7 @@ def save_item(request):
         activity_item_obj = ActivityItem.objects.filter(fk_activity_id=activity_id)
         render_string = render_to_string("activity_item_list.html", {"activity_item_obj": activity_item_obj})
         return HttpResponse(render_string)
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -684,7 +684,7 @@ def update_activity_item(request):
         activity_item_obj = ActivityItem.objects.filter(fk_activity_id=activity_id)
         render_string = render_to_string("activity_item_list.html", {"activity_item_obj": activity_item_obj})
         return JsonResponse({"render_string": render_string, "activity_id": activity_id})
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -700,7 +700,7 @@ def delete_activity_item(request):
         item_id = request.POST.get("item_id")
         ActivityItem.objects.get(id=item_id).delete()
         return HttpResponse("success")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -725,7 +725,7 @@ def save_activity_budget(request):
         activity_obj.actual = actual
         activity_obj.save()
         return HttpResponse("success")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -752,7 +752,7 @@ def event_registration_form(request):
                                                                           "event_registration_id":
                                                                               event_registration_obj.id})
         return HttpResponse(render_string)
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -775,7 +775,7 @@ def add_grp_member(request):
             activity_group_member_obj.save()
 
         return HttpResponse("success")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -793,7 +793,7 @@ def remove_grp_member(request):
         ActivityGroupMember.objects.filter(fk_events_registrations_id=event_registration_id,
                                            fk_activity_id=activity_id).delete()
         return HttpResponse("success")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -848,7 +848,7 @@ def save_event_registration(request):
             activity_group_member_obj.save()
 
         return HttpResponse("success")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -897,7 +897,7 @@ def event_registration_login(request):
                 return JsonResponse({"success": "unauthorized user"})
         else:
             return JsonResponse({"success": "error"})
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -930,6 +930,6 @@ def activity_participant_modal(request):
                                           "event_id": event_id})
         return JsonResponse(
             {"render_string": render_string, "activity_name": EventActivity.objects.get(id=activity_id).activity_name})
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")

@@ -70,7 +70,7 @@ def notes(request):
                               {"user_info_obj": user_info_obj, "notes_obj": notes_obj, "all_notes_obj": all_notes_obj})
         else:
             return redirect("/")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -104,7 +104,7 @@ def save_notes(request):
                                  fk_course_id=course)
         notes_obj.save()
         return redirect('/notes/')
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -136,7 +136,7 @@ def edit_notes(request):
             dict_data['fk_course'] = notes_obj.fk_course.id
         list_data.append(dict_data)
         return JsonResponse({"list": list_data})
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -172,7 +172,7 @@ def update_notes(request):
         notes_obj.fk_course_id = course
         notes_obj.save()
         return redirect('/notes/')
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -189,7 +189,7 @@ def delete_notes(request):
         notes_obj = AcademicNote.objects.get(id=notes_id)
         notes_obj.delete()
         return HttpResponse("success")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -220,7 +220,7 @@ def syllabus(request):
                                                            fk_semesters=semester_obj.fk_semesters)
             return render(request, "academic_syllabus.html", {"user_info_obj": user_info_obj,
                                                               "syllabus_obj": syllabus_obj})
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -260,7 +260,7 @@ def add_syllabus(request):
                                                 fk_course_id=course)
                 syllabus_obj.save()
         return redirect("/syllabus")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -277,7 +277,7 @@ def delete_syllabus(request):
         syllabus_obj = AcademicSyllabus.objects.get(id=syllabus_id)
         syllabus_obj.delete()
         return HttpResponse("success")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -303,7 +303,7 @@ def edit_syllabus(request):
         dict_data['fk_course'] = syllabus_obj.fk_course.id
         list_data.append(dict_data)
         return JsonResponse({"list": list_data})
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -337,7 +337,7 @@ def update_syllabus(request):
         syllabus_obj.fk_course_id = course
         syllabus_obj.save()
         return redirect("/syllabus")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -380,7 +380,7 @@ def assignment(request):
             assignment_obj = SubmittedAssignment.objects.filter(fk_user_info_id=session)
             return render(request, "assignment.html",
                           {"assignment_obj": assignment_obj, "user_info_obj": user_info_obj, "time_now": time_now})
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -527,7 +527,7 @@ def save_assignment(request):
                 submitted_assignment.submitted_file = submitted_file
                 submitted_assignment.save()
         return redirect('assignment')
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -544,7 +544,7 @@ def delete_assignment(request):
         assignments_obj = Assignment.objects.get(id=assignment_id)
         assignments_obj.delete()
         return HttpResponse("success")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -577,7 +577,7 @@ def edit_assignment(request):
         dict_data['fk_course'] = assignments_obj.fk_course.id
         list_data.append(dict_data)
         return JsonResponse({"list": list_data})
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -599,7 +599,7 @@ def assignment_get_student_list(request):
                                                         fk_semesters_id=semester)
         render_string = render_to_string("assignmentstudents.html", {"academic_info_obj": academic_info_obj})
         return HttpResponse(render_string)
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -617,6 +617,6 @@ def edit_student_list(request):
         render_string = render_to_string("edit_assignmentstudents.html", {"student_list": student_list,
                                                                           "academic_info_obj": academic_info_obj})
         return HttpResponse(render_string)
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
