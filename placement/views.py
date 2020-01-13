@@ -237,7 +237,7 @@ def edit_company_visiting_selection_precess_date_time(request):
 
 
 @csrf_exempt
-def UpdateCompanyVisitingSelectionprecessDateTime(request):
+def update_company_visiting_selection_precess_date_time(request):
     dict = {}
     list = []
     company_visiting_selection_process_date_time_id = request.POST.get(
