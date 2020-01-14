@@ -162,9 +162,9 @@ def filter_notice(request):
             if audience:
                 filter_str += ".filter(audience=audience)"
             if start_date:
-                filter_str += ".filter(date__gte=startdate)"
+                filter_str += ".filter(date__gte=start_date)"
             if end_date:
-                filter_str += ".filter(date__lte=enddate)"
+                filter_str += ".filter(date__lte=end_date)"
             if section:
                 filter_str += ".filter(fk_section_id=section)"
             show_notice = eval(filter_str)
