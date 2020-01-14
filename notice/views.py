@@ -146,12 +146,12 @@ def filter_notice(request):
             sem = request.POST.get("filter_semesters")
             section = request.POST.get("filter_sections")
             audience = request.POST.get("filter_audience")
-            startdate = request.POST.get("filter_from_date")
-            enddate = request.POST.get("filter_to_date")
-            if startdate:
+            start_date = request.POST.get("filter_from_date")
+            end_date = request.POST.get("filter_to_date")
+            if start_date:
                 startdate = datetime.datetime.strptime(str(request.POST.get("filter_from_date")), "%d-%m-%Y").strftime(
                     "%Y-%m-%d")
-            if enddate:
+            if end_date:
                 enddate = datetime.datetime.strptime(str(request.POST.get("filter_to_date")), "%d-%m-%Y").strftime(
                     "%Y-%m-%d")
             filter_str = "Notice.objects"
@@ -161,9 +161,9 @@ def filter_notice(request):
                 filter_str += ".filter(fk_course_id=course)"
             if audience:
                 filter_str += ".filter(audience=audience)"
-            if startdate:
+            if start_date:
                 filter_str += ".filter(date__gte=startdate)"
-            if enddate:
+            if end_date:
                 filter_str += ".filter(date__lte=enddate)"
             if section:
                 filter_str += ".filter(fk_section_id=section)"
