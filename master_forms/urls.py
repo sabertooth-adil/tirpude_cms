@@ -1,7 +1,5 @@
 from django.urls import path
 from master_forms import views
-from django.conf import settings
-from django.conf.urls.static import static
 
 urlpatterns = [
     path('subject-views/', views.subject_views, name='subject_views'),

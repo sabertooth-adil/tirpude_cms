@@ -154,149 +154,20 @@ def filter_notice(request):
             if enddate:
                 enddate = datetime.datetime.strptime(str(request.POST.get("filter_to_date")), "%d-%m-%Y").strftime(
                     "%Y-%m-%d")
-            if audience and course and sem and startdate and enddate:
-                show_notice = Notice.objects.filter(audience=audience, fk_course_id=course, fk_semester_id=sem,
-                                                    date__gte=startdate, date__lte=enddate)
-            elif audience and course and sem and startdate and enddate:
-                show_notice = Notice.objects.filter(audience=audience, fk_course_id=course, fk_semester_id=sem,
-                                                    date__gte=startdate, date__lte=enddate)
-            elif audience and course and sem and startdate and enddate:
-                show_notice = Notice.objects.filter(audience=audience, fk_course_id=course, fk_semester_id=sem,
-                                                    date__gte=startdate, date__lte=enddate)
-            elif audience and course and section and startdate and enddate:
-                show_notice = Notice.objects.filter(audience=audience, fk_course_id=course, fk_semester_id=sem,
-                                                    date__gte=startdate, date__lte=enddate)
-            elif section and audience and sem and startdate and enddate:
-                show_notice = Notice.objects.filter(fk_section_id=section, audience=audience, fk_semester_id=sem,
-                                                    date__gte=startdate, date__lte=enddate)
-            elif section and course and sem and startdate and enddate:
-                show_notice = Notice.objects.filter(fk_section_id=section, fk_course_id=course, fk_semester_id=sem,
-                                                    date__gte=startdate, date__lte=enddate)
-            elif section and audience and sem and enddate:
-                show_notice = Notice.objects.filter(fk_section_id=section, audience=audience, fk_semester_id=sem,
-                                                    date__lte=enddate)
-            elif section and course and audience and enddate:
-                show_notice = Notice.objects.filter(fk_section_id=section, fk_course_id=course, audience=audience,
-                                                    date__lte=enddate)
-            elif section and course and sem and enddate:
-                show_notice = Notice.objects.filter(fk_section_id=section, fk_course_id=course, fk_semester_id=sem,
-                                                    date__lte=enddate)
-            elif section and course and sem and enddate:
-                show_notice = Notice.objects.filter(fk_section_id=section, fk_course_id=course, fk_semester_id=sem,
-                                                    date__lte=enddate)
-            elif startdate and course and sem and enddate:
-                show_notice = Notice.objects.filter(date__gte=startdate, fk_course_id=course, fk_semester_id=sem,
-                                                    date__lte=enddate)
-            elif audience and startdate and sem and enddate:
-                show_notice = Notice.objects.filter(audience=audience, date__gte=startdate, fk_semester_id=sem,
-                                                    date__lte=enddate)
-            elif sem and audience and startdate and enddate:
-                show_notice = Notice.objects.filter(fk_semester_id=sem, audience=audience, date__gte=startdate,
-                                                    date__lte=enddate)
-            elif course and audience and startdate and enddate:
-                show_notice = Notice.objects.filter(fk_course_id=course, audience=audience, date__gte=startdate,
-                                                    date__lte=enddate)
-            elif course and section and startdate and enddate:
-                show_notice = Notice.objects.filter(fk_course_id=course, fk_section_id=section, date__gte=startdate,
-                                                    date__lte=enddate)
-            elif audience and course and sem and startdate and enddate:
-                show_notice = Notice.objects.filter(audience=audience, fk_course_id=course, fk_semester_id=sem,
-                                                    date__gte=startdate, date__lte=enddate)
-            elif audience and course and section and startdate and enddate:
-                show_notice = Notice.objects.filter(audience=audience, fk_course_id=course, fk_semester_id=sem,
-                                                    date__gte=startdate, date__lte=enddate)
-            elif section and audience and sem and startdate and enddate:
-                show_notice = Notice.objects.filter(fk_section_id=section, audience=audience, fk_semester_id=sem,
-                                                    date__gte=startdate, date__lte=enddate)
-            elif section and course and sem and startdate and enddate:
-                show_notice = Notice.objects.filter(fk_section_id=section, fk_course_id=course, fk_semester_id=sem,
-                                                    date__gte=startdate, date__lte=enddate)
-            elif section and audience and sem:
-                show_notice = Notice.objects.filter(fk_section_id=section, audience=audience, fk_semester_id=sem)
-            elif section and course and audience:
-                show_notice = Notice.objects.filter(fk_section_id=section, fk_course_id=course, audience=audience)
-            elif section and course and sem:
-                show_notice = Notice.objects.filter(fk_section_id=section, fk_course_id=course, fk_semester_id=sem)
-            elif section and course and sem:
-                show_notice = Notice.objects.filter(fk_section_id=section, fk_course_id=course, fk_semester_id=sem)
-            elif startdate and course and sem:
-                show_notice = Notice.objects.filter(date__gte=startdate, fk_course_id=course, fk_semester_id=sem)
-            elif audience and startdate and sem:
-                show_notice = Notice.objects.filter(audience=audience, date__gte=startdate, fk_semester_id=sem)
-            elif sem and audience and startdate:
-                show_notice = Notice.objects.filter(fk_semester_id=sem, audience=audience, date__gte=startdate)
-            elif course and audience and startdate:
-                show_notice = Notice.objects.filter(fk_course_id=course, audience=audience, date__gte=startdate)
-            elif course and section and startdate:
-                show_notice = Notice.objects.filter(fk_course_id=course, fk_section_id=section, date__gte=startdate)
-            elif course and sem and enddate:
-                show_notice = Notice.objects.filter(fk_course_id=course, fk_semester_id=sem, date__lte=enddate)
-            elif section and course and enddate:
-                show_notice = Notice.objects.filter(fk_section_id=section, fk_course_id=course, date__lte=enddate)
-            elif section and sem and enddate:
-                show_notice = Notice.objects.filter(fk_section_id=section, fk_semester_id=sem, date__lte=enddate)
-            elif audience and sem and enddate:
-                show_notice = Notice.objects.filter(audience=audience, fk_semester_id=sem, date__lte=enddate)
-            elif audience and course and enddate:
-                show_notice = Notice.objects.filter(audience=audience, fk_course_id=course, date__lte=enddate)
-            elif audience and section and enddate:
-                show_notice = Notice.objects.filter(audience=audience, fk_section_id=section, date__lte=enddate)
-            elif audience and startdate and enddate:
-                show_notice = Notice.objects.filter(audience=audience, date__gte=startdate,
-                                                    date__lte=enddate)
-            elif section and startdate and enddate:
-                show_notice = Notice.objects.filter(fk_section_id=section, date__gte=startdate,
-                                                    date__lte=enddate)
-            elif course and startdate and enddate:
-                show_notice = Notice.objects.filter(fk_course_id=course, date__gte=startdate, date__lte=enddate)
-            elif course and startdate and enddate:
-                show_notice = Notice.objects.filter(fk_course_id=course, date__gte=startdate, date__lte=enddate)
-            elif sem and startdate and enddate:
-                show_notice = Notice.objects.filter(fk_semester_id=sem, date__gte=startdate, date__lte=enddate)
-            elif course and sem:
-                show_notice = Notice.objects.filter(fk_course_id=course, fk_semester_id=sem)
-            elif section and course:
-                show_notice = Notice.objects.filter(fk_section_id=section, fk_course_id=course)
-            elif section and sem:
-                show_notice = Notice.objects.filter(fk_section_id=section, fk_semester_id=sem)
-            elif audience and sem:
-                show_notice = Notice.objects.filter(audience=audience, fk_semester_id=sem)
-            elif audience and course:
-                show_notice = Notice.objects.filter(audience=audience, fk_course_id=course)
-            elif audience and section:
-                show_notice = Notice.objects.filter(audience=audience, fk_section_id=section)
-            elif audience and startdate:
-                show_notice = Notice.objects.filter(audience=audience, date__gte=startdate)
-            elif section and startdate:
-                show_notice = Notice.objects.filter(fk_section_id=section, date__gte=startdate)
-            elif course and startdate:
-                show_notice = Notice.objects.filter(fk_course_id=course, date__gte=startdate)
-            elif sem and startdate:
-                show_notice = Notice.objects.filter(fk_semester_id=sem, date__gte=startdate)
-            elif sem and enddate:
-                show_notice = Notice.objects.filter(fk_semester_id=sem, date__lte=enddate)
-            elif course and enddate:
-                show_notice = Notice.objects.filter(fk_course_id=course, date__lte=enddate)
-            elif audience and enddate:
-                show_notice = Notice.objects.filter(audience=audience, date__lte=enddate)
-            elif section and enddate:
-                show_notice = Notice.objects.filter(fk_section_id=section, date__lte=enddate)
-            elif startdate and enddate:
-                show_notice = Notice.objects.filter(date__gte=startdate, date__lte=enddate)
-            elif sem:
-                show_notice = Notice.objects.filter(fk_semester_id=sem)
-            elif course:
-                show_notice = Notice.objects.filter(fk_course_id=course)
-            elif audience:
-                show_notice = Notice.objects.filter(audience=audience)
-            elif section:
-                show_notice = Notice.objects.filter(fk_section_id=section)
-            elif startdate:
-                show_notice = Notice.objects.filter(date__gte=startdate)
-            elif enddate:
-                show_notice = Notice.objects.filter(date__lte=enddate)
-            else:
-                show_notice = Notice.objects.all()
+            filter_str = "Notice.objects"
+            if sem:
+                filter_str += ".filter(fk_semester_id=sem)"
+            if course:
+                filter_str += ".filter(fk_course_id=course)"
+            if audience:
+                filter_str += ".filter(audience=audience)"
+            if startdate:
+                filter_str += ".filter(date__gte=startdate)"
+            if enddate:
+                filter_str += ".filter(date__lte=enddate)"
+            if section:
+                filter_str += ".filter(fk_section_id=section)"
+            show_notice = eval(filter_str)
             render_string = render_to_string("filter_notice.html",
                                              {"user_operation_obj": user_operation_obj, "show_notice": show_notice})
             return HttpResponse(render_string)
