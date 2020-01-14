@@ -1214,7 +1214,7 @@ def filter_company_appearances(request):
             company_appearance_list_obj = list(CompanyAppearance.objects.filter(
                 fk_company_appearance_date_time_list__in=company_appearance_date_time_obj).values_list('fk_company__id',
                                                                                                        flat=True).distinct())
-            print("company_appearance_list_obj",company_appearance_list_obj)
+            print("company_appearance_list_obj", company_appearance_list_obj)
             company_obj += ".filter(id__in=company_appearance_list_obj)"
 
         if company_obj == "Company.objects":

@@ -104,47 +104,21 @@ def filter_authenticate_user(request):
             print("to_date", to_date)
             print("from_date", from_date)
 
-            if user_type and status and from_date and to_date:
-                user_info_detail_obj = UserInfo.objects.filter(fk_user_type__id=user_type, status=status,
-                                                               registration_date__range=[from_date, to_date]).order_by(
-                    '-id')
-            elif user_type and status and to_date:
-                user_info_detail_obj = UserInfo.objects.filter(fk_user_type__id=user_type, status=status,
-                                                               registration_date=to_date).order_by('-id')
-            elif user_type and status and from_date:
-                user_info_detail_obj = UserInfo.objects.filter(fk_user_type__id=user_type, status=status,
-                                                               registration_date=from_date).order_by('-id')
-            elif user_type and to_date and from_date:
-                user_info_detail_obj = UserInfo.objects.filter(fk_user_type__id=user_type,
-                                                               registration_date__range=[from_date, to_date]).order_by(
-                    '-id')
-            elif status and to_date and from_date:
-                user_info_detail_obj = UserInfo.objects.filter(status=status,
-                                                               registration_date__range=[from_date, to_date]).order_by(
-                    '-id')
-            elif status and to_date and from_date:
-                user_info_detail_obj = UserInfo.objects.filter(status=status,
-                                                               registration_date__range=[from_date, to_date]).order_by(
-                    '-id')
-            elif status and to_date:
-                user_info_detail_obj = UserInfo.objects.filter(status=status, registration_date=to_date).order_by('-id')
-            elif status and from_date:
-                user_info_detail_obj = UserInfo.objects.filter(status=status, registration_date=from_date).order_by('-id')
-            elif from_date and to_date:
-                user_info_detail_obj = UserInfo.objects.filter(registration_date__range=[from_date, to_date]).order_by(
-                    '-id')
-            elif user_type:
-                print("user_type", user_type)
-                user_info_detail_obj = UserInfo.objects.filter(fk_user_type_id=user_type).order_by('-id')
-            elif status:
-                user_info_detail_obj = UserInfo.objects.filter(status=status).order_by('-id')
-            elif to_date:
-                user_info_detail_obj = UserInfo.objects.filter(registration_date=to_date).order_by('-id')
-            elif from_date:
-                user_info_detail_obj = UserInfo.objects.filter(registration_date=from_date).order_by('-id')
-            else:
-                print("dcxvzxmbmn")
-                user_info_detail_obj = UserInfo.objects.all().order_by('-id')
+            user_info_detail_obj = "UserInfo.objects"
+            if user_type:
+                user_info_detail_obj += ".filter(fk_user_type__id=user_type)"
+            if status:
+                user_info_detail_obj += ".filter(status=status)"
+            if from_date:
+                user_info_detail_obj += ".filter(registration_date__gte=from_date)"
+            if to_date:
+                user_info_detail_obj += ".filter(registration_date__lte=to_date)"
+            if user_info_detail_obj == "UserInfo.objects":
+                user_info_detail_obj += ".all()"
+
+            print(user_info_detail_obj)
+            user_info_detail_obj = eval(user_info_detail_obj)
+            print(user_info_detail_obj)
             academic_info_obj = AcademicInfo.objects.all()
             print(academic_info_obj)
             print(user_info_detail_obj)
@@ -153,6 +127,7 @@ def filter_authenticate_user(request):
                                               "academic_info_obj": academic_info_obj,
                                               "user_info_detail_obj": user_info_detail_obj, "user_obj": user_obj})
             return HttpResponse(render_string)
+
         else:
             return redirect("/")
     except Exception as e:

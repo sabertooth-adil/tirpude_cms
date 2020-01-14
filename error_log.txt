@@ -1252,3 +1252,13 @@ Traceback (most recent call last):
 UnboundLocalError: local variable 'company_appearance_job_type_detail_obj' referenced before assignment
 
 
+2020-01-14 17:13:30.353662
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\authenticate_user\views.py", line 119, in filter_authenticate_user
+    user_info_detail_obj = eval(user_info_detail_obj)
+  File "<string>", line 1
+    .filter(registration_date=to_date)
+    ^
+SyntaxError: invalid syntax
+
+
