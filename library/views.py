@@ -215,107 +215,30 @@ def filter_book_purchase(request):
         title = request.POST.get("title")
         subject = request.POST.get("subject")
         isbn = request.POST.get("isbn")
-        from_date = request.POST.get("from_date")
-        to_date = request.POST.get("to_date")
-        if from_date:
-            from_date = datetime.datetime.strptime(str(request.POST.get("from_date")), "%d-%m-%Y").strftime("%Y-%m-%d")
-        if to_date:
-            to_date = datetime.datetime.strptime(str(request.POST.get("to_date")), "%d-%m-%Y").strftime("%Y-%m-%d")
-        if author and title and isbn and subject and from_date and to_date:
-            book_obj = BooksPurchase.objects.filter(author=author, title=title, isbn=isbn, subject_id=subject,
-                                                    purchase_date__gte=from_date, purchase_date__lte=to_date)
-        elif from_date and isbn and title and author:
-            book_obj = BooksPurchase.objects.filter(purchase_date__gte=from_date, isbn=isbn, title=title, author=author)
-        elif to_date and from_date and isbn and author:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, purchase_date__gte=from_date, isbn=isbn,
-                                                    author=author)
-        elif to_date and from_date and isbn and title:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, purchase_date__gte=from_date, isbn=isbn,
-                                                    title=title)
-        elif to_date and from_date and isbn and subject:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, purchase_date__gte=from_date, isbn=isbn,
-                                                    subject_id=subject)
-        elif subject and author and title:
-            book_obj = BooksPurchase.objects.filter(subject_id=subject, author=author, title=title)
-        elif isbn and title and author:
-            book_obj = BooksPurchase.objects.filter(isbn=isbn, title=title, author=author)
-        elif from_date and isbn and author:
-            book_obj = BooksPurchase.objects.filter(purchase_date__gte=from_date, isbn=isbn, author=author)
-        elif from_date and isbn and title:
-            book_obj = BooksPurchase.objects.filter(purchase_date__gte=from_date, isbn=isbn, title=title)
-        elif from_date and isbn and subject:
-            book_obj = BooksPurchase.objects.filter(purchase_date__gte=from_date, isbn=isbn, subject_id=subject)
-        elif to_date and title and author:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, title=title, author=author)
-        elif to_date and title and subject:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, title=title, subject_id=subject)
-        elif to_date and isbn and author:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, isbn=isbn, author=author)
-        elif to_date and isbn and title:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, isbn=isbn, title=title)
-        elif to_date and isbn and subject:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, isbn=isbn, subject_id=subject)
-        elif to_date and from_date and author:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, purchase_date__gte=from_date,
-                                                    author=author)
-        elif to_date and from_date and subject:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, purchase_date__gte=from_date,
-                                                    subject=subject)
-        elif to_date and from_date and title:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, purchase_date__gte=from_date,
-                                                    title=title)
-        elif to_date and from_date and isbn:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, purchase_date__gte=from_date, isbn=isbn)
-        elif author and subject:
-            book_obj = BooksPurchase.objects.filter(author=author, subject_id=subject)
-        elif subject and title:
-            book_obj = BooksPurchase.objects.filter(subject_id=subject, title=title)
-        elif author and title:
-            book_obj = BooksPurchase.objects.filter(author=author, title=title)
-        elif subject and title:
-            book_obj = BooksPurchase.objects.filter(subject_id=subject, title=title)
-        elif title and author:
-            book_obj = BooksPurchase.objects.filter(title=title, author=author)
-        elif title and subject:
-            book_obj = BooksPurchase.objects.filter(title=title, subject_id=subject)
-        elif isbn and author:
-            book_obj = BooksPurchase.objects.filter(isbn=isbn, author=author)
-        elif isbn and title:
-            book_obj = BooksPurchase.objects.filter(isbn=isbn, title=title)
-        elif isbn and subject:
-            book_obj = BooksPurchase.objects.filter(isbn=isbn, subject_id=subject)
-        elif from_date and author:
-            book_obj = BooksPurchase.objects.filter(purchase_date__gte=from_date, author=author)
-        elif from_date and subject:
-            book_obj = BooksPurchase.objects.filter(purchase_date__gte=from_date, subject_id=subject)
-        elif from_date and title:
-            book_obj = BooksPurchase.objects.filter(purchase_date__gte=from_date, title=title)
-        elif from_date and isbn:
-            book_obj = BooksPurchase.objects.filter(purchase_date__gte=from_date, isbn=isbn)
-        elif to_date and author:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, author=author)
-        elif to_date and subject:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, subject_id=subject)
-        elif to_date and title:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, title=title)
-        elif to_date and isbn:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, isbn=isbn)
-        elif to_date and from_date:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, purchase_date__gte=from_date)
-        elif author:
-            book_obj = BooksPurchase.objects.filter(author=author)
-        elif title:
-            book_obj = BooksPurchase.objects.filter(title=title)
-        elif subject:
-            book_obj = BooksPurchase.objects.filter(subject_id=subject)
-        elif isbn:
-            book_obj = BooksPurchase.objects.filter(isbn=isbn)
-        elif from_date:
-            book_obj = BooksPurchase.objects.filter(purchase_date__gte=from_date)
-        elif to_date:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date)
-        else:
-            book_obj = BooksPurchase.objects.all()
+        purchase_date_from_date = request.POST.get("purchase_date_from_date")
+        purchase_date_to_date = request.POST.get("purchase_date_to_date")
+        if purchase_date_from_date:
+            purchase_date_from_date = datetime.datetime.strptime(str(request.POST.get("purchase_date_from_date")),
+                                                                 "%d-%m-%Y").strftime("%Y-%m-%d")
+        if purchase_date_to_date:
+            purchase_date_to_date = datetime.datetime.strptime(str(request.POST.get("purchase_date_to_date")),
+                                                               "%d-%m-%Y").strftime("%Y-%m-%d")
+        filter_str = "BooksPurchase.objects"
+        if author:
+            filter_str += ".filter(author=author)"
+        if title:
+            filter_str += ".filter(title=title)"
+        if isbn:
+            filter_str += ".filter(isbn=isbn)"
+        if subject:
+            filter_str += ".filter(subject_id=subject)"
+        if purchase_date_from_date:
+            filter_str += ".filter(purchase_date__gte=purchase_date_from_date)"
+        if purchase_date_to_date:
+            filter_str += ".filter(purchase_date__lte=purchase_date_to_date)"
+        if filter_str == "BooksPurchase.objects":
+            filter_str += ".all()"
+        book_obj = eval(filter_str)
         render_string = render_to_string("render_filter_book_purchase.html", {"books_obj": book_obj})
         return HttpResponse(render_string)
     except Exception:
@@ -581,115 +504,33 @@ def filter_modal_book_issue(request):
         title = request.POST.get("title")
         subject = request.POST.get("subject")
         isbn = request.POST.get("isbn")
-        from_date = request.POST.get("fromdate")
-        to_date = request.POST.get("todate")
-        if from_date:
-            from_date = datetime.datetime.strptime(str(request.POST.get("fromdate")), "%d-%m-%Y").strftime("%Y-%m-%d")
-        if to_date:
-            to_date = datetime.datetime.strptime(str(request.POST.get("todate")), "%d-%m-%Y").strftime("%Y-%m-%d")
-        if author and title and isbn and subject and from_date and to_date:
-            book_obj = BooksPurchase.objects.filter(author=author, title=title, isbn=isbn, subject_id=subject,
-                                                    published_date__gte=from_date, published_date__lte=to_date)
-        elif from_date and isbn and title and author:
-            book_obj = BooksPurchase.objects.filter(published_date__gte=from_date, isbn=isbn, title=title,
-                                                    author=author)
-        elif to_date and from_date and isbn and author:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, published_date__gte=from_date,
-                                                    isbn=isbn,
-                                                    author=author)
-        elif to_date and from_date and isbn and title:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, published_date__gte=from_date,
-                                                    isbn=isbn,
-                                                    title=title)
-        elif to_date and from_date and isbn and subject:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, published_date__gte=from_date,
-                                                    isbn=isbn,
-                                                    subject_id=subject)
-        elif subject and title and author:
-            book_obj = BooksPurchase.objects.filter(subject_id=subject, title=title, author=author)
-        elif isbn and title and author:
-            book_obj = BooksPurchase.objects.filter(isbn=isbn, title=title, author=author)
-        elif from_date and isbn and author:
-            book_obj = BooksPurchase.objects.filter(published_date__gte=from_date, isbn=isbn, author=author)
-        elif from_date and isbn and title:
-            book_obj = BooksPurchase.objects.filter(published_date__gte=from_date, isbn=isbn, title=title)
-        elif from_date and isbn and subject:
-            book_obj = BooksPurchase.objects.filter(published_date__gte=from_date, isbn=isbn, subject_id=subject)
-        elif to_date and title and author:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, title=title, author=author)
-        elif to_date and title and subject:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, title=title, subject_id=subject)
-        elif to_date and isbn and author:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, isbn=isbn, author=author)
-        elif to_date and isbn and title:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, isbn=isbn, title=title)
-        elif to_date and isbn and subject:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, isbn=isbn, subject_id=subject)
-        elif to_date and from_date and author:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, published_date__gte=from_date,
-                                                    author=author)
-        elif to_date and from_date and subject:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, published_date__gte=from_date,
-                                                    subject_id=subject)
-        elif to_date and from_date and title:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, published_date__gte=from_date,
-                                                    title=title)
-        elif to_date and from_date and isbn:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, published_date__gte=from_date,
-                                                    isbn=isbn)
-        elif author and subject:
-            book_obj = BooksPurchase.objects.filter(author=author, subject_id=subject)
-        elif subject and title:
-            book_obj = BooksPurchase.objects.filter(subject_id=subject, title=title)
-        elif author and title:
-            book_obj = BooksPurchase.objects.filter(author=author, title=title)
-        elif subject and title:
-            book_obj = BooksPurchase.objects.filter(subject_id=subject, title=title)
-        elif title and author:
-            book_obj = BooksPurchase.objects.filter(title=title, author=author)
-        elif title and subject:
-            book_obj = BooksPurchase.objects.filter(title=title, subject_id=subject)
-        elif isbn and author:
-            book_obj = BooksPurchase.objects.filter(isbn=isbn, author=author)
-        elif isbn and title:
-            book_obj = BooksPurchase.objects.filter(isbn=isbn, title=title)
-        elif isbn and subject:
-            book_obj = BooksPurchase.objects.filter(isbn=isbn, subject_id=subject)
-        elif from_date and author:
-            book_obj = BooksPurchase.objects.filter(published_date__gte=from_date, author=author)
-        elif from_date and subject:
-            book_obj = BooksPurchase.objects.filter(published_date__gte=from_date, subject_id=subject)
-        elif from_date and title:
-            book_obj = BooksPurchase.objects.filter(published_date__gte=from_date, title=title)
-        elif from_date and isbn:
-            book_obj = BooksPurchase.objects.filter(published_date__gte=from_date, isbn=isbn)
-        elif to_date and author:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, author=author)
-        elif to_date and subject:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, subject_id=subject)
-        elif to_date and title:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, title=title)
-        elif to_date and isbn:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, isbn=isbn)
-        elif to_date and from_date:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, published_date__gte=from_date)
-        elif author:
-            book_obj = BooksPurchase.objects.filter(author=author)
-        elif title:
-            book_obj = BooksPurchase.objects.filter(title=title)
-        elif subject:
-            book_obj = BooksPurchase.objects.filter(subject_id=subject)
-        elif isbn:
-            book_obj = BooksPurchase.objects.filter(isbn=isbn)
-        elif from_date:
-            book_obj = BooksPurchase.objects.filter(published_date__gte=from_date)
-        elif to_date:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date)
-        else:
-            book_obj = BooksPurchase.objects.all()
-        render_string = render_to_string("render_filter_modal_book_issue.html", {"bookss_obj": book_obj})
+        published_from_date = request.POST.get("published_from_date")
+        published_to_date = request.POST.get("published_to_date")
+        if published_from_date:
+            published_from_date = datetime.datetime.strptime(str(request.POST.get("published_from_date")),
+                                                             "%d-%m-%Y").strftime("%Y-%m-%d")
+        if published_to_date:
+            published_to_date = datetime.datetime.strptime(str(request.POST.get("published_to_date")),
+                                                           "%d-%m-%Y").strftime("%Y-%m-%d")
+        filter_str = "BooksPurchase.objects"
+        if author:
+            filter_str += ".filter(author=author)"
+        if title:
+            filter_str += ".filter(title=title)"
+        if isbn:
+            filter_str += ".filter(isbn=isbn)"
+        if subject:
+            filter_str += ".filter(subject_id=subject)"
+        if published_from_date:
+            filter_str += ".filter(published_date__gte=published_from_date)"
+        if published_to_date:
+            filter_str += ".filter(published_date__lte=published_to_date)"
+        if filter_str == "BooksPurchase.objects":
+            filter_str += ".all()"
+        book_obj = eval(filter_str)
+        render_string = render_to_string("render_filter_modal_book_issue.html", {"book_obj": book_obj})
         return HttpResponse(render_string)
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect("error_handler_500")
 
@@ -697,7 +538,7 @@ def filter_modal_book_issue(request):
 @csrf_exempt
 def filter_book_issue(request):
     """
-    Filter book issue table
+     Filter book issue table
 
     :param request:
     :return:
@@ -705,141 +546,32 @@ def filter_book_issue(request):
     try:
         author = request.POST.get("author")
         title = request.POST.get("title")
-        isbn = request.POST.get("isbn")
         subject = request.POST.get("subject")
-        from_date = request.POST.get("fromdate")
-        to_date = request.POST.get("todate")
-        if from_date:
-            from_date = datetime.datetime.strptime(str(request.POST.get("fromdate")), "%d-%m-%Y").strftime("%Y-%m-%d")
-        if to_date:
-            to_date = datetime.datetime.strptime(str(request.POST.get("todate")), "%d-%m-%Y").strftime("%Y-%m-%d")
-        if author and title and isbn and subject and from_date and to_date:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__author=author, fk_book_purchase__title=title,
-                                                     fk_book_purchase__isbn=isbn, fk_book_purchase__subject=subject,
-                                                     issue_date__gte=from_date, issue_date__lte=to_date)
-        elif from_date and isbn and title and author:
-            book_obj = BooksIssueData.objects.filter(issue_date__gte=from_date, fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__title=title, fk_book_purchase__author=author)
-        elif to_date and from_date and isbn and author:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                     fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__author=author)
-        elif to_date and from_date and isbn and title:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                     fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__title=title)
-        elif to_date and from_date and isbn and subject:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                     fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__subject=subject)
-        elif subject and title and author:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__subject=subject, fk_book_purchase__title=title,
-                                                     fk_book_purchase__author=author).order_by("issue_date")
-        elif isbn and title and author:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__isbn=isbn, fk_book_purchase__title=title,
-                                                     fk_book_purchase__author=author)
-        elif from_date and isbn and author:
-            book_obj = BooksIssueData.objects.filter(issue_date__gte=from_date, fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__author=author)
-        elif from_date and isbn and title:
-            book_obj = BooksIssueData.objects.filter(issue_date__gte=from_date, fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__title=title).order_by("issue_date")
-        elif from_date and isbn and subject:
-            book_obj = BooksIssueData.objects.filter(issue_date__gte=from_date, fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__subject=subject).order_by("issue_date")
-        elif to_date and title and author:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, fk_book_purchase__title=title,
-                                                     fk_book_purchase__author=author).order_by("issue_date")
-        elif to_date and title and subject:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, fk_book_purchase__title=title,
-                                                     fk_book_purchase__subject=subject).order_by("issue_date")
-        elif to_date and isbn and author:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__author=author).order_by("issue_date")
-        elif to_date and isbn and title:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__title=title).order_by("issue_date")
-        elif to_date and isbn and subject:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__subject=subject).order_by("issue_date")
-        elif to_date and from_date and author:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                     fk_book_purchase__author=author).order_by("issue_date")
-        elif to_date and from_date and subject:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                     fk_book_purchase__subject=subject).order_by("issue_date")
-        elif to_date and from_date and title:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                     fk_book_purchase__title=title).order_by("issue_date")
-        elif to_date and from_date and isbn:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                     fk_book_purchase__isbn=isbn).order_by("issue_date")
-        elif author and subject:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__author=author,
-                                                     fk_book_purchase__subject=subject).order_by("issue_date")
-        elif title and author:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__title=title,
-                                                     fk_book_purchase__author=author).order_by(
-                "issue_date")
-        elif title and subject:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__title=title,
-                                                     fk_book_purchase__subject=subject).order_by("issue_date")
-        elif isbn and author:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__author=author).order_by(
-                "issue_date")
-        elif isbn and title:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__title=title).order_by(
-                "issue_date")
-        elif isbn and subject:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__subject=subject).order_by(
-                "issue_date")
-        elif from_date and author:
-            book_obj = BooksIssueData.objects.filter(issue_date__gte=from_date,
-                                                     fk_book_purchase__author=author).order_by(
-                "issue_date")
-        elif from_date and subject:
-            book_obj = BooksIssueData.objects.filter(issue_date__gte=from_date,
-                                                     fk_book_purchase__subject=subject).order_by(
-                "issue_date")
-        elif from_date and title:
-            book_obj = BooksIssueData.objects.filter(issue_date__gte=from_date, fk_book_purchase__title=title).order_by(
-                "issue_date")
-        elif from_date and isbn:
-            book_obj = BooksIssueData.objects.filter(issue_date__gte=from_date, fk_book_purchase__isbn=isbn).order_by(
-                "issue_date")
-        elif to_date and author:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, fk_book_purchase__author=author).order_by(
-                "issue_date")
-        elif to_date and subject:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date,
-                                                     fk_book_purchase__subject=subject).order_by(
-                "issue_date")
-        elif to_date and title:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, fk_book_purchase__title=title).order_by(
-                "issue_date")
-        elif to_date and isbn:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, fk_book_purchase__isbn=isbn).order_by(
-                "issue_date")
-        elif to_date and from_date:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date).order_by(
-                "issue_date")
-        elif author:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__author=author).order_by("issue_date")
-        elif title:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__title=title).order_by("issue_date")
-        elif subject:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__subject=subject).order_by("issue_date")
-        elif isbn:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__isbn=isbn).order_by("issue_date")
-        elif from_date:
-            book_obj = BooksIssueData.objects.filter(issue_date__gte=from_date).order_by("issue_date")
-        elif to_date:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date).order_by("issue_date")
-        else:
-            book_obj = BooksIssueData.objects.all()
+        isbn = request.POST.get("isbn")
+        issue_from_date = request.POST.get("issue_from_date")
+        issue_to_date = request.POST.get("issue_to_date")
+        if issue_from_date:
+            issue_from_date = datetime.datetime.strptime(str(request.POST.get("issue_from_date")),
+                                                         "%d-%m-%Y").strftime("%Y-%m-%d")
+        if issue_to_date:
+            issue_to_date = datetime.datetime.strptime(str(request.POST.get("issue_to_date")),
+                                                       "%d-%m-%Y").strftime("%Y-%m-%d")
+        filter_str = "BooksIssueData.objects"
+        if author:
+            filter_str += ".filter(fk_book_purchase__author=author)"
+        if title:
+            filter_str += ".filter(fk_book_purchase__title=title)"
+        if isbn:
+            filter_str += ".filter(fk_book_purchase__isbn=isbn)"
+        if subject:
+            filter_str += ".filter(fk_book_purchase__subject=subject)"
+        if issue_from_date:
+            filter_str += ".filter(issue_date__gte=issue_from_date)"
+        if issue_to_date:
+            filter_str += ".filter(issue_date__lte=issue_to_date)"
+        if filter_str == "BooksIssueData.objects":
+            filter_str += ".all()"
+        book_obj = eval(filter_str)
         render_string = render_to_string("render_filter_book_issue.html", {"books_data_obj": book_obj})
         return HttpResponse(render_string)
     except Exception:
@@ -866,7 +598,7 @@ def book_return(request):
         sections_obj = Section.objects.all()
         books_returned_obj = BooksReturned.objects.all().order_by("return_date")
         return render(request, "book_return.html",
-                      {"user_operations_obj": user_operation_obj, "books_returned_obj": books_returned_obj,
+                      {"user_operation_obj": user_operation_obj, "books_returned_obj": books_returned_obj,
                        "books_subject_obj": books_subject_obj,
                        "user_info_obj": user_info_obj, "books_issue_obj": books_issue_obj,
                        "books_purchase_obj": books_purchase_obj,
@@ -899,10 +631,10 @@ def append_search_book_issue_details(request):
         dict_data["course"] = book_obj.fk_course.course
         dict_data["semester"] = book_obj.fk_semester.semester
         dict_data["section"] = book_obj.fk_section.sections
-        dict_data["issuedate"] = datetime.datetime.strptime(str(book_obj.issue_date), "%Y-%m-%d").strftime("%d-%m-%Y")
-        dict_data["duedate"] = datetime.datetime.strptime(str(book_obj.due_date), "%Y-%m-%d").strftime("%d-%m-%Y")
-        dict_data["studentname"] = book_obj.fk_user_info.first_name + " " + book_obj.fk_user_info.last_name
-        dict_data["studentname_id"] = book_obj.fk_user_info_id
+        dict_data["issue_date"] = datetime.datetime.strptime(str(book_obj.issue_date), "%Y-%m-%d").strftime("%d-%m-%Y")
+        dict_data["due_date"] = datetime.datetime.strptime(str(book_obj.due_date), "%Y-%m-%d").strftime("%d-%m-%Y")
+        dict_data["student_name"] = book_obj.fk_user_info.first_name + " " + book_obj.fk_user_info.last_name
+        dict_data["student_name_id"] = book_obj.fk_user_info_id
         list_data.append(dict_data)
         return JsonResponse({"list": list_data})
     except Exception:
@@ -953,180 +685,32 @@ def filter_book_return(request):
     try:
         author = request.POST.get("author")
         title = request.POST.get("title")
-        isbn = request.POST.get("isbn")
         subject = request.POST.get("subject")
-        from_date = request.POST.get("fromdate")
-        to_date = request.POST.get("todate")
-        if from_date:
-            from_date = datetime.datetime.strptime(str(request.POST.get("fromdate")), "%d-%m-%Y").strftime("%Y-%m-%d")
-        if to_date:
-            to_date = datetime.datetime.strptime(str(request.POST.get("todate")), "%d-%m-%Y").strftime("%Y-%m-%d")
-        if author and title and isbn and subject and from_date and to_date:
-            book_obj = BooksReturned.objects.filter(fk_books_issue_data__fk_book_purchase__author=author,
-                                                    fk_books_issue_data__fk_book_purchase__title=title,
-                                                    fk_books_issue_data__fk_book_purchase__isbn=isbn,
-                                                    fk_books_issue_data__fk_book_purchase__subject=subject,
-                                                    return_date__gte=from_date, return_date__lte=to_date)
-        elif from_date and isbn and title and author:
-            book_obj = BooksReturned.objects.filter(return_date__gte=from_date,
-                                                    fk_books_issue_data__fk_book_purchase__isbn=isbn,
-                                                    fk_books_issue_data__fk_book_purchase__title=title,
-                                                    fk_books_issue_data__fk_book_purchase__author=author)
-        elif to_date and from_date and isbn and author:
-            book_obj = BooksReturned.objects.filter(return_date__lte=to_date, return_date__gte=from_date,
-                                                    fk_books_issue_data__fk_book_purchase__isbn=isbn,
-                                                    fk_books_issue_data__fk_book_purchase__author=author)
-        elif to_date and from_date and isbn and title:
-            book_obj = BooksReturned.objects.filter(return_date__lte=to_date, return_date__gte=from_date,
-                                                    fk_books_issue_data__fk_book_purchase__isbn=isbn,
-                                                    fk_books_issue_data__fk_book_purchase__title=title)
-        elif to_date and from_date and isbn and subject:
-            book_obj = BooksReturned.objects.filter(return_date__lte=to_date, return_date__gte=from_date,
-                                                    fk_books_issue_data__fk_book_purchase__isbn=isbn,
-                                                    fk_books_issue_data__fk_book_purchase__subject=subject)
-        elif subject and title and author:
-            book_obj = BooksReturned.objects.filter(fk_books_issue_data__fk_book_purchase__subject=subject,
-                                                    fk_books_issue_data__fk_book_purchase__title=title,
-                                                    fk_books_issue_data__fk_book_purchase__author=author).order_by(
-                "return_date")
-        elif isbn and title and author:
-            book_obj = BooksReturned.objects.filter(fk_books_issue_data__fk_book_purchase__isbn=isbn,
-                                                    fk_books_issue_data__fk_book_purchase__title=title,
-                                                    fk_books_issue_data__fk_book_purchase__author=author)
-        elif from_date and isbn and author:
-            book_obj = BooksReturned.objects.filter(return_date__gte=from_date,
-                                                    fk_books_issue_data__fk_book_purchase__isbn=isbn,
-                                                    fk_books_issue_data__fk_book_purchase__author=author)
-        elif from_date and isbn and title:
-            book_obj = BooksReturned.objects.filter(return_date__gte=from_date,
-                                                    fk_books_issue_data__fk_book_purchase__isbn=isbn,
-                                                    fk_books_issue_data__fk_book_purchase__title=title).order_by(
-                "return_date")
-        elif from_date and isbn and subject:
-            book_obj = BooksReturned.objects.filter(return_date__gte=from_date,
-                                                    fk_books_issue_data__fk_book_purchase__isbn=isbn,
-                                                    fk_books_issue_data__fk_book_purchase__subject=subject).order_by(
-                "return_date")
-        elif to_date and title and author:
-            book_obj = BooksReturned.objects.filter(return_date__lte=to_date,
-                                                    fk_books_issue_data__fk_book_purchase__title=title,
-                                                    fk_books_issue_data__fk_book_purchase__author=author).order_by(
-                "return_date")
-        elif to_date and title and subject:
-            book_obj = BooksReturned.objects.filter(return_date__lte=to_date,
-                                                    fk_books_issue_data__fk_book_purchase__title=title,
-                                                    fk_books_issue_data__fk_book_purchase__subject=subject).order_by(
-                "return_date")
-        elif to_date and isbn and author:
-            book_obj = BooksReturned.objects.filter(return_date__lte=to_date,
-                                                    fk_books_issue_data__fk_book_purchase__isbn=isbn,
-                                                    fk_books_issue_data__fk_book_purchase__author=author).order_by(
-                "return_date")
-        elif to_date and isbn and title:
-            book_obj = BooksReturned.objects.filter(return_date__lte=to_date,
-                                                    fk_books_issue_data__fk_book_purchase__isbn=isbn,
-                                                    fk_books_issue_data__fk_book_purchase__title=title).order_by(
-                "return_date")
-        elif to_date and isbn and subject:
-            book_obj = BooksReturned.objects.filter(return_date__lte=to_date,
-                                                    fk_books_issue_data__fk_book_purchase__isbn=isbn,
-                                                    fk_books_issue_data__fk_book_purchase__subject=subject).order_by(
-                "return_date")
-        elif to_date and from_date and author:
-            book_obj = BooksReturned.objects.filter(return_date__lte=to_date, return_date__gte=from_date,
-                                                    fk_books_issue_data__fk_book_purchase__author=author).order_by(
-                "return_date")
-        elif to_date and from_date and subject:
-            book_obj = BooksReturned.objects.filter(return_date__lte=to_date, return_date__gte=from_date,
-                                                    fk_books_issue_data__fk_book_purchase__subject=subject).order_by(
-                "return_date")
-        elif to_date and from_date and title:
-            book_obj = BooksReturned.objects.filter(return_date__lte=to_date, return_date__gte=from_date,
-                                                    fk_books_issue_data__fk_book_purchase__title=title).order_by(
-                "return_date")
-        elif to_date and from_date and isbn:
-            book_obj = BooksReturned.objects.filter(return_date__lte=to_date, return_date__gte=from_date,
-                                                    fk_books_issue_data__fk_book_purchase__isbn=isbn).order_by(
-                "return_date")
-        elif author and subject:
-            book_obj = BooksReturned.objects.filter(fk_books_issue_data__fk_book_purchase__author=author,
-                                                    fk_books_issue_data__fk_book_purchase__subject=subject).order_by(
-                "return_date")
-        elif title and author:
-            book_obj = BooksReturned.objects.filter(fk_books_issue_data__fk_book_purchase__title=title,
-                                                    fk_books_issue_data__fk_book_purchase__author=author).order_by(
-                "return_date")
-        elif title and subject:
-            book_obj = BooksReturned.objects.filter(fk_books_issue_data__fk_book_purchase__title=title,
-                                                    fk_books_issue_data__fk_book_purchase__subject=subject).order_by(
-                "return_date")
-        elif isbn and author:
-            book_obj = BooksReturned.objects.filter(fk_books_issue_data__fk_book_purchase__isbn=isbn,
-                                                    fk_books_issue_data__fk_book_purchase__author=author).order_by(
-                "return_date")
-        elif isbn and title:
-            book_obj = BooksReturned.objects.filter(fk_books_issue_data__fk_book_purchase__isbn=isbn,
-                                                    fk_books_issue_data__fk_book_purchase__title=title).order_by(
-                "return_date")
-        elif isbn and subject:
-            book_obj = BooksReturned.objects.filter(fk_books_issue_data__fk_book_purchase__isbn=isbn,
-                                                    fk_books_issue_data__fk_book_purchase__subject=subject).order_by(
-                "return_date")
-        elif from_date and author:
-            book_obj = BooksReturned.objects.filter(return_date__gte=from_date,
-                                                    fk_books_issue_data__fk_book_purchase__author=author).order_by(
-                "return_date")
-        elif from_date and subject:
-            book_obj = BooksReturned.objects.filter(return_date__gte=from_date,
-                                                    fk_books_issue_data__fk_book_purchase__subject=subject).order_by(
-                "return_date")
-        elif from_date and title:
-            book_obj = BooksReturned.objects.filter(return_date__gte=from_date,
-                                                    fk_books_issue_data__fk_book_purchase__title=title).order_by(
-                "return_date")
-        elif from_date and isbn:
-            book_obj = BooksReturned.objects.filter(return_date__gte=from_date,
-                                                    fk_books_issue_data__fk_book_purchase__isbn=isbn).order_by(
-                "return_date")
-        elif to_date and author:
-            book_obj = BooksReturned.objects.filter(return_date__lte=to_date,
-                                                    fk_books_issue_data__fk_book_purchase__author=author).order_by(
-                "return_date")
-        elif to_date and subject:
-            book_obj = BooksReturned.objects.filter(return_date__lte=to_date,
-                                                    fk_books_issue_data__fk_book_purchase__subject=subject).order_by(
-                "return_date")
-        elif to_date and title:
-            book_obj = BooksReturned.objects.filter(return_date__lte=to_date,
-                                                    fk_books_issue_data__fk_book_purchase__title=title).order_by(
-                "return_date")
-        elif to_date and isbn:
-            book_obj = BooksReturned.objects.filter(return_date__lte=to_date,
-                                                    fk_books_issue_data__fk_book_purchase__isbn=isbn).order_by(
-                "return_date")
-        elif to_date and from_date:
-            book_obj = BooksReturned.objects.filter(return_date__lte=to_date, return_date__gte=from_date).order_by(
-                "return_date")
-        elif author:
-            book_obj = BooksReturned.objects.filter(fk_books_issue_data__fk_book_purchase__author=author).order_by(
-                "return_date")
-        elif title:
-            book_obj = BooksReturned.objects.filter(fk_books_issue_data__fk_book_purchase__title=title).order_by(
-                "return_date")
-        elif subject:
-            book_obj = BooksReturned.objects.filter(fk_books_issue_data__fk_book_purchase__subject=subject).order_by(
-                "return_date")
-        elif isbn:
-            book_obj = BooksReturned.objects.filter(fk_books_issue_data__fk_book_purchase__isbn=isbn).order_by(
-                "return_date")
-        elif from_date:
-            book_obj = BooksReturned.objects.filter(fk_books_issue_data__return_date__gte=from_date).order_by(
-                "return_date")
-        elif to_date:
-            book_obj = BooksReturned.objects.filter(fk_books_issue_data__return_date__lte=to_date).order_by(
-                "return_date")
-        else:
-            book_obj = BooksReturned.objects.all()
+        isbn = request.POST.get("isbn")
+        return_from_date = request.POST.get("return_from_date")
+        return_to_date = request.POST.get("return_to_date")
+        if return_from_date:
+            return_from_date = datetime.datetime.strptime(str(request.POST.get("return_from_date")),
+                                                          "%d-%m-%Y").strftime("%Y-%m-%d")
+        if return_to_date:
+            return_to_date = datetime.datetime.strptime(str(request.POST.get("return_to_date")),
+                                                        "%d-%m-%Y").strftime("%Y-%m-%d")
+        filter_str = "BooksReturned.objects"
+        if author:
+            filter_str += ".filter(fk_books_issue_data__fk_book_purchase__author=author)"
+        if title:
+            filter_str += ".filter(fk_books_issue_data__fk_book_purchase__title=title)"
+        if isbn:
+            filter_str += ".filter( fk_books_issue_data__fk_book_purchase__isbn=isbn)"
+        if subject:
+            filter_str += ".filter(fk_books_issue_data__fk_book_purchase__subject=subject)"
+        if return_from_date:
+            filter_str += ".filter(return_date__gte=return_from_date)"
+        if return_to_date:
+            filter_str += ".filter(return_date__lte=return_to_date)"
+        if filter_str == "BooksReturned.objects":
+            filter_str += ".all()"
+        book_obj = eval(filter_str)
         render_string = render_to_string("render_filter_book_return.html", {"books_data_obj": book_obj})
         return HttpResponse(render_string)
     except Exception:
@@ -1147,136 +731,30 @@ def filter_modal_book_return(request):
         title = request.POST.get("title")
         subject = request.POST.get("subject")
         isbn = request.POST.get("isbn")
-        from_date = request.POST.get("fromdate")
-        to_date = request.POST.get("todate")
-        if from_date:
-            from_date = datetime.datetime.strptime(str(request.POST.get("fromdate")), "%d-%m-%Y").strftime("%Y-%m-%d")
-        if to_date:
-            to_date = datetime.datetime.strptime(str(request.POST.get("todate")), "%d-%m-%Y").strftime("%Y-%m-%d")
-        if author and title and isbn and subject and from_date and to_date:
-            book_obj = BooksIssue.objects.filter(fk_book_purchase__author=author, fk_book_purchase__title=title,
-                                                 fk_book_purchase__isbn=isbn, fk_book_purchase__subject=subject,
-                                                 issue_date__gte=from_date, issue_date__lte=to_date)
-        elif from_date and isbn and title and author:
-            book_obj = BooksIssue.objects.filter(issue_date__gte=from_date, fk_book_purchase__isbn=isbn,
-                                                 fk_book_purchase__title=title, fk_book_purchase__author=author)
-        elif to_date and from_date and isbn and author:
-            book_obj = BooksIssue.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                 fk_book_purchase__isbn=isbn,
-                                                 fk_book_purchase__author=author)
-        elif to_date and from_date and isbn and title:
-            book_obj = BooksIssue.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                 fk_book_purchase__isbn=isbn,
-                                                 fk_book_purchase__title=title)
-        elif to_date and from_date and isbn and subject:
-            book_obj = BooksIssue.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                 fk_book_purchase__isbn=isbn,
-                                                 fk_book_purchase__subject=subject)
-        elif subject and title and author:
-            book_obj = BooksIssue.objects.filter(fk_book_purchase__subject=subject, fk_book_purchase__title=title,
-                                                 fk_book_purchase__author=author).order_by("issue_date")
-        elif isbn and title and author:
-            book_obj = BooksIssue.objects.filter(fk_book_purchase__isbn=isbn, fk_book_purchase__title=title,
-                                                 fk_book_purchase__author=author)
-        elif from_date and isbn and author:
-            book_obj = BooksIssue.objects.filter(issue_date__gte=from_date, fk_book_purchase__isbn=isbn,
-                                                 fk_book_purchase__author=author)
-        elif from_date and isbn and title:
-            book_obj = BooksIssue.objects.filter(issue_date__gte=from_date, fk_book_purchase__isbn=isbn,
-                                                 fk_book_purchase__title=title).order_by("issue_date")
-        elif from_date and isbn and subject:
-            book_obj = BooksIssue.objects.filter(issue_date__gte=from_date, fk_book_purchase__isbn=isbn,
-                                                 fk_book_purchase__subject=subject).order_by("issue_date")
-        elif to_date and title and author:
-            book_obj = BooksIssue.objects.filter(issue_date__lte=to_date, fk_book_purchase__title=title,
-                                                 fk_book_purchase__author=author).order_by("issue_date")
-        elif to_date and title and subject:
-            book_obj = BooksIssue.objects.filter(issue_date__lte=to_date, fk_book_purchase__title=title,
-                                                 fk_book_purchase__subject=subject).order_by("issue_date")
-        elif to_date and isbn and author:
-            book_obj = BooksIssue.objects.filter(issue_date__lte=to_date, fk_book_purchase__isbn=isbn,
-                                                 fk_book_purchase__author=author).order_by("issue_date")
-        elif to_date and isbn and title:
-            book_obj = BooksIssue.objects.filter(issue_date__lte=to_date, fk_book_purchase__isbn=isbn,
-                                                 fk_book_purchase__title=title).order_by("issue_date")
-        elif to_date and isbn and subject:
-            book_obj = BooksIssue.objects.filter(issue_date__lte=to_date, fk_book_purchase__isbn=isbn,
-                                                 fk_book_purchase__subject=subject).order_by("issue_date")
-        elif to_date and from_date and author:
-            book_obj = BooksIssue.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                 fk_book_purchase__author=author).order_by("issue_date")
-        elif to_date and from_date and subject:
-            book_obj = BooksIssue.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                 fk_book_purchase__subject=subject).order_by("issue_date")
-        elif to_date and from_date and title:
-            book_obj = BooksIssue.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                 fk_book_purchase__title=title).order_by("issue_date")
-        elif to_date and from_date and isbn:
-            book_obj = BooksIssue.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                 fk_book_purchase__isbn=isbn).order_by("issue_date")
-        elif author and subject:
-            book_obj = BooksIssue.objects.filter(fk_book_purchase__author=author,
-                                                 fk_book_purchase__subject=subject).order_by(
-                "issue_date")
-        elif title and author:
-            book_obj = BooksIssue.objects.filter(fk_book_purchase__title=title,
-                                                 fk_book_purchase__author=author).order_by(
-                "issue_date")
-        elif title and subject:
-            book_obj = BooksIssue.objects.filter(fk_book_purchase__title=title,
-                                                 fk_book_purchase__subject=subject).order_by(
-                "issue_date")
-        elif isbn and author:
-            book_obj = BooksIssue.objects.filter(fk_book_purchase__isbn=isbn, fk_book_purchase__author=author).order_by(
-                "issue_date")
-        elif isbn and title:
-            book_obj = BooksIssue.objects.filter(fk_book_purchase__isbn=isbn, fk_book_purchase__title=title).order_by(
-                "issue_date")
-        elif isbn and subject:
-            book_obj = BooksIssue.objects.filter(fk_book_purchase__isbn=isbn,
-                                                 fk_book_purchase__subject=subject).order_by(
-                "issue_date")
-        elif from_date and author:
-            book_obj = BooksIssue.objects.filter(issue_date__gte=from_date, fk_book_purchase__author=author).order_by(
-                "issue_date")
-        elif from_date and subject:
-            book_obj = BooksIssue.objects.filter(issue_date__gte=from_date, fk_book_purchase__subject=subject).order_by(
-                "issue_date")
-        elif from_date and title:
-            book_obj = BooksIssue.objects.filter(issue_date__gte=from_date, fk_book_purchase__title=title).order_by(
-                "issue_date")
-        elif from_date and isbn:
-            book_obj = BooksIssue.objects.filter(issue_date__gte=from_date, fk_book_purchase__isbn=isbn).order_by(
-                "issue_date")
-        elif to_date and author:
-            book_obj = BooksIssue.objects.filter(issue_date__lte=to_date, fk_book_purchase__author=author).order_by(
-                "issue_date")
-        elif to_date and subject:
-            book_obj = BooksIssue.objects.filter(issue_date__lte=to_date, fk_book_purchase__subject=subject).order_by(
-                "issue_date")
-        elif to_date and title:
-            book_obj = BooksIssue.objects.filter(issue_date__lte=to_date, fk_book_purchase__title=title).order_by(
-                "issue_date")
-        elif to_date and isbn:
-            book_obj = BooksIssue.objects.filter(issue_date__lte=to_date, fk_book_purchase__isbn=isbn).order_by(
-                "issue_date")
-        elif to_date and from_date:
-            book_obj = BooksIssue.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date).order_by(
-                "issue_date")
-        elif author:
-            book_obj = BooksIssue.objects.filter(fk_book_purchase__author=author).order_by("issue_date")
-        elif title:
-            book_obj = BooksIssue.objects.filter(fk_book_purchase__title=title).order_by("issue_date")
-        elif subject:
-            book_obj = BooksIssue.objects.filter(fk_book_purchase__subject=subject).order_by("issue_date")
-        elif isbn:
-            book_obj = BooksIssue.objects.filter(fk_book_purchase__isbn=isbn).order_by("issue_date")
-        elif from_date:
-            book_obj = BooksIssue.objects.filter(issue_date__gte=from_date).order_by("issue_date")
-        elif to_date:
-            book_obj = BooksIssue.objects.filter(issue_date__lte=to_date).order_by("issue_date")
-        else:
-            book_obj = BooksIssue.objects.all()
+        issue_from_date = request.POST.get("issue_from_date")
+        issue_to_date = request.POST.get("issue_to_date")
+        if issue_from_date:
+            issue_from_date = datetime.datetime.strptime(str(request.POST.get("issue_from_date")),
+                                                         "%d-%m-%Y").strftime("%Y-%m-%d")
+        if issue_to_date:
+            issue_to_date = datetime.datetime.strptime(str(request.POST.get("issue_to_date")),
+                                                       "%d-%m-%Y").strftime("%Y-%m-%d")
+        filter_str = "BooksIssue.objects"
+        if author:
+            filter_str += ".filter(fk_book_purchase__author=author)"
+        if title:
+            filter_str += ".filter(fk_book_purchase__title=title)"
+        if isbn:
+            filter_str += ".filter(fk_book_purchase__isbn=isbn)"
+        if subject:
+            filter_str += ".filter(fk_book_purchase__subject=subject)"
+        if issue_from_date:
+            filter_str += ".filter(issue_date__gte=issue_from_date)"
+        if issue_to_date:
+            filter_str += ".filter(issue_date__lte=issue_to_date)"
+        if filter_str == "BooksIssue.objects":
+            filter_str += ".all()"
+        book_obj = eval(filter_str)
         render_string = render_to_string("render_filter_modal_book_return.html", {"books_obj": book_obj})
         return HttpResponse(render_string)
     except Exception:
@@ -1299,7 +777,7 @@ def book_scrap(request):
         books_subject_obj = Subject.objects.all()
         books_scrapped_obj = BooksScrapped.objects.all().order_by("scrap_date")
         return render(request, "book_scrap.html",
-                      {"user_operations_obj": user_operation_obj, "user_info_obj": user_info_obj,
+                      {"user_operation_obj": user_operation_obj, "user_info_obj": user_info_obj,
                        "books_scrapped_obj": books_scrapped_obj,
                        "books_subject_obj": books_subject_obj,
                        "books_purchase_obj": books_purchase_obj})
@@ -1372,123 +850,31 @@ def filter_book_scrap(request):
         title = request.POST.get("title")
         subject = request.POST.get("subject")
         isbn = request.POST.get("isbn")
-        from_date = request.POST.get("fromdate")
-        to_date = request.POST.get("todate")
-        if from_date:
-            from_date = datetime.datetime.strptime(str(request.POST.get("fromdate")), "%d-%m-%Y").strftime("%Y-%m-%d")
-        if to_date:
-            to_date = datetime.datetime.strptime(str(request.POST.get("todate")), "%d-%m-%Y").strftime("%Y-%m-%d")
-        if author and title and isbn and subject and from_date and to_date:
-            book_obj = BooksScrapped.objects.filter(fk_book_purchase__author=author, fk_book_purchase__title=title,
-                                                    fk_book_purchase__isbn=isbn, fk_book_purchase__subject_id=subject,
-                                                    scrap_date__gte=from_date, scrap_date__lte=to_date)
-        elif from_date and isbn and title and author:
-            book_obj = BooksScrapped.objects.filter(scrap_date__gte=from_date, fk_book_purchase__isbn=isbn,
-                                                    fk_book_purchase__title=title, fk_book_purchase__author=author)
-        elif to_date and from_date and isbn and author:
-            book_obj = BooksScrapped.objects.filter(scrap_date__lte=to_date, scrap_date__gte=from_date,
-                                                    fk_book_purchase__isbn=isbn, fk_book_purchase__author=author)
-        elif to_date and from_date and isbn and title:
-            book_obj = BooksScrapped.objects.filter(scrap_date__lte=to_date, scrap_date__gte=from_date,
-                                                    fk_book_purchase__isbn=isbn, fk_book_purchase__title=title)
-        elif to_date and from_date and isbn and subject:
-            book_obj = BooksScrapped.objects.filter(scrap_date__lte=to_date, scrap_date__gte=from_date,
-                                                    fk_book_purchase__isbn=isbn, fk_book_purchase__subject_id=subject)
-        elif subject and author and title:
-            book_obj = BooksScrapped.objects.filter(fk_book_purchase__subject_id=subject,
-                                                    fk_book_purchase__author=author,
-                                                    fk_book_purchase__title=title)
-        elif isbn and title and author:
-            book_obj = BooksScrapped.objects.filter(fk_book_purchase__isbn=isbn, fk_book_purchase__title=title,
-                                                    fk_book_purchase__author=author)
-        elif from_date and isbn and author:
-            book_obj = BooksScrapped.objects.filter(scrap_date__gte=from_date, fk_book_purchase__isbn=isbn,
-                                                    fk_book_purchase__author=author)
-        elif from_date and isbn and title:
-            book_obj = BooksScrapped.objects.filter(scrap_date__gte=from_date, fk_book_purchase__isbn=isbn,
-                                                    fk_book_purchase__title=title)
-        elif from_date and isbn and subject:
-            book_obj = BooksScrapped.objects.filter(scrap_date__gte=from_date, fk_book_purchase__isbn=isbn,
-                                                    fk_book_purchase__subject_id=subject)
-        elif to_date and title and author:
-            book_obj = BooksScrapped.objects.filter(scrap_date__lte=to_date, fk_book_purchase__title=title,
-                                                    fk_book_purchase__author=author)
-        elif to_date and title and subject:
-            book_obj = BooksScrapped.objects.filter(scrap_date__lte=to_date, fk_book_purchase__title=title,
-                                                    fk_book_purchase__subject_id=subject)
-        elif to_date and isbn and author:
-            book_obj = BooksScrapped.objects.filter(scrap_date__lte=to_date, fk_book_purchase__isbn=isbn,
-                                                    fk_book_purchase__author=author)
-        elif to_date and isbn and title:
-            book_obj = BooksScrapped.objects.filter(scrap_date__lte=to_date, fk_book_purchase__isbn=isbn,
-                                                    fk_book_purchase__title=title)
-        elif to_date and isbn and subject:
-            book_obj = BooksScrapped.objects.filter(scrap_date__lte=to_date, fk_book_purchase__isbn=isbn,
-                                                    fk_book_purchase__subject_id=subject)
-        elif to_date and from_date and author:
-            book_obj = BooksScrapped.objects.filter(scrap_date__lte=to_date, scrap_date__gte=from_date,
-                                                    fk_book_purchase__author=author)
-        elif to_date and from_date and subject:
-            book_obj = BooksScrapped.objects.filter(scrap_date__lte=to_date, scrap_date__gte=from_date,
-                                                    fk_book_purchase__subject_id=subject)
-        elif to_date and from_date and title:
-            book_obj = BooksScrapped.objects.filter(scrap_date__lte=to_date, scrap_date__gte=from_date,
-                                                    fk_book_purchase__title=title)
-        elif to_date and from_date and isbn:
-            book_obj = BooksScrapped.objects.filter(scrap_date__lte=to_date, scrap_date__gte=from_date,
-                                                    fk_book_purchase__isbn=isbn)
-        elif author and subject:
-            book_obj = BooksScrapped.objects.filter(fk_book_purchase__author=author,
-                                                    fk_book_purchase__subject_id=subject)
-        elif subject and title:
-            book_obj = BooksScrapped.objects.filter(fk_book_purchase__subject_id=subject, fk_book_purchase__title=title)
-        elif author and title:
-            book_obj = BooksScrapped.objects.filter(fk_book_purchase__author=author, fk_book_purchase__title=title)
-        elif subject and title:
-            book_obj = BooksScrapped.objects.filter(fk_book_purchase__subject_id=subject, fk_book_purchase__title=title)
-        elif title and author:
-            book_obj = BooksScrapped.objects.filter(fk_book_purchase__title=title, fk_book_purchase__author=author)
-        elif title and subject:
-            book_obj = BooksScrapped.objects.filter(fk_book_purchase__title=title, fk_book_purchase__subject_id=subject)
-        elif isbn and author:
-            book_obj = BooksScrapped.objects.filter(fk_book_purchase__isbn=isbn, fk_book_purchase__author=author)
-        elif isbn and title:
-            book_obj = BooksScrapped.objects.filter(fk_book_purchase__isbn=isbn, fk_book_purchase__title=title)
-        elif isbn and subject:
-            book_obj = BooksScrapped.objects.filter(fk_book_purchase__isbn=isbn, fk_book_purchase__subject_id=subject)
-        elif from_date and author:
-            book_obj = BooksScrapped.objects.filter(scrap_date__gte=from_date, fk_book_purchase__author=author)
-        elif from_date and subject:
-            book_obj = BooksScrapped.objects.filter(scrap_date__gte=from_date, fk_book_purchase__subject_id=subject)
-        elif from_date and title:
-            book_obj = BooksScrapped.objects.filter(scrap_date__gte=from_date, fk_book_purchase__title=title)
-        elif from_date and isbn:
-            book_obj = BooksScrapped.objects.filter(scrap_date__gte=from_date, fk_book_purchase__isbn=isbn)
-        elif to_date and author:
-            book_obj = BooksScrapped.objects.filter(scrap_date__lte=to_date, fk_book_purchase__author=author)
-        elif to_date and subject:
-            book_obj = BooksScrapped.objects.filter(scrap_date__lte=to_date, fk_book_purchase__subject_id=subject)
-        elif to_date and title:
-            book_obj = BooksScrapped.objects.filter(scrap_date__lte=to_date, fk_book_purchase__title=title)
-        elif to_date and isbn:
-            book_obj = BooksScrapped.objects.filter(scrap_date__lte=to_date, fk_book_purchase__isbn=isbn)
-        elif to_date and from_date:
-            book_obj = BooksScrapped.objects.filter(scrap_date__lte=to_date, scrap_date__gte=from_date)
-        elif author:
-            book_obj = BooksScrapped.objects.filter(fk_book_purchase__author=author)
-        elif title:
-            book_obj = BooksScrapped.objects.filter(fk_book_purchase__title=title)
-        elif subject:
-            book_obj = BooksScrapped.objects.filter(fk_book_purchase__subject_id=subject)
-        elif isbn:
-            book_obj = BooksScrapped.objects.filter(fk_book_purchase__isbn=isbn)
-        elif from_date:
-            book_obj = BooksScrapped.objects.filter(scrap_date__gte=from_date)
-        elif to_date:
-            book_obj = BooksScrapped.objects.filter(scrap_date__lte=to_date)
-        else:
-            book_obj = BooksScrapped.objects.all()
-        render_string = render_to_string("render_filter_book_scrap.html", {"Books_Scrapped_obj": book_obj})
+        scrap_from_date = request.POST.get("scrap_from_date")
+        scrap_to_date = request.POST.get("scrap_to_date")
+        if scrap_from_date:
+            scrap_from_date = datetime.datetime.strptime(str(request.POST.get("scrap_from_date")),
+                                                         "%d-%m-%Y").strftime("%Y-%m-%d")
+        if scrap_to_date:
+            scrap_to_date = datetime.datetime.strptime(str(request.POST.get("scrap_to_date")),
+                                                       "%d-%m-%Y").strftime("%Y-%m-%d")
+        filter_str = "BooksScrapped.objects"
+        if author:
+            filter_str += ".filter(fk_book_purchase__author=author)"
+        if title:
+            filter_str += ".filter(fk_book_purchase__title=title)"
+        if isbn:
+            filter_str += ".filter(fk_book_purchase__isbn=isbn)"
+        if subject:
+            filter_str += ".filter(fk_book_purchase__subject_id=subject)"
+        if scrap_from_date:
+            filter_str += ".filter(scrap_date__gte=scrap_from_date)"
+        if scrap_to_date:
+            filter_str += ".filter(scrap_date__lte=scrap_to_date)"
+        if filter_str == "BooksScrapped.objects":
+            filter_str += ".all()"
+        book_obj = eval(filter_str)
+        render_string = render_to_string("render_filter_book_scrap.html", {"book_obj": book_obj})
         return HttpResponse(render_string)
     except Exception:
         error_save(str(traceback.format_exc()))
@@ -1508,111 +894,31 @@ def filter_modal_book_scrap(request):
         title = request.POST.get("title")
         subject = request.POST.get("subject")
         isbn = request.POST.get("isbn")
-        from_date = request.POST.get("fromdate")
-        to_date = request.POST.get("todate")
-        if from_date:
-            from_date = datetime.datetime.strptime(str(request.POST.get("fromdate")), "%d-%m-%Y").strftime("%Y-%m-%d")
-        if to_date:
-            to_date = datetime.datetime.strptime(str(request.POST.get("todate")), "%d-%m-%Y").strftime("%Y-%m-%d")
-        if author and title and isbn and subject and from_date and to_date:
-            book_obj = BooksPurchase.objects.filter(author=author, title=title, isbn=isbn, subject_id=subject,
-                                                    published_date__gte=from_date, published_date__lte=to_date)
-        elif from_date and isbn and title and author:
-            book_obj = BooksPurchase.objects.filter(published_date__gte=from_date, isbn=isbn, title=title,
-                                                    author=author)
-        elif to_date and from_date and isbn and author:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, published_date__gte=from_date,
-                                                    isbn=isbn,
-                                                    author=author)
-        elif to_date and from_date and isbn and title:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, published_date__gte=from_date,
-                                                    isbn=isbn,
-                                                    title=title)
-        elif to_date and from_date and isbn and subject:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, published_date__gte=from_date,
-                                                    isbn=isbn,
-                                                    subject_id=subject)
-        elif isbn and title and author:
-            book_obj = BooksPurchase.objects.filter(isbn=isbn, title=title, author=author)
-        elif from_date and isbn and author:
-            book_obj = BooksPurchase.objects.filter(published_date__gte=from_date, isbn=isbn, author=author)
-        elif from_date and isbn and title:
-            book_obj = BooksPurchase.objects.filter(published_date__gte=from_date, isbn=isbn, title=title)
-        elif from_date and isbn and subject:
-            book_obj = BooksPurchase.objects.filter(published_date__gte=from_date, isbn=isbn, subject_id=subject)
-        elif to_date and title and author:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, title=title, author=author)
-        elif to_date and title and subject:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, title=title, subject_id=subject)
-        elif to_date and isbn and author:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, isbn=isbn, author=author)
-        elif to_date and isbn and title:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, isbn=isbn, title=title)
-        elif to_date and isbn and subject:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, isbn=isbn, subject_id=subject)
-        elif to_date and from_date and author:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, published_date__gte=from_date,
-                                                    author=author)
-        elif to_date and from_date and subject:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, published_date__gte=from_date,
-                                                    subject_id=subject)
-        elif to_date and from_date and title:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, published_date__gte=from_date,
-                                                    title=title)
-        elif to_date and from_date and isbn:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, published_date__gte=from_date,
-                                                    isbn=isbn)
-        elif author and subject:
-            book_obj = BooksPurchase.objects.filter(author=author, subject_id=subject)
-        elif subject and title:
-            book_obj = BooksPurchase.objects.filter(subject_id=subject, title=title)
-        elif author and title:
-            book_obj = BooksPurchase.objects.filter(author=author, title=title)
-        elif subject and title:
-            book_obj = BooksPurchase.objects.filter(subject_id=subject, title=title)
-        elif title and author:
-            book_obj = BooksPurchase.objects.filter(title=title, author=author)
-        elif title and subject:
-            book_obj = BooksPurchase.objects.filter(title=title, subject_id=subject)
-        elif isbn and author:
-            book_obj = BooksPurchase.objects.filter(isbn=isbn, author=author)
-        elif isbn and title:
-            book_obj = BooksPurchase.objects.filter(isbn=isbn, title=title)
-        elif isbn and subject:
-            book_obj = BooksPurchase.objects.filter(isbn=isbn, subject_id=subject)
-        elif from_date and author:
-            book_obj = BooksPurchase.objects.filter(published_date__gte=from_date, author=author)
-        elif from_date and subject:
-            book_obj = BooksPurchase.objects.filter(published_date__gte=from_date, subject_id=subject)
-        elif from_date and title:
-            book_obj = BooksPurchase.objects.filter(published_date__gte=from_date, title=title)
-        elif from_date and isbn:
-            book_obj = BooksPurchase.objects.filter(published_date__gte=from_date, isbn=isbn)
-        elif to_date and author:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, author=author)
-        elif to_date and subject:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, subject_id=subject)
-        elif to_date and title:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, title=title)
-        elif to_date and isbn:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, isbn=isbn)
-        elif to_date and from_date:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date, published_date__gte=from_date)
-        elif author:
-            book_obj = BooksPurchase.objects.filter(author=author)
-        elif title:
-            book_obj = BooksPurchase.objects.filter(title=title)
-        elif subject:
-            book_obj = BooksPurchase.objects.filter(subject_id=subject)
-        elif isbn:
-            book_obj = BooksPurchase.objects.filter(isbn=isbn)
-        elif from_date:
-            book_obj = BooksPurchase.objects.filter(published_date__gte=from_date)
-        elif to_date:
-            book_obj = BooksPurchase.objects.filter(published_date__lte=to_date)
-        else:
-            book_obj = BooksPurchase.objects.all()
-        render_string = render_to_string("render_filter_modal_book_scrap.html", {"bookss_obj": book_obj})
+        published_from_date = request.POST.get("published_from_date")
+        published_to_date = request.POST.get("published_to_date")
+        if published_from_date:
+            published_from_date = datetime.datetime.strptime(str(request.POST.get("published_from_date")),
+                                                             "%d-%m-%Y").strftime("%Y-%m-%d")
+        if published_to_date:
+            published_to_date = datetime.datetime.strptime(str(request.POST.get("published_to_date")),
+                                                           "%d-%m-%Y").strftime("%Y-%m-%d")
+        filter_str = "BooksPurchase.objects"
+        if author:
+            filter_str += ".filter(author=author)"
+        if title:
+            filter_str += ".filter(title=title)"
+        if isbn:
+            filter_str += ".filter(isbn=isbn)"
+        if subject:
+            filter_str += ".filter(subject_id=subject)"
+        if published_from_date:
+            filter_str += ".filter(published_date__gte=published_from_date)"
+        if published_to_date:
+            filter_str += ".filter(published_date__lte=published_to_date)"
+        if filter_str == "BooksPurchase.objects":
+            filter_str += ".all()"
+        book_obj = eval(filter_str)
+        render_string = render_to_string("render_filter_modal_book_scrap.html", {"book_obj": book_obj})
         return HttpResponse(render_string)
     except Exception:
         error_save(str(traceback.format_exc()))
@@ -1633,7 +939,7 @@ def available_book_report(request):
         books_purchase_obj = BooksPurchase.objects.all().order_by("purchase_date")
         books_subject_obj = Subject.objects.all()
         return render(request, "available_book_report.html",
-                      {"user_operations_obj": user_operation_obj, "user_info_obj": user_info_obj,
+                      {"user_operation_obj": user_operation_obj, "user_info_obj": user_info_obj,
                        "books_subject_obj": books_subject_obj,
                        "books_purchase_obj": books_purchase_obj})
     except Exception:
@@ -1656,7 +962,7 @@ def issued_book_report(request):
         books_data_obj = BooksIssueData.objects.all().order_by("issue_date")
         books_subject_obj = Subject.objects.all()
         return render(request, "issued_book_report.html",
-                      {"user_operations_obj": user_operation_obj, "books_data_obj": books_data_obj,
+                      {"user_operation_obj": user_operation_obj, "books_data_obj": books_data_obj,
                        "books_subject_obj": books_subject_obj,
                        "user_info_obj": user_info_obj, "books_obj": book_obj})
     except Exception:
@@ -1679,7 +985,7 @@ def returned_book_report(request):
         books_subject_obj = Subject.objects.all()
         books_returned_obj = BooksReturned.objects.all().order_by("return_date")
         return render(request, "returned_book_report.html",
-                      {"user_operations_obj": user_operation_obj, "books_returned_obj": books_returned_obj,
+                      {"user_operation_obj": user_operation_obj, "books_returned_obj": books_returned_obj,
                        "books_subject_obj": books_subject_obj,
                        "user_info_obj": user_info_obj, "books_obj": book_obj})
     except Exception:
@@ -1702,7 +1008,7 @@ def scrapped_book_report(request):
         books_subject_obj = Subject.objects.all()
         books_scrapped_obj = BooksScrapped.objects.all().order_by("scrap_date")
         return render(request, "scrapped_book_report.html",
-                      {"user_operations_obj": user_operation_obj, "user_info_obj": user_info_obj,
+                      {"user_operation_obj": user_operation_obj, "user_info_obj": user_info_obj,
                        "books_scrapped_obj": books_scrapped_obj,
                        "books_subject_obj": books_subject_obj, "books_purchase_obj": books_purchase_obj})
     except Exception:
@@ -1723,108 +1029,31 @@ def filter_available_book_report(request):
         title = request.POST.get("title")
         subject = request.POST.get("subject")
         isbn = request.POST.get("isbn")
-        from_date = request.POST.get("fromdate")
-        to_date = request.POST.get("todate")
-        if from_date:
-            from_date = datetime.datetime.strptime(str(request.POST.get("fromdate")), "%d-%m-%Y").strftime("%Y-%m-%d")
-        if to_date:
-            to_date = datetime.datetime.strptime(str(request.POST.get("todate")), "%d-%m-%Y").strftime("%Y-%m-%d")
-        if author and title and isbn and subject and from_date and to_date:
-            book_obj = BooksPurchase.objects.filter(author=author, title=title, isbn=isbn, subject_id=subject,
-                                                    purchase_date__gte=from_date, purchase_date__lte=to_date)
-        elif from_date and isbn and title and author:
-            book_obj = BooksPurchase.objects.filter(purchase_date__gte=from_date, isbn=isbn, title=title, author=author)
-        elif to_date and from_date and isbn and author:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, purchase_date__gte=from_date, isbn=isbn,
-                                                    author=author)
-        elif to_date and from_date and isbn and title:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, purchase_date__gte=from_date, isbn=isbn,
-                                                    title=title)
-        elif to_date and from_date and isbn and subject:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, purchase_date__gte=from_date, isbn=isbn,
-                                                    subject_id=subject)
-        elif subject and author and title:
-            book_obj = BooksPurchase.objects.filter(subject_id=subject, author=author, title=title)
-        elif isbn and title and author:
-            book_obj = BooksPurchase.objects.filter(isbn=isbn, title=title, author=author)
-        elif from_date and isbn and author:
-            book_obj = BooksPurchase.objects.filter(purchase_date__gte=from_date, isbn=isbn, author=author)
-        elif from_date and isbn and title:
-            book_obj = BooksPurchase.objects.filter(purchase_date__gte=from_date, isbn=isbn, title=title)
-        elif from_date and isbn and subject:
-            book_obj = BooksPurchase.objects.filter(purchase_date__gte=from_date, isbn=isbn, subject_id=subject)
-        elif to_date and title and author:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, title=title, author=author)
-        elif to_date and title and subject:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, title=title, subject_id=subject)
-        elif to_date and isbn and author:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, isbn=isbn, author=author)
-        elif to_date and isbn and title:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, isbn=isbn, title=title)
-        elif to_date and isbn and subject:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, isbn=isbn, subject_id=subject)
-        elif to_date and from_date and author:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, purchase_date__gte=from_date,
-                                                    author=author)
-        elif to_date and from_date and subject:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, purchase_date__gte=from_date,
-                                                    subject=subject)
-        elif to_date and from_date and title:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, purchase_date__gte=from_date,
-                                                    title=title)
-        elif to_date and from_date and isbn:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, purchase_date__gte=from_date, isbn=isbn)
-        elif author and subject:
-            book_obj = BooksPurchase.objects.filter(author=author, subject_id=subject)
-        elif subject and title:
-            book_obj = BooksPurchase.objects.filter(subject_id=subject, title=title)
-        elif author and title:
-            book_obj = BooksPurchase.objects.filter(author=author, title=title)
-        elif subject and title:
-            book_obj = BooksPurchase.objects.filter(subject_id=subject, title=title)
-        elif title and author:
-            book_obj = BooksPurchase.objects.filter(title=title, author=author)
-        elif title and subject:
-            book_obj = BooksPurchase.objects.filter(title=title, subject_id=subject)
-        elif isbn and author:
-            book_obj = BooksPurchase.objects.filter(isbn=isbn, author=author)
-        elif isbn and title:
-            book_obj = BooksPurchase.objects.filter(isbn=isbn, title=title)
-        elif isbn and subject:
-            book_obj = BooksPurchase.objects.filter(isbn=isbn, subject_id=subject)
-        elif from_date and author:
-            book_obj = BooksPurchase.objects.filter(purchase_date__gte=from_date, author=author)
-        elif from_date and subject:
-            book_obj = BooksPurchase.objects.filter(purchase_date__gte=from_date, subject_id=subject)
-        elif from_date and title:
-            book_obj = BooksPurchase.objects.filter(purchase_date__gte=from_date, title=title)
-        elif from_date and isbn:
-            book_obj = BooksPurchase.objects.filter(purchase_date__gte=from_date, isbn=isbn)
-        elif to_date and author:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, author=author)
-        elif to_date and subject:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, subject_id=subject)
-        elif to_date and title:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, title=title)
-        elif to_date and isbn:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, isbn=isbn)
-        elif to_date and from_date:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date, purchase_date__gte=from_date)
-        elif author:
-            book_obj = BooksPurchase.objects.filter(author=author)
-        elif title:
-            book_obj = BooksPurchase.objects.filter(title=title)
-        elif subject:
-            book_obj = BooksPurchase.objects.filter(subject_id=subject)
-        elif isbn:
-            book_obj = BooksPurchase.objects.filter(isbn=isbn)
-        elif from_date:
-            book_obj = BooksPurchase.objects.filter(purchase_date__gte=from_date)
-        elif to_date:
-            book_obj = BooksPurchase.objects.filter(purchase_date__lte=to_date)
-        else:
-            book_obj = BooksPurchase.objects.all()
-        render_string = render_to_string("render_filter_available_book_report.html", {"books_obj": book_obj})
+        purchase_from_date = request.POST.get("purchase_from_date")
+        purchase_to_date = request.POST.get("purchase_to_date")
+        if purchase_from_date:
+            purchase_from_date = datetime.datetime.strptime(str(request.POST.get("purchase_from_date")),
+                                                            "%d-%m-%Y").strftime("%Y-%m-%d")
+        if purchase_to_date:
+            purchase_to_date = datetime.datetime.strptime(str(request.POST.get("purchase_to_date")),
+                                                          "%d-%m-%Y").strftime("%Y-%m-%d")
+        filter_str = "BooksPurchase.objects"
+        if author:
+            filter_str += ".filter(author=author)"
+        if title:
+            filter_str += ".filter(title=title)"
+        if isbn:
+            filter_str += ".filter(isbn=isbn)"
+        if subject:
+            filter_str += ".filter(subject_id=subject)"
+        if purchase_from_date:
+            filter_str += ".filter(purchase_date__gte=purchase_from_date)"
+        if purchase_to_date:
+            filter_str += ".filter(purchase_date__lte=purchase_to_date)"
+        if filter_str == "BooksPurchase.objects":
+            filter_str += ".all()"
+        book_obj = eval(filter_str)
+        render_string = render_to_string("render_filter_available_book_report.html", {"book_obj": book_obj})
         return HttpResponse(render_string)
     except Exception:
         error_save(str(traceback.format_exc()))
@@ -1842,142 +1071,33 @@ def filter_issued_book_report(request):
     try:
         author = request.POST.get("author")
         title = request.POST.get("title")
-        isbn = request.POST.get("isbn")
         subject = request.POST.get("subject")
-        from_date = request.POST.get("fromdate")
-        to_date = request.POST.get("todate")
-        if from_date:
-            from_date = datetime.datetime.strptime(str(request.POST.get("fromdate")), "%d-%m-%Y").strftime("%Y-%m-%d")
-        if to_date:
-            to_date = datetime.datetime.strptime(str(request.POST.get("todate")), "%d-%m-%Y").strftime("%Y-%m-%d")
-        if author and title and isbn and subject and from_date and to_date:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__author=author, fk_book_purchase__title=title,
-                                                     fk_book_purchase__isbn=isbn, fk_book_purchase__subject=subject,
-                                                     issue_date__gte=from_date, issue_date__lte=to_date)
-        elif from_date and isbn and title and author:
-            book_obj = BooksIssueData.objects.filter(issue_date__gte=from_date, fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__title=title, fk_book_purchase__author=author)
-        elif to_date and from_date and isbn and author:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                     fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__author=author)
-        elif to_date and from_date and isbn and title:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                     fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__title=title)
-        elif to_date and from_date and isbn and subject:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                     fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__subject=subject)
-        elif subject and title and author:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__subject=subject, fk_book_purchase__title=title,
-                                                     fk_book_purchase__author=author).order_by("issue_date")
-        elif isbn and title and author:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__isbn=isbn, fk_book_purchase__title=title,
-                                                     fk_book_purchase__author=author)
-        elif from_date and isbn and author:
-            book_obj = BooksIssueData.objects.filter(issue_date__gte=from_date, fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__author=author)
-        elif from_date and isbn and title:
-            book_obj = BooksIssueData.objects.filter(issue_date__gte=from_date, fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__title=title).order_by("issue_date")
-        elif from_date and isbn and subject:
-            book_obj = BooksIssueData.objects.filter(issue_date__gte=from_date, fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__subject=subject).order_by("issue_date")
-        elif to_date and title and author:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, fk_book_purchase__title=title,
-                                                     fk_book_purchase__author=author).order_by("issue_date")
-        elif to_date and title and subject:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, fk_book_purchase__title=title,
-                                                     fk_book_purchase__subject=subject).order_by("issue_date")
-        elif to_date and isbn and author:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__author=author).order_by("issue_date")
-        elif to_date and isbn and title:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__title=title).order_by("issue_date")
-        elif to_date and isbn and subject:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__subject=subject).order_by("issue_date")
-        elif to_date and from_date and author:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                     fk_book_purchase__author=author).order_by("issue_date")
-        elif to_date and from_date and subject:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                     fk_book_purchase__subject=subject).order_by("issue_date")
-        elif to_date and from_date and title:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                     fk_book_purchase__title=title).order_by("issue_date")
-        elif to_date and from_date and isbn:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date,
-                                                     fk_book_purchase__isbn=isbn).order_by("issue_date")
-        elif author and subject:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__author=author,
-                                                     fk_book_purchase__subject=subject).order_by("issue_date")
-        elif title and author:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__title=title,
-                                                     fk_book_purchase__author=author).order_by(
-                "issue_date")
-        elif title and subject:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__title=title,
-                                                     fk_book_purchase__subject=subject).order_by("issue_date")
-        elif isbn and author:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__author=author).order_by(
-                "issue_date")
-        elif isbn and title:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__title=title).order_by(
-                "issue_date")
-        elif isbn and subject:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__isbn=isbn,
-                                                     fk_book_purchase__subject=subject).order_by(
-                "issue_date")
-        elif from_date and author:
-            book_obj = BooksIssueData.objects.filter(issue_date__gte=from_date,
-                                                     fk_book_purchase__author=author).order_by(
-                "issue_date")
-        elif from_date and subject:
-            book_obj = BooksIssueData.objects.filter(issue_date__gte=from_date,
-                                                     fk_book_purchase__subject=subject).order_by(
-                "issue_date")
-        elif from_date and title:
-            book_obj = BooksIssueData.objects.filter(issue_date__gte=from_date, fk_book_purchase__title=title).order_by(
-                "issue_date")
-        elif from_date and isbn:
-            book_obj = BooksIssueData.objects.filter(issue_date__gte=from_date, fk_book_purchase__isbn=isbn).order_by(
-                "issue_date")
-        elif to_date and author:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, fk_book_purchase__author=author).order_by(
-                "issue_date")
-        elif to_date and subject:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date,
-                                                     fk_book_purchase__subject=subject).order_by(
-                "issue_date")
-        elif to_date and title:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, fk_book_purchase__title=title).order_by(
-                "issue_date")
-        elif to_date and isbn:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, fk_book_purchase__isbn=isbn).order_by(
-                "issue_date")
-        elif to_date and from_date:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date, issue_date__gte=from_date).order_by(
-                "issue_date")
-        elif author:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__author=author).order_by("issue_date")
-        elif title:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__title=title).order_by("issue_date")
-        elif subject:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__subject=subject).order_by("issue_date")
-        elif isbn:
-            book_obj = BooksIssueData.objects.filter(fk_book_purchase__isbn=isbn).order_by("issue_date")
-        elif from_date:
-            book_obj = BooksIssueData.objects.filter(issue_date__gte=from_date).order_by("issue_date")
-        elif to_date:
-            book_obj = BooksIssueData.objects.filter(issue_date__lte=to_date).order_by("issue_date")
-        else:
-            book_obj = BooksIssueData.objects.all()
-        render_string = render_to_string("render_filter_issued_book_report.html", {"books_data_obj": book_obj})
+        isbn = request.POST.get("isbn")
+        issue_from_date = request.POST.get("issue_from_date")
+        issue_to_date = request.POST.get("issue_to_date")
+        if issue_from_date:
+            issue_from_date = datetime.datetime.strptime(str(request.POST.get("issue_from_date")),
+                                                         "%d-%m-%Y").strftime("%Y-%m-%d")
+        if issue_to_date:
+            issue_to_date = datetime.datetime.strptime(str(request.POST.get("issue_to_date")),
+                                                       "%d-%m-%Y").strftime("%Y-%m-%d")
+        filter_str = "BooksIssueData.objects"
+        if author:
+            filter_str += ".filter(fk_book_purchase__author=author)"
+        if title:
+            filter_str += ".filter(fk_book_purchase__title=title)"
+        if isbn:
+            filter_str += ".filter(fk_book_purchase__isbn=isbn)"
+        if subject:
+            filter_str += ".filter(fk_book_purchase__subject=subject)"
+        if issue_from_date:
+            filter_str += ".filter(issue_date__gte=issue_from_date)"
+        if issue_to_date:
+            filter_str += ".filter(issue_date__lte=issue_to_date)"
+        if filter_str == "BooksIssueData.objects":
+            filter_str += ".all()"
+        book_obj = eval(filter_str)
+        render_string = render_to_string("render_filter_issued_book_report.html", {"book_data_obj": book_obj})
         return HttpResponse(render_string)
     except Exception:
         error_save(str(traceback.format_exc()))

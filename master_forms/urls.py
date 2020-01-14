@@ -3,10 +3,10 @@ from master_forms import views
 
 urlpatterns = [
     path('subject-views/', views.subject_views, name='subject_views'),
-    path('delete-subject/', views.delete_subject, name='DeleteSubject'),
-    path('edit-subject/', views.edit_subject, name='EditSubject'),
-    path('add-subject/', views.add_subject, name='AddSubject'),
-    path('update-subject/', views.update_subject, name='UpdateSubject'),
+    path('delete-subject/', views.delete_subject, name='delete_subject'),
+    path('edit-subject/', views.edit_subject, name='edit_subject'),
+    path('add-subject/', views.add_subject, name='add_subject'),
+    path('update-subject/', views.update_subject, name='update_subject'),
 
     path('course-views/', views.course_views, name='course_views'),
     path('delete-course/', views.delete_course, name='delete_course'),

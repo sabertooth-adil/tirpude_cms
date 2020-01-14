@@ -124,3 +124,5 @@ dmypy.json
 /.idea
 /__pycache__
 .iml
+
+error_log.txt

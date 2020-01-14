@@ -690,13 +690,13 @@
                     $("#editcourse").val(response['list'][0]['course'])
                     $("#editsemester").val(response['list'][0]['semester'])
                     $("#editsection").val(response['list'][0]['section'])
-                    $("#editdateofissue").val(response['list'][0]['issuedate'])
-                    $("#editduedate").val(response['list'][0]['duedate'])
-                    $("#editstudentname").val(response['list'][0]['studentname'])
+                    $("#editdateofissue").val(response['list'][0]['issue_date'])
+                    $("#editduedate").val(response['list'][0]['due_date'])
+                    $("#editstudentname").val(response['list'][0]['student_name'])
                     console.log("purchase id ", response['list'][0]['fk_purchase_id'])
                     console.log("issue id ", response['list'][0]['id'])
                     $("#bookpurchaseid").val(response['list'][0]['fk_purchase_id'])
-                    $("#studentname_id").val(response['list'][0]['studentname_id'])
+                    $("#studentname_id").val(response['list'][0]['student_name_id'])
                 }
             })
         }
@@ -759,8 +759,8 @@
                     "title": title,
                     "isbn": isbn,
                     "subject": subject,
-                    "fromdate": fromdate,
-                    "todate": todate,
+                    "return_from_date": fromdate,
+                    "return_to_date": todate,
                 },
                 success: function (response) {
                     console.log(response)
@@ -785,8 +785,8 @@
                     "title": title,
                     "isbn": isbn,
                     "subject": subject,
-                    "fromdate": fromdate,
-                    "todate": todate,
+                    "issue_from_date": fromdate,
+                    "issue_to_date": todate,
                 },
                 success: function (response) {
                     console.log(response)

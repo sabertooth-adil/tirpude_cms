@@ -58,6 +58,7 @@ def delete_subject(request):
     """
     try:
         subject_id = request.POST.get("id")
+        print("subject_id",subject_id)
         subject_obj = Subject.objects.get(id=subject_id)
         subject_obj.delete()
         return HttpResponse("success")
@@ -444,7 +445,7 @@ def degree_stream_or_field(request):
             user_operation_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
             degree_obj = Degree.objects.all()
             degree_stream_or_field_obj = DegreeStreamOrField.objects.all()
-            return render(request, "master_degreestreamorfield.html",
+            return render(request, "master_degree_stream_field.html",
                           {"user_operation_obj": user_operation_obj, "user_info_obj": user_info_obj,
                            "degree_obj": degree_obj,
                            "degree_stream_or_field_obj": degree_stream_or_field_obj})

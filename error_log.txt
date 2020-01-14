@@ -1,8 +1,185 @@
-2020-01-14 11:01:54.100892
+
+2020-01-14 11:48:24.149341
 Traceback (most recent call last):
-  File "E:\tirpude_cms_new\notice\views.py", line 170, in filter_notice
-    show_notice = eval(filter_str)
-  File "<string>", line 1, in <module>
+  File "E:\tirpude_cms_new\library\views.py", line 237, in filter_book_purchase
+    book_obj = eval(filter_str)
+  File "<string>", line 1
+    BooksPurchase.objects.filter((purchase_date__gte=from_date).filter(purchase_date__lte=to_date=to_date)
+                                                    ^
+SyntaxError: invalid syntax
+
+
+2020-01-14 11:49:30.380903
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 237, in filter_book_purchase
+    book_obj = eval(filter_str)
+  File "<string>", line 1
+    BooksPurchase.objects.filter((purchase_date__gte=from_date).filter(purchase_date__lte=to_date)
+                                                    ^
+SyntaxError: invalid syntax
+
+
+2020-01-14 11:50:34.333373
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 237, in filter_book_purchase
+    book_obj = eval(filter_str)
+  File "<string>", line 1
+    BooksPurchase.objects.filter((purchase_date__gte=from_date).filter(purchase_date__lte=to_date)
+                                                    ^
+SyntaxError: invalid syntax
+
+
+2020-01-14 12:39:13.057869
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 80, in filter_author_title
+    return HttpResponse(json.dumps(title_list))
+UnboundLocalError: local variable 'title_list' referenced before assignment
+
+
+2020-01-14 12:39:14.296018
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 527, in filter_modal_book_issue
+    render_string = render_to_string("render_filter_modal_book_issue.html", {"bookss_obj": book_obj})
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\defaulttags.py", line 165, in render
+    values = list(values)
+TypeError: 'Manager' object is not iterable
+
+
+2020-01-14 12:39:32.457102
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 80, in filter_author_title
+    return HttpResponse(json.dumps(title_list))
+UnboundLocalError: local variable 'title_list' referenced before assignment
+
+
+2020-01-14 12:39:51.409539
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 80, in filter_author_title
+    return HttpResponse(json.dumps(title_list))
+UnboundLocalError: local variable 'title_list' referenced before assignment
+
+
+2020-01-14 12:39:52.873267
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 240, in filter_book_purchase
+    render_string = render_to_string("render_filter_book_purchase.html", {"books_obj": book_obj})
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\defaulttags.py", line 165, in render
+    values = list(values)
+TypeError: 'Manager' object is not iterable
+
+
+2020-01-14 12:40:39.913685
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 80, in filter_author_title
+    return HttpResponse(json.dumps(title_list))
+UnboundLocalError: local variable 'title_list' referenced before assignment
+
+
+2020-01-14 12:40:42.559842
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 527, in filter_modal_book_issue
+    render_string = render_to_string("render_filter_modal_book_issue.html", {"bookss_obj": book_obj})
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\defaulttags.py", line 165, in render
+    values = list(values)
+TypeError: 'Manager' object is not iterable
+
+
+2020-01-14 12:40:43.650034
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 527, in filter_modal_book_issue
+    render_string = render_to_string("render_filter_modal_book_issue.html", {"bookss_obj": book_obj})
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\defaulttags.py", line 165, in render
+    values = list(values)
+TypeError: 'Manager' object is not iterable
+
+
+2020-01-14 12:51:48.904858
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 80, in filter_author_title
+    return HttpResponse(json.dumps(title_list))
+UnboundLocalError: local variable 'title_list' referenced before assignment
+
+
+2020-01-14 12:51:49.824852
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 569, in filter_book_issue
+    render_string = render_to_string("render_filter_book_issue.html", {"books_data_obj": book_obj})
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\defaulttags.py", line 165, in render
+    values = list(values)
+TypeError: 'Manager' object is not iterable
+
+
+2020-01-14 14:31:50.626782
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 319, in issue_filter_student_name
+    fk_sections_id=section).values_list("fk_user_info",
   File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
     return getattr(self.get_queryset(), name)(*args, **kwargs)
   File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
@@ -19,12 +196,847 @@ Traceback (most recent call last):
     lookup = lookup_class(lhs, rhs)
   File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
     self.rhs = self.get_prep_lookup()
-  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\lookups.py", line 72, in get_prep_lookup
-    return self.lhs.output_field.get_prep_value(self.rhs)
-  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1211, in get_prep_value
-    return self.to_python(value)
-  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1186, in to_python
-    params={'value': value},
-django.core.exceptions.ValidationError: ['“01-01-2020” value has an invalid date format. It must be in YYYY-MM-DD format.']
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-14 14:31:51.919424
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 319, in issue_filter_student_name
+    fk_sections_id=section).values_list("fk_user_info",
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-14 14:32:58.463827
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 80, in filter_author_title
+    return HttpResponse(json.dumps(title_list))
+UnboundLocalError: local variable 'title_list' referenced before assignment
+
+
+2020-01-14 14:32:59.480905
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 748, in filter_modal_book_return
+    render_string = render_to_string("render_filter_modal_book_return.html", {"books_obj": book_obj})
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\defaulttags.py", line 165, in render
+    values = list(values)
+TypeError: 'Manager' object is not iterable
+
+
+2020-01-14 14:46:06.735551
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 80, in filter_author_title
+    return HttpResponse(json.dumps(title_list))
+UnboundLocalError: local variable 'title_list' referenced before assignment
+
+
+2020-01-14 14:46:07.895800
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 865, in filter_book_scrap
+    render_string = render_to_string("render_filter_book_scrap.html", {"Books_Scrapped_obj": book_obj})
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\defaulttags.py", line 165, in render
+    values = list(values)
+TypeError: 'Manager' object is not iterable
+
+
+2020-01-14 14:59:48.070911
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 908, in filter_modal_book_scrap
+    render_string = render_to_string("render_filter_modal_book_scrap.html", {"bookss_obj": book_obj})
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\defaulttags.py", line 165, in render
+    values = list(values)
+TypeError: 'Manager' object is not iterable
+
+
+2020-01-14 15:16:35.847679
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 706, in filter_book_return
+    render_string = render_to_string("render_filter_book_return.html", {"books_data_obj": book_obj})
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\defaulttags.py", line 165, in render
+    values = list(values)
+TypeError: 'Manager' object is not iterable
+
+
+2020-01-14 15:16:39.720113
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 706, in filter_book_return
+    render_string = render_to_string("render_filter_book_return.html", {"books_data_obj": book_obj})
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\defaulttags.py", line 165, in render
+    values = list(values)
+TypeError: 'Manager' object is not iterable
+
+
+2020-01-14 15:17:07.833895
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 706, in filter_book_return
+    render_string = render_to_string("render_filter_book_return.html", {"books_data_obj": book_obj})
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\defaulttags.py", line 165, in render
+    values = list(values)
+TypeError: 'Manager' object is not iterable
+
+
+2020-01-14 15:17:13.030832
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 706, in filter_book_return
+    render_string = render_to_string("render_filter_book_return.html", {"books_data_obj": book_obj})
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\defaulttags.py", line 165, in render
+    values = list(values)
+TypeError: 'Manager' object is not iterable
+
+
+2020-01-14 15:17:13.543775
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 706, in filter_book_return
+    render_string = render_to_string("render_filter_book_return.html", {"books_data_obj": book_obj})
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\defaulttags.py", line 165, in render
+    values = list(values)
+TypeError: 'Manager' object is not iterable
+
+
+2020-01-14 15:17:13.742160
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 706, in filter_book_return
+    render_string = render_to_string("render_filter_book_return.html", {"books_data_obj": book_obj})
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\defaulttags.py", line 165, in render
+    values = list(values)
+TypeError: 'Manager' object is not iterable
+
+
+2020-01-14 15:28:37.903164
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 80, in filter_author_title
+    return HttpResponse(json.dumps(title_list))
+UnboundLocalError: local variable 'title_list' referenced before assignment
+
+
+2020-01-14 15:47:33.366406
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 80, in filter_author_title
+    return HttpResponse(json.dumps(title_list))
+UnboundLocalError: local variable 'title_list' referenced before assignment
+
+
+2020-01-14 15:47:55.710587
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 80, in filter_author_title
+    return HttpResponse(json.dumps(title_list))
+UnboundLocalError: local variable 'title_list' referenced before assignment
+
+
+2020-01-14 15:48:56.246773
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 80, in filter_author_title
+    return HttpResponse(json.dumps(title_list))
+UnboundLocalError: local variable 'title_list' referenced before assignment
+
+
+2020-01-14 15:49:17.037818
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 80, in filter_author_title
+    return HttpResponse(json.dumps(title_list))
+UnboundLocalError: local variable 'title_list' referenced before assignment
+
+
+2020-01-14 15:49:29.028452
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 321, in issue_filter_student_name
+    fk_sections_id=section).values_list("fk_user_info",
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-14 15:49:30.093839
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 321, in issue_filter_student_name
+    fk_sections_id=section).values_list("fk_user_info",
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-14 15:49:52.830760
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 290, in delete_issue_book
+    books_issue_data_obj = BooksIssueData.objects.get(book_issue_fk=id)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+library.models.BooksIssueData.DoesNotExist: BooksIssueData matching query does not exist.
+
+
+2020-01-14 15:50:00.373352
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 290, in delete_issue_book
+    books_issue_data_obj = BooksIssueData.objects.get(book_issue_fk=id)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+library.models.BooksIssueData.DoesNotExist: BooksIssueData matching query does not exist.
+
+
+2020-01-14 15:50:47.709752
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\library\views.py", line 80, in filter_author_title
+    return HttpResponse(json.dumps(title_list))
+UnboundLocalError: local variable 'title_list' referenced before assignment
+
+
+2020-01-14 16:01:37.181269
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.IntegrityError: (1451, 'Cannot delete or update a parent row: a foreign key constraint fails (`tirpude_cms`.`attendance_studentattendance`, CONSTRAINT `attendance_studentat_fk_subjects_id_6a8e22ab_fk_master_fo` FOREIGN KEY (`fk_subjects_id`) REFERENCES `master_forms_subject` (`id`))')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\master_forms\views.py", line 62, in delete_subject
+    subject_obj.delete()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\base.py", line 937, in delete
+    return collector.delete()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\deletion.py", line 332, in delete
+    count = query.delete_batch(pk_list, self.using)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\subqueries.py", line 41, in delete_batch
+    num_deleted += self.do_query(self.get_meta().db_table, self.where, using=using)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\subqueries.py", line 24, in do_query
+    cursor = self.get_compiler(using).execute_sql(CURSOR)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1137, in execute_sql
+    cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 100, in execute
+    return super().execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 68, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 77, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+django.db.utils.IntegrityError: (1451, 'Cannot delete or update a parent row: a foreign key constraint fails (`tirpude_cms`.`attendance_studentattendance`, CONSTRAINT `attendance_studentat_fk_subjects_id_6a8e22ab_fk_master_fo` FOREIGN KEY (`fk_subjects_id`) REFERENCES `master_forms_subject` (`id`))')
+
+
+2020-01-14 16:03:30.489806
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.IntegrityError: (1451, 'Cannot delete or update a parent row: a foreign key constraint fails (`tirpude_cms`.`attendance_studentattendance`, CONSTRAINT `attendance_studentat_fk_subjects_id_6a8e22ab_fk_master_fo` FOREIGN KEY (`fk_subjects_id`) REFERENCES `master_forms_subject` (`id`))')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\master_forms\views.py", line 62, in delete_subject
+    subject_obj.delete()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\base.py", line 937, in delete
+    return collector.delete()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\deletion.py", line 332, in delete
+    count = query.delete_batch(pk_list, self.using)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\subqueries.py", line 41, in delete_batch
+    num_deleted += self.do_query(self.get_meta().db_table, self.where, using=using)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\subqueries.py", line 24, in do_query
+    cursor = self.get_compiler(using).execute_sql(CURSOR)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1137, in execute_sql
+    cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 100, in execute
+    return super().execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 68, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 77, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+django.db.utils.IntegrityError: (1451, 'Cannot delete or update a parent row: a foreign key constraint fails (`tirpude_cms`.`attendance_studentattendance`, CONSTRAINT `attendance_studentat_fk_subjects_id_6a8e22ab_fk_master_fo` FOREIGN KEY (`fk_subjects_id`) REFERENCES `master_forms_subject` (`id`))')
+
+
+2020-01-14 16:04:18.965427
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.IntegrityError: (1451, 'Cannot delete or update a parent row: a foreign key constraint fails (`tirpude_cms`.`attendance_studentattendance`, CONSTRAINT `attendance_studentat_fk_subjects_id_6a8e22ab_fk_master_fo` FOREIGN KEY (`fk_subjects_id`) REFERENCES `master_forms_subject` (`id`))')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\master_forms\views.py", line 62, in delete_subject
+    subject_obj.delete()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\base.py", line 937, in delete
+    return collector.delete()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\deletion.py", line 332, in delete
+    count = query.delete_batch(pk_list, self.using)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\subqueries.py", line 41, in delete_batch
+    num_deleted += self.do_query(self.get_meta().db_table, self.where, using=using)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\subqueries.py", line 24, in do_query
+    cursor = self.get_compiler(using).execute_sql(CURSOR)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1137, in execute_sql
+    cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 100, in execute
+    return super().execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 68, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 77, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+django.db.utils.IntegrityError: (1451, 'Cannot delete or update a parent row: a foreign key constraint fails (`tirpude_cms`.`attendance_studentattendance`, CONSTRAINT `attendance_studentat_fk_subjects_id_6a8e22ab_fk_master_fo` FOREIGN KEY (`fk_subjects_id`) REFERENCES `master_forms_subject` (`id`))')
+
+
+2020-01-14 16:04:44.415949
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.IntegrityError: (1451, 'Cannot delete or update a parent row: a foreign key constraint fails (`tirpude_cms`.`attendance_studentattendance`, CONSTRAINT `attendance_studentat_fk_subjects_id_6a8e22ab_fk_master_fo` FOREIGN KEY (`fk_subjects_id`) REFERENCES `master_forms_subject` (`id`))')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\master_forms\views.py", line 62, in delete_subject
+    subject_obj.delete()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\base.py", line 937, in delete
+    return collector.delete()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\deletion.py", line 332, in delete
+    count = query.delete_batch(pk_list, self.using)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\subqueries.py", line 41, in delete_batch
+    num_deleted += self.do_query(self.get_meta().db_table, self.where, using=using)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\subqueries.py", line 24, in do_query
+    cursor = self.get_compiler(using).execute_sql(CURSOR)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1137, in execute_sql
+    cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 100, in execute
+    return super().execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 68, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 77, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+django.db.utils.IntegrityError: (1451, 'Cannot delete or update a parent row: a foreign key constraint fails (`tirpude_cms`.`attendance_studentattendance`, CONSTRAINT `attendance_studentat_fk_subjects_id_6a8e22ab_fk_master_fo` FOREIGN KEY (`fk_subjects_id`) REFERENCES `master_forms_subject` (`id`))')
+
+
+2020-01-14 16:14:51.276588
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.IntegrityError: (1451, 'Cannot delete or update a parent row: a foreign key constraint fails (`tirpude_cms`.`exam_examscheduledetails`, CONSTRAINT `exam_examscheduledet_fk_subjects_id_a6c2c009_fk_master_fo` FOREIGN KEY (`fk_subjects_id`) REFERENCES `master_forms_subject` (`id`))')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\master_forms\views.py", line 63, in delete_subject
+    subject_obj.delete()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\base.py", line 937, in delete
+    return collector.delete()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\deletion.py", line 332, in delete
+    count = query.delete_batch(pk_list, self.using)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\subqueries.py", line 41, in delete_batch
+    num_deleted += self.do_query(self.get_meta().db_table, self.where, using=using)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\subqueries.py", line 24, in do_query
+    cursor = self.get_compiler(using).execute_sql(CURSOR)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1137, in execute_sql
+    cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 100, in execute
+    return super().execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 68, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 77, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+django.db.utils.IntegrityError: (1451, 'Cannot delete or update a parent row: a foreign key constraint fails (`tirpude_cms`.`exam_examscheduledetails`, CONSTRAINT `exam_examscheduledet_fk_subjects_id_a6c2c009_fk_master_fo` FOREIGN KEY (`fk_subjects_id`) REFERENCES `master_forms_subject` (`id`))')
+
+
+2020-01-14 16:37:44.190663
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.IntegrityError: (1451, 'Cannot delete or update a parent row: a foreign key constraint fails (`tirpude_cms`.`attendance_studentattendance`, CONSTRAINT `attendance_studentat_fk_subjects_id_6a8e22ab_fk_master_fo` FOREIGN KEY (`fk_subjects_id`) REFERENCES `master_forms_subject` (`id`))')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\master_forms\views.py", line 63, in delete_subject
+    subject_obj.delete()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\base.py", line 937, in delete
+    return collector.delete()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\deletion.py", line 332, in delete
+    count = query.delete_batch(pk_list, self.using)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\subqueries.py", line 41, in delete_batch
+    num_deleted += self.do_query(self.get_meta().db_table, self.where, using=using)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\subqueries.py", line 24, in do_query
+    cursor = self.get_compiler(using).execute_sql(CURSOR)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1137, in execute_sql
+    cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 100, in execute
+    return super().execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 68, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 77, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+django.db.utils.IntegrityError: (1451, 'Cannot delete or update a parent row: a foreign key constraint fails (`tirpude_cms`.`attendance_studentattendance`, CONSTRAINT `attendance_studentat_fk_subjects_id_6a8e22ab_fk_master_fo` FOREIGN KEY (`fk_subjects_id`) REFERENCES `master_forms_subject` (`id`))')
+
+
+2020-01-14 16:45:10.994839
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.IntegrityError: (1451, 'Cannot delete or update a parent row: a foreign key constraint fails (`tirpude_cms`.`attendance_studentattendance`, CONSTRAINT `attendance_studentat_fk_subjects_id_6a8e22ab_fk_master_fo` FOREIGN KEY (`fk_subjects_id`) REFERENCES `master_forms_subject` (`id`))')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\master_forms\views.py", line 63, in delete_subject
+    subject_obj.delete()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\base.py", line 937, in delete
+    return collector.delete()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\deletion.py", line 332, in delete
+    count = query.delete_batch(pk_list, self.using)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\subqueries.py", line 41, in delete_batch
+    num_deleted += self.do_query(self.get_meta().db_table, self.where, using=using)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\subqueries.py", line 24, in do_query
+    cursor = self.get_compiler(using).execute_sql(CURSOR)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1137, in execute_sql
+    cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 100, in execute
+    return super().execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 68, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 77, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+django.db.utils.IntegrityError: (1451, 'Cannot delete or update a parent row: a foreign key constraint fails (`tirpude_cms`.`attendance_studentattendance`, CONSTRAINT `attendance_studentat_fk_subjects_id_6a8e22ab_fk_master_fo` FOREIGN KEY (`fk_subjects_id`) REFERENCES `master_forms_subject` (`id`))')
+
+
+2020-01-14 16:45:23.425003
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.IntegrityError: (1451, 'Cannot delete or update a parent row: a foreign key constraint fails (`tirpude_cms`.`exam_examscheduledetails`, CONSTRAINT `exam_examscheduledet_fk_subjects_id_a6c2c009_fk_master_fo` FOREIGN KEY (`fk_subjects_id`) REFERENCES `master_forms_subject` (`id`))')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\master_forms\views.py", line 63, in delete_subject
+    subject_obj.delete()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\base.py", line 937, in delete
+    return collector.delete()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\deletion.py", line 332, in delete
+    count = query.delete_batch(pk_list, self.using)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\subqueries.py", line 41, in delete_batch
+    num_deleted += self.do_query(self.get_meta().db_table, self.where, using=using)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\subqueries.py", line 24, in do_query
+    cursor = self.get_compiler(using).execute_sql(CURSOR)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1137, in execute_sql
+    cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 100, in execute
+    return super().execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 68, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 77, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+django.db.utils.IntegrityError: (1451, 'Cannot delete or update a parent row: a foreign key constraint fails (`tirpude_cms`.`exam_examscheduledetails`, CONSTRAINT `exam_examscheduledet_fk_subjects_id_a6c2c009_fk_master_fo` FOREIGN KEY (`fk_subjects_id`) REFERENCES `master_forms_subject` (`id`))')
+
+
+2020-01-14 16:46:57.288022
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.IntegrityError: (1451, 'Cannot delete or update a parent row: a foreign key constraint fails (`tirpude_cms`.`attendance_studentattendance`, CONSTRAINT `attendance_studentat_fk_subjects_id_6a8e22ab_fk_master_fo` FOREIGN KEY (`fk_subjects_id`) REFERENCES `master_forms_subject` (`id`))')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\master_forms\views.py", line 172, in delete_course
+    course_obj.delete()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\base.py", line 937, in delete
+    return collector.delete()
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\deletion.py", line 332, in delete
+    count = query.delete_batch(pk_list, self.using)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\subqueries.py", line 41, in delete_batch
+    num_deleted += self.do_query(self.get_meta().db_table, self.where, using=using)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\subqueries.py", line 24, in do_query
+    cursor = self.get_compiler(using).execute_sql(CURSOR)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1137, in execute_sql
+    cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 100, in execute
+    return super().execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 68, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 77, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\db\backends\mysql\base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 209, in execute
+    res = self._query(query)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\cursors.py", line 315, in _query
+    db.query(q)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\MySQLdb\connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+django.db.utils.IntegrityError: (1451, 'Cannot delete or update a parent row: a foreign key constraint fails (`tirpude_cms`.`attendance_studentattendance`, CONSTRAINT `attendance_studentat_fk_subjects_id_6a8e22ab_fk_master_fo` FOREIGN KEY (`fk_subjects_id`) REFERENCES `master_forms_subject` (`id`))')
 
 
