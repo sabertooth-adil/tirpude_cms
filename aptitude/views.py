@@ -639,3 +639,179 @@ def view_student_answer(request):
     except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
+
+
+@csrf_exempt
+def filter_publish_list(request):
+    """
+    Filtering publish test on aptitude test score page
+    :param request:
+    :return:
+    """
+    try:
+        course = request.POST.get("course")
+        sem = request.POST.get("sem")
+        section = request.POST.get("section")
+        faculty = request.POST.get("faculty")
+        start_date = request.POST.get("start_date")
+        end_date = request.POST.get("end_date")
+        dict_data = {}
+        mylist_data = []
+
+        if start_date:
+            start_date = datetime.datetime.strptime(request.POST.get("start_date"), '%Y-%m-%d')
+        if end_date:
+            end_date = datetime.datetime.strptime(request.POST.get("end_date"), '%Y-%m-%d')
+
+        filter_str = "AptitudeSet.objects.filter(status='Attempted')"
+        if sem:
+            filter_str += ".filter(fk_semesters_id=sem)"
+        if course:
+            filter_str += ".filter(fk_course_id=course)"
+        if faculty:
+            filter_str += ".filter(fk_faculty_id=faculty)"
+        if section:
+            filter_str += ".filter(fk_sections_id=section)"
+        if start_date:
+            filter_str += ".filter(schedule__gte=start_date)"
+        if end_date:
+            filter_str += ".filter(schedule__lte=end_date)"
+        if filter_str == "AptitudeSet.objects":
+            filter_str += ".all()"
+
+        publish_test_obj = eval(filter_str)
+
+        for i in publish_test_obj:
+            dict_data['id'] = i.id
+            dict_data['total'] = AptitudeTestScore.objects.filter(fk_aptitude_test_id=i.id).count()
+            mylist_data.append(dict_data)
+            dict_data = {}
+
+        render_string = render_to_string("publish_test_list.html", {"publish_test_obj": publish_test_obj,
+                                                                    "mylist": mylist_data})
+        return HttpResponse(render_string)
+    except Exception:
+        error_save(str(traceback.format_exc()))
+        return redirect('error_handler_500')
+
+
+@csrf_exempt
+def filter_test_list(request):
+    """
+    Filtering aptitude test on main aptitude test page
+    :param request:
+    :return:
+    """
+    session = request.session.get('user_id')
+    try:
+        user_info_obj = UserInfo.objects.get(id=session)
+        user_operations_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
+        course = request.POST.get("course")
+        sem = request.POST.get("sem")
+        section = request.POST.get("section")
+        faculty = request.POST.get("faculty")
+        start_date = request.POST.get("start_date")
+        end_date = request.POST.get("end_date")
+        dict_data = {}
+        mylist_data = []
+
+        if start_date:
+            start_date = datetime.datetime.strptime(request.POST.get("start_date"), '%Y-%m-%d')
+
+        if end_date:
+            end_date = datetime.datetime.strptime(request.POST.get("end_date"), '%Y-%m-%d')
+
+        filter_str = "AptitudeSet.objects.filter(status='Attempted')"
+        if sem:
+            filter_str += ".filter(fk_semesters_id=sem)"
+        if course:
+            filter_str += ".filter(fk_course_id=course)"
+        if faculty:
+            filter_str += ".filter(fk_faculty_id=faculty)"
+        if section:
+            filter_str += ".filter(fk_sections_id=section)"
+        if start_date:
+            filter_str += ".filter(schedule__gte=start_date)"
+        if end_date:
+            filter_str += ".filter(schedule__lte=end_date)"
+        if filter_str == "AptitudeSet.objects":
+            filter_str += ".all()"
+
+        publish_test_obj = eval(filter_str)
+
+        # publish_test_obj = AptitudeSet.objects.filter(fk_faculty_id=faculty, fk_course_id=course, fk_semesters_id=sem,
+        # schedule__gte=start_date,schedule__lte=end_date)
+
+        for i in publish_test_obj:
+            print(i.id)
+            dict_data['id'] = i.id
+            dict_data['total'] = AllottedQuestion.objects.filter(fk_aptitude_set_id=i.id).count()
+            mylist_data.append(dict_data)
+            dict_data = {}
+
+        print(mylist_data)
+        render_string = render_to_string("aptitidetestmaster_div.html",
+                                         {"useroperations_obj": user_operations_obj, "publish_test_obj": publish_test_obj,
+                                          "my_list": mylist_data})
+        return HttpResponse(render_string)
+    except Exception:
+        error_save(str(traceback.format_exc()))
+        return redirect('error_handler_500')
+
+
+
+@csrf_exempt
+def filter_select_list(request):
+    """
+    Filtering aptitude test to select questions for adding it
+    in new aptitude test
+    :param request:
+    :return:
+    """
+    try:
+        course = request.POST.get("course")
+        sem = request.POST.get("sem")
+        section = request.POST.get("section")
+        faculty = request.POST.get("faculty")
+        start_date = request.POST.get("start_date")
+        end_date = request.POST.get("end_date")
+        dict_data = {}
+        mylist_data = []
+
+        if start_date:
+            start_date = datetime.datetime.strptime(request.POST.get("start_date"), '%Y-%m-%d')
+        if end_date:
+            end_date = datetime.datetime.strptime(request.POST.get("end_date"), '%Y-%m-%d')
+
+        filter_str = "AptitudeSet.objects.filter(status='Attempted')"
+        if sem:
+            filter_str += ".filter(fk_semesters_id=sem)"
+        if course:
+            filter_str += ".filter(fk_course_id=course)"
+        if faculty:
+            filter_str += ".filter(fk_faculty_id=faculty)"
+        if section:
+            filter_str += ".filter(fk_sections_id=section)"
+        if start_date:
+            filter_str += ".filter(schedule__gte=start_date)"
+        if end_date:
+            filter_str += ".filter(schedule__lte=end_date)"
+        if filter_str == "AptitudeSet.objects":
+            filter_str += ".all()"
+
+        publish_test_obj = eval(filter_str)
+        print("start date, ", start_date)
+        print("end date ", end_date)
+
+        for i in publish_test_obj:
+            dict_data['id'] = i.id
+            dict_data['total'] = AllottedQuestion.objects.filter(fk_aptitude_set_id=i.id).count()
+            mylist_data.append(dict_data)
+            dict_data = {}
+
+        render_string = render_to_string("aptitudeselecttable.html", {"publish_test_obj": publish_test_obj,
+                                                                      "my_list": mylist_data})
+        return HttpResponse(render_string)
+    except Exception:
+        error_save(str(traceback.format_exc()))
+        return redirect('error_handler_500')

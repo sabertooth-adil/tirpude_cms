@@ -27,7 +27,6 @@ def error_save(error):
     except:
         return redirect('error_handler_500')
 
-
     ####################################################################################################################
     # Notes #
     ####################################################################################################################
@@ -192,6 +191,57 @@ def delete_notes(request):
     except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
+
+
+@csrf_exempt
+def filter_notes(request):
+    session = request.session.get('user_id')
+    if session:
+        if request.method == "POST":
+            user_info_obj = UserInfo.objects.get(id=session)
+            user_operations_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
+            print("in if post")
+            course = request.POST.get("filter_course")
+            sem = request.POST.get("filter_semesters")
+            section = request.POST.get("filter_sections")
+            subject = request.POST.get("filter_subject")
+            start_date = request.POST.get("filter_from_date")
+            end_date = request.POST.get("filter_to_date")
+
+        print("subject ", subject)
+
+        if start_date:
+            start_date = datetime.datetime.strptime(str(request.POST.get("filter_from_date")), '%d/%m/%Y').strftime(
+                '%Y-%m-%d')
+        if end_date:
+            end_date = datetime.datetime.strptime(str(request.POST.get("filter_to_date")), '%d/%m/%Y').strftime(
+                '%Y-%m-%d')
+
+        filter_str = "AcademicNote.objects"
+        if sem:
+            filter_str += ".filter(fk_semesters_id=sem)"
+        if course:
+            filter_str += ".filter(fk_course_id=course)"
+        if subject:
+            filter_str += ".filter(fk_subjects_id=subject)"
+        if section:
+            filter_str += ".filter(fk_sections_id=section)"
+        if start_date:
+            filter_str += ".filter(date_post__gte=start_date)"
+        if end_date:
+            filter_str += ".filter(date_post__lte=end_date)"
+        if filter_str == "AcademicNote.objects":
+            filter_str += ".all()"
+
+        print(filter_str)
+
+        notes_obj = eval(filter_str)
+
+        render_string = render_to_string("faculty_filternotes.html",
+                                         {"user_operations_obj": user_operations_obj, "notes_obj": notes_obj})
+        return HttpResponse(render_string)
+    else:
+        return redirect("/")
 
 
 def syllabus(request):
@@ -448,9 +498,9 @@ def save_assignment(request):
                     if section:
                         if assignment_obj.assignment_title == title and assignment_obj.fk_subjects.id == int(
                                 subject) and assignment_obj.fk_sections.id == int(
-                                section) and assignment_obj.fk_semesters.id == int(
-                                semester) and assignment_obj.fk_course.id == int(
-                                course) and not file:
+                            section) and assignment_obj.fk_semesters.id == int(
+                            semester) and assignment_obj.fk_course.id == int(
+                            course) and not file:
                             pass
                         else:
                             assignment_obj.fk_user_info_id = session
@@ -470,8 +520,8 @@ def save_assignment(request):
                     else:
                         if assignment_obj.assignment_title == title and assignment_obj.fk_subjects.id == int(
                                 subject) and assignment_obj.fk_semesters.id == int(
-                                semester) and assignment_obj.fk_course.id == int(
-                                course) and not file:
+                            semester) and assignment_obj.fk_course.id == int(
+                            course) and not file:
                             pass
                         else:
                             assignment_obj.fk_user_info_id = session
@@ -602,6 +652,56 @@ def assignment_get_student_list(request):
     except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
+
+
+@csrf_exempt
+def filter_assignments(request):
+    session = request.session.get('user_id')
+    if session:
+        user_info_obj = UserInfo.objects.get(id=session)
+        user_operations_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
+        course = request.POST.get("filter_course")
+        sem = request.POST.get("filter_semesters")
+        section = request.POST.get("filter_sections")
+        subject = request.POST.get("filter_subject")
+        start_date = request.POST.get("filter_from_date")
+        end_date = request.POST.get("filter_to_date")
+        time_now = timezone.now().date() - timezone.timedelta(days=1)  # Getting Current Time
+
+        if start_date:
+            start_date = datetime.datetime.strptime(str(request.POST.get("filter_from_date")),
+                                                    '%d/%m/%Y').strftime('%Y-%m-%d')
+        if end_date:
+            end_date = datetime.datetime.strptime(str(request.POST.get("filter_to_date")),
+                                                  '%d/%m/%Y').strftime('%Y-%m-%d')
+
+        filter_str = "Assignment.objects"
+        if sem:
+            filter_str += ".filter(fk_semesters_id=sem)"
+        if course:
+            filter_str += ".filter(fk_course_id=course)"
+        if subject:
+            filter_str += ".filter(fk_subjects_id=subject)"
+        if section:
+            filter_str += ".filter(fk_sections_id=section)"
+        if start_date:
+            filter_str += ".filter(date_post__gte=start_date)"
+        if end_date:
+            filter_str += ".filter(date_post__lte=end_date)"
+        if filter_str == "Assignment.objects":
+            filter_str += ".all()"
+        print(filter_str)
+
+        assignment_obj = eval(filter_str)
+        print(filter_str)
+
+        render_string = render_to_string("faculty_filterassignment.html",
+                                         {"user_operations_obj": user_operations_obj, "assignment_obj": assignment_obj,
+                                          "time_now": time_now})
+        return HttpResponse(render_string)
+    else:
+        return redirect("/")
+
 
 @csrf_exempt
 def edit_student_list(request):

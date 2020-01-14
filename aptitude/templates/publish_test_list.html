@@ -1,0 +1,47 @@
+{% for i in publish_test_obj reversed %}
+    <tr class="btn-light">
+        <th scope="col">
+        </th>
+        <td scope="row">
+            {{ forloop.counter }}
+        </td>
+        <td scope="row" class="name" style="text-overflow: ellipsis;width: 200px;overflow: hidden; white-space: nowrap;">
+            {{ i.test_name }}
+        </td>
+        <td class="status">
+            {{ i.schedule}}
+        </td>
+        <td>
+            <div >
+                {{ i.test_duration }}
+            </div>
+        </td>
+        <td>{% if not i.fk_course and not i.fk_semesters and not i.fk_sections %}
+            All
+            {% else %}
+            {% if i.fk_course %}
+            Course : {{ i.fk_course.course }} <br>
+            {% endif %}
+            {% if i.fk_semesters %}
+            Sem : {{ i.fk_semesters.semester }} <br>
+            {% endif %}
+            {% if i.fk_sections %}
+            Section : {{ i.fk_sections.sections }}
+            {% endif %}
+            {% endif %}
+        </td>
+        <td>
+            {% for j in mylist %}
+            {% if j.id == i.id %}
+            {{ j.total }}
+            {% endif %}
+            {% endfor %}
+        </td>
+        </td>
+        <td class="completion text-center">
+            <div class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target=""
+                 onclick="viewtestscore({{i.id}})">View
+            </div>
+        </td>
+    </tr>
+{% endfor %}

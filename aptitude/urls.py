@@ -18,7 +18,7 @@ urlpatterns = [
     path('aptitude-score/', aptitude_score, name='aptitude_score'),
     path('student-score-list/', student_score_list, name='student_score_list'),
     path('view-student-answer/', view_student_answer, name='view_student_answer'),
-    # path('FilterPublishList/', FilterPublishList, name='FilterPublishList'),
-    # path('FilterTestList/', FilterTestList, name='FilterTestList'),
-    # path('FilterSelectList/', FilterSelectList, name='FilterSelectList'),
+    path('filter-publish-list/', filter_publish_list, name='filter_publish_list'),
+    path('filter-test-list/', filter_test_list, name='filter_test_list'),
+    path('fliter-select-list/', filter_select_list, name='filter_select_list'),
 ]

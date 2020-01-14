@@ -1,3 +1,4 @@
+{% load static %}
 <style>
     input::placeholder {
     font-size: small;
@@ -406,7 +407,7 @@
                                                                     From
                                                                 </div>
                                                                 <div class="font-size-h2 font-w400 text-dark">
-                                                                    <input id="startdate1"
+                                                                    <input id="start_date1"
                                                                            class="form-control form-control-sm form-control-alternative js-datepicker"
                                                                            data-date-format="yyyy-mm-dd"
                                                                            placeholder="YYYY/MM/DD" required>
@@ -416,7 +417,7 @@
                                                                     To
                                                                 </div>
                                                                 <div class="font-size-h2 font-w400 text-dark">
-                                                                    <input id="enddate1"
+                                                                    <input id="end_date1"
                                                                            class="form-control form-control-sm form-control-alternative js-datepicker"
                                                                            data-date-format="yyyy-mm-dd"
                                                                            placeholder="YYYY/MM/DD" required>
@@ -649,7 +650,10 @@
                 </div>
             </div>
         </div>
-
+<script src="{% static 'js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
+<script>jQuery(function () {
+    One.helpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'rangeslider']);
+});</script>
 <script>
 
 // Add the following code if you want the name of the file appear on select
@@ -699,18 +703,18 @@ function filterselecttest() {
         section = $("#sections1").val()
         semester = $("#semesters1").val()
         faculty = $("#faculty1").val()
-        startdate = $("#startdate1").val()
-        enddate = $("#enddate1").val()
+        start_date = $("#start_date1").val()
+        end_date = $("#end_date1").val()
         $.ajax({
-            url : "/FilterSelectList/",
+            url : "/fliter-select-list/",
             method : "POST",
             data : {
                 "course":course,
                 "section":section,
                 "sem":semester,
                 "faculty":faculty,
-                "startdate":startdate,
-                "enddate":enddate,
+                "start_date":start_date,
+                "end_date":end_date,
                 },
                 success : function(response){
                 $("#selectestlist").html("")

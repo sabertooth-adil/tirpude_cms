@@ -19,4 +19,6 @@ urlpatterns = [
     path('assignment-get-student-list/', assignment_get_student_list, name='assignment_get_student_list'),
     path('delete-assignment/', delete_assignment, name='delete_assignment'),
     path('edit-student-list/', edit_assignment, name='edit_student_list'),
+    path('filter_notes/', filter_notes, name='filter_notes'),
+    path('filter_assignment/', filter_assignments, name='filter_assignments'),
 ]

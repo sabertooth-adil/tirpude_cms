@@ -1,4 +1,4 @@
-{% for i in publishtest_obj reversed %}
+{% for i in publish_test_obj reversed %}
 {% if i.test_name != "sample" %}
 {% if i.test_name != "UploadSample" %}
 <tr class="btn-light">
@@ -43,9 +43,9 @@
     <td>
         {{ i.status }}
     </td>
-    {% for u in  user_operation_obj %}
-        {% if u.fk_screen.screen_url == "aptitude_test" %}
-            {% if u.edit_data == "Y" or u.delete_data == "Y" %}
+{#    {% for u in  user_operation_obj %}#}
+{#        {% if u.fk_screen.screen_url == "aptitude_test" %}#}
+{#            {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
                 <td class="completion">
                     {% if i.status == "Unassigned" or i.status == "Scheduled" %}
                         {% if u.edit_data == "Y" %}
@@ -53,22 +53,22 @@
                                  onclick="editmaster({{i.id}},'edit')"><i class="si si-pencil"></i>
                             </div>
                         {% endif %}
-                        {% if u.delete_data == "Y" %}
-                            <div class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target=""
-                                 onclick="delete_fun({{i.id}})"><i class="fa fa-fw fa-times"></i>
-                            </div>
-                        {% endif %}
+{#                        {% if u.delete_data == "Y" %}#}
+{#                            <div class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target=""#}
+{#                                 onclick="delete_fun({{i.id}})"><i class="fa fa-fw fa-times"></i>#}
+{#                            </div>#}
+{#                        {% endif %}#}
                     {% else %}
-                        {% if u.edit_data == "Y" %}
+{#                        {% if u.edit_data == "Y" %}#}
                             <div class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target=""
                                  onclick="editmaster({{i.id}},'view')"><i class="fa fa-chevron-right"></i>
                             </div>
-                        {% endif %}
+{#                        {% endif %}#}
                     {% endif %}
                 </td>
-            {% endif %}
-        {% endif %}
-    {% endfor %}
+{#            {% endif %}#}
+{#        {% endif %}#}
+{#    {% endfor %}#}
 </tr>
 {% endif %}
 {% endif %}

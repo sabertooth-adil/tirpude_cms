@@ -92,9 +92,9 @@
                             <div class="form-group">
                                 <div class="font-size-sm font-w600 text-uppercase text-muted">From Date</div>
                                 <div class="font-w400 text-dark">
-                                    <input name="filter_chartfromdate" id="filter_chartfromdate"
+                                    <input name="filter_from_date" id="filter_from_date"
                                         class="form-control form-control-sm form-control-alternative js-datepicker"
-                                            data-date-format="dd-mm-yyyy" placeholder="DD/MM/YYYY" required autocomplete="off"
+                                            data-date-format="dd/mm/yyyy" placeholder="DD/MM/YYYY" required autocomplete="off"
                                            value="{{from_date|date:'d/m/Y'}}">
                                     <span style="display:none;color:red;" id="err_specialization">Please Select From
                                         Date</span>
@@ -105,9 +105,9 @@
                             <div class="form-group">
                                 <div class="font-size-sm font-w600 text-uppercase text-muted">To Date</div>
                                 <div class="font-w400 text-dark">
-                                    <input name="filter_charttodate" id="filter_charttodate"
+                                    <input name="filter_to_date" id="filter_to_date"
                                         class="form-control form-control-sm form-control-alternative js-datepicker"
-                                            data-date-format="dd-mm-yyyy" placeholder="DD/MM/YYYY" required autocomplete="off"
+                                            data-date-format="dd/mm/yyyy" placeholder="DD/MM/YYYY" required autocomplete="off"
                                            value="{{to_date|date:'d/m/Y'}}">
                                     <span style="display:none;color:red;" id="err_semesters">Please Select To
                                         Date</span>
@@ -548,10 +548,10 @@
                 $("#filter_subject").html("")
                 if (JSON.parse(response).length == 0) {
                     $("#filter_subject").html("<option value='' selected hidden>Subjects Not Found</option>")
-                    $("#filter_subject").html("<option value='' selected hidden>Select Subject</option><option value='All'>All</option>")
+                    $("#filter_subject").html("<option value='' selected hidden>Select Subject</option><option value=''>All</option>")
                 }
                 else {
-                    $("#filter_subject").html("<option value='' selected hidden>Select Subject</option><option value='All'>All</option>")
+                    $("#filter_subject").html("<option value='' selected hidden>Select Subject</option><option value=''>All</option>")
                 }
                 for (i = 0; i < JSON.parse(response).length; i++) {
                     cit = document.createElement('option');
@@ -656,18 +656,18 @@
         var filter_semesters = $("#filter_semesters").val();
         var filter_sections = $("#filter_sections").val();
         var filter_subject = $("#filter_subject").val();
-        var filter_chartfromdate = $("#filter_chartfromdate").val();
-        var filter_charttodate = $("#filter_charttodate").val();
+        var filter_from_date = $("#filter_from_date").val();
+        var filter_to_date = $("#filter_to_date").val();
         $.ajax({
-            url: "/FilterAssignment/",
+            url: "/filter_assignment/",
             method: "POST",
             data: {
                 "filter_course": filter_course,
                 "filter_semesters": filter_semesters,
                 "filter_sections": filter_sections,
                 "filter_subject": filter_subject,
-                "filter_chartfromdate": filter_chartfromdate,
-                "filter_charttodate": filter_charttodate,
+                "filter_from_date": filter_from_date,
+                "filter_to_date": filter_to_date,
             },
             success: function (response) {
                 console.log(response)

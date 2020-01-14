@@ -65,19 +65,19 @@
                    </select>
                </div>
                <div class="form-group" style="width:15%; padding-right: 2rem;">
-                   <label for="startdate">Form</label>
-                   <input id="startdate"
+                   <label for="start_date">Form</label>
+                   <input id="start_date"
                           class="form-control form-control-sm form-control-alternative js-datepicker"
                           data-date-format="yyyy-mm-dd" placeholder="YYYY/MM/DD" required>
                </div>
                <div class="form-group"  style="width:15%; padding-right: 2rem;">
-                   <label for="enddate">To</label>
-                   <input id="enddate"
+                   <label for="end_date">To</label>
+                   <input id="end_date"
                           class="form-control form-control-sm form-control-alternative js-datepicker"
                           data-date-format="yyyy-mm-dd" placeholder="YYYY/MM/DD" required>
                </div>
                <div class="form-group cols-lg-1">
-                   <label for="enddate">&nbsp;</label>
+                   <label for="end_date">&nbsp;</label>
                    <buttton class="btn btn-warning nu-orange-button submit-btn btn-block btn-sm"
                             onclick="filterpublishtest()">
                        <i class="fa fa-filter" aria-hidden="true"></i> Filter
@@ -211,18 +211,18 @@ function filterpublishtest() {
         section = $("#sections").val()
         semester = $("#semesters").val()
         faculty = $("#faculty").val()
-        startdate = $("#startdate").val()
-        enddate = $("#enddate").val()
+        start_date = $("#start_date").val()
+        end_date = $("#end_date").val()
         $.ajax({
-            url : "/FilterPublishList/",
+            url : "/filter-publish-list/",
             method : "POST",
             data : {
                 "course":course,
                 "section":section,
                 "sem":semester,
                 "faculty":faculty,
-                "startdate":startdate,
-                "enddate":enddate,
+                "start_date":start_date,
+                "end_date":end_date,
                 },
                 success : function(response){
                 $("#PublishTestList").html("")
