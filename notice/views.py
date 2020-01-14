@@ -149,10 +149,10 @@ def filter_notice(request):
             start_date = request.POST.get("filter_from_date")
             end_date = request.POST.get("filter_to_date")
             if start_date:
-                startdate = datetime.datetime.strptime(str(request.POST.get("filter_from_date")), "%d-%m-%Y").strftime(
+                start_date = datetime.datetime.strptime(str(request.POST.get("filter_from_date")), "%d-%m-%Y").strftime(
                     "%Y-%m-%d")
             if end_date:
-                enddate = datetime.datetime.strptime(str(request.POST.get("filter_to_date")), "%d-%m-%Y").strftime(
+                end_date = datetime.datetime.strptime(str(request.POST.get("filter_to_date")), "%d-%m-%Y").strftime(
                     "%Y-%m-%d")
             filter_str = "Notice.objects"
             if sem:
