@@ -1,0 +1,147 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">Student Performance Detail</h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                <a href="javascript:history.back()"><button class="btn btn-primary btn-sm submit-btn">Back</button></a>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <div class="row">
+        <div class="col-6 col-md-3 col-lg-6 col-xl-3" style="padding-left: 0px;">
+            <a class="block block-rounded block-link-pop border-left border-primary border-4x" href="javascript:void(0)" style="margin-bottom: 0px !important;">
+                <div class="block-content block-content-full">
+                    <div class="font-size-sm font-w600 text-uppercase text-muted">Student Name</div>
+                    <div class="font-w400 text-dark">
+                        <input type="text" class="form-control form-control-sm form-control-alternative" id="filter_student_name" name="filter_student_name" maxlength="30" onchange="FilterSearchStudentPerformance()">
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-3 col-lg-6 col-xl-3" style="padding-left: 0px;">
+            <a class="block block-rounded block-link-pop border-left border-primary border-4x" href="javascript:void(0)" style="margin-bottom: 0px !important;">
+                <div class="block-content block-content-full">
+                    <div class="font-size-sm font-w600 text-uppercase text-muted">Course</div>
+                    <div class="font-w400 text-dark">
+                        <select class="form-control form-control-sm form-control-alternative" id="filter_course" name="filter_course">
+                            <option value="" selected hidden>Select Course</option>
+                            {% for i in course_obj %}
+                            <option value="{{i.id}}">{{i.course}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-3 col-lg-6 col-xl-3" style="padding-left: 0px;">
+            <a class="block block-rounded block-link-pop border-left border-primary border-4x" href="javascript:void(0)" style="margin-bottom: 0px !important;">
+                <div class="block-content block-content-full">
+                    <div class="font-size-sm font-w600 text-uppercase text-muted">Semesters</div>
+                    <div class="font-w400 text-dark">
+                        <select class="form-control form-control-sm form-control-alternative" id="filter_semesters" name="filter_semesters">
+                            <option value="" selected hidden>Select Semesters</option>
+                            {% for i in semesters_obj %}
+                            <option value="{{i.id}}">{{i.semester}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-2 col-lg-2 col-xl-2" style="padding-left: 0px;">
+            <a class="block block-rounded block-link-pop border-left border-primary border-4x" href="javascript:void(0)" style="margin-bottom: 0px !important;">
+                <div class="block-content block-content-full">
+                    <div class="font-size-sm font-w600 text-uppercase text-muted">Section</div>
+                    <div class="font-w400 text-dark">
+                        <select class="form-control form-control-sm form-control-alternative" id="filter_section" name="filter_section">
+                            <option value="" selected hidden>Select Section</option>
+                            {% for i in sections_obj %}
+                            <option value="{{i.id}}">{{i.sections}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-1 col-lg-6 col-xl-1" style="padding-left: 0px;">
+            <a href="javascript:void(0)">
+                <div>
+                    <div class="font-size-sm font-w600 text-uppercase text-muted"></div>
+                    <div class="font-w400 text-dark">
+                        <buttton class="btn btn-warning nu-orange-button submit-btn btn-block btn-sm" onclick="FilterSearchStudentPerformance()" style="margin-top: 25px;"><i class="fa fa-filter" aria-hidden="true" style="margin-right: 3px;"></i>Filter</buttton>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <div class="block">
+        <div class="block-content block-content-full">
+            <div class="block-content block-content-full" id="FilterSearchStudentPerformance_Div">
+                <div class="table-responsive">
+                    <table class="table table-vcenter table-bordered" id="mydatatable">
+                        <thead style="background-color: #f5f3f3;">
+                            <tr>
+                                <th class="text-center" style="width: 15% !important;">Student Name</th>
+                                <th class="text-center" style="width: 15% !important;">Course</th>
+                                <th class="text-center" style="width: 15% !important;">Semesters</th>
+                                <th class="text-center" style="width: 15% !important;">Section</th>
+                                <th class="text-center" style="width: 3% !important;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in academic_info_obj %}
+                                <tr>
+                                    <td>{{i.fk_user_info.first_name}} {{i.fk_user_info.last_name}}</td>
+                                    <td>{{i.fk_course.course}}</td>
+                                    <td>{{i.fk_semesters.semester}}</td>
+                                    <td>{{i.fk_sections.sections}}</td>
+                                    <td>
+                                        <a href="{% url 'placement-student-performance' id=i.fk_user_info.id %}"><button type="button" class="btn btn-sm btn-outline-secondary js-tooltip-enabled" style="margin-bottom: 5px;">View Detail</button></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#PlacementMainNavPage').addClass('open');
+        $('#SearchStudentPerformanceNavPage').addClass('active');
+        $(".datepicker").datepicker({autoclose: true});
+        $('#mydatatable').DataTable();
+    });
+    function FilterSearchStudentPerformance() {
+        var filter_student_name = $("#filter_student_name").val();
+        var filter_course = $("#filter_course").val();
+        var filter_semesters = $("#filter_semesters").val();
+        var filter_section = $("#filter_section").val();
+        $.ajax({
+            url :"/filter-search-student-performance/",
+            method : "POST",
+            data : {
+                "filter_student_name":filter_student_name,
+                "filter_course":filter_course,
+                "filter_semesters":filter_semesters,
+                "filter_section":filter_section,
+            },
+            success : function (response) {
+                console.log(response)
+                $("#FilterSearchStudentPerformance_Div").html("");
+                $("#FilterSearchStudentPerformance_Div").append(response);
+            }
+        })
+
+    }
+</script>
+{% endblock content %}

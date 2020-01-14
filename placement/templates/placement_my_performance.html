@@ -1,0 +1,70 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">My Performance Detail</h1>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <div class="block">
+        <div class="block-content block-content-full">
+            <div class="block-content block-content-full">
+                <div class="table-responsive">
+                    <table class="table table-vcenter table-bordered" id="mydatatable">
+                        <thead style="background-color: #f5f3f3;">
+                            <tr>
+                                <th class="text-center" style="width: 15% !important;">Company Name</th>
+                                <th class="text-center" style="width: 15% !important;">Status</th>
+                                <th class="text-center" style="width: 15% !important;">Tests</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in apple_company_appearance_obj %}
+                                <tr>
+                                    <td>{{i.fk_company.company_name}}</td>
+                                    <td>{% if i.placement_status %}{{i.placement_status}}{% else %}Not Available{% endif %}</td>
+                                    <td>
+                                        <table>
+                                             <thead>
+                                                <tr style="background-color: #f5f3f3;">
+                                                    {% for j in i.fk_company_appearance.fk_company_appearance_date_time_list.all %}
+                                                        {% for k in company_appearance_test_result_obj %}
+                                                            {% if i.id == k.fk_appled_company_appearance.id and k.fk_selection_process_test.id == j.fk_selection_process_test.id and k.fk_user_info.id == i.fk_user_info.id %}
+                                                                <th class="text-center" style="width: 15% !important;padding: .25rem;">{{k.fk_selection_process_test.test_name}}</th>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% endfor %}
+                                                </tr>
+                                                <tr>
+                                                    {% for j in i.fk_company_appearance.fk_company_appearance_date_time_list.all %}
+                                                        {% for k in company_appearance_test_result_obj %}
+                                                            {% if i.id == k.fk_appled_company_appearance.id and k.fk_selection_process_test.id == j.fk_selection_process_test.id and k.fk_user_info.id == i.fk_user_info.id %}
+                                                                <td class="text-center" style="width: 15% !important;">{% if k.test_status %}{{k.test_status}}{% else %}Not Available{% endif %}</td>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% endfor %}
+                                                </tr>
+                                             </thead>
+                                        </table>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#PlacementMainNavPage').addClass('open');
+        $('#StudentMyPerformanceNavPage').addClass('active');
+        $(".datepicker").datepicker({autoclose: true});
+        $('#mydatatable').DataTable();
+    });
+</script>
+{% endblock content %}
