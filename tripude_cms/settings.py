@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'master_forms',
     'library',
     'notice',
-
 ]
 
 MIDDLEWARE = [

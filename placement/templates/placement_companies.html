@@ -1,0 +1,533 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">Companies</h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAddCourse_Div()" id="ShowAddCourse_Button">Add Company</button>
+                <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAllCourse_Div()" id="ShowAllCourse_Button" style="display: none;">All Company</button>
+                <button class="btn btn-success btn-sm" onclick="addcompany()" id="addcourse_button" style="display:none;">Save</button>
+                <button class="btn btn-success btn-sm" onclick="updatecompany()" id="updatecourse_button" style="display:none;">Update</button>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <div class="block">
+        <div class="block-content block-content-full">
+            <div id="ShowAddCourse_Div" style="display: none;">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Company Name <span class="text-danger">*</span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="company_name" name="company_name" maxlength="190">
+                            <span style="display:none;color:red;font-size: 12px;" id="err_company_name">Please Enter Company Name</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Company Type <span class="text-danger">*</span>:</label>
+                            <select class="form-control form-control-sm form-control-alternative" id="company_type" name="company_type">
+                                <option value="" selected hidden>Select Company Type</option>
+                                {% for i in company_type_obj %}
+                                <option value="{{i.id}}">{{i.company_type}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_company_type">Please Enter Company Type</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Company Location <span class="text-danger">*</span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="company_location" name="company_location" maxlength="90">
+                            <span style="display:none;color:red;font-size: 12px;" id="err_company_location">Please Enter Company Location</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-xs-6">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Company Main Address <span class="text-danger">*</span>:</label>
+                            <textarea class="form-control form-control-sm form-control-alternative" id="company_main_address" name="company_main_address" maxlength="450"></textarea>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_company_main_address">Please Enter Company Main Address</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 col-xs-6">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Company Other Detail <span class="text-danger"></span>:</label>
+                            <textarea class="form-control form-control-sm form-control-alternative" id="company_other_detail" name="company_other_detail" maxlength="450"></textarea>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_company_other_detail">Please Enter Contact Other Detail</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Contact Person 1 Name <span class="text-danger">*</span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="contact_person_one_name" name="contact_person_one_name" maxlength="90">
+                            <span style="display:none;color:red;font-size: 12px;" id="err_contact_person_one_name">Please Enter Contact Person 1 Name</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Contact Person 1 Email <span class="text-danger">*</span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="contact_person_one_email" name="contact_person_one_email" maxlength="45">
+                            <span style="display:none;color:red;font-size: 12px;" id="err_contact_person_one_email">Please Enter Email</span>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_contact_person_one_email_valid">Please Enter Valid Email</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Contact Person 1 Mobile No. <span class="text-danger">*</span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="contact_person_one_mobile_no" name="contact_person_one_mobile_no" maxlength="10" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                            <span style="display:none;color:red;font-size: 12px;" id="err_contact_person_one_mobile_no">Please Enter Mobile No.</span>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_contact_person_one_mobile_no_valid">Please Enter Valid Mobile No.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Contact Person 2 Name <span class="text-danger"></span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="contact_person_two_name" name="contact_person_two_name" maxlength="90">
+                            <span style="display:none;color:red;font-size: 12px;" id="err_contact_person_one_name">Please Enter Contact Person 1 Name</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Contact Person 2 Email <span class="text-danger"></span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="contact_person_two_email" name="contact_person_two_email" maxlength="45">
+                            <span style="display:none;color:red;font-size: 12px;" id="err_contact_person_two_email">Please Enter Email</span>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_contact_person_two_email_valid">Please Enter Valid Email</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Contact Person 2 Mobile No. <span class="text-danger"></span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="contact_person_two_mobile_no" name="contact_person_two_mobile_no" maxlength="10" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                            <span style="display:none;color:red;font-size: 12px;" id="err_contact_person_two_mobile_no">Please Enter Mobile No.</span>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_contact_person_two_mobile_no_valid">Please Enter Valid Mobile No.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="ShowUpdateCourse_Div" style="display: none;">
+                <input type="hidden" class="form-control form-control-sm form-control-alternative" id="company_id" name="company_id">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Company Name <span class="text-danger">*</span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="edit_company_name" name="edit_company_name" maxlength="190">
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editcompany_name">Please Enter Company Name</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Company Type <span class="text-danger">*</span>:</label>
+                            <select class="form-control form-control-sm form-control-alternative" id="edit_company_type" name="edit_company_type">
+                                <option value="" selected hidden>Select Company Type</option>
+                                {% for i in company_type_obj %}
+                                <option value="{{i.id}}">{{i.company_type}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editcompany_type">Please Enter Company Type</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Company Location <span class="text-danger">*</span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="edit_company_location" name="edit_company_location" maxlength="90">
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editcompany_location">Please Enter Company Location</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-xs-6">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Company Main Address <span class="text-danger">*</span>:</label>
+                            <textarea class="form-control form-control-sm form-control-alternative" id="edit_company_main_address" name="edit_company_main_address" maxlength="450"></textarea>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editcompany_main_address">Please Enter Company Main Address</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 col-xs-6">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Company Other Detail <span class="text-danger"></span>:</label>
+                            <textarea class="form-control form-control-sm form-control-alternative" id="edit_company_other_detail" name="edit_company_other_detail" maxlength="450"></textarea>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editcompany_other_detail">Please Enter Contact Other Detail</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Contact Person 1 Name <span class="text-danger">*</span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="edit_contact_person_one_name" name="edit_contact_person_one_name" maxlength="90">
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editcontact_person_one_name">Please Enter Contact Person 1 Name</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Contact Person 1 Email <span class="text-danger">*</span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="edit_contact_person_one_email" name="edit_contact_person_one_email" maxlength="45">
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editcontact_person_one_email">Please Enter Email</span>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editcontact_person_one_email_valid">Please Enter Valid Email</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Contact Person 1 Mobile No. <span class="text-danger">*</span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="edit_contact_person_one_mobile_no" name="edit_contact_person_one_mobile_no" maxlength="10" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editcontact_person_one_mobile_no">Please Enter Mobile No.</span>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editcontact_person_one_mobile_no_valid">Please Enter Valid Mobile No.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Contact Person 2 Name <span class="text-danger"></span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="edit_contact_person_two_name" name="edit_contact_person_two_name" maxlength="90">
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editcontact_person_one_name">Please Enter Contact Person 1 Name</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Contact Person 2 Email <span class="text-danger"></span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="edit_contact_person_two_email" name="edit_contact_person_two_email" maxlength="45">
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editcontact_person_two_email">Please Enter Email</span>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editcontact_person_two_email_valid">Please Enter Valid Email</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Contact Person 2 Mobile No. <span class="text-danger"></span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="edit_contact_person_two_mobile_no" name="edit_contact_person_two_mobile_no" maxlength="10" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editcontact_person_two_mobile_no">Please Enter Mobile No.</span>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editcontact_person_two_mobile_no_valid">Please Enter Valid Mobile No.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive" id="ShowAllCourse_Div">
+                <table class="table table-vcenter" id="mydatatable">
+                    <thead class="thead-light">
+                    <tr>
+                        <th class="text-center" style="width: 10% !important;">Sr No.</th>
+                        <th>Company Name</th>
+                        <th>Company Type</th>
+                        <th>Company Location</th>
+                        <th class="text-center" style="width: 10% !important;">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in company_obj %}
+                    <tr>
+                        <td class="text-center font-size-sm">{{forloop.counter}}</td>
+                        <td class="font-w600 font-size-sm">{{ i.company_name }}</td>
+                        <td class="font-w600 font-size-sm">{{ i.fk_company_type.company_type }}</td>
+                        <td class="font-w600 font-size-sm">{{ i.company_location }}</td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-primary js-tooltip-enabled"
+                                        data-toggle="tooltip" title="" data-original-title="Edit Client"
+                                        onclick="edit_company({{i.id}})">
+                                    <i class="fa fa-fw fa-pencil-alt"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-danger js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Remove Client" onclick="delete_company({{i.id}})">
+                                    <i class="fa fa-fw fa-times"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#PlacementMainNavPage').addClass('open');
+        $('#CompanyNavPage').addClass('active');
+        $('#mydatatable').DataTable();
+        $("#AssignmentModal").on("hidden.bs.modal", function () {
+            location.reload();
+        });
+    });
+
+    function delete_company(id) {
+        console.log(id)
+        swal({
+            title: "Are you sure?",
+            text: "To delete this Company!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if(willDelete) {
+                $.ajax({
+                    url: "/delete-company/",
+                    method: "POST",
+                    data: {
+                        "id": id
+                    },
+                    success: function (response) {
+                        if (response == "success") {
+                            swal("The Company has been successfully Deleted!", {
+                                icon: "success",
+                                button: "Ok",
+                                closeOnClickOutside: false,
+                            }).then(function () {
+                                location.reload();
+                            });
+                        }
+                    }
+                })
+            }else {
+                swal("Company is NOT deleted!");
+            }
+        });
+    }
+
+    function ShowAddCourse_Div() {
+        $("#ShowAddCourse_Div").show();
+        $("#ShowAllCourse_Div").hide();
+        $("#ShowAddCourse_Button").hide();
+        $("#ShowAllCourse_Button").show();
+        $("#addcourse_button").show();
+        $("#updatecourse_button").hide();
+    }
+
+    function ShowAllCourse_Div() {
+        $("#ShowAddCourse_Div").hide();
+        $("#ShowAllCourse_Div").show();
+        $("#ShowAddCourse_Button").show();
+        $("#ShowAllCourse_Button").hide();
+        $("#ShowUpdateCourse_Div").hide();
+        $("#addcourse_button").hide();
+        $("#updatecourse_button").hide();
+    }
+
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+
+    function edit_company(id) {
+        $("#ShowUpdateCourse_Div").show();
+        $("#ShowAllCourse_Div").hide();
+        $("#ShowAddCourse_Button").hide();
+        $("#ShowAllCourse_Button").show();
+        $("#addcourse_button").hide();
+        $("#updatecourse_button").show();
+        $.ajax({
+            url: "/edit-company/",
+            method: "POST",
+            data: {
+                "id": id
+            },
+            success: function (response) {
+                console.log(response)
+                $("#company_id").val(response['list_data'][0]['id'])
+                $("#edit_company_name").val(response['list_data'][0]['company_name'])
+                $("#edit_company_type").val(response['list_data'][0]['fk_company_type_id'])
+                $("#edit_company_location").val(response['list_data'][0]['company_location'])
+                $("#edit_company_main_address").val(response['list_data'][0]['company_main_address'])
+                $("#edit_company_other_detail").val(response['list_data'][0]['company_other_detail'])
+                $("#edit_contact_person_one_name").val(response['list_data'][0]['contact_person_one_name'])
+                $("#edit_contact_person_one_email").val(response['list_data'][0]['contact_person_one_email'])
+                $("#edit_contact_person_one_mobile_no").val(response['list_data'][0]['contact_person_one_mobile_no'])
+                $("#edit_contact_person_two_name").val(response['list_data'][0]['contact_person_two_name'])
+                $("#edit_contact_person_two_email").val(response['list_data'][0]['contact_person_two_email'])
+                $("#edit_contact_person_two_mobile_no").val(response['list_data'][0]['contact_person_two_mobile_no'])
+            }
+        })
+    }
+
+    $("#company_name").keyup(function () {
+        $("#err_company_name").hide();
+    });$("#company_type").change(function () {
+        $("#err_company_type").hide();
+    });$("#company_location").keyup(function () {
+        $("#err_company_location").hide();
+    });$("#company_main_address").keyup(function () {
+        $("#err_company_main_address").hide();
+    });$("#contact_person_one_name").keyup(function () {
+        $("#err_contact_person_one_name").hide();
+    });$("#contact_person_one_email").keyup(function () {
+        $("#err_contact_person_one_email").hide();
+        $("#err_contact_person_one_email_valid").hide();
+    });$("#contact_person_one_mobile_no").keyup(function () {
+        $("#err_contact_person_one_mobile_no").hide();
+        $("#err_contact_person_one_mobile_no_valid").hide();
+    });$("#contact_person_two_email").keyup(function () {
+        $("#err_contact_person_two_email_valid").hide();
+    });$("#contact_person_two_mobile_no").keyup(function () {
+        $("#err_contact_person_two_mobile_no_valid").hide();
+    });
+
+    function addcompany() {
+        var emailfilter = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+        var company_name = $("#company_name").val();
+        var company_type = $("#company_type").val();
+        var company_location = $("#company_location").val();
+        var company_main_address = $("#company_main_address").val();
+        var company_other_detail = $("#company_other_detail").val();
+        var contact_person_one_name = $("#contact_person_one_name").val();
+        var contact_person_one_email = $("#contact_person_one_email").val();
+        var contact_person_one_mobile_no = $("#contact_person_one_mobile_no").val();
+        var contact_person_two_name = $("#contact_person_two_name").val();
+        var contact_person_two_email = $("#contact_person_two_email").val();
+        var contact_person_two_mobile_no = $("#contact_person_two_mobile_no").val();
+        if (company_name == "") {
+            $("#err_company_name").show();
+        }else if (company_type == "") {
+            $("#err_company_type").show();
+        }else if (company_location == "") {
+            $("#err_company_location").show();
+        }else if (company_main_address == "") {
+            $("#err_company_main_address").show();
+        }else if (contact_person_one_name == "") {
+            $("#err_contact_person_one_name").show();
+        }else if (contact_person_one_email == "") {
+            $("#err_contact_person_one_email").show();
+        }else if (!emailfilter.test(contact_person_one_email)) {
+            $("#err_contact_person_one_email_valid").show();
+        }else if (contact_person_one_mobile_no == "") {
+            $("#err_contact_person_one_mobile_no").show();
+        }else if (contact_person_one_mobile_no == "") {
+            $("#err_contact_person_one_mobile_no").show();
+        }else if (contact_person_one_mobile_no.length < 10) {
+            $("#err_contact_person_one_mobile_no_valid").show();
+        }else if (contact_person_two_email != "" && !emailfilter.test(contact_person_two_email)) {
+            $("#err_contact_person_two_email_valid").show();
+        }else if (contact_person_two_mobile_no != "" && contact_person_two_mobile_no.length < 10) {
+            $("#err_contact_person_two_mobile_no_valid").show();
+        }else {
+            $.ajax({
+                url: "/add-company/",
+                method: "POST",
+                data: {
+                    "company_name": company_name,
+                    "company_type": company_type,
+                    "company_location": company_location,
+                    "company_main_address": company_main_address,
+                    "company_other_detail": company_other_detail,
+                    "contact_person_one_name": contact_person_one_name,
+                    "contact_person_one_email": contact_person_one_email,
+                    "contact_person_one_mobile_no": contact_person_one_mobile_no,
+                    "contact_person_two_name": contact_person_two_name,
+                    "contact_person_two_email": contact_person_two_email,
+                    "contact_person_two_mobile_no": contact_person_two_mobile_no,
+                },
+                success: function (response) {
+                    console.log(response)
+                    if (response == "success") {
+                        swal("The Company has been Added successfully!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+            })
+        }
+    }
+
+    $("#edit_company_name").keyup(function () {
+        $("#err_editcompany_name").hide();
+    });$("#edit_company_type").change(function () {
+        $("#err_editcompany_type").hide();
+    });$("#edit_company_location").keyup(function () {
+        $("#err_editcompany_location").hide();
+    });$("#edit_company_main_address").keyup(function () {
+        $("#err_editcompany_main_address").hide();
+    });$("#edit_contact_person_one_name").keyup(function () {
+        $("#err_editcontact_person_one_name").hide();
+    });$("#edit_contact_person_one_email").keyup(function () {
+        $("#err_editcontact_person_one_email").hide();
+        $("#err_editcontact_person_one_email_valid").hide();
+    });$("#edit_contact_person_one_mobile_no").keyup(function () {
+        $("#err_editcontact_person_one_mobile_no").hide();
+        $("#err_editcontact_person_one_mobile_no_valid").hide();
+    });$("#edit_contact_person_two_email").keyup(function () {
+        $("#err_editcontact_person_two_email_valid").hide();
+    });$("#edit_contact_person_two_mobile_no").keyup(function () {
+        $("#err_editcontact_person_two_mobile_no_valid").hide();
+    });
+
+    function updatecompany() {
+        var emailfilter = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+        var company_id = $("#company_id").val();
+        var edit_company_name = $("#edit_company_name").val();
+        var edit_company_type = $("#edit_company_type").val();
+        var edit_company_location = $("#edit_company_location").val();
+        var edit_company_main_address = $("#edit_company_main_address").val();
+        var edit_company_other_detail = $("#edit_company_other_detail").val();
+        var edit_contact_person_one_name = $("#edit_contact_person_one_name").val();
+        var edit_contact_person_one_email = $("#edit_contact_person_one_email").val();
+        var edit_contact_person_one_mobile_no = $("#edit_contact_person_one_mobile_no").val();
+        var edit_contact_person_two_name = $("#edit_contact_person_two_name").val();
+        var edit_contact_person_two_email = $("#edit_contact_person_two_email").val();
+        var edit_contact_person_two_mobile_no = $("#edit_contact_person_two_mobile_no").val();
+        if (edit_company_name == "") {
+            $("#err_editcompany_name").show();
+        }else if (edit_company_type == "") {
+            $("#err_editcompany_type").show();
+        }else if (edit_company_location == "") {
+            $("#err_editcompany_location").show();
+        }else if (edit_company_main_address == "") {
+            $("#err_editcompany_main_address").show();
+        }else if (edit_contact_person_one_name == "") {
+            $("#err_editcontact_person_one_name").show();
+        }else if (edit_contact_person_one_email == "") {
+            $("#err_editcontact_person_one_email").show();
+        }else if (!emailfilter.test(edit_contact_person_one_email)) {
+            $("#err_editcontact_person_one_email_valid").show();
+        }else if (edit_contact_person_one_mobile_no == "") {
+            $("#err_editcontact_person_one_mobile_no").show();
+        }else if (edit_contact_person_one_mobile_no.length < 10) {
+            $("#err_editcontact_person_one_mobile_no_valid").show();
+        }else if (edit_contact_person_two_email != "" && !emailfilter.test(edit_contact_person_two_email)) {
+            $("#err_editcontact_person_two_email_valid").show();
+        }else if (edit_contact_person_two_mobile_no != "" && edit_contact_person_two_mobile_no.length < 10) {
+            $("#err_editcontact_person_two_mobile_no_valid").show();
+        }else {
+            $.ajax({
+                url: "/update-company/",
+                method: "POST",
+                data: {
+                    "company_id": company_id,
+                    "edit_company_name": edit_company_name,
+                    "edit_company_type": edit_company_type,
+                    "edit_company_location": edit_company_location,
+                    "edit_company_main_address": edit_company_main_address,
+                    "edit_company_other_detail": edit_company_other_detail,
+                    "edit_contact_person_one_name": edit_contact_person_one_name,
+                    "edit_contact_person_one_email": edit_contact_person_one_email,
+                    "edit_contact_person_one_mobile_no": edit_contact_person_one_mobile_no,
+                    "edit_contact_person_two_name": edit_contact_person_two_name,
+                    "edit_contact_person_two_email": edit_contact_person_two_email,
+                    "edit_contact_person_two_mobile_no": edit_contact_person_two_mobile_no,
+                },
+                success: function (response) {
+                    console.log(response)
+                    if (response == "success") {
+                        swal("The Company has been Updeted successfully!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                        });
+                    }
+                }
+            })
+        }
+    }
+</script>
+{% endblock content %}

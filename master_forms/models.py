@@ -6,9 +6,9 @@ from django.contrib.auth.models import User
 
 
 class AcademicSession(models.Model):
-    '''
+    """
     Academic Session start and end date
-    '''
+    """
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
 
@@ -17,9 +17,9 @@ class AcademicSession(models.Model):
 
 
 class Module(models.Model):
-    '''
+    """
     Module in Project
-    '''
+    """
     module_name = models.CharField(max_length=100, blank=True, null=True)
     module_url = models.CharField(max_length=100, blank=True, null=True)
 
@@ -28,9 +28,9 @@ class Module(models.Model):
 
 
 class Screen(models.Model):
-    '''
+    """
     Screens in Project
-    '''
+    """
     fk_module = models.ForeignKey(Module, on_delete=models.CASCADE, null=True, blank=True)
     screen_name = models.CharField(max_length=100, blank=True, null=True)
     screen_url = models.CharField(max_length=100, blank=True, null=True)
@@ -40,9 +40,9 @@ class Screen(models.Model):
 
 
 class UserType(models.Model):
-    '''
+    """
     User Type
-    '''
+    """
     user_type = models.CharField(max_length=30, blank=True, null=True)
 
     def __str__(self):
@@ -50,9 +50,9 @@ class UserType(models.Model):
 
 
 class UserRole(models.Model):
-    '''
+    """
     User Role
-    '''
+    """
     user_role = models.CharField(max_length=30, blank=True, null=True)
 
     def __str__(self):
@@ -60,9 +60,9 @@ class UserRole(models.Model):
 
 
 class YearOfAdmission(models.Model):
-    '''
+    """
     Year Of Admission
-    '''
+    """
     year_of_admission = models.CharField(max_length=30, blank=True, null=True)
 
     def __str__(self):
@@ -70,10 +70,10 @@ class YearOfAdmission(models.Model):
 
 
 class UserOperation(models.Model):
-    '''
+    """
     Roles And Rights
     User Operation on each screen and Module that used in project
-    '''
+    """
     status = models.CharField(max_length=50, blank=True, null=True)
     special_data = models.CharField(max_length=50, blank=True, null=True, default="N")
     view_data = models.CharField(max_length=50, blank=True, null=True, default="N")
@@ -89,9 +89,9 @@ class UserOperation(models.Model):
 
 
 class Nationality(models.Model):
-    '''
+    """
     Nationality e.g. Indian, Other
-    '''
+    """
     nationality = models.CharField(max_length=30, blank=True, null=True)
 
     def __str__(self):
@@ -99,9 +99,9 @@ class Nationality(models.Model):
 
 
 class State(models.Model):
-    '''
+    """
     State
-    '''
+    """
     state = models.CharField(max_length=30, blank=True, null=True)
     fk_nationality = models.ForeignKey(Nationality, on_delete=models.CASCADE, blank=True, null=True)
 
@@ -110,9 +110,9 @@ class State(models.Model):
 
 
 class City(models.Model):
-    '''
+    """
     City
-    '''
+    """
     city = models.CharField(max_length=30, blank=True, null=True)
     fk_state = models.ForeignKey(State, on_delete=models.CASCADE, blank=True, null=True)
 
@@ -121,9 +121,9 @@ class City(models.Model):
 
 
 class District(models.Model):
-    '''
+    """
     District
-    '''
+    """
     district = models.CharField(max_length=30, blank=True, null=True)
     fk_state = models.ForeignKey(State, on_delete=models.CASCADE, blank=True, null=True)
 
@@ -132,9 +132,9 @@ class District(models.Model):
 
 
 class Tehsil(models.Model):
-    '''
+    """
     Tehsil
-    '''
+    """
     tehsil = models.CharField(max_length=30, blank=True, null=True)
     fk_state = models.ForeignKey(State, on_delete=models.CASCADE, blank=True, null=True)
 
@@ -143,9 +143,9 @@ class Tehsil(models.Model):
 
 
 class PostalCode(models.Model):
-    '''
-    PostalCode
-    '''
+    """
+    Postal Code
+    """
     postal_code = models.CharField(max_length=30, blank=True, null=True)
     fk_city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
 
@@ -154,9 +154,9 @@ class PostalCode(models.Model):
 
 
 class MotherTongue(models.Model):
-    '''
+    """
     Mother Tongue
-    '''
+    """
     mother_tongue = models.CharField(max_length=30, blank=True, null=True)
 
     def __str__(self):
@@ -164,9 +164,9 @@ class MotherTongue(models.Model):
 
 
 class Religion(models.Model):
-    '''
+    """
     Religion
-    '''
+    """
     religion = models.CharField(max_length=30, blank=True, null=True)
 
     def __str__(self):
@@ -174,9 +174,9 @@ class Religion(models.Model):
 
 
 class Gender(models.Model):
-    '''
+    """
     Gender
-    '''
+    """
     gender = models.CharField(max_length=30, blank=True, null=True)
 
     def __str__(self):
@@ -184,9 +184,9 @@ class Gender(models.Model):
 
 
 class BloodGroup(models.Model):
-    '''
+    """
     Blood Group
-    '''
+    """
     blood_group = models.CharField(max_length=30, blank=True, null=True)
 
     def __str__(self):
@@ -194,9 +194,9 @@ class BloodGroup(models.Model):
 
 
 class Course(models.Model):
-    '''
+    """
     Course
-    '''
+    """
     course = models.CharField(max_length=30, blank=True, null=True)
 
     def __str__(self):
@@ -204,9 +204,9 @@ class Course(models.Model):
 
 
 class Semester(models.Model):
-    '''
+    """
     Semester
-    '''
+    """
     semester = models.CharField(max_length=30, blank=True, null=True)
 
     def __str__(self):
@@ -214,9 +214,9 @@ class Semester(models.Model):
 
 
 class Section(models.Model):
-    '''
+    """
     Section
-    '''
+    """
     sections = models.CharField(max_length=30, blank=True, null=True)
 
     def __str__(self):
@@ -224,9 +224,9 @@ class Section(models.Model):
 
 
 class TwelvethOrDiploma(models.Model):
-    '''
+    """
     Twelveth Or Diploma
-    '''
+    """
     twelveth_or_diploma = models.CharField(max_length=30, blank=True, null=True)
 
     def __str__(self):
@@ -234,9 +234,9 @@ class TwelvethOrDiploma(models.Model):
 
 
 class StreamOrField(models.Model):
-    '''
+    """
     Stream Or Field in Twelveth Or Diploma
-    '''
+    """
     fk_twelveth_or_diploma = models.ForeignKey(TwelvethOrDiploma, blank=True, null=True, on_delete=models.CASCADE)
     stream_or_field_name = models.CharField(max_length=100, blank=True, null=True)
 
@@ -245,9 +245,9 @@ class StreamOrField(models.Model):
 
 
 class Subject(models.Model):
-    '''
+    """
     Subject
-    '''
+    """
     fk_course = models.ForeignKey(Course, blank=True, null=True, on_delete=models.CASCADE)
     fk_semesters = models.ForeignKey(Semester, blank=True, null=True, on_delete=models.CASCADE)
     subjects = models.CharField(max_length=100, blank=True, null=True)
@@ -258,9 +258,9 @@ class Subject(models.Model):
 
 
 class Day(models.Model):
-    '''
+    """
     Day in Week
-    '''
+    """
     day = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
@@ -268,19 +268,19 @@ class Day(models.Model):
 
 
 class Time(models.Model):
-    '''
+    """
     Time of Lecture
-    '''
+    """
     time = models.TimeField(blank=True, null=True)
 
-    # def __str__(self):
-    #     return self.id
+    def __str__(self):
+        return str(self.time)
 
 
 class Lecture(models.Model):
-    '''
+    """
     Lecture in one Day
-    '''
+    """
     lecture = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
@@ -288,9 +288,9 @@ class Lecture(models.Model):
 
 
 class Category(models.Model):
-    '''
+    """
     Category Open/Reserved
-    '''
+    """
     category = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
@@ -298,9 +298,9 @@ class Category(models.Model):
 
 
 class Reserved(models.Model):
-    '''
+    """
     if Category id Reserved than sub-category
-    '''
+    """
     reserved = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
@@ -308,9 +308,9 @@ class Reserved(models.Model):
 
 
 class ApplyingConcession(models.Model):
-    '''
+    """
     Applying Concession
-    '''
+    """
     applying_concession = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
@@ -318,9 +318,9 @@ class ApplyingConcession(models.Model):
 
 
 class Cast(models.Model):
-    '''
+    """
     Cast
-    '''
+    """
     cast = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
@@ -328,9 +328,9 @@ class Cast(models.Model):
 
 
 class SubCast(models.Model):
-    '''
+    """
     Sub-Cast
-    '''
+    """
     fk_cast = models.ForeignKey(Cast, blank=True, null=True, on_delete=models.CASCADE)
     sub_cast = models.CharField(max_length=50, blank=True, null=True)
 
@@ -339,9 +339,9 @@ class SubCast(models.Model):
 
 
 class Degree(models.Model):
-    '''
+    """
     Degree
-    '''
+    """
     degree = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
@@ -349,9 +349,9 @@ class Degree(models.Model):
 
 
 class DegreeStreamOrField(models.Model):
-    '''
+    """
     Stream Or Field in Degree
-    '''
+    """
     fk_degree = models.ForeignKey(Degree, blank=True, null=True, on_delete=models.CASCADE)
     stream_or_field_name = models.CharField(max_length=50, blank=True, null=True)
 
@@ -360,10 +360,42 @@ class DegreeStreamOrField(models.Model):
 
 
 class PhysicallyChallenged(models.Model):
-    '''
+    """
     Physically Challenged
-    '''
+    """
     physically_challenged = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
         return self.physically_challenged
+
+
+
+class CompanyType(models.Model):
+    """
+    Company Type
+    """
+    company_type = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return self.company_type
+
+
+class JobType(models.Model):
+    """
+    Job Type
+    """
+    job_type = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return self.job_type
+
+
+class SelectionProcessTest(models.Model):
+    """
+    Selection Process Test
+    """
+    test_name = models.CharField(max_length=100, blank=True, null=True)
+    test_number = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return self.test_name
