@@ -620,3 +620,635 @@ Traceback (most recent call last):
 django.db.utils.OperationalError: (2002, "Can't connect to MySQL server on '3.6.127.100' (10060)")
 
 
+2020-01-14 15:03:42.728208
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1484, in filter_search_student_performance
+    academic_info_obj = AcademicInfo.objects.all(fk_user_info__fk_user_type__user_type="Student")
+TypeError: all() got an unexpected keyword argument 'fk_user_info__fk_user_type__user_type'
+
+
+2020-01-14 15:11:18.479912
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1445, in filter_search_student_performance
+    academic_info_obj = eval(academic_info_obj)
+  File "<string>", line 1, in <module>
+AttributeError: type object 'AcademicInfo' has no attribute 'objectsfilter'
+
+
+2020-01-14 15:12:34.503718
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1445, in filter_search_student_performance
+    academic_info_obj = eval(academic_info_obj)
+  File "<string>", line 1
+    AcademicInfo.objects.filter(fk_course_id=filter_course)filter(fk_semesters__id=filter_semesters)
+                                                                ^
+SyntaxError: invalid syntax
+
+
+2020-01-14 15:14:33.568308
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1447, in filter_search_student_performance
+    {"academic_info_obj": academic_info_obj})
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\template\defaulttags.py", line 165, in render
+    values = list(values)
+TypeError: 'Manager' object is not iterable
+
+
+2020-01-14 15:41:23.625111
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1201, in filter_company_appearances
+    if company_appearance_job_type_detail_obj:
+UnboundLocalError: local variable 'company_appearance_job_type_detail_obj' referenced before assignment
+
+
+2020-01-14 15:42:05.787577
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1409, in filter_company_appearances
+    dict_data['company_appearance_id'] = i.id
+AttributeError: 'str' object has no attribute 'id'
+
+
+2020-01-14 15:43:43.539418
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: 'l'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1213, in filter_company_appearances
+    company_appearance_obj = eval(company_appearance_obj)
+  File "<string>", line 1, in <module>
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in get_prep_lookup
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in <listcomp>
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got 'l'.
+
+
+2020-01-14 15:44:22.257562
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: 'l'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1213, in filter_company_appearances
+    company_appearance_obj = eval(company_appearance_obj)
+  File "<string>", line 1, in <module>
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in get_prep_lookup
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in <listcomp>
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got 'l'.
+
+
+2020-01-14 15:45:24.417257
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: 'l'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1213, in filter_company_appearances
+    company_appearance_obj = eval(company_appearance_obj)
+  File "<string>", line 1, in <module>
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in get_prep_lookup
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in <listcomp>
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got 'l'.
+
+
+2020-01-14 15:48:45.256213
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: 'l'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1217, in filter_company_appearances
+    company_appearance_obj = eval(company_appearance_obj)
+  File "<string>", line 1, in <module>
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in get_prep_lookup
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in <listcomp>
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got 'l'.
+
+
+2020-01-14 15:52:19.486958
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1418, in filter_company_appearances
+    dict_data['company_appearance_id'] = i.id
+AttributeError: 'str' object has no attribute 'id'
+
+
+2020-01-14 15:52:41.708392
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1418, in filter_company_appearances
+    dict_data['company_appearance_id'] = i.id
+AttributeError: 'str' object has no attribute 'id'
+
+
+2020-01-14 15:54:59.209000
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: 'l'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1219, in filter_company_appearances
+    company_appearance_obj = eval(company_appearance_obj)
+  File "<string>", line 1, in <module>
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in get_prep_lookup
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in <listcomp>
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got 'l'.
+
+
+2020-01-14 15:55:13.098074
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: 'l'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1219, in filter_company_appearances
+    company_appearance_obj = eval(company_appearance_obj)
+  File "<string>", line 1, in <module>
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in get_prep_lookup
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in <listcomp>
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got 'l'.
+
+
+2020-01-14 15:56:09.243768
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: 'l'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1219, in filter_company_appearances
+    company_appearance_obj = eval(company_appearance_obj)
+  File "<string>", line 1, in <module>
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in get_prep_lookup
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in <listcomp>
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got 'l'.
+
+
+2020-01-14 15:58:19.824521
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: 'l'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1219, in filter_company_appearances
+    company_appearance_obj = eval(company_appearance_obj)
+  File "<string>", line 1, in <module>
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in get_prep_lookup
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in <listcomp>
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got 'l'.
+
+
+2020-01-14 15:58:42.538177
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: 'l'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1219, in filter_company_appearances
+    company_appearance_obj = eval(company_appearance_obj)
+  File "<string>", line 1, in <module>
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in get_prep_lookup
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in <listcomp>
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got 'l'.
+
+
+2020-01-14 16:00:25.617096
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1200, in filter_company_appearances
+    company_appearance_job_type_detail_obj = list(CompanyAppearanceJobTypeDetail.objects.filter(fk_jobtype__id=filter_job_type).values_list('id',flat=True).distinct())
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1240, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1077, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1473, in names_to_path
+    "Choices are: %s" % (name, ", ".join(available)))
+django.core.exceptions.FieldError: Cannot resolve keyword 'fk_jobtype' into field. Choices are: companyappearance, fk_job_type, id, job_location, package
+
+
+2020-01-14 16:02:27.930367
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: 'l'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1219, in filter_company_appearances
+    company_appearance_obj = eval(company_appearance_obj)
+  File "<string>", line 1, in <module>
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in get_prep_lookup
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in <listcomp>
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got 'l'.
+
+
+2020-01-14 16:03:28.389070
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: 'l'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1219, in filter_company_appearances
+    company_appearance_obj = eval(company_appearance_obj)
+  File "<string>", line 1, in <module>
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in get_prep_lookup
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in <listcomp>
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got 'l'.
+
+
+2020-01-14 16:14:13.734104
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: '.'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1219, in filter_company_appearances
+    company_appearance_obj = eval(company_appearance_obj)
+  File "<string>", line 1, in <module>
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in get_prep_lookup
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in <listcomp>
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got '.'.
+
+
+2020-01-14 16:15:25.022704
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: 'l'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1217, in filter_company_appearances
+    company_appearance_obj = eval(company_appearance_obj)
+  File "<string>", line 1, in <module>
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in get_prep_lookup
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in <listcomp>
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got 'l'.
+
+
+2020-01-14 16:17:14.394011
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: 'C'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1217, in filter_company_appearances
+    company_appearance_obj = eval(company_appearance_obj)
+  File "<string>", line 1, in <module>
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in get_prep_lookup
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 59, in <listcomp>
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "D:\GIT CMS TIRPUDE\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got 'C'.
+
+
+2020-01-14 16:32:02.323823
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1252, in filter_company_appearances
+    company_obj = eval(company_obj)
+TypeError: eval() arg 1 must be a string, bytes or code object
+
+
+2020-01-14 16:42:23.722001
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1202, in filter_company_appearances
+    if company_appearance_job_type_detail_obj:
+UnboundLocalError: local variable 'company_appearance_job_type_detail_obj' referenced before assignment
+
+
+2020-01-14 16:42:48.287268
+Traceback (most recent call last):
+  File "D:\GIT CMS TIRPUDE\placement\views.py", line 1202, in filter_company_appearances
+    if company_appearance_job_type_detail_obj:
+UnboundLocalError: local variable 'company_appearance_job_type_detail_obj' referenced before assignment
+
+

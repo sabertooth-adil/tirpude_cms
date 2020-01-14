@@ -1181,200 +1181,56 @@ def filter_company_appearances(request):
         if filter_to_date:
             filter_to_date = datetime.datetime.strptime(str(filter_to_date), '%d-%m-%Y').strftime('%Y-%m-%d')
 
-        if filter_company_name and filter_company_type and filter_job_type and filter_from_date and filter_to_date:
-            print("A")
-            company_obj = Company.objects.filter(id=filter_company_name, fk_company_type_id=filter_company_type)
+        company_obj = "Company.objects"
+        company_appearance_obj = "CompanyAppearance.objects"
+        company_appearance_job_type_detail_obj = ""
+        company_appearance_date_time_obj = ""
+        if filter_from_date and filter_to_date:
             company_appearance_date_time_obj = list(
                 CompanyAppearanceDateTime.objects.filter(date__range=[filter_from_date, filter_to_date]).values_list(
-                    'id',
-                    flat=True).distinct())
-            company_appearance_job_type_detail_obj = list(
-                CompanyAppearanceJobTypeDetail.objects.filter(fk_jobtype__id=filter_job_type).values_list('id',
-                                                                                                          flat=True).distinct())
-            company_appearance_obj = CompanyAppearance.objects.filter(
-                fk_company_appearance_job_type_detail_list__in=company_appearance_job_type_detail_obj,
-                fk_company_appearance_date_time_list__in=company_appearance_date_time_obj)
-        elif filter_company_name and filter_company_type and filter_job_type and filter_from_date:
-            print("B")
-            company_obj = Company.objects.filter(id=filter_company_name, fk_company_type_id=filter_company_type)
-            company_appearance_date_time_obj = list(
-                CompanyAppearanceDateTime.objects.filter(date=filter_from_date).values_list('id', flat=True).distinct())
-            company_appearance_job_type_detail_obj = list(
-                CompanyAppearanceJobTypeDetail.objects.filter(fk_jobtype__id=filter_job_type).values_list('id',
-                                                                                                          flat=True).distinct())
-            company_appearance_obj = CompanyAppearance.objects.filter(
-                fk_company_appearance_job_type_detail_list__in=company_appearance_job_type_detail_obj,
-                fk_company_appearance_date_time_list__in=company_appearance_date_time_obj)
-        elif filter_company_name and filter_company_type and filter_job_type and filter_to_date:
-            print("C")
-            company_obj = Company.objects.filter(id=filter_company_name, fk_company_type_id=filter_company_type)
-            company_appearance_date_time_obj = list(
-                CompanyAppearanceDateTime.objects.filter(date=filter_to_date).values_list('id', flat=True).distinct())
-            company_appearance_job_type_detail_obj = list(
-                CompanyAppearanceJobTypeDetail.objects.filter(fk_jobtype__id=filter_job_type).values_list('id',
-                                                                                                          flat=True).distinct())
-            company_appearance_obj = CompanyAppearance.objects.filter(
-                fk_company_appearance_job_type_detail_list__in=company_appearance_job_type_detail_obj,
-                fk_company_appearance_date_time_list__in=company_appearance_date_time_obj)
-        elif filter_company_name and filter_company_type and filter_job_type:
-            print("D")
-            company_obj = Company.objects.filter(id=filter_company_name, fk_company_type_id=filter_company_type)
-            company_appearance_job_type_detail_obj = list(
-                CompanyAppearanceJobTypeDetail.objects.filter(fk_jobtype__id=filter_job_type).values_list('id',
-                                                                                                          flat=True).distinct())
-            company_appearance_obj = CompanyAppearance.objects.filter(
-                fk_company_appearance_job_type_detail_list__in=company_appearance_job_type_detail_obj)
-        elif filter_company_name and filter_company_type:
-            print("E")
-            company_obj = Company.objects.filter(id=filter_company_name, fk_company_type_id=filter_company_type)
-            company_appearance_obj = CompanyAppearance.objects.all()
-        elif filter_company_type and filter_job_type and filter_from_date and filter_to_date:
-            print("F")
-            company_obj = Company.objects.filter(fk_company_type_id=filter_company_type)
-            company_appearance_date_time_obj = list(
-                CompanyAppearanceDateTime.objects.filter(date__range=[filter_from_date, filter_to_date]).values_list(
-                    'id',
-                    flat=True).distinct())
-            company_appearance_job_type_detail_obj = list(
-                CompanyAppearanceJobTypeDetail.objects.filter(fk_jobtype__id=filter_job_type).values_list('id',
-                                                                                                          flat=True).distinct())
-            company_appearance_obj = CompanyAppearance.objects.filter(
-                fk_company_appearance_job_type_detail_list__in=company_appearance_job_type_detail_obj,
-                fk_company_appearance_date_time_list__in=company_appearance_date_time_obj)
-        elif filter_company_type and filter_job_type and filter_from_date:
-            print("G")
-            company_obj = Company.objects.filter(fk_company_type_id=filter_company_type)
-            company_appearance_date_time_obj = list(
-                CompanyAppearanceDateTime.objects.filter(date=filter_from_date).values_list('id', flat=True).distinct())
-            company_appearance_job_type_detail_obj = list(
-                CompanyAppearanceJobTypeDetail.objects.filter(fk_jobtype__id=filter_job_type).values_list('id',
-                                                                                                          flat=True).distinct())
-            company_appearance_obj = CompanyAppearance.objects.filter(
-                fk_company_appearance_job_type_detail_list__in=company_appearance_job_type_detail_obj,
-                fk_company_appearance_date_time_list__in=company_appearance_date_time_obj)
-        elif filter_company_type and filter_job_type and filter_to_date:
-            print("H")
-            company_obj = Company.objects.filter(fk_company_type_id=filter_company_type)
-            company_appearance_date_time_obj = list(
-                CompanyAppearanceDateTime.objects.filter(date=filter_to_date).values_list('id', flat=True).distinct())
-            company_appearance_job_type_detail_obj = list(
-                CompanyAppearanceJobTypeDetail.objects.filter(fk_jobtype__id=filter_job_type).values_list('id',
-                                                                                                          flat=True).distinct())
-            company_appearance_obj = CompanyAppearance.objects.filter(
-                fk_company_appearance_job_type_detail_list__in=company_appearance_job_type_detail_obj,
-                fk_company_appearance_date_time_list__in=company_appearance_date_time_obj)
-        elif filter_company_type and filter_job_type:
-            print("I")
-            company_obj = Company.objects.filter(fk_company_type_id=filter_company_type)
-            company_appearance_job_type_detail_obj = list(
-                CompanyAppearanceJobTypeDetail.objects.filter(fk_jobtype__id=filter_job_type).values_list('id',
-                                                                                                          flat=True).distinct())
-            company_appearance_obj = CompanyAppearance.objects.filter(
-                fk_company_appearance_job_type_detail_list__in=company_appearance_job_type_detail_obj)
-        elif filter_job_type and filter_from_date and filter_to_date:
-            print("J")
-            company_appearance_date_time_obj = list(
-                CompanyAppearanceDateTime.objects.filter(date__range=[filter_from_date, filter_to_date]).values_list(
-                    'id',
-                    flat=True).distinct())
-            company_appearance_job_type_detail_obj = list(
-                CompanyAppearanceJobTypeDetail.objects.filter(fk_jobtype__id=filter_job_type).values_list('id',
-                                                                                                          flat=True).distinct())
-            company_appearance_obj = CompanyAppearance.objects.filter(
-                fk_company_appearance_job_type_detail_list__in=company_appearance_job_type_detail_obj,
-                fk_company_appearance_date_time_list__in=company_appearance_date_time_obj)
-            company_appearance_list_obj = list(CompanyAppearance.objects.filter(
-                fk_company_appearance_job_type_detail_list__in=company_appearance_job_type_detail_obj,
-                fk_company_appearance_date_time_list__in=company_appearance_date_time_obj).values_list('fk_company__id',
-                                                                                                       flat=True).distinct())
-            company_obj = Company.objects.filter(id__in=company_appearance_list_obj)
-        elif filter_job_type and filter_from_date:
-            print("K")
-            company_appearance_date_time_obj = list(
-                CompanyAppearanceDateTime.objects.filter(date=filter_from_date).values_list('id', flat=True).distinct())
-            company_appearance_job_type_detail_obj = list(
-                CompanyAppearanceJobTypeDetail.objects.filter(fk_jobtype__id=filter_job_type).values_list('id',
-                                                                                                          flat=True).distinct())
-            company_appearance_obj = CompanyAppearance.objects.filter(
-                fk_company_appearance_job_type_detail_list__in=company_appearance_job_type_detail_obj,
-                fk_company_appearance_date_time_list__in=company_appearance_date_time_obj)
-            company_appearance_list_obj = list(CompanyAppearance.objects.filter(
-                fk_company_appearance_job_type_detail_list__in=company_appearance_job_type_detail_obj,
-                fk_company_appearance_date_time_list__in=company_appearance_date_time_obj).values_list('fk_company__id',
-                                                                                                       flat=True).distinct())
-            company_obj = Company.objects.filter(id__in=company_appearance_list_obj)
-        elif filter_job_type and filter_to_date:
-            print("L")
-            company_appearance_date_time_obj = list(
-                CompanyAppearanceDateTime.objects.filter(date=filter_to_date).values_list('id', flat=True).distinct())
-            company_appearance_job_type_detail_obj = list(
-                CompanyAppearanceJobTypeDetail.objects.filter(fk_jobtype__id=filter_job_type).values_list('id',
-                                                                                                          flat=True).distinct())
-            company_appearance_obj = CompanyAppearance.objects.filter(
-                fk_company_appearance_job_type_detail_list__in=company_appearance_job_type_detail_obj,
-                fk_company_appearance_date_time_list__in=company_appearance_date_time_obj)
-            company_appearance_list_obj = list(CompanyAppearance.objects.filter(
-                fk_company_appearance_job_type_detail_list__in=company_appearance_job_type_detail_obj,
-                fk_company_appearance_date_time_list__in=company_appearance_date_time_obj).values_list('fk_company__id',
-                                                                                                       flat=True).distinct())
-            company_obj = Company.objects.filter(id__in=company_appearance_list_obj)
-        elif filter_from_date and filter_to_date:
-            print("M")
-            company_appearance_date_time_obj = list(
-                CompanyAppearanceDateTime.objects.filter(date__range=[filter_from_date, filter_to_date]).values_list(
-                    'id',
-                    flat=True).distinct())
-            company_appearance_obj = CompanyAppearance.objects.filter(
-                fk_company_appearance_date_time_list__in=company_appearance_date_time_obj).distinct()
-            company_appearance_list_obj = list(CompanyAppearance.objects.filter(
-                fk_company_appearance_date_time_list__in=company_appearance_date_time_obj).values_list('fk_company__id',
-                                                                                                       flat=True).distinct())
-            company_obj = Company.objects.filter(id__in=company_appearance_list_obj)
-        elif filter_company_name:
-            print("N")
-            company_obj = Company.objects.filter(id=filter_company_name)
-            company_appearance_obj = CompanyAppearance.objects.all()
-        elif filter_company_type:
-            print("O")
-            company_obj = Company.objects.filter(fk_company_type_id=filter_company_type)
-            company_appearance_obj = CompanyAppearance.objects.all()
-        elif filter_job_type:
-            print("P")
-            company_appearance_job_type_detail_obj = list(
-                CompanyAppearanceJobTypeDetail.objects.filter(fk_jobtype__id=filter_job_type).values_list('id',
-                                                                                                          flat=True).distinct())
-            company_appearance_obj = CompanyAppearance.objects.filter(
-                fk_company_appearance_job_type_detail_list__in=company_appearance_job_type_detail_obj).distinct()
-            company_appearance_list_obj = list(CompanyAppearance.objects.filter(
-                fk_company_appearance_job_type_detail_list__in=company_appearance_job_type_detail_obj).values_list(
-                'fk_company__id', flat=True).distinct())
-            company_obj = Company.objects.filter(id__in=company_appearance_list_obj)
+                    'id', flat=True).distinct())
         elif filter_from_date:
-            print("Q")
             company_appearance_date_time_obj = list(
                 CompanyAppearanceDateTime.objects.filter(date=filter_from_date).values_list('id', flat=True).distinct())
-            company_appearance_obj = CompanyAppearance.objects.filter(
-                fk_company_appearance_date_time_list__in=company_appearance_date_time_obj)
-            company_appearance_list_obj = list(CompanyAppearance.objects.filter(
-                fk_company_appearance_date_time_list__in=company_appearance_date_time_obj).values_list('fk_company__id',
-                                                                                                       flat=True).distinct())
-            company_obj = Company.objects.filter(id__in=company_appearance_list_obj)
         elif filter_to_date:
-            print("R")
             company_appearance_date_time_obj = list(
                 CompanyAppearanceDateTime.objects.filter(date=filter_to_date).values_list('id', flat=True).distinct())
-            company_appearance_obj = CompanyAppearance.objects.filter(
-                fk_company_appearance_date_time_list__in=company_appearance_date_time_obj)
+
+        print("company_appearance_date_time_obj", company_appearance_date_time_obj)
+        if filter_job_type:
+            company_appearance_job_type_detail_obj = list(
+                CompanyAppearanceJobTypeDetail.objects.filter(fk_job_type__id=filter_job_type).values_list('id',
+                                                                                                           flat=True).distinct())
+
+        if filter_company_name:
+            company_obj += ".filter(id=filter_company_name)"
+        if filter_company_type:
+            company_obj += ".filter(fk_company_type_id=filter_company_type)"
+
+        if company_appearance_job_type_detail_obj:
+            company_appearance_obj += ".filter(fk_company_appearance_job_type_detail_list__in=company_appearance_job_type_detail_obj)"
+        if company_appearance_date_time_obj:
+            company_appearance_obj += ".filter(fk_company_appearance_date_time_list__in=company_appearance_date_time_obj).distinct()"
             company_appearance_list_obj = list(CompanyAppearance.objects.filter(
                 fk_company_appearance_date_time_list__in=company_appearance_date_time_obj).values_list('fk_company__id',
                                                                                                        flat=True).distinct())
-            company_obj = Company.objects.filter(id__in=company_appearance_list_obj)
-        else:
-            print("S")
-            company_obj = Company.objects.all()
-            company_appearance_obj = CompanyAppearance.objects.all()
+            print("company_appearance_list_obj",company_appearance_list_obj)
+            company_obj += ".filter(id__in=company_appearance_list_obj)"
+
+        if company_obj == "Company.objects":
+            company_obj += ".all()"
+        if company_appearance_obj == "CompanyAppearance.objects":
+            company_appearance_obj += ".all()"
+
+        print(company_appearance_date_time_obj)
+        print(company_obj)
+        print(company_appearance_obj)
+
+        company_obj = eval(company_obj)
+        company_appearance_obj = eval(company_appearance_obj)
 
         for i in company_appearance_obj:
+            print(i.id)
             dict_data['company_appearance_id'] = i.id
             date_list = list(
                 CompanyAppearance.objects.filter(id=i.id).values_list('fk_company_appearance_date_time_list__date',
@@ -1387,6 +1243,10 @@ def filter_company_appearances(request):
                                          {"list_data": list_data, "company_obj": company_obj,
                                           "company_appearance_obj": company_appearance_obj})
         return HttpResponse(render_string)
+
+
+
+
     except:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
@@ -1394,7 +1254,7 @@ def filter_company_appearances(request):
 
 def search_student_performance(request):
     """
-
+    search student performance
     :param request:
     :return:
     """
@@ -1431,57 +1291,20 @@ def filter_search_student_performance(request):
         filter_course = request.POST.get("filter_course")
         filter_semesters = request.POST.get("filter_semesters")
         filter_section = request.POST.get("filter_section")
-        if filter_student_name and filter_course and filter_semesters and filter_section:
-            academic_info_obj = AcademicInfo.objects.filter(
-                Q(fk_user_info__first_name__icontains=filter_student_name) | Q(
-                    fk_user_info__middle_name__icontains=filter_student_name) | Q(
-                    fk_user_info__last_name__icontains=filter_student_name),
-                fk_user_info__fk_user_type__user_type="Student",
-                fk_course_id=filter_course, fk_semesters__id=filter_semesters,
-                fk_sections_id=filter_section)
-        elif filter_student_name and filter_course and filter_semesters:
-            academic_info_obj = AcademicInfo.objects.filter(
-                Q(fk_user_info__first_name__icontains=filter_student_name) | Q(
-                    fk_user_info__middle_name__icontains=filter_student_name) | Q(
-                    fk_user_info__last_name__icontains=filter_student_name),
-                fk_user_info__fk_user_type__user_type="Student",
-                fk_course_id=filter_course, fk_semesters__id=filter_semesters)
-        elif filter_student_name and filter_course:
-            academic_info_obj = AcademicInfo.objects.filter(
-                Q(fk_user_info__first_name__icontains=filter_student_name) | Q(
-                    fk_user_info__middle_name__icontains=filter_student_name) | Q(
-                    fk_user_info__last_name__icontains=filter_student_name),
-                fk_user_info__fk_user_type__user_type="Student",
-                fk_course_id=filter_course)
-        elif filter_course and filter_semesters and filter_section:
-            academic_info_obj = AcademicInfo.objects.filter(fk_user_info__fk_user_type__user_type="Student",
-                                                            fk_course_id=filter_course, fk_sections_id=filter_section,
-                                                            fk_semesters__id=filter_semesters)
-        elif filter_course and filter_semesters:
-            academic_info_obj = AcademicInfo.objects.filter(fk_user_info__fk_user_type__user_type="Student",
-                                                            fk_course_id=filter_course,
-                                                            fk_semesters__id=filter_semesters)
-        elif filter_semesters and filter_section:
-            academic_info_obj = AcademicInfo.objects.filter(fk_user_info__fk_user_type__user_type="Student",
-                                                            fk_sections_id=filter_section,
-                                                            fk_semesters__id=filter_semesters)
-        elif filter_student_name:
-            academic_info_obj = AcademicInfo.objects.filter(
-                Q(fk_user_info__first_name__icontains=filter_student_name) | Q(
-                    fk_user_info__middle_name__icontains=filter_student_name) | Q(
-                    fk_user_info__last_name__icontains=filter_student_name),
-                fk_user_info__fk_user_type__user_type="Student")
-        elif filter_course:
-            academic_info_obj = AcademicInfo.objects.filter(fk_user_info__fk_user_type__user_type="Student",
-                                                            fk_course_id=filter_course)
-        elif filter_semesters:
-            academic_info_obj = AcademicInfo.objects.filter(fk_user_info__fk_user_type__user_type="Student",
-                                                            fk_semesters__id=filter_semesters)
-        elif filter_section:
-            academic_info_obj = AcademicInfo.objects.filter(fk_user_info__fk_user_type__user_type="Student",
-                                                            fk_sections_id=filter_section)
-        else:
-            academic_info_obj = AcademicInfo.objects.all(fk_user_info__fk_user_type__user_type="Student")
+        academic_info_obj = "AcademicInfo.objects"
+        if filter_student_name:
+            academic_info_obj += ".filter(Q(fk_user_info__first_name__icontains=filter_student_name) | Q(fk_user_info__middle_name__icontains=filter_student_name) | Q(fk_user_info__last_name__icontains=filter_student_name),fk_user_info__fk_user_type__user_type='Student')"
+        if filter_course:
+            academic_info_obj += ".filter(fk_course_id=filter_course)"
+        if filter_semesters:
+            academic_info_obj += ".filter(fk_semesters__id=filter_semesters)"
+        if filter_section:
+            academic_info_obj += ".filter(fk_sections_id=filter_section)"
+        if academic_info_obj == "AcademicInfo.objects":
+            academic_info_obj += ".all()"
+
+        print(academic_info_obj)
+        academic_info_obj = eval(academic_info_obj)
         render_string = render_to_string("placement_filter_search_student_performance.html",
                                          {"academic_info_obj": academic_info_obj})
         return HttpResponse(render_string)
