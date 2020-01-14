@@ -58,7 +58,7 @@ def delete_subject(request):
     """
     try:
         subject_id = request.POST.get("id")
-        print("subject_id",subject_id)
+        print("subject_id", subject_id)
         subject_obj = Subject.objects.get(id=subject_id)
         subject_obj.delete()
         return HttpResponse("success")
@@ -1627,6 +1627,296 @@ def delete_academic_session(request):
         academic_id = request.POST.get("id")
         academic_session_obj = AcademicSession.objects.get(id=academic_id)
         academic_session_obj.delete()
+        return HttpResponse("success")
+    except Exception:
+        error_save(str(traceback.format_exc()))
+        return redirect("error_handler_500")
+
+
+def company_type(request):
+    """
+    Page for master table Company Type
+    :param request:
+    :return:
+    """
+    try:
+        session = request.session.get('user_id')
+        if session:
+            user_info_obj = UserInfo.objects.get(id=session)
+            user_operation_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
+            company_type_obj = CompanyType.objects.all()
+            return render(request, "master_company_type.html",
+                          {"user_operation_obj": user_operation_obj, "user_info_obj": user_info_obj,
+                           "company_type_obj": company_type_obj})
+        else:
+            return redirect("/")
+    except Exception:
+        error_save(str(traceback.format_exc()))
+        return redirect("error_handler_500")
+
+
+@csrf_exempt
+def add_company_type(request):
+    """
+    Adding new company in master table Company Type
+    :param request:
+    :return:
+    """
+    try:
+        company = request.POST.get("company")
+        company_type_obj = CompanyType(company_type=company)
+        company_type_obj.save()
+        return HttpResponse("success")
+    except Exception:
+        error_save(str(traceback.format_exc()))
+        return redirect("error_handler_500")
+
+
+@csrf_exempt
+def edit_company_type(request):
+    """
+    Editing any details from master table Company Type
+    :param request:
+    :return:
+    """
+    try:
+        list_data = []
+        dict_data = {}
+        company_id = request.POST.get("id")
+        company_type_obj = CompanyType.objects.get(id=company_id)
+        dict_data['id'] = company_type_obj.id
+        dict_data['company_type'] = company_type_obj.company_type
+        list_data.append(dict_data)
+        print(list_data)
+        return JsonResponse({"list": list_data})
+    except Exception:
+        error_save(str(traceback.format_exc()))
+        return redirect("error_handler_500")
+
+
+@csrf_exempt
+def update_company_type(request):
+    """
+    Update any details from master table Company Type
+    :param request:
+    :return:
+    """
+    try:
+        company_id = request.POST.get("company_id")
+        edit_company = request.POST.get("edit_company")
+        company_type_obj = CompanyType.objects.get(id=company_id)
+        company_type_obj.company_type = edit_company
+        company_type_obj.save()
+        return HttpResponse("success")
+    except Exception:
+        error_save(str(traceback.format_exc()))
+        return redirect("error_handler_500")
+
+
+@csrf_exempt
+def delete_company_type(request):
+    """
+    Deleting any Company from master table Company Type
+    :param request:
+    :return:
+    """
+    try:
+        company_id = request.POST.get("id")
+        company_type_obj = CompanyType.objects.get(id=company_id)
+        company_type_obj.delete()
+        return HttpResponse("success")
+    except Exception:
+        error_save(str(traceback.format_exc()))
+        return redirect("error_handler_500")
+
+
+def job_type(request):
+    """
+    Page for master table Job Type
+    :param request:
+    :return:
+    """
+    try:
+        session = request.session.get('user_id')
+        if session:
+            user_info_obj = UserInfo.objects.get(id=session)
+            user_operation_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
+            job_type_obj = JobType.objects.all()
+            return render(request, "master_job_type.html",
+                          {"user_operation_obj": user_operation_obj, "user_info_obj": user_info_obj,
+                           "job_type_obj": job_type_obj})
+        else:
+            return redirect("/")
+    except Exception:
+        error_save(str(traceback.format_exc()))
+        return redirect("error_handler_500")
+
+
+@csrf_exempt
+def add_job_type(request):
+    """
+    Adding new job type in master table Job Type
+    :param request:
+    :return:
+    """
+    try:
+        job = request.POST.get("job")
+        job_type_obj = JobType(job_type=job)
+        job_type_obj.save()
+        return HttpResponse("success")
+    except Exception:
+        error_save(str(traceback.format_exc()))
+        return redirect("error_handler_500")
+
+
+@csrf_exempt
+def edit_job_type(request):
+    """
+    Editing any details from master table Job Type
+    :param request:
+    :return:
+    """
+    try:
+        list_data = []
+        dict_data = {}
+        job_id = request.POST.get("id")
+        jobtype_obj = JobType.objects.get(id=job_id)
+        dict_data['id'] = jobtype_obj.id
+        dict_data['job_type'] = jobtype_obj.job_type
+        list_data.append(dict_data)
+        return JsonResponse({"list": list_data})
+    except Exception:
+        error_save(str(traceback.format_exc()))
+        return redirect("error_handler_500")
+
+
+@csrf_exempt
+def update_job_type(request):
+    """
+    Update any details from master table Job Type
+    :param request:
+    :return:
+    """
+    try:
+        job_id = request.POST.get("job_id")
+        edit_job = request.POST.get("edit_job")
+        job_type_obj = JobType.objects.get(id=job_id)
+        job_type_obj.job_type = edit_job
+        job_type_obj.save()
+        return HttpResponse("success")
+    except Exception:
+        error_save(str(traceback.format_exc()))
+        return redirect("error_handler_500")
+
+
+@csrf_exempt
+def delete_job_type(request):
+    """
+    Deleting any Job Type from master table Job Type
+    :param request:
+    :return:
+    """
+    try:
+        job_id = request.POST.get("id")
+        job_type_obj = JobType.objects.get(id=job_id)
+        job_type_obj.delete()
+        return HttpResponse("success")
+    except Exception:
+        error_save(str(traceback.format_exc()))
+        return redirect("error_handler_500")
+
+
+def selection_process_test(request):
+    """
+    Page for master table Selection Process Test
+    :param request:
+    :return:
+    """
+    try:
+        session = request.session.get('user_id')
+        if session:
+            user_info_obj = UserInfo.objects.get(id=session)
+            user_operation_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
+            selection_process_test_obj = SelectionProcessTest.objects.all()
+            return render(request, "master_selection_process_test.html",
+                          {"user_operation_obj": user_operation_obj, "user_info_obj": user_info_obj,
+                           "selection_process_test_obj": selection_process_test_obj})
+        else:
+            return redirect("/")
+    except Exception:
+        error_save(str(traceback.format_exc()))
+        return redirect("error_handler_500")
+
+
+@csrf_exempt
+def add_selection_process_test(request):
+    """
+    Adding new Selection Process Test in master table Selection Process Test
+    :param request:
+    :return:
+    """
+    try:
+        selection_process_test_name = request.POST.get("selection_process_test_name")
+        selection_process_test_obj = SelectionProcessTest(test_name=selection_process_test_name)
+        selection_process_test_obj.save()
+        return HttpResponse("success")
+    except Exception:
+        error_save(str(traceback.format_exc()))
+        return redirect("error_handler_500")
+
+
+@csrf_exempt
+def edit_selection_process_test(request):
+    """
+    Editing any details from master table Selection Process Test
+    :param request:
+    :return:
+    """
+    try:
+        list_data = []
+        dict_data = {}
+        selection_id = request.POST.get("id")
+        selection_process_test_obj = SelectionProcessTest.objects.get(id=selection_id)
+        dict_data['id'] = selection_process_test_obj.id
+        dict_data['test_name'] = selection_process_test_obj.test_name
+        list_data.append(dict_data)
+        print(list_data)
+        return JsonResponse({"list": list_data})
+    except Exception:
+        error_save(str(traceback.format_exc()))
+        return redirect("error_handler_500")
+
+
+@csrf_exempt
+def update_selection_process_test(request):
+    """
+    Update any details from master table Selection Process Test
+    :param request:
+    :return:
+    """
+    try:
+        selection_process_test_name_id = request.POST.get("selection_process_test_name_id")
+        edit_selection_process_test_name = request.POST.get("edit_selection_process_test_name")
+        selection_process_test_obj = SelectionProcessTest.objects.get(id=selection_process_test_name_id)
+        selection_process_test_obj.test_name = edit_selection_process_test_name
+        selection_process_test_obj.save()
+        return HttpResponse("success")
+    except Exception:
+        error_save(str(traceback.format_exc()))
+        return redirect("error_handler_500")
+
+
+@csrf_exempt
+def delete_selection_process_test(request):
+    """
+    Deleting any Selection Process Test from master table Selection Process Test
+    :param request:
+    :return:
+    """
+    try:
+        selection_id = request.POST.get("id")
+        selection_process_test_obj = SelectionProcessTest.objects.get(id=selection_id)
+        selection_process_test_obj.delete()
         return HttpResponse("success")
     except Exception:
         error_save(str(traceback.format_exc()))

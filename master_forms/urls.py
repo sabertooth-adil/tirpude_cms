@@ -97,4 +97,23 @@ urlpatterns = [
     path('edit-academic-session/', views.edit_academic_session, name='edit_academic_session'),
     path('update-academic-session/', views.update_academic_session, name='update_academic_session'),
     path('delete-academic-session/', views.delete_academic_session, name='delete_academic_session'),
+
+    path('company-type/', views.company_type, name='company_type'),
+    path('add-company-type/', views.add_company_type, name='add_company_type'),
+    path('edit-company-type/', views.edit_company_type, name='edit_company_type'),
+    path('update-company-type/', views.update_company_type, name='update_company_type'),
+    path('delete-company-type/', views.delete_company_type, name='delete_company_type'),
+
+    path('job-type/', views.job_type, name='job_type'),
+    path('add-job-type/', views.add_job_type, name='add_job_type'),
+    path('edit-job-type/', views.edit_job_type, name='edit_job_type'),
+    path('update-job-type/', views.update_job_type, name='update_job_type'),
+    path('delete-job-type/', views.delete_job_type, name='delete_job_type'),
+
+    path('selection-process-test/', views.selection_process_test, name='selection_process_test'),
+    path('add-selection-process-test/', views.add_selection_process_test, name='add_selection_process_test'),
+    path('edit-selection-process-test/', views.edit_selection_process_test, name='edit_selection_process_test'),
+    path('update-selection-process-test/', views.update_selection_process_test, name='update_selection_process_test'),
+    path('delete-selection-process-test/', views.delete_selection_process_test, name='delete_selection_process_test'),
+
 ]

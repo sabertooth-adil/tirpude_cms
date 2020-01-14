@@ -14,3 +14,85 @@ Traceback (most recent call last):
 NameError: name 'Sections' is not defined
 
 
+2020-01-14 17:22:56.063645
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\authentication\views.py", line 312, in profile_user
+    "address_detail_obj": address_detail_obj, "user_operations_obj": user_operations_obj})
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\defaulttags.py", line 309, in render
+    return nodelist.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\defaulttags.py", line 443, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\urls\base.py", line 87, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\urls\resolvers.py", line 677, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'time-table' not found. 'time-table' is not a valid view function or pattern name.
+
+
+2020-01-14 17:23:23.484328
+Traceback (most recent call last):
+  File "E:\tirpude_cms_new\authentication\views.py", line 312, in profile_user
+    "address_detail_obj": address_detail_obj, "user_operations_obj": user_operations_obj})
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\defaulttags.py", line 309, in render
+    return nodelist.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\base.py", line 903, in render_annotated
+    return self.render(context)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\template\defaulttags.py", line 443, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\urls\base.py", line 87, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "E:\tirpude_cms_new\venv\lib\site-packages\django\urls\resolvers.py", line 677, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'time-table' not found. 'time-table' is not a valid view function or pattern name.
+
+
