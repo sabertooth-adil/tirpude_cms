@@ -15,18 +15,40 @@ from master_forms.models import City, District, SubCast, StreamOrField, DegreeSt
 
 
 def handler404(request, exception):
+    """
+    handler 404 Page
+    :param request:
+    :param exception:
+    :return:
+    """
     return render(request, "404.html")
 
 
 def handler400(request, exception):
+    """
+    handler 400 Page
+    :param request:
+    :param exception:
+    :return:
+    """
     return render(request, "400.html")
 
 
 def error_handler_500(request):
+    """
+    error handler 500 Page
+    :param request:
+    :return:
+    """
     return render(request, "500.html")
 
 
 def error_save(error):
+    """
+    Save error to error_log file
+    :param error:
+    :return:
+    """
     time = str(datetime.datetime.now())
     with open("error_log.txt", "a") as myfile:
         myfile.write(time + "\n")
@@ -38,7 +60,6 @@ def error_save(error):
 def random_with_n_digits(n):
     """
     Generate random n number digite
-    
     """
     try:
         range_start = 10 ** (n - 1)
@@ -53,7 +74,6 @@ def random_with_n_digits(n):
 def get_city_district_list(request):
     """
         Get Cities and districts list
-
     :param request:
     :return:
     """
@@ -64,7 +84,7 @@ def get_city_district_list(request):
         return JsonResponse({"city_list": city_list, "district_list": district_list})
     except:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -81,7 +101,7 @@ def get_sub_cast_list(request):
         return JsonResponse({"sub_cast_list": sub_cast_list})
     except:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -100,7 +120,7 @@ def get_stream_or_field_list(request):
         return JsonResponse({"stream_or_field_list": stream_or_field_list})
     except:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -118,7 +138,7 @@ def get_degree_stream_or_field_list(request):
         return JsonResponse({"degree_stream_or_field_list": degree_stream_or_field_list})
     except:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 def admin_home(request):
@@ -159,7 +179,7 @@ def admin_signup(request):
                        "obj_year_of_admission": obj_year_of_admission})
     except:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -207,7 +227,7 @@ def register_user(request):
             return JsonResponse({"msg": "Registed Successfully", "status": "1"})
     except Exception as e:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -231,7 +251,7 @@ def signup_user(request):
         else:
             return HttpResponse("error")
     except Exception as e:
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 def signout_user(request):
@@ -250,7 +270,7 @@ def signout_user(request):
             return redirect("/")
     except Exception as e:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -313,7 +333,7 @@ def profile_user(request):
             return redirect("/")
     except Exception as e:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -341,7 +361,7 @@ def change_password(request):
         return JsonResponse(send_data)
     except Exception as e:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -376,7 +396,7 @@ def forgot_password(request):
         return JsonResponse(send_data)
     except Exception as e:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -419,7 +439,7 @@ def save_personal_info(request):
         return HttpResponse("success")
     except Exception as e:
         error_save(str(traceback.format_exc()))
-        return redirect('error500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -450,7 +470,7 @@ def save_other_details(request):
         return HttpResponse("success")
     except Exception as e:
         error_save(str(traceback.format_exc()))
-        return redirect('error500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -511,7 +531,7 @@ def save_academic_details(request):
         return HttpResponse("success")
     except Exception as e:
         error_save(str(traceback.format_exc()))
-        return redirect('error500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -532,7 +552,7 @@ def save_user_profile_pic(request):
         return redirect("profile_user")
     except Exception as e:
         error_save(str(traceback.format_exc()))
-        return redirect('error500')
+        return redirect("error_handler_500")
 
 
 def upload_profile(img):
@@ -552,7 +572,7 @@ def upload_profile(img):
         return img_n
     except Exception as e:
         error_save(str(traceback.format_exc()))
-        return redirect('error500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -572,4 +592,4 @@ def update_profile_picture(request):
         return HttpResponse("success")
     except Exception as e:
         error_save(str(traceback.format_exc()))
-        return redirect('error500')
+        return redirect("error_handler_500")

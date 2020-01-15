@@ -22,11 +22,11 @@ def authenticate_user(request):
     :return:
     """
     try:
-        session = request.session.get('user_id')
+        session = request.session.get("user_id")
         if session:
             user_info_obj = UserInfo.objects.get(id=session)
             user_operation_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
-            user_info_detail_obj = UserInfo.objects.all().order_by('-id')
+            user_info_detail_obj = UserInfo.objects.all().order_by("-id")
             academic_info_obj = AcademicInfo.objects.all()
             base = datetime.datetime.today()
             date_list = [base - datetime.timedelta(days=x) for x in range(30)]
@@ -43,7 +43,7 @@ def authenticate_user(request):
             return redirect("/")
     except Exception as e:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -65,7 +65,7 @@ def activate_deactivate_user(request):
         return HttpResponse("success")
     except Exception as e:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -76,7 +76,7 @@ def filter_authenticate_user(request):
     :return:
     """
     try:
-        session = request.session.get('user_id')
+        session = request.session.get("user_id")
         if session:
             user_info_obj = UserInfo.objects.get(id=session)
             user_operation_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
@@ -87,15 +87,15 @@ def filter_authenticate_user(request):
             from_date = request.POST.get("from_date")
             base = datetime.datetime.today()
             if to_date and from_date:
-                from_date = datetime.datetime.strptime(from_date, '%d-%m-%Y')
-                to_date = datetime.datetime.strptime(to_date, '%d-%m-%Y')
+                from_date = datetime.datetime.strptime(from_date, "%d-%m-%Y")
+                to_date = datetime.datetime.strptime(to_date, "%d-%m-%Y")
                 date_list = [d for d in date_range(from_date, to_date)]
-                start_date_range = str(date_list[-1].strftime('%Y-%m-%d'))
-                end_date_range = str(date_list[0].strftime('%Y-%m-%d'))
+                start_date_range = str(date_list[-1].strftime("%Y-%m-%d"))
+                end_date_range = str(date_list[0].strftime("%Y-%m-%d"))
             else:
                 date_list = [base - datetime.timedelta(days=x) for x in range(30)]
-                start_date_range = str(date_list[0].strftime('%Y-%m-%d'))
-                end_date_range = str(date_list[-1].strftime('%Y-%m-%d'))
+                start_date_range = str(date_list[0].strftime("%Y-%m-%d"))
+                end_date_range = str(date_list[-1].strftime("%Y-%m-%d"))
             print(date_list)
             user_obj = UserInfo.objects.filter(registration_date__range=[start_date_range, end_date_range])
 
@@ -132,7 +132,7 @@ def filter_authenticate_user(request):
             return redirect("/")
     except Exception as e:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 @csrf_exempt
 def delete_register_request(request):
@@ -150,7 +150,7 @@ def delete_register_request(request):
         return HttpResponse("success")
     except Exception as e:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -171,4 +171,4 @@ def assign_user_role(request):
         return HttpResponse("success")
     except Exception as e:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")

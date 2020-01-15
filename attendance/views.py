@@ -46,17 +46,17 @@ def GetSubjects(request):
         semesters = request.POST.get("semesters")
         if course and semesters:
             subject_list = list(
-                Subject.objects.filter(fk_course_id=course, fk_semesters_id=semesters).values_list('id', 'subjects'))
+                Subject.objects.filter(fk_course_id=course, fk_semesters_id=semesters).values_list("id", "subjects"))
         elif course:
-            subject_list = list(Subject.objects.filter(fk_course_id=course).values_list('id', 'subjects'))
+            subject_list = list(Subject.objects.filter(fk_course_id=course).values_list("id", "subjects"))
         elif semesters:
-            subject_list = list(Subject.objects.filter(fk_semesters_id=semesters).values_list('id', 'subjects'))
+            subject_list = list(Subject.objects.filter(fk_semesters_id=semesters).values_list("id", "subjects"))
         else:
             pass
         return HttpResponse(json.dumps(subject_list))
     except:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 def date_range(date1, date2):
@@ -77,7 +77,7 @@ def attendance(request):
     :return:
     """
     try:
-        session = request.session.get('user_id')
+        session = request.session.get("user_id")
         list_data = []
         dict_data = {}
         all_total_lecture = 0
@@ -91,25 +91,25 @@ def attendance(request):
                 subjects_obj = Subject.objects.filter(fk_course=academic_info_obj.fk_course,
                                                       fk_semesters=academic_info_obj.fk_semesters)
                 for i in subjects_obj:
-                    dict_data['present_in_subject'] = StudentAttendance.objects.filter(fk_student_user_info_id=session,
+                    dict_data["present_in_subject"] = StudentAttendance.objects.filter(fk_student_user_info_id=session,
                                                                                        fk_subjects_id=i.id,
                                                                                        attendance_status="P").count()
                     present_total_lecture = present_total_lecture + StudentAttendance.objects.filter(
                         fk_student_user_info_id=session, fk_subjects_id=i.id, attendance_status="P").count()
                     student_attendance_obj = StudentAttendance.objects.filter(fk_subjects_id=i.id)
-                    dict_data['total_lectures_subject'] = student_attendance_obj.values('date').distinct().count()
-                    all_total_lecture = all_total_lecture + student_attendance_obj.values('date').distinct().count()
-                    dict_data['subject_name'] = i.subjects
-                    dict_data['subject_id'] = i.id
-                    dict_data['student_id'] = session
-                    dict_data['compulsory_attendance'] = int(i.compulsory_attendance)
-                    if student_attendance_obj.values('date').distinct().count() > 0:
-                        dict_data['percentage'] = round(int(
+                    dict_data["total_lectures_subject"] = student_attendance_obj.values("date").distinct().count()
+                    all_total_lecture = all_total_lecture + student_attendance_obj.values("date").distinct().count()
+                    dict_data["subject_name"] = i.subjects
+                    dict_data["subject_id"] = i.id
+                    dict_data["student_id"] = session
+                    dict_data["compulsory_attendance"] = int(i.compulsory_attendance)
+                    if student_attendance_obj.values("date").distinct().count() > 0:
+                        dict_data["percentage"] = round(int(
                             StudentAttendance.objects.filter(fk_student_user_info_id=session, fk_subjects_id=i.id,
                                                              attendance_status="P").count()) * 100 / int(
-                            student_attendance_obj.values('date').distinct().count()), 2)
+                            student_attendance_obj.values("date").distinct().count()), 2)
                     else:
-                        dict_data['percentage'] = 0
+                        dict_data["percentage"] = 0
                     list_data.append(dict_data)
                     dict_data = {}
                 try:
@@ -134,13 +134,13 @@ def attendance(request):
             return redirect("/")
     except:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
 def filter_attendance(request):
     try:
-        session = request.session.get('user_id')
+        session = request.session.get("user_id")
         user_info_obj = UserInfo.objects.get(id=session)
         user_operation_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
         list_data = []
@@ -168,15 +168,15 @@ def filter_attendance(request):
         print("sections", sections)
         base = datetime.datetime.today()
         if chart_from_date and chart_to_date:
-            chart_from_date = datetime.datetime.strptime(chart_from_date, '%d-%m-%Y')
-            chart_to_date = datetime.datetime.strptime(chart_to_date, '%d-%m-%Y')
+            chart_from_date = datetime.datetime.strptime(chart_from_date, "%d-%m-%Y")
+            chart_to_date = datetime.datetime.strptime(chart_to_date, "%d-%m-%Y")
             date_list = [d for d in date_range(chart_from_date, chart_to_date)]
-            start_date_range = str(date_list[-1].strftime('%Y-%m-%d'))
-            end_date_range = str(date_list[0].strftime('%Y-%m-%d'))
+            start_date_range = str(date_list[-1].strftime("%Y-%m-%d"))
+            end_date_range = str(date_list[0].strftime("%Y-%m-%d"))
         else:
             date_list = [base - datetime.timedelta(days=x) for x in range(30)]
-            start_date_range = str(date_list[0].strftime('%Y-%m-%d'))
-            end_date_range = str(date_list[-1].strftime('%Y-%m-%d'))
+            start_date_range = str(date_list[0].strftime("%Y-%m-%d"))
+            end_date_range = str(date_list[-1].strftime("%Y-%m-%d"))
         print(date_list)
         print("academic_info_obj", academic_info_obj)
         subjects_obj = Subject.objects.filter(fk_course_id=course, fk_semesters_id=semesters)
@@ -184,22 +184,22 @@ def filter_attendance(request):
             date_list_list = []
             for i in reversed(date_list):
                 date_list_list.append(str(i.date().strftime("%d-%m-%Y")))
-                chart_subject_dict['label'] = str(s.subjects)
-                chart_subject_dict['fill'] = "false"
-                chart_subject_dict['borderColor'] = ('#%02X%02X%02X' % (r(), r(), r()))
-                chart_subject_dict['lineTension'] = 0.4
+                chart_subject_dict["label"] = str(s.subjects)
+                chart_subject_dict["fill"] = "false"
+                chart_subject_dict["borderColor"] = ("#%02X%02X%02X" % (r(), r(), r()))
+                chart_subject_dict["lineTension"] = 0.4
                 student_attendance_obj = StudentAttendance.objects.filter(fk_course_id=course,
                                                                           fk_semesters_id=semesters,
                                                                           fk_sections_id=sections, fk_subjects_id=s.id,
                                                                           date=i)
-                distinct_date_obj = student_attendance_obj.values('date').distinct()
+                distinct_date_obj = student_attendance_obj.values("date").distinct()
                 if distinct_date_obj:
                     subject_attendance_list.append(
                         StudentAttendance.objects.filter(date=i, fk_subjects_id=s.id, attendance_status="P").count())
                     print(subject_attendance_list)
                 else:
                     subject_attendance_list.append(0)
-                chart_subject_dict['data'] = subject_attendance_list
+                chart_subject_dict["data"] = subject_attendance_list
             subject_attendance_list = []
             chart_subject_list.append(chart_subject_dict)
             chart_subject_dict = {}
@@ -207,11 +207,11 @@ def filter_attendance(request):
 
         a = 0
         attendance_count = 0
-        for k in range(len(all_subject_list['labels'])):
-            for i in range(len(all_subject_list['datasets'])):
-                if all_subject_list['datasets'][i]['data'][k] > 0:
+        for k in range(len(all_subject_list["labels"])):
+            for i in range(len(all_subject_list["datasets"])):
+                if all_subject_list["datasets"][i]["data"][k] > 0:
                     attendance_count = attendance_count + 1
-                    a = a + all_subject_list['datasets'][i]['data'][k]
+                    a = a + all_subject_list["datasets"][i]["data"][k]
             try:
                 present_student_list.append(round((a / (academic_info_obj.count() * attendance_count)) * 100, 2))
             except:
@@ -233,22 +233,22 @@ def filter_attendance(request):
                                                                       fk_sections_id=sections,
                                                                       date__range=[str(end_date_range),
                                                                                    str(start_date_range)]).order_by(
-                '-date')
-            distinct_date_obj = student_attendance_obj.values('date').distinct()
+                "-date")
+            distinct_date_obj = student_attendance_obj.values("date").distinct()
             for i in distinct_date_obj:
-                dict_data['date'] = i['date']
-                distinct_subject_obj = StudentAttendance.objects.filter(date=i['date']).values('fk_subjects',
-                                                                                               'fk_subjects__subjects').distinct()
+                dict_data["date"] = i["date"]
+                distinct_subject_obj = StudentAttendance.objects.filter(date=i["date"]).values("fk_subjects",
+                                                                                               "fk_subjects__subjects").distinct()
                 for j in distinct_subject_obj:
-                    subject_dict['subject_id'] = j['fk_subjects']
-                    subject_dict['subject_name'] = j['fk_subjects__subjects']
-                    subject_dict['subject_attendance_count'] = StudentAttendance.objects.filter(date=i['date'],
+                    subject_dict["subject_id"] = j["fk_subjects"]
+                    subject_dict["subject_name"] = j["fk_subjects__subjects"]
+                    subject_dict["subject_attendance_count"] = StudentAttendance.objects.filter(date=i["date"],
                                                                                                 fk_subjects_id=j[
-                                                                                                    'fk_subjects'],
+                                                                                                    "fk_subjects"],
                                                                                                 attendance_status="P").count()
                     subject_list.append(subject_dict)
                     subject_dict = {}
-                dict_data['subject_attendance_count'] = subject_list
+                dict_data["subject_attendance_count"] = subject_list
                 subject_list = []
                 list_data.append(dict_data)
                 dict_data = {}
@@ -257,21 +257,21 @@ def filter_attendance(request):
                                                                       fk_sections_id=sections, fk_subjects_id=subject,
                                                                       date__range=[str(end_date_range),
                                                                                    str(start_date_range)]).order_by(
-                '-date')
-            distinct_date_obj = student_attendance_obj.values('date', 'fk_subjects', 'fk_subjects__subjects').distinct()
+                "-date")
+            distinct_date_obj = student_attendance_obj.values("date", "fk_subjects", "fk_subjects__subjects").distinct()
             for i in distinct_date_obj:
-                dict_data['date'] = i['date']
-                distinct_subject_obj = StudentAttendance.objects.filter(date=i['date'], fk_subjects_id=subject).values(
-                    'fk_subjects', 'fk_subjects__subjects').distinct()
+                dict_data["date"] = i["date"]
+                distinct_subject_obj = StudentAttendance.objects.filter(date=i["date"], fk_subjects_id=subject).values(
+                    "fk_subjects", "fk_subjects__subjects").distinct()
                 for j in distinct_subject_obj:
-                    subject_dict['subject_id'] = j['fk_subjects']
-                    subject_dict['subject_name'] = j['fk_subjects__subjects']
-                    subject_dict['subject_attendance_count'] = str(
-                        StudentAttendance.objects.filter(date=i['date'], fk_subjects_id=subject,
+                    subject_dict["subject_id"] = j["fk_subjects"]
+                    subject_dict["subject_name"] = j["fk_subjects__subjects"]
+                    subject_dict["subject_attendance_count"] = str(
+                        StudentAttendance.objects.filter(date=i["date"], fk_subjects_id=subject,
                                                          attendance_status="P").count())
                     subject_list.append(subject_dict)
                     subject_dict = {}
-                dict_data['subject_attendance_count'] = subject_list
+                dict_data["subject_attendance_count"] = subject_list
                 subject_list = []
                 list_data.append(dict_data)
                 dict_data = {}
@@ -287,7 +287,7 @@ def filter_attendance(request):
         return HttpResponse(render_string)
     except:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -298,7 +298,7 @@ def add_attendance_detail(request):
     :return:
     """
     try:
-        session = request.session.get('user_id')
+        session = request.session.get("user_id")
         course = request.POST.get("course")
         semesters = request.POST.get("semesters")
         sections = request.POST.get("sections")
@@ -315,7 +315,7 @@ def add_attendance_detail(request):
         return HttpResponse(render_string)
     except:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -326,13 +326,13 @@ def save_attendance_detail(request):
     :return:
     """
     try:
-        session = request.session.get('user_id')
+        session = request.session.get("user_id")
         course = request.POST.get("course")
         semesters = request.POST.get("semesters")
         sections = request.POST.get("sections")
         subject = request.POST.get("subject")
-        attendance_date = datetime.datetime.strptime(str(request.POST.get("attendance_date")), '%d-%m-%Y').strftime(
-            '%Y-%m-%d')
+        attendance_date = datetime.datetime.strptime(str(request.POST.get("attendance_date")), "%d-%m-%Y").strftime(
+            "%Y-%m-%d")
         absent_student_list = request.POST.getlist("absent_student_list[]")
         present_student_list = request.POST.getlist("present_student_list[]")
         if StudentAttendance.objects.filter(fk_course_id=course, fk_semesters_id=semesters, fk_sections_id=sections,
@@ -354,7 +354,7 @@ def save_attendance_detail(request):
             return HttpResponse("success")
     except:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -365,7 +365,7 @@ def filter_attendance_detail(request):
     :return:
     """
     try:
-        session = request.session.get('user_id')
+        session = request.session.get("user_id")
         course = request.POST.get("course")
         semesters = request.POST.get("semesters")
         sections = request.POST.get("sections")
@@ -381,7 +381,7 @@ def filter_attendance_detail(request):
         student_attendance_obj = StudentAttendance.objects.filter(fk_course_id=course, fk_semesters_id=semesters,
                                                                   fk_sections_id=sections, fk_subjects_id=subject,
                                                                   date=attendance_date)
-        student_attendance_obj_list = list(student_attendance_obj.values_list('fk_student_user_info', flat=True))
+        student_attendance_obj_list = list(student_attendance_obj.values_list("fk_student_user_info", flat=True))
         if student_attendance_obj:
             academic_info_date_wise_obj = AcademicInfo.objects.filter(fk_user_info__in=student_attendance_obj_list)
             print(academic_info_date_wise_obj)
@@ -394,7 +394,7 @@ def filter_attendance_detail(request):
         return HttpResponse(render_string)
     except:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -405,7 +405,7 @@ def filter_attendance_detail(request):
     :return:
     """
     try:
-        session = request.session.get('user_id')
+        session = request.session.get("user_id")
         course = request.POST.get("course")
         semesters = request.POST.get("semesters")
         sections = request.POST.get("sections")
@@ -421,7 +421,7 @@ def filter_attendance_detail(request):
         student_attendance_obj = StudentAttendance.objects.filter(fk_course_id=course, fk_semesters_id=semesters,
                                                                   fk_sections_id=sections, fk_subjects_id=subject,
                                                                   date=attendance_date)
-        student_attendance_obj_list = list(student_attendance_obj.values_list('fk_student_user_info', flat=True))
+        student_attendance_obj_list = list(student_attendance_obj.values_list("fk_student_user_info", flat=True))
         if student_attendance_obj:
             academic_info_date_wise_obj = AcademicInfo.objects.filter(fk_user_info__in=student_attendance_obj_list)
             print(academic_info_date_wise_obj)
@@ -434,7 +434,7 @@ def filter_attendance_detail(request):
         return HttpResponse(render_string)
     except:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -445,7 +445,7 @@ def update_attendance_detail(request):
     :return:
     """
     try:
-        session = request.session.get('user_id')
+        session = request.session.get("user_id")
         course = request.POST.get("course")
         semesters = request.POST.get("semesters")
         sections = request.POST.get("sections")
@@ -477,7 +477,7 @@ def update_attendance_detail(request):
         return HttpResponse("success")
     except:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -488,7 +488,7 @@ def single_student_attendance_detail(request):
     :return:
     """
     try:
-        session = request.session.get('user_id')
+        session = request.session.get("user_id")
         id = request.POST.get("id")
         user_info_obj = UserInfo.objects.get(id=session)
         list_data = []
@@ -499,27 +499,27 @@ def single_student_attendance_detail(request):
         subjects_obj = Subject.objects.filter(fk_course=academic_info_obj.fk_course,
                                               fk_semesters=academic_info_obj.fk_semesters)
         for i in subjects_obj:
-            dict_data['present_in_subject'] = StudentAttendance.objects.filter(fk_student_user_info_id=id,
+            dict_data["present_in_subject"] = StudentAttendance.objects.filter(fk_student_user_info_id=id,
                                                                                fk_subjects_id=i.id,
                                                                                attendance_status="P").count()
             present_total_lecture = present_total_lecture + StudentAttendance.objects.filter(fk_student_user_info_id=id,
                                                                                              fk_subjects_id=i.id,
                                                                                              attendance_status="P").count()
             student_attendance_obj = StudentAttendance.objects.filter(fk_subjects_id=i.id)
-            dict_data['total_lectures_subject'] = student_attendance_obj.values('date').distinct().count()
-            all_total_lecture = all_total_lecture + student_attendance_obj.values('date').distinct().count()
-            dict_data['subject_name'] = i.subjects
-            dict_data['subject_id'] = i.id
-            dict_data['student_id'] = id
-            dict_data['compulsory_attendance'] = int(i.compulsory_attendance)
-            if student_attendance_obj.values('date').distinct().cou.nt() > 0:
-                print(student_attendance_obj.values('date').distinct().count())
-                dict_data['percentage'] = round(int(
+            dict_data["total_lectures_subject"] = student_attendance_obj.values("date").distinct().count()
+            all_total_lecture = all_total_lecture + student_attendance_obj.values("date").distinct().count()
+            dict_data["subject_name"] = i.subjects
+            dict_data["subject_id"] = i.id
+            dict_data["student_id"] = id
+            dict_data["compulsory_attendance"] = int(i.compulsory_attendance)
+            if student_attendance_obj.values("date").distinct().cou.nt() > 0:
+                print(student_attendance_obj.values("date").distinct().count())
+                dict_data["percentage"] = round(int(
                     StudentAttendance.objects.filter(fk_student_user_info_id=id, fk_subjects_id=i.id,
                                                      attendance_status="P").count()) * 100 / int(
-                    student_attendance_obj.values('date').distinct().count()), 2)
+                    student_attendance_obj.values("date").distinct().count()), 2)
             else:
-                dict_data['percentage'] = 0
+                dict_data["percentage"] = 0
             list_data.append(dict_data)
             dict_data = {}
         if present_total_lecture == 0:
@@ -534,7 +534,7 @@ def single_student_attendance_detail(request):
         return HttpResponse(render_string)
     except:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 @csrf_exempt
@@ -556,7 +556,7 @@ def get_subject_attendance_detail(request):
         return HttpResponse(render_string)
     except:
         error_save(str(traceback.format_exc()))
-        return redirect('error_handler_500')
+        return redirect("error_handler_500")
 
 
 """
@@ -582,8 +582,8 @@ filter it on only main filter
 #     chart_from_date = request.POST.get("chart_from_date")
 #     chart_to_date = request.POST.get("chart_to_date")
 #     subject = request.POST.get("subject")
-#     chart_from_date = datetime.datetime.strptime(chart_from_date, '%d-%m-%Y')
-#     chart_to_date = datetime.datetime.strptime(chart_to_date, '%d-%m-%Y')
+#     chart_from_date = datetime.datetime.strptime(chart_from_date, "%d-%m-%Y")
+#     chart_to_date = datetime.datetime.strptime(chart_to_date, "%d-%m-%Y")
 #     print ("course", course)
 #     print ("semesters", semesters)
 #     print ("sections", sections)
@@ -598,21 +598,21 @@ filter it on only main filter
 #         date_list_data = []
 #         for i in date_list_data:
 #             date_list_data.append(str(i.date().strftime("%m-%d")))
-#             chart_subject_dict['label'] = str(s.subjects)
-#             chart_subject_dict['fill'] = "false"
-#             chart_subject_dict['borderColor'] = ('#%02X%02X%02X' % (r(), r(), r()))
-#             chart_subject_dict['lineTension'] = 0.4
+#             chart_subject_dict["label"] = str(s.subjects)
+#             chart_subject_dict["fill"] = "false"
+#             chart_subject_dict["borderColor"] = ("#%02X%02X%02X" % (r(), r(), r()))
+#             chart_subject_dict["lineTension"] = 0.4
 #             student_attendance_obj = StudentAttendance.objects.filter(fk_course_id=course, fk_semesters_id=semesters,
 #                                                                      fk_sections_id=sections, fk_subjects_id=s.id,
 #                                                                      date=i)
-#             distinct_date_obj = student_attendance_obj.values('date').distinct()
+#             distinct_date_obj = student_attendance_obj.values("date").distinct()
 #             if distinct_date_obj:
 #                 subject_attendance_list_data.append(
 #                     StudentAttendance.objects.filter(date=i, fk_subjects_id=s.id, attendance_status="P").count())
 #                 print (subject_attendance_list_data)
 #             else:
 #                 subject_attendance_list_data.append(0)
-#             chart_subject_dict['data'] = subject_attendance_list_data
+#             chart_subject_dict["data"] = subject_attendance_list_data
 #         subject_attendance_list_data = []
 #         chart_subject_list_data.append(chart_subject_dict)
 #         chart_subject_dict = {}
@@ -621,11 +621,11 @@ filter it on only main filter
 #
 #     a = 0
 #     attendance_count = 0
-#     for k in range(len(all_subject_list_data['labels'])):
-#         for i in range(len(all_subject_list_data['datasets'])):
-#             if all_subject_list_data['datasets'][i]['data'][k] > 0:
+#     for k in range(len(all_subject_list_data["labels"])):
+#         for i in range(len(all_subject_list_data["datasets"])):
+#             if all_subject_list_data["datasets"][i]["data"][k] > 0:
 #                 attendance_count = attendance_count + 1
-#                 a = a + all_subject_list_data['datasets'][i]['data'][k]
+#                 a = a + all_subject_list_data["datasets"][i]["data"][k]
 #         if a > 0:
 #             present_student_list_data.append(round((a / (academic_info_obj.count() * attendance_count)) * 100, 2))
 #         else:
@@ -641,22 +641,22 @@ filter it on only main filter
 #         student_attendance_obj = StudentAttendance.objects.filter(fk_course_id=course, fk_semesters_id=semesters,
 #                                                                  fk_sections_id=sections,
 #                                                                  date__range=[chart_from_date, chart_to_date]).order_by(
-#             '-date')
-#         distinct_date_obj = student_attendance_obj.values('date').distinct()
+#             "-date")
+#         distinct_date_obj = student_attendance_obj.values("date").distinct()
 #         for i in distinct_date_obj:
-#             dict_data['date'] = i['date']
-#             distinct_subject_obj = StudentAttendance.objects.filter(date=i['date']).values('fk_subjects',
-#                                                                                           'fk_subjects__subjects').distinct()
+#             dict_data["date"] = i["date"]
+#             distinct_subject_obj = StudentAttendance.objects.filter(date=i["date"]).values("fk_subjects",
+#                                                                                           "fk_subjects__subjects").distinct()
 #             for j in distinct_subject_obj:
-#                 subject_dict['subject_id'] = j['fk_subjects']
-#                 subject_dict['subject_name'] = j['fk_subjects__subjects']
-#                 subject_dict['subject_attendance_count'] = StudentAttendance.objects.filter(date=i['date'],
+#                 subject_dict["subject_id"] = j["fk_subjects"]
+#                 subject_dict["subject_name"] = j["fk_subjects__subjects"]
+#                 subject_dict["subject_attendance_count"] = StudentAttendance.objects.filter(date=i["date"],
 #                                                                                          fk_subjects_id=j[
-#                                                                                              'fk_subjects'],
+#                                                                                              "fk_subjects"],
 #                                                                                          attendance_status="P").count()
 #                 subject_list_data.append(subject_dict)
 #                 subject_dict = {}
-#             dict_data['subject_attendance_count'] = subject_list_data
+#             dict_data["subject_attendance_count"] = subject_list_data
 #             subject_list_data = []
 #             list_data.append(dict_data)
 #             dict_data = {}
@@ -664,21 +664,21 @@ filter it on only main filter
 #         student_attendance_obj = StudentAttendance.objects.filter(fk_course_id=course, fk_semesters_id=semesters,
 #                                                                  fk_sections_id=sections, fk_subjects_id=subject,
 #                                                                  date__range=[chart_from_date, chart_to_date]).order_by(
-#             '-date')
-#         distinct_date_obj = student_attendance_obj.values('date', 'fk_subjects', 'fk_subjects__subjects').distinct()
+#             "-date")
+#         distinct_date_obj = student_attendance_obj.values("date", "fk_subjects", "fk_subjects__subjects").distinct()
 #         for i in distinct_date_obj:
-#             dict_data['date'] = i['date']
-#             distinct_subject_obj = StudentAttendance.objects.filter(date=i['date'], fk_subjects_id=subject).values(
-#                 'fk_subjects', 'fk_subjects__subjects').distinct()
+#             dict_data["date"] = i["date"]
+#             distinct_subject_obj = StudentAttendance.objects.filter(date=i["date"], fk_subjects_id=subject).values(
+#                 "fk_subjects", "fk_subjects__subjects").distinct()
 #             for j in distinct_subject_obj:
-#                 subject_dict['subject_id'] = j['fk_subjects']
-#                 subject_dict['subject_name'] = j['fk_subjects__subjects']
-#                 subject_dict['subject_attendance_count'] = str(
-#                     StudentAttendance.objects.filter(date=i['date'], fk_subjects_id=subject,
+#                 subject_dict["subject_id"] = j["fk_subjects"]
+#                 subject_dict["subject_name"] = j["fk_subjects__subjects"]
+#                 subject_dict["subject_attendance_count"] = str(
+#                     StudentAttendance.objects.filter(date=i["date"], fk_subjects_id=subject,
 #                                                      attendance_status="P").count())
 #                 subject_list_data.append(subject_dict)
 #                 subject_dict = {}
-#             dict_data['subject_attendance_count'] = subject_list_data_data
+#             dict_data["subject_attendance_count"] = subject_list_data_data
 #             subject_list_data_data = []
 #             list_data_data.append(dict_data)
 #             dict_data = {}
