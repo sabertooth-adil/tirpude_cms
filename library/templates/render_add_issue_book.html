@@ -1,0 +1,58 @@
+<div class="content" style="padding: 10px !important;">
+    <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+        <h1 class="flex-sm-fill h6 my-2" id="h2">Allow Books : 6&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            Issued Books : <span id="issued_copies">{{ book_issue_copies_obj }} </span></h1>
+    </div>
+</div>
+
+<div class="col">
+    <div class="show showInbox">
+        <div class="table-responsive" id="AddStudentBookTable_Div">
+            <table class="table table-vcenter" id="mydatatable">
+                <thead class="thead-light">
+                <tr>
+                    <th style="width: 7%;">Sr No.</th>
+                    <th style="width: 20%">Title</th>
+                    <th style="width: 15%">Author</th>
+                    <th style="width: 15%">Subject</th>
+                    <th style="width: 8%">ISBN</th>
+                    <th class="text-center" scope="col" style="width: 10%">Issue Date</th>
+                    <th class="text-center" scope="col" style="width: 8%">Due Date</th>
+                    <th class="text-center" scope="col" style="width: 7%">Action</th>
+                </tr>
+                </thead>
+                <tbody id="addappend">
+                {% for i in books_obj %}
+                    <tr>
+                        <td class="text-center font-size-sm">{{ forloop.counter }}</td>
+                        <td class="font-size-sm">{{ i.fk_book_purchase.title }}</td>
+                        <td class="font-size-sm">{{ i.fk_book_purchase.author }}</td>
+                        <td class="font-size-sm">{{ i.fk_book_purchase.subject.subjects }}</td>
+                        <td class="font-size-sm">{{ i.fk_book_purchase.isbn }}</td>
+                        <td class="text-center font-size-sm">{{ i.issue_date|date:"d-M-Y" }}</td>
+                        <td class="text-center font-size-sm">{{ i.due_date|date:"d-M-Y" }}</td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-danger js-tooltip-enabled"
+                                        data-toggle="tooltip" title="" data-original-title="Remove Client"
+                                        onclick="append_delete_book({{ i.id }},this)">
+                                    <i class="fa fa-fw fa-times"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#no_of_copies").html("")
+    $("#no_of_copies").html("{{books_no_copies}}")
+    $("#no_of_issued_copies").html("")
+    $("#no_of_issued_copies").html("{{issue_no_copies}}")
+    $("#no_of_remaining_copies").html("")
+    $("#no_of_remaining_copies").html("{{remaining_copies}}")
+</script>

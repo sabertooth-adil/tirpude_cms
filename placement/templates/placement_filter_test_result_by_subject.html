@@ -1,0 +1,55 @@
+<div class="table-responsive">
+    <table class="table table-vcenter table-bordered" id="mydatatable">
+        <thead style="background-color: #f5f3f3;">
+            <tr>
+                <th class="text-center" style="width: 15% !important;">Student Name</th>
+                <th class="text-center" style="width: 15% !important;">Course</th>
+                <th class="text-center" style="width: 15% !important;">Semester</th>
+                <th class="text-center" style="width: 15% !important;">Sections</th>
+                <th class="text-center" style="width: 15% !important;">Test Status</th>
+                <th class="text-center" style="width: 5% !important;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in apple_company_appearance_obj %}
+                <tr>
+                    <td>
+                        <input type="hidden" id="appledcompanyappearance_id_{{i.id}}" value="{{i.id}}">
+                        <input type="hidden" id="user_id_{{i.id}}" value="{{i.fk_user_info.id}}">
+                        {{i.fk_user_info.first_name}} {{i.fk_user_info.last_name}}</td>
+                    <td>{{i.fk_academic_info.fk_course.course}}</td>
+                    <td>{{i.fk_academic_info.fk_semesters.semester}}</td>
+                    <td>{{i.fk_academic_info.fk_sections.sections}}</td>
+                    <td>
+                        <select class="form-control form-control-sm" id="test_result_{{i.id}}">
+                            {% if company_appearance_test_result_obj%}
+                                {% for j in company_appearance_test_result_obj %}
+                                    {% if i.fk_user_info.id == j.fk_user_info.id %}
+                                            {% if j.test_status == "Pass" %}
+                                                <option value="Pass" selected>Pass</option>
+                                                <option value="Fail">Fail</option>
+                                            {% elif j.test_status == "Fail" %}
+                                                <option value="Pass">Pass</option>
+                                                <option value="Fail" selected>Fail</option>
+                                            {% else %}
+                                                <option value="" selected hidden>Select Test Result</option>
+                                                <option value="Pass">Pass</option>
+                                                <option value="Fail">Fail</option>
+                                            {% endif %}
+                                        </select>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <option value="" selected hidden>Select Test Result</option>
+                                <option value="Pass">Pass</option>
+                                <option value="Fail">Fail</option>
+                            {% endif %}
+                    </td>
+                    <td>
+                        <buttton class="btn btn-warning btn-sm" onclick="SaveTestResult({{i.id}},{{i.fk_user_info.id}})">Save</buttton>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,38 @@
+<table class="table table-vcenter">
+    <thead class="thead-light">
+    <tr>
+        <th class="text-center" style="width: 10% !important;">Sr No.</th>
+        <th>Roll No.</th>
+        <th>Student Name</th>
+        <th class="text-center" style="width: 10%;">Action</th>
+        <th class="text-center" style="width: 10%;">View Detail</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for i in academic_info_obj %}
+    <tr>
+        <td class="text-center font-size-sm">{{forloop.counter}}</td>
+        <td>{{i.roll_no}}</td>
+        <td scope="row">
+            <div class="media align-items-center">
+                <div class="media-body">
+                    <span class="mb-0 text-sm">{{i.fk_user_info.first_name}} {% if i.fk_user_info.middle_name %} {{i.fk_user_info.middle_name}}{% endif %} {{i.fk_user_info.last_name}}</span>
+                </div>
+            </div>
+        </td>
+        <td>
+            <label class="switch">
+                <div class="custom-control custom-switch custom-control-lg mb-2">
+                    <input type="checkbox" class="custom-control-input" id="PresentAbsentButton"
+                           name="PresentAbsentButton" value="{{i.fk_user_info.id}}" checked>
+                    <label class="custom-control-label switch-lg" for="example-sw-custom-lg1"></label>
+                </div>
+            </label>
+        </td>
+        <td class="text-right">
+            <a class="btn btn-outline-primary btn-sm" href="#" onclick="StudentAttendanceDeatil({{i.fk_user_info.id}})">View Detail</a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

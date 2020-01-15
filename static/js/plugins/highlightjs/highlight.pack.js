@@ -15264,7 +15264,7 @@ hljs.registerLanguage('verilog', function(hljs) {
       'if iff ifnone ignore_bins illegal_bins implements implies import incdir include ' +
       'initial inout input inside instance int integer interconnect interface intersect ' +
       'join join_any join_none large let liblist library local localparam logic longint ' +
-      'macromodule matches medium modport module nand negedge nettype new nexttime nmos ' +
+      'macromodule matches medium modport module nand negedge nettype new next_time nmos ' +
       'nor noshowcancelled not notif0 notif1 or output package packed parameter pmos ' +
       'posedge primitive priority program property protected pull0 pull1 pulldown pullup ' +
       'pulsestyle_ondetect pulsestyle_onevent pure rand randc randcase randsequence rcmos ' +

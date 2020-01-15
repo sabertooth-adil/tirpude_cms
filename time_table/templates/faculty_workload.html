@@ -1,0 +1,233 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+{#{% for u in  user_operation_obj %}#}
+{#{% if u.fk_screen.screen_url == "faculty_workload" %}#}
+{#{% if u.view_data == "Y" %}#}
+<style>
+.card .table td, .card .table th {
+     padding-left: 0px !important;;
+     padding-right: 0px !important;;
+}
+.table th, .table td {
+    padding: 2px !important;
+}
+
+</style>
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">My Workload</h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                <button type="button" class="btn btn-sm btn-primary" onclick='printDiv()'><i class="fa fa-print" aria-hidden="true"></i>Print</button>
+                <button type="button" class="btn btn-sm btn-primary" onclick='ExportToExcel({{i.id}})'><i class="fa fa-print" aria-hidden="true"></i> Excel</button>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <div class="block" id="TableList_Div">
+        <div class="block-header">
+            <h3 class="block-title">{{user_info_obj.first_name}} {{user_info_obj.last_name}}</h3>
+        </div>
+        <div class="block-content block-content-full" style="padding: 10px !important;">
+            <div class="tab-content">
+                <div class="tab-content">
+                    <div id="MondayInfo" class="tab-pane fade active show">
+                        <div class="card-body table-responsive">
+                            <table class="table table-bordered table-vcenter"  id="mytable" style="text-align:center;">
+                                <thead class="thead-light">
+                                <tr id="innertable">
+                                    <th style="width: 10%;font-weight: bold;font-size: 13px;">Time/Day</th>
+                                    {% if time_table_detail_monday_obj %}
+                                    <th style="font-weight: bold;font-size: 13px;" scope="col">Monday</th>
+                                    {% endif %}
+                                    {% if time_table_detail_tuesday_obj %}
+                                    <th style="font-weight: bold;font-size: 13px;" scope="col">Tuesday</th>
+                                    {% endif %}
+                                    {% if time_table_detail_wednesday_obj %}
+                                    <th style="font-weight: bold;font-size: 13px;" scope="col">Wednesday</th>
+                                    {% endif %}
+                                    {% if time_table_detail_thursday_obj %}
+                                    <th style="font-weight: bold;font-size: 13px;" scope="col">Thursday</th>
+                                    {% endif %}
+                                    {% if time_table_detail_friday_obj %}
+                                    <th style="font-weight: bold;font-size: 13px;" scope="col">Friday</th>
+                                    {% endif %}
+                                    {% if time_table_detail_saturday_obj %}
+                                    <th style="font-weight: bold;font-size: 13px;" scope="col">Saturday</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for t in list_data %}
+                                <tr>
+                                    <th>{{t.time|date:'h:i A'}} to {{t.next_time|date:'h:i A'}}</th>
+                                    {% if time_table_detail_monday_obj %}
+                                    <td id="innertable">
+                                        <table class="borderless" style="text-align:center;width: 100% !important;">
+
+                                            {% for i in time_table_detail_monday_obj %}
+                                            {% if t.time >= i.fk_time_start.time and t.next_time <= i.fk_time_end.time %}
+
+                                            <tr>
+                                                {% if i.lecture_break == "Break" %}
+                                                <td style="background: gainsboro;">BREAK</td>
+                                                {% else %}
+                                                <td>
+                                                    {{i.fk_subjects.subjects}}<br>
+                                                    {{i.fk_timetable_master.fk_course.course}} - Sem
+                                                    {{i.fk_timetable_master.fk_semesters.semester}} - Section
+                                                    {{i.fk_timetable_master.fk_sections.sections}}
+                                                </td>
+                                                {% endif %}
+                                            </tr>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </table>
+                                    </td>
+                                    {% endif %}
+                                    {% if time_table_detail_tuesday_obj %}
+                                    <td id="innertable">
+                                        <table class="borderless" style="text-align:center;width: 100% !important;">
+                                            {% for i in time_table_detail_tuesday_obj %}
+                                            {% if t.time >= i.fk_time_start.time and t.next_time <= i.fk_time_end.time%}
+                                            <tr>
+                                                {% if i.lecture_break == "Break" %}
+                                                <td style="background: gainsboro;">BREAK</td>
+                                                {% else %}
+                                                <td>
+                                                    {{i.fk_subjects.subjects}}<br>
+                                                    {{i.fk_timetable_master.fk_course.course}} - Sem
+                                                    {{i.fk_timetable_master.fk_semesters.semester}} - Section
+                                                    {{i.fk_timetable_master.fk_sections.sections}}
+                                                </td>
+                                                {% endif %}
+                                            </tr>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </table>
+                                    </td>
+                                    {% endif %}
+                                    {% if time_table_detail_wednesday_obj %}
+                                    <td id="innertable">
+                                        <table class="borderless" style="text-align:center;width: 100% !important;">
+                                            {% for i in time_table_detail_wednesday_obj %}
+                                            {% if t.time >= i.fk_time_start.time and t.next_time <= i.fk_time_end.time%}
+                                            <tr>
+                                                {% if i.lecture_break == "Break" %}
+                                                <td style="background: gainsboro;">BREAK</td>
+                                                {% else %}
+                                                <td>
+                                                    {{i.fk_subjects.subjects}}<br>
+                                                    {{i.fk_timetable_master.fk_course.course}} - Sem
+                                                    {{i.fk_timetable_master.fk_semesters.semester}} - Section
+                                                    {{i.fk_timetable_master.fk_sections.sections}}
+                                                </td>
+                                                {% endif %}
+                                            </tr>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </table>
+                                    </td>
+                                    {% endif %}
+                                    {% if time_table_detail_thursday_obj %}
+                                    <td id="innertable">
+                                        <table class="borderless" style="text-align:center;width: 100% !important;">
+                                            {% for i in time_table_detail_thursday_obj %}
+                                            {% if t.time >= i.fk_time_start.time and t.next_time <= i.fk_time_end.time%}
+                                            <tr>
+                                                {% if i.lecture_break == "Break" %}
+                                                <td style="background: gainsboro;">BREAK</td>
+                                                {% else %}
+                                                <td>
+                                                    {{i.fk_subjects.subjects}}<br>
+                                                    {{i.fk_timetable_master.fk_course.course}} - Sem
+                                                    {{i.fk_timetable_master.fk_semesters.semester}} - Section
+                                                    {{i.fk_timetable_master.fk_sections.sections}}
+                                                </td>
+                                                {% endif %}
+                                            </tr>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </table>
+                                    </td>
+                                    {% endif %}
+                                    {% if time_table_detail_friday_obj %}
+                                    <td id="innertable">
+                                        <table class="borderless" style="text-align:center;width: 100% !important;">
+                                            {% for i in time_table_detail_friday_obj %}
+                                            {% if t.time >= i.fk_time_start.time and t.next_time <= i.fk_time_end.time%}
+                                            <tr>
+                                                {% if i.lecture_break == "Break" %}
+                                                <td style="background: gainsboro;">BREAK</td>
+                                                {% else %}
+                                                <td>
+                                                    {{i.fk_subjects.subjects}}<br>
+                                                    {{i.fk_timetable_master.fk_course.course}} - Sem
+                                                    {{i.fk_timetable_master.fk_semesters.semester}} - Section
+                                                    {{i.fk_timetable_master.fk_sections.sections}}
+                                                </td>
+                                                {% endif %}
+                                            </tr>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </table>
+                                    </td>
+                                    {% endif %}
+                                    {% if time_table_detail_saturday_obj %}
+                                    <td id="innertable">
+                                        <table class="borderless" style="text-align:center;width: 100% !important;">
+                                            {% for i in time_table_detail_saturday_obj %}
+                                            {% if t.time >= i.fk_time_start.time and t.next_time <= i.fk_time_end.time%}
+                                            <tr>
+                                                {% if i.lecture_break == "Break" %}
+                                                <td style="background: gainsboro;">BREAK</td>
+                                                {% else %}
+                                                <td>
+                                                    {{i.fk_subjects.subjects}}<br>
+                                                    {{i.fk_timetable_master.fk_course.course}} - Sem
+                                                    {{i.fk_timetable_master.fk_semesters.semester}} - Section
+                                                    {{i.fk_timetable_master.fk_sections.sections}}
+                                                </td>
+                                                {% endif %}
+                                            </tr>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </table>
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$(document).ready(function () {
+	$('#TimeTableMainNavPage').addClass('open');
+	$('#FacultyWorkloadNavPage').addClass('active');
+});
+function printDiv(id){
+    var divToPrint=document.getElementById('TableList_Div');
+    var htmlToPrint = '';
+    htmlToPrint += divToPrint.outerHTML;
+    newWin = window.open("");
+    newWin.document.write('<style>#innertable{border:1px solid #000;padding:0.5em;}#mytable th{border:1px solid #000;padding:0.5em;}</style>');
+    newWin.document.write(htmlToPrint);
+    newWin.print();
+    newWin.close();
+}
+function ExportToExcel(id){
+    window.open('data:application/vnd.ms-excel,' +  encodeURIComponent($('#TableList_Div').html())).preventDefault();
+}
+</script>
+{#{% endif %}#}
+{#{% endif %}#}
+{#{% endfor %}#}
+{% endblock content %}

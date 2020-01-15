@@ -1,0 +1,343 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+{#{% for u in  user_operation_obj %}#}
+{#{% if u.fk_module.module_url == "authenticate_user" %}#}
+{#{% if u.view_data == "Y" %}#}
+<style>
+.content .block, .content .items-push>div, .content .push, .content p{
+    margin-bottom: 0px !important;
+}
+    .nu-orange-button {
+        padding: 3px 6px 3px 6px;
+    }
+    .nu-orange-button:hover {
+        padding: 3px 6px 3px 6px;
+    }
+</style>
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">Authenticate User</h1>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <div class="row">
+        <div class="col-6 col-md-3 col-lg-6 col-xl-3" style="margin-bottom: 1%;">
+            <a class="block block-rounded block-link-pop border-left border-primary border-4x"
+               href="javascript:void(0)">
+                <div class="block-content block-content-full">
+                    <div class="font-size-sm font-w600 text-uppercase text-muted">User Type</div>
+                    <div class="font-size-h2 font-w400 text-dark">
+                        <select class="form-control form-control-sm" id="user_type">
+                            <option value="" selected hidden>Select User Type</option>
+                            <option value="">All</option>
+                            {% for i in user_type_obj %}
+                            <option value="{{i.id}}">{{i.user_type}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-3 col-lg-6 col-xl-3">
+            <a class="block block-rounded block-link-pop border-left border-primary border-4x"
+               href="javascript:void(0)">
+                <div class="block-content block-content-full">
+                    <div class="font-size-sm font-w600 text-uppercase text-muted">Status</div>
+                    <div class="font-size-h2 font-w400 text-dark">
+                        <select class="form-control form-control-sm" id="status">
+                            <option value="" selected hidden>Select Status</option>
+                            <option value="">All</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-3 col-lg-6 col-xl-2">
+            <a class="block block-rounded block-link-pop border-left border-primary border-4x"
+               href="javascript:void(0)">
+                <div class="block-content block-content-full">
+                   <div class="font-size-sm font-w600 text-uppercase text-muted">From Date</div>
+                    <div class="font-size-h2 font-w400 text-dark">
+                        <input name="from_date" id="from_date" class="form-control form-control-sm form-control-alternative js-datepicker" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" value="{{from_date|date:'d-m-Y'}}">
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-3 col-lg-6 col-xl-2">
+            <a class="block block-rounded block-link-pop border-left border-primary border-4x"
+               href="javascript:void(0)">
+                <div class="block-content block-content-full">
+                     <div class="font-size-sm font-w600 text-uppercase text-muted">To Date</div>
+                    <div class="font-size-h2 font-w400 text-dark">
+                        <input name="to_date" id="to_date" class="form-control form-control-sm form-control-alternative js-datepicker" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" value="{{to_date|date:'d-m-Y'}}">
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-3 col-lg-6 col-xl-2" style="padding-left: 0px; padding-right: 0px;">
+            <a href="javascript:void(0)">
+                <div class="block-content block-content-full">
+                    <div class="font-size-h2 font-w400 text-dark">
+                        <button class="btn btn-warning submit-btn btn-block" onclick="filter_authenticate_user()"><i
+                                class="fa fa-filter" aria-hidden="true"></i> Filter
+                        </button>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <div class="block">
+        <div class="block-content block-content-full">
+            <div class="table-responsive" id="filterresult_data">
+                <table class="table table-vcenter" id="mydatatable">
+                    <thead class="thead-light">
+                    <tr>
+                        <th class="text-center" style="width: 7%;">Sr. No.</th>
+                        <th style="width: 8%;">User Type</th>
+                        <th style="width: 5%;">Status</th>
+                        <th style="width: 20%;">Name</th>
+                        <th style="width: 5%;">Detail</th>
+                        <th style="width: 7%;">Reg date</th>
+{#                        {% for u in  user_operation_obj %}#}
+{#                            {% if u.fk_module.module_url == "authenticate_user" %}#}
+{#                                {% if u.edit_data == "Y" %}#}
+                                    <th class=" " style="width: 10%;">User Role</th>
+{#                                {% endif %}#}
+{#                                {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                                    <th class=" " style="width: 5%;">Action</th>
+{#                                {% endif %}#}
+{#                            {% endif %}#}
+{#                        {% endfor %}#}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in user_info_detail_obj %}
+                        <tr>
+                            <td class=" text-center font-size-sm">{{forloop.counter}}</td>
+                            <td class="  font-size-sm">{{i.fk_user_type.user_type}}</td>
+                            <td class="  font-size-sm">
+                                {% if i.status == "Active" %}
+                                <span style="color: green;">{{i.status}}</span>
+                                {% else %}
+                                <span style="color: red;">{{i.status}}</span>
+                                {% endif%}
+                            </td>
+                            <td >{{i.first_name}} {% if i.middle_name %} {{i.middle_name}} {% endif %} {{i.last_name}}</td>
+                            <td class="  font-size-sm">
+                                {% if i.fk_user_type.user_type == "Student" %}
+                                {% for j in academic_info_obj %}
+                                {% if i.id == j.fk_user_info.id %}
+                                Course - {{j.fk_course.course}},<br>
+                                Sem - {{j.fk_semesters.semester}},
+                                Sec - {{j.fk_sections.sections}}
+                                {% endif %}
+                                {% endfor %}
+                                {% else %}
+                                --
+                                {% endif %}
+                            </td>
+                            <td class="  font-size-sm">
+                                {{i.registration_date}}
+                            </td>
+{#                            {% for u in  user_operation_obj %}#}
+{#                                {% if u.fk_module.module_url == "authenticate_user" %}#}
+{#                                    {% if u.edit_data == "Y" %}#}
+                                        <th class="  font-size-sm">
+                                            <div class="btn-group">
+                                                {% if i.fk_user_type.user_type == "Faculty" %}
+                                                    <select name="user_role" class="form-control form-control-sm form-control-alternative" id="userrole_{{i.id}}">
+                                                        <option value="" selected hidden>-Select User Role-</option>
+                                                        {% for j in user_role_obj %}
+                                                            {% if i.fk_user_role.id == j.id %}
+                                                                <option value="{{j.id}}" selected>{{j.user_role}}</option>
+                                                            {% else %}
+                                                                <option value="{{j.id}}">{{j.user_role}}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                    <span style="display:none;color:red;font-size: 12px;" id="err_userrole">Please Select Role</span>
+                                                    <span class="mb-0 text-sm"><button type="button" class="btn btn-sm btn-outline-primary js-tooltip-enabled" onclick="assign_user_role({{i.id}})" style="padding: 0.15rem .4rem;"><i class="fa fa-fw fa-pencil-alt" aria-hidden="true"></i></button></span>
+                                                {% else %}
+                                                --
+                                                {% endif %}
+                                            </div>
+                                        </th>
+{#                                    {% endif %}#}
+{#                                    {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                                        <th class="  font-size-sm">
+                                            <div class="btn-group">
+{#                                                {% if u.edit_data == "Y" %}#}
+                                                    {% if i.fk_user_type.user_type == "Student" %}
+                                                        {% if i.status == "Active" %}
+                                                            <button class="btn btn-outline-primary btn-sm js-tooltip-enabled" onclick="activatedeactivateuser({{i.id}},'{{i.status}}')">Deactivate</button>
+                                                        {% else %}
+                                                            <button class="btn btn-outline-primary btn-sm" onclick="activatedeactivateuser({{i.id}},'{{i.status}}')">Activate</button>
+                                                        {% endif %}
+                                                    {% elif i.fk_user_role %}
+                                                        {% if i.status == "Active" %}
+                                                            <button class="btn btn-outline-primary btn-sm js-tooltip-enabled" onclick="activatedeactivateuser({{i.id}},'{{i.status}}')">Deactivate</button>
+                                                        {% else %}
+                                                            <button class="btn btn-outline-primary btn-sm" onclick="activatedeactivateuser({{i.id}},'{{i.status}}')">Activate</button>
+                                                        {% endif %}
+                                                    {% else %}
+                                                    {% endif %}
+{#                                                {% endif %}#}
+{#                                                {% if u.delete_data == "Y" %}#}
+                                                    <span class="mb-0 text-sm"><button type="button" class="btn btn-sm btn-outline-danger js-tooltip-enabled" onclick="DeleteRequest({{i.id}})"><i class="fa fa-fw fa-times" aria-hidden="true"></i></button></span>
+{#                                                {% endif %}#}
+                                            </div>
+                                        </th>
+{#                                    {% endif %}#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$(document).ready( function () {
+    $('#mydatatable').DataTable();
+	$('#AuthenticateUserNavPage').addClass('active');
+});
+function activatedeactivateuser(id,status){
+    console.log(status)
+    if(status == "Active"){
+        var change_status = "Inactive";
+    }else{
+        var change_status = "Active";
+    }
+    console.log(change_status)
+    swal({
+        title: "Are you sure?",
+        text: "To make this user "+change_status+"!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willDelete) => {
+        if(willDelete) {
+            $.ajax({
+                url: "/activate-deactivate-user/",
+                method: "POST",
+                data: {
+                    "id": id,
+                    "change_status": change_status
+                },
+                success: function (response) {
+                    if (response == "success") {
+                        swal("The user is "+change_status+"!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+            })
+        }
+        else {
+            swal("The User is NOT "+change_status+"!");
+        }
+    });
+}
+
+function filter_authenticate_user(){
+    var user_type = $("#user_type").val();
+    var status = $("#status").val();
+    var to_date = $("#to_date").val();
+    var from_date = $("#from_date").val();
+    $.ajax({
+        url : "/filter-authenticate-user/",
+        method : "POST",
+        data : {
+            "user_type":user_type,
+            "status":status,
+            "to_date":to_date,
+            "from_date":from_date
+        },
+        success : function (response) {
+            console.log(response)
+            $("#filterresult_data").html("");
+            $("#filterresult_data").append(response);
+        }
+    })
+}
+
+function DeleteRequest(id){
+console.log(id)
+    swal({
+        title: "Are you sure?",
+        text: "To delete this Registration Request!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,})
+        .then((willDelete) => {
+        if(willDelete) {
+            $.ajax({
+                url: "/delete-register-request/",
+                method: "POST",
+                data: {
+                    "id": id
+                },
+                success: function (response) {
+                    if (response == "success") {
+                        swal("The Registration Request has been successfully Deleted!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+            })
+        }
+        else {
+            swal("Registration Request is NOT deleted!");
+        }
+    });
+}
+
+function assign_user_role(id) {
+    var user_role = $("#userrole_"+id).val();
+    if(user_role == ""){
+        $("#err_userrole").show();
+    }
+    else{
+        $.ajax({
+            url: "/assign-user-role/",
+            method: "POST",
+            data: {
+                "id": id,
+                "user_role": user_role,
+            },
+            success: function (response) {
+                if (response == "success") {
+                    swal("Role has been assign Successfully!", {
+                        icon: "success",
+                        button: "Ok",
+                        closeOnClickOutside: false,
+                    }).then(function () {
+                        location.reload();
+                    });
+                }
+            }
+        })
+    }
+}
+</script>
+{#{% endif %}#}
+{#{% endif %}#}
+{#{% endfor %}#}
+{% endblock content %}

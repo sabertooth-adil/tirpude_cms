@@ -1,0 +1,27 @@
+{% for i in time_table_detail_obj %}
+{% if i.lecture_break == "Break" %}
+    <tr style="background: gainsboro;">
+        <th>{{i.lecture_break}}</th>
+        <th colspan="4" style="text-align: center;">{{i.fk_time_start.time|date:'h:i A'}} to {{i.fk_time_end.time|date:'h:i A'}}</th>
+        <th><button class="btn btn-sm btn-info" onclick="edit_day_time_table({{i.id}})"><i class="fa fa-fw fa-pencil-alt"></i></button></th>
+    </tr>
+{% else %}
+    <tr>
+        <th>{{i.fk_lecture.lecture}}</th>
+        <th>{{i.fk_subjects.subjects}}</th>
+        <th>{{i.fk_time_start.time|date:'h:i A'}}</th>
+        <th>{{i.fk_time_end.time|date:'h:i A'}}</th>
+        <th>{{i.fk_faculty_user_info1.first_name}} {{i.fk_faculty_user_info1.last_name}}
+            {% if i.fk_faculty_user_info2 %}
+                / {{i.fk_faculty_user_info2.first_name}} {{i.fk_faculty_user_info2.last_name}}
+            {% endif %}
+        </th>
+        <th>
+            <button class="btn btn-sm btn-info" onclick="edit_day_time_table({{i.id}})"><i class="fa fa-fw fa-pencil-alt"></i></button>
+            <button type="button" class="btn btn-sm btn-outline-danger js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Remove Client" onclick="delete_timetable_row({{i.id}},this)">
+                <i class="fa fa-fw fa-times"></i>
+            </button>
+        </th>
+    </tr>
+{% endif%}
+{% endfor %}

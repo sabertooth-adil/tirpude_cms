@@ -1,0 +1,352 @@
+{% extends 'index_base.html' %}
+{% block content %}
+    {% load static %}
+
+    <style>
+        .content .block, .content .items-push > div, .content .push, .content p {
+            margin-bottom: 0px !important;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+
+    <div class="bg-body-light">
+        <div class="content" style="padding: 10px !important;">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+                <h1 class="flex-sm-fill h3 my-2" id="h">Issued Books Report</h1>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static '/js/Chartnew.min.js' %}"></script>
+
+    <style>
+        canvas {
+            height: 400px !important;
+        }
+    </style>
+
+    <div id="BookPurchaseFilter_Div">
+        <div class="content" style="padding: 10px !important;">
+            <div class="block block-rounde ink-pop border-left border-primary border-4x"
+                 href="javascript:void(0)">
+                <div class="block-content block-content-full" style="padding-bottom: 0px !important;">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-xs-2">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">Subject</div>
+                                <div class="font-w400 font-w400 text-dark">
+                                    <select class="form-control form-control-sm" data-style="btn-white"
+                                            data-live-search="true" name="fsubject" id="fsubject"
+                                            onchange="IssueChange()">
+                                        <option value="" selected>Select Subject</option>
+                                        {% for i in books_subject_obj %}
+                                            <option value="{{ i.id }}">{{ i.subjects }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-xs-2">
+                            <div class="form-group tab-responsive">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">Author</div>
+                                <div class="font-w400 font-w400 text-dark">
+                                    <select class="form-control form-control-sm" data-style="btn-white"
+                                            data-live-search="true" name="fauthor" id="fauthor"
+                                            onchange="IssueChangeAuthor()">
+                                        <option value="" selected>Select Author</option>
+                                        {% for i in books_obj %}
+                                            <option value="{{ i.author }}">{{ i.author }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-2 col-xs-2">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">Title</div>
+                                <div class="font-w400 font-w400 text-dark">
+                                    <select class="form-control form-control-sm" data-style="btn-white"
+                                            data-live-search="true" name="ftitle" id="ftitle">
+                                        <option value="" selected>Select Title</option>
+                                        {% for i in books_obj %}
+                                            <option value="{{ i.title }}">{{ i.title }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-xs-2">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">ISBN</div>
+                                <div class="font-w400 text-dark">
+
+                                    <input type="text" maxlength="200" placeholder="Enter ISBN"
+                                           class="form-control form-control-sm form-control-alternative"
+                                           id="fisbn" name="fisbn" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-1 col-md-2 col-xs-2">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">From</div>
+                                <div class="font-w400 text-dark">
+                                    <input name="ffromdate" id="ffromdate"
+                                           class="form-control form-control-sm form-control-alternative js-datepicker"
+                                           data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-1 col-md-2 col-xs-2">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">To</div>
+                                <input name="ftodate" id="ftodate"
+                                       class="form-control form-control-sm form-control-alternative js-datepicker"
+                                       data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
+                            </div>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-xs-1">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">&nbsp;</div>
+                                <div class="font-w400 text-dark">
+                                    <buttton class="btn btn-sm btn-primary submit-btn btn-block" onclick="Filterbook()">
+                                        <i class="fa fa-filter" aria-hidden="true"></i> Filter
+                                    </buttton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content" style="padding: 10px !important;">
+        <div class="block">
+            <br>
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+                <h1 class="flex-sm-fill h3 my-2"></h1>
+                <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                    <button type="button" class="btn btn-sm btn-primary" onclick='printDiv()' id="printbutton"><i
+                            class="fa fa-print" aria-hidden="true"></i>Print
+                    </button>
+                    <button type="button" class="btn btn-sm btn-primary" onclick='printAllDiv()' id="printallbutton"><i
+                            class="fa fa-print" aria-hidden="true"></i>Print All
+                    </button>
+                    <button type="button" class="btn btn-sm btn-primary" id="excelbuttton"
+                            onclick='ExportToExcel({{ i.id }})'><i class="fa fa-print"
+                                                                   aria-hidden="true"></i> Excel
+                    </button>
+                </nav>
+            </div>
+            <br>
+            <!-- col start -->
+            <div class="col">
+                <div class="show showInbox">
+                    <div class="table-responsive" id="ShowBookTable_Div">
+                        <table class="table table-vcenter" id="mytable">
+                            <thead class="thead-light">
+                            <tr>
+                                <th class="text-center" style="width: 7%;" align="left">Sr No.</th>
+                                <th style="width: 20%" align="left">Title</th>
+                                <th style="width: 13%" align="left">Author</th>
+                                <th style="width: 10%" align="left">Subject</th>
+                                <th style="width: 8%" align="left">ISBN</th>
+                                <th class="text-center" scope="col" style="width: 10%" align="left">Student Name</th>
+                                <th class="text-center" scope="col" style="width: 8%" align="left">Date of <br>Issue
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody id="bookissuebody">
+                            {% for i in books_data_obj reversed %}
+                                <tr>
+                                    <td class="text-center font-size-sm">{{ forloop.counter }}</td>
+                                    <td class="font-size-sm">{{ i.fk_book_purchase.title }}</td>
+                                    <td class="font-size-sm">{{ i.fk_book_purchase.author }}</td>
+                                    <td class="font-size-sm">{{ i.fk_book_purchase.subject.subjects }}</td>
+                                    <td class="font-size-sm">{{ i.fk_book_purchase.isbn }}</td>
+                                    <td class="text-center font-size-sm">{{ i.fk_user_info.first_name }}&nbsp;{{ i.fk_user_info.last_name }}</td>
+                                    <td class="text-center font-size-sm">{{ i.issue_date|date:"d-M-Y" }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="show showInbox">
+                    <div class="table-responsive" id="ShowAllBookTable_Div" style="display: none;">
+                        <table class="table table-vcenter" id="bookbodyy">
+                            <thead class="thead-light">
+                            <tr>
+                                <th class="text-center" style="width: 7%;" align="left">Sr No.</th>
+                                <th style="width: 20%" align="left">Title</th>
+                                <th style="width: 13%" align="left">Author</th>
+                                <th style="width: 10%" align="left">Subject</th>
+                                <th style="width: 8%" align="left">ISBN</th>
+                                <th class="text-center" scope="col" style="width: 10%" align="left">Student Name</th>
+                                <th class="text-center" scope="col" style="width: 8%" align="left">Date of <br>Issue
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for i in books_data_obj reversed %}
+                                <tr>
+                                    <td class="text-center font-size-sm">{{ forloop.counter }}</td>
+                                    <td class="font-size-sm">{{ i.fk_book_purchase.title }}</td>
+                                    <td class="font-size-sm">{{ i.fk_book_purchase.author }}</td>
+                                    <td class="font-size-sm">{{ i.fk_book_purchase.subject.subjects }}</td>
+                                    <td class="font-size-sm">{{ i.fk_book_purchase.isbn }}</td>
+                                    <td class="text-center font-size-sm">{{ i.fk_user_info.first_name }}&nbsp;{{ i.fk_user_info.last_name }}</td>
+                                    <td class="text-center font-size-sm">{{ i.issue_date|date:"d-M-Y" }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#mytable').DataTable();
+
+            $('#fauthor').selectpicker({
+                maxOptions: 2
+            });
+            $('#ftitle').selectpicker({
+                maxOptions: 2
+            });
+            $('#fisbn').selectpicker({
+                maxOptions: 2
+            });
+            $('#fsubject').selectpicker({
+                maxOptions: 2
+            });
+        });
+
+        function Filterbook() {
+            author = $("#fauthor").val()
+            title = $("#ftitle").val()
+            isbn = $("#fisbn").val()
+            subject = $("#fsubject").val()
+            fromdate = $("#ffromdate").val()
+            todate = $("#ftodate").val()
+            $.ajax({
+                url: "/filter-issued-book-report/",
+                method: "POST",
+                data: {
+                    "author": author,
+                    "title": title,
+                    "isbn": isbn,
+                    "subject": subject,
+                    "issue_from_date": fromdate,
+                    "issue_to_date": todate,
+                },
+                success: function (response) {
+                    console.log(response)
+                    $("#ShowBookTable_Div").html("")
+                    $("#ShowBookTable_Div").append(response)
+                }
+            })
+        }
+
+        function IssueChange() {
+            var subject = $("#fsubject").val();
+            $.ajax({
+                method: "POST",
+                url: "/filter-author-title/",
+                data: {
+                    "subject": subject,
+                },
+                success: function (response) {
+                    console.log(response)
+
+                    $("#ftitle").html("")
+                    $("#fauthor").html("")
+                    if (JSON.parse(response).length == 0) {
+                        $("#ftitle").html("<option value='' selected hidden>Title Not Found</option>")
+                        $("#ftitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
+                        $("#fauthor").html("<option value='' selected hidden>Author Not Found</option>")
+                        $("#fauthor").html("<option value='' selected hidden>Select Author</option><option value=''>Select Author</option>")
+                    }
+                    else {
+                        $("#ftitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
+                        $("#fauthor").html("<option value='' selected hidden>Select Author</option><option value=''>Select Author</option>")
+                    }
+                    for (i = 0; i < JSON.parse(response).length; i++) {
+                        tit = document.createElement('option');
+                        tit.value = JSON.parse(response)[i][1]
+                        tit.innerHTML = JSON.parse(response)[i][1]
+                        $("#ftitle").append(tit).selectpicker('refresh');
+                        auth = document.createElement('option');
+                        auth.value = JSON.parse(response)[i][2]
+                        auth.innerHTML = JSON.parse(response)[i][2]
+                        $("#fauthor").append(auth).selectpicker('refresh');
+                    }
+                }
+            })
+        }
+
+        function IssueChangeAuthor() {
+            var fauthor = $("#fauthor").val();
+            $.ajax({
+                method: "POST",
+                url: "/filter-title/",
+                data: {
+                    "author": fauthor,
+                },
+                success: function (response) {
+                    console.log(response)
+                    $("#ftitle").html("")
+                    if (JSON.parse(response).length == 0) {
+                        $("#ftitle").html("<option value='' selected hidden>Title Not Found</option>")
+                        $("#ftitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
+                    }
+                    else {
+                        $("#ftitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
+                    }
+                    for (i = 0; i < JSON.parse(response).length; i++) {
+                        tit = document.createElement('option');
+                        tit.value = JSON.parse(response)[i][1]
+                        tit.innerHTML = JSON.parse(response)[i][1]
+                        $("#ftitle").append(tit).selectpicker('refresh');
+                    }
+                }
+            })
+        }
+
+        function printAllDiv(id) {
+            $("#ShowBookTable_Div").hide(0).delay(0).show(0)
+            $("#ShowAllBookTable_Div").show(0).delay(0).hide(0);
+            $("#bookbodyy").printThis({
+                orientation: 'Landscape',
+                importCSS: true,
+                header: '<h6 align="center" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Issued Books Report</h6>',
+            });
+        }
+
+        function ExportToExcel(id) {
+            var htmltable = document.getElementById('bookbodyy');
+            var html = htmltable.outerHTML;
+            window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
+        }
+
+        function printDiv(id) {
+            // $(".navhide").hide(0).delay(500).show(0)
+            $("#mytable").printThis({
+                orientation: 'Landscape',
+                importCSS: true,
+                header: '<h6 align="center" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Issued Books Report</h6>',
+            });
+        }
+
+    </script>
+{% endblock content %}

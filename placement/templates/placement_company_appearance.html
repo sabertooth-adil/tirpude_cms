@@ -1,0 +1,249 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+<style>
+    .content .block, .content .items-push > div, .content .push, .content p {
+        margin-bottom: 0px !important;
+    }
+
+    .nu-orange-button {
+        padding: 3px 6px 3px 6px;
+    }
+
+    .nu-orange-button:hover {
+        padding: 3px 6px 3px 6px;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+<a href="http://127.0.0.1:8070/media/Placement_Apply_Student/Student_Apply.csv" style="display: none" id="Download_Csv_File"></a>
+<div id="AttendanceDetailPage_div">
+    <div class="content" style="padding: 10px !important;">
+        <a class="block block-rounded block-link-pop border-left border-primary border-4x" style="width: 100%;margin-bottom: 0rem;">
+            <div class="block-content block-content-full" style="padding-bottom: 0px !important;">
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-xs-2">
+                        <div class="form-group tab-responsive">
+                            <div class="font-size-sm font-w600 text-uppercase text-muted">Company Name </div>
+                            <div class="font-w400 text-dark">
+                                <select class="form-control form-control-sm" id="filter_company_name">
+                                    <option value="" selected hidden>Select Course</option>
+                                    {% for i in company_obj %}
+                                    <option value="{{i.id}}">{{i.company_name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <span style="display:none;color:red;font-size: 12px;" id="err_filter_company_name">Please Select Company Name</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2">
+                        <div class="form-group">
+                            <div class="font-size-sm font-w600 text-uppercase text-muted">Company Type</div>
+                            <div class="font-w400 text-dark">
+                                <select class="form-control form-control-sm" id="filter_company_type">
+                                    <option value="" selected hidden>Select Company Type</option>
+                                    {% for i in company_type_obj %}
+                                    <option value="{{i.id}}">{{i.company_type}}</option>
+                                    {% endfor %}
+                                </select>
+                                <span style="display:none;color:red;font-size: 12px;" id="err_filter_company_name">Please Select Company Type</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2">
+                        <div class="form-group">
+                            <div class="font-size-sm font-w600 text-uppercase text-muted">Company Location </div>
+                            <div class="font-w400 text-dark">
+                                <select class="form-control form-control-sm" id="filter_company_location">
+                                    <option value="" selected hidden>Select Company Location</option>
+                                    {% for i in sections_obj %}
+                                    <option value="{{i.id}}">{{i.sections}}</option>
+                                    {% endfor %}
+                                </select>
+                                <span style="display:none;color:red;font-size: 12px;" id="err_filter_company_location">Please Select Company Location</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2">
+                        <div class="form-group">
+                            <div class="font-size-sm font-w600 text-uppercase text-muted">Job Type</div>
+                            <div class="font-w400 text-dark">
+                                <select class="form-control form-control-sm" id="filter_job_type">
+                                    <option value="" selected hidden>Select Job Type</option>
+                                    {% for i in job_type_obj %}
+                                    <option value="{{i.id}}">{{i.job_type}}</option>
+                                    {% endfor %}
+                                </select>
+                                <span style="display:none;color:red;font-size: 12px;" id="err_filter_job_type">Please Select Job Type</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-xs-6">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-xs-6">
+                                <div class="form-group">
+                                    <div class="font-size-sm font-w600 text-uppercase text-muted">From Date</div>
+                                    <div class="font-w400 text-dark">
+                                        <input name="filter_from_date" id="filter_from_date"
+                                               class="form-control form-control-sm form-control-alternative datepicker"
+                                               data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
+                                        <span style="display:none;color:red;" id="err_filter_from_date">Please Select From Date</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-xs-6">
+                                <div class="form-group">
+                                    <div class="font-size-sm font-w600 text-uppercase text-muted">To Date</div>
+                                    <div class="font-w400 text-dark">
+                                        <input name="filter_to_date" id="filter_to_date"
+                                               class="form-control form-control-sm form-control-alternative datepicker"
+                                               data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
+                                        <span style="display:none;color:red;" id="err_filter_to_date">Please Select To Date</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-xs-1">
+                        <div class="form-group">
+                            <div class="font-size-sm font-w600 text-uppercase text-muted"></div>
+                            <div class="font-w400 text-dark">
+                               <buttton class="btn btn-warning nu-orange-button submit-btn btn-block btn-sm" onclick="FilterCompanyAppearances()" style="margin: 10px;">
+                                   <i class="fa fa-filter" aria-hidden="true"></i> Filter
+                               </buttton>
+                            </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="content" style="padding: 10px !important;">
+        <div class="block">
+            <div class="block-content block-content-full" id="FilterCompanyAppearances_Div">
+                <div class="table-responsive">
+                    <table class="table table-vcenter" id="mydatatable">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Company Name</th>
+                                <th>Company Type</th>
+                                <th>Company Location</th>
+                                <th>Job Title</th>
+                                <th style="width: 12% !important;">Date</th>
+                                <th>Excel</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in company_obj %}
+                            <tr>
+                                <td class="font-w600 font-size-sm">{{ i.company_name }}</td>
+                                <td class="font-w600 font-size-sm">{{ i.fk_company_type.company_type }}</td>
+                                <td class="font-w600 font-size-sm">{{ i.company_location }}</td>
+                                <td>
+                                {% for j in company_appearance_obj %}
+                                    {% if i.id == j.fk_company.id %}
+                                            <table class="table table-vcenter table-borderless" style="background-color: #ffffff;margin-bottom: 0.5rem;">
+                                                <tr>
+                                                    <td>
+                                                        {% if j.fk_company_appearance_job_type_detail_list.all %}
+                                                            {% for k in j.fk_company_appearance_job_type_detail_list.all %}
+                                                                {% for l in k.fk_job_type.all %}
+                                                                    {{ l.job_type }},
+                                                                {% endfor %}
+                                                            {% endfor %}
+                                                        {% else %}
+                                                            Job Title Not Define
+                                                        {% endif %}</br>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                    {% endif %}
+                                {% endfor %}
+                                </td>
+                                <td>
+                                {% for j in company_appearance_obj %}
+                                    {% for k in list_data %}
+                                        {% if j.id == k.company_appearance_id and i.id == j.fk_company.id%}
+                                            <table class="table table-vcenter table-borderless" style="background-color: #ffffff;margin-bottom: 0.5rem;">
+                                                    <tr>
+                                                        <td>
+                                                            {{k.min_date|date:'d-m-Y'}} to {{k.max_date|date:'d-m-Y'}}</br>
+                                                        </td>
+                                                    </tr>
+                                            </table>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                                </td>
+                                <td>
+                                    {% for j in company_appearance_obj %}
+                                    {% if i.id == j.fk_company.id %}
+                                            <table class="table table-vcenter table-borderless" style="background-color: #ffffff;margin-bottom: 0rem;">
+                                                <tr>
+                                                    <td>
+                                                       <button type="button" class="btn btn-sm btn-outline-primary js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Edit Client" onclick="download_excel_file({{j.id}})">Excel</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                    {% endif %}
+                                {% endfor %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'edit-company-appearances' id=i.id %}"><button type="button" class="btn btn-sm btn-outline-danger js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Remove Client">View Detail</button></a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#PlacementMainNavPage').addClass('open');
+        $('#CompanyAppearanceNavPage').addClass('active');
+        $(".datepicker").datepicker({autoclose: true});
+        $('#mydatatable').DataTable();
+    });
+    function download_excel_file(id) {
+        $.ajax({
+            url : "/download-excel-file/",
+            method : "POST",
+            data : {
+                "id" : id,
+            },
+            success : function (response) {
+                console.log(response)
+                var href = $('#Download_Csv_File').attr('href');
+                window.location.href = href;
+            }
+        })
+    }
+    function FilterCompanyAppearances() {
+        var filter_company_name = $("#filter_company_name").val();
+        var filter_company_type = $("#filter_company_type").val();
+        var filter_company_location = $("#filter_company_location").val();
+        var filter_job_type = $("#filter_job_type").val();
+        var filter_from_date = $("#filter_from_date").val();
+        var filter_to_date = $("#filter_to_date").val();
+        $.ajax({
+            url : "/filter-company-appearances/",
+            method : "POST",
+            data : {
+                "filter_company_name" : filter_company_name,
+                "filter_company_type" : filter_company_type,
+                "filter_company_location" : filter_company_location,
+                "filter_job_type" : filter_job_type,
+                "filter_from_date" : filter_from_date,
+                "filter_to_date" : filter_to_date,
+            },
+            success : function(response){
+                $("#FilterCompanyAppearances_Div").html("");
+                $("#FilterCompanyAppearances_Div").append(response);
+            }
+        })
+    }
+</script>
+{% endblock content %}

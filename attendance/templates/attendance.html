@@ -1,0 +1,393 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+{#{% for u in user_operation_obj %}#}
+{#{% if u.fk_module.module_url == "Attendance"%}#}
+{#{% if u.view_data == "Y" %}#}
+<style>
+    .content .block, .content .items-push > div, .content .push, .content p {
+        margin-bottom: 0px !important;
+    }
+
+    .nu-orange-button {
+        padding: 3px 6px 3px 6px;
+    }
+
+    .nu-orange-button:hover {
+        padding: 3px 6px 3px 6px;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+<div id="AttendanceDetailPage_div">
+    <div class="content" style="padding: 10px !important;">
+        <a class="block block-rounded block-link-pop border-left border-primary border-4x"
+           style="width: 100%;margin-bottom: 0rem;">
+            <div class="block-content block-content-full" style="padding-bottom: 0px !important;">
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-xs-2">
+                        <div class="form-group tab-responsive">
+                            <div class="font-size-sm font-w600 text-uppercase text-muted">Course </div>
+                            <div class="font-w400 text-dark">
+                                <select class="form-control form-control-sm" id="course" onchange="GetSubjects()">
+                                    <option value="" selected hidden>Select Course</option>
+                                    {% for i in course_obj %}
+                                    <option value="{{i.id}}">{{i.course}}</option>
+                                    {% endfor %}
+                                </select>
+                                <span style="display:none;color:red;font-size: 12px;"
+                                      id="err_course">Please Select Course</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2">
+                        <div class="form-group">
+                            <div class="font-size-sm font-w600 text-uppercase text-muted">Semesters</div>
+                            <div class="font-w400 text-dark">
+                                <select class="form-control form-control-sm" id="semesters" onchange="GetSubjects()">
+                                    <option value="" selected hidden>Select Semesters</option>
+                                    {% for i in semester_obj %}
+                                    <option value="{{i.id}}">{{i.semester}}</option>
+                                    {% endfor %}
+                                </select>
+                                <span style="display:none;color:red;font-size: 12px;" id="err_semesters">Please Select Semesters</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2">
+                        <div class="form-group">
+                            <div class="font-size-sm font-w600 text-uppercase text-muted">Section</div>
+                            <div class="font-w400 text-dark">
+                                <select class="form-control form-control-sm" id="sections">
+                                    <option value="" selected hidden>Select Section</option>
+                                    {% for i in section_obj %}
+                                    <option value="{{i.id}}">{{i.sections}}</option>
+                                    {% endfor %}
+                                </select>
+                                <span style="display:none;color:red;font-size: 12px;" id="err_sections">Please Select Section</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2">
+                        <div class="form-group">
+                            <div class="font-size-sm font-w600 text-uppercase text-muted">Subject</div>
+                            <div class="font-w400 text-dark">
+                                <select class="form-control form-control-sm" id="subject">
+                                    <option value="" selected hidden>Select Subject</option>
+                                </select>
+                                <span style="display:none;color:red;font-size: 12px;" id="err_subject">Please Select Section</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-xs-6">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-xs-6">
+                                <div class="form-group">
+                                    <div class="font-size-sm font-w600 text-uppercase text-muted">From Date</div>
+                                    <div class="font-w400 text-dark">
+                                        <input name="chart_from_date" id="chart_from_date"
+                                               class="form-control form-control-sm form-control-alternative datepicker"
+                                               data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY"
+                                               value="{{from_date|date:'d-m-Y'}}">
+                                        <span style="display:none;color:red;" id="err_specialization">Please Select From Date</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-xs-6">
+                                <div class="form-group">
+                                    <div class="font-size-sm font-w600 text-uppercase text-muted">To Date</div>
+                                    <div class="font-w400 text-dark">
+                                        <input name="chart_to_date" id="chart_to_date"
+                                               class="form-control form-control-sm form-control-alternative datepicker"
+                                               data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY"
+                                               value="{{to_date|date:'d-m-Y'}}">
+                                        <span style="display:none;color:red;" id="err_semesters">Please Select To Date</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-xs-1">
+                        <div class="form-group">
+                            <div class="font-size-sm font-w600 text-uppercase text-muted"></div>
+                            <div class="font-w400 text-dark">
+                               <buttton class="btn btn-warning nu-orange-button submit-btn btn-block btn-sm" onclick="FilterAttendance()" style="margin: 10px;">
+                                   <i class="fa fa-filter" aria-hidden="true"></i> Filter
+                               </buttton>
+                            </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        <br>
+        <div id="AttandanceDetail_Div">
+        </div>
+    </div>
+</div>
+<div id="SingleStudentDetailPage_Div" style="display: none;">
+</div>
+<script>
+    $(document).ready(function () {
+        $('#AttendanceNavPage').addClass('active');
+        $(".datepicker").datepicker({autoclose: true});
+    });
+
+    function GetSubjects() {
+        var course = $("#course").val();
+        var semesters = $("#semesters").val();
+        $.ajax({
+            method: "POST",
+            url: "/GetSubjects/",
+            data: {
+                "course": course,
+                "semesters": semesters
+            },
+            success: function (response) {
+                console.log(response)
+                $("#subject").html("")
+                if (JSON.parse(response).length == 0) {
+                    $("#subject").html("<option value='' selected hidden>Subjects Not Found</option>")
+                    $("#subject").html("<option value='' selected hidden>Select Subject</option><option value='All'>All</option>")
+                }
+                else {
+                    $("#subject").html("<option value='' selected hidden>Select Subject</option><option value='All'>All</option>")
+                }
+                for (i = 0; i < JSON.parse(response).length; i++) {
+                    cit = document.createElement('option');
+                    cit.value = JSON.parse(response)[i][0]
+                    cit.innerHTML = JSON.parse(response)[i][1]
+                    $("#subject").append(cit)
+                }
+            }
+        })
+    }
+
+    $("#course").change(function () {
+        $("#err_course").hide();
+        $("#AttandanceDetail_Div").hide();
+    });
+    $("#semesters").change(function () {
+        $("#err_semesters").hide();
+        $("#AttandanceDetail_Div").hide();
+    });
+    $("#sections").change(function () {
+        $("#err_sections").hide();
+        $("#AttandanceDetail_Div").hide();
+    });
+    $("#subject").change(function () {
+        $("#err_subject").hide();
+        $("#AttandanceDetail_Div").hide();
+    });
+
+    function FilterAttendance() {
+        var course = $("#course").val();
+        var semesters = $("#semesters").val();
+        var sections = $("#sections").val();
+        var subject = $("#subject").val();
+        var chart_from_date = $("#chart_from_date").val();
+        var chart_to_date = $("#chart_to_date").val();
+        if (course == "") {
+            $("#err_course").show();
+        }
+        else if (semesters == "") {
+            $("#err_semesters").show();
+        }
+        else if (sections == "") {
+            $("#err_sections").show();
+        }
+        else if (subject == "") {
+            $("#err_subject").show();
+        }
+        else {
+            $("#loading").show();
+            $.ajax({
+                method: "POST",
+                url: "/filter-attendance/",
+                data: {
+                    "course": course,
+                    "semesters": semesters,
+                    "sections": sections,
+                    "subject": subject,
+                    "chart_from_date": chart_from_date,
+                    "chart_to_date": chart_to_date,
+                },
+                success: function (response) {
+                    console.log(response)
+                    $("#AttandanceDetail_Div").show();
+                    $("#AttandanceDetail_Div").html("")
+                    $("#AttandanceDetail_Div").append(response)
+                    $("#loading").hide();
+                }
+            })
+        }
+    }
+
+    $("#attendancesubject").change(function () {
+        $("#err_attendancesubject").hide();
+    });
+    $("#attendance_date").change(function () {
+        $("#err_attendancedate").hide();
+    });
+
+    function SaveAttendance() {
+        var absent_student_list = [];
+        var present_student_list = [];
+        var course = $("#course").val();
+        ;
+        var semesters = $("#semesters").val();
+        var sections = $("#sections").val();
+        var subject = $("#attendancesubject").val();
+        var attendance_date = $("#attendance_date").val();
+        $("#PresentAbsentButton:checked").each(function () {
+            present_student_list.push($(this).val());
+        });
+        $("input:checkbox:not(:checked)").each(function () {
+            absent_student_list.push($(this).val());
+        });
+        console.log(absent_student_list)
+        console.log(present_student_list)
+        if (subject == "") {
+            $("#err_attendancesubject").show();
+        }
+        else if (attendance_date == "") {
+            $("#err_attendancedate").show();
+        }
+        else {
+            $("#loading").show();
+            $.ajax({
+                method: "POST",
+                url: "/save-attendance-detail/",
+                data: {
+                    "course": course,
+                    "semesters": semesters,
+                    "sections": sections,
+                    "subject": subject,
+                    "attendance_date": attendance_date,
+                    "absent_student_list[]": absent_student_list,
+                    "present_student_list[]": present_student_list
+                },
+                success: function (response) {
+                    $("#loading").hide();
+                    if (response == "success") {
+                        swal("Attendance Save Succesfully!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                            // location.reload();
+                            FilterAttendance();
+                        });
+                    }
+                    else if (response == "already save") {
+                        swal("Attendance of this subject has been already save. Please filter and update!", {
+                            icon: "error",
+                            button: "Ok"
+                        });
+                    }
+                    else {
+                        swal("Something Want Wrong!", {
+                            icon: "success",
+                            button: "Ok"
+                        });
+                    }
+                }
+            })
+        }
+    }
+
+    function UpdateAttendance() {
+        var absent_student_list = [];
+        var present_student_list = [];
+        var course = $("#course").val();
+        var specialization = $("#specialization").val();
+        var semesters = $("#semesters").val();
+        var sections = $("#sections").val();
+        var subject = $("#attendancesubject").val();
+        var attendance_date = $("#attendance_date").val();
+        $("#PresentAbsentButton:checked").each(function () {
+            present_student_list.push($(this).val());
+        });
+        $("input:checkbox:not(:checked)").each(function () {
+            absent_student_list.push($(this).val());
+        });
+        console.log(absent_student_list)
+        console.log(present_student_list)
+        if (subject == "") {
+            $("#err_subject").show();
+        }
+        else if (attendance_date == "") {
+            $("#err_attendancedate").show();
+        }
+        else {
+            $("#loading").show();
+            $.ajax({
+                method: "POST",
+                url: "/update-attendance-detail/",
+                data: {
+                    "course": course,
+                    "specialization": specialization,
+                    "semesters": semesters,
+                    "sections": sections,
+                    "subject": subject,
+                    "attendance_date": attendance_date,
+                    "absent_student_list[]": absent_student_list,
+                    "present_student_list[]": present_student_list
+                },
+                success: function (response) {
+                    $("#loading").hide();
+                    if (response == "success") {
+                        swal("Attendance Updated Succesfully!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                            // location.reload();
+                            FilterAttendance();
+                        });
+                    }
+                    else if (response == "already save") {
+                        swal("Attendance of this subject has been already save. Please filter and update!", {
+                            icon: "error",
+                            button: "Ok"
+                        });
+                    }
+                    else {
+                        swal("Something Want Wrong!", {
+                            icon: "success",
+                            button: "Ok"
+                        });
+                    }
+                }
+            })
+        }
+    }
+
+    function StudentAttendanceDeatil(id) {
+        console.log(id)
+        $("#loading").show();
+        $.ajax({
+            url: "/single-student-attendance-detail/",
+            method: "POST",
+            data: {
+                "id": id
+            },
+            success: function (response) {
+                console.log(response)
+                $("#AttendanceDetailPage_div").hide();
+                $("#SingleStudentDetailPage_Div").show();
+                $("#SingleStudentDetailPage_Div").html("");
+                $("#SingleStudentDetailPage_Div").append(response);
+                $("#loading").hide();
+            }
+        })
+    }
+
+    function ShowAttendanceDetailPage_div() {
+        $("#AttendanceDetailPage_div").show();
+        $("#SingleStudentDetailPage_Div").hide();
+    }
+</script>
+{#{% endif %}#}
+{#{% endif %}#}
+{#{% endfor %}#}
+{% endblock content %}

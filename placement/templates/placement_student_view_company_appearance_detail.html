@@ -1,0 +1,283 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+<input type="hidden" id="modal_appledcompanyappearance_id" name="modal_appledcompanyappearance_id" value="{{appled_company_appearance_id}}">
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">Company Detail</h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                {% if apply_status == "Apply" and applied_status == "Applied" %}
+                <button type="button" class="btn btn-sm btn-outline-secondary js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Remove Client" onclick="apply_visiting_company_modal_detail({{companyappearance_get_obj.id}})">Update</button>
+                <button class="btn btn-sm btn-outline-danger js-tooltip-enabled" id="Cancelregistration_Button" onclick="Cancelregistration()">Cancel Registration</button>
+                {% elif apply_status == "Apply" and applied_status == "Not Applied" %}
+                <button type="button" class="btn btn-sm btn-outline-success js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Remove Client" onclick="apply_visiting_company_modal_detail({{companyappearance_get_obj.id}})">Apply</button>
+                {% elif apply_status == "Not Apply" %}
+                {% endif %}
+                <a href="/student-company-appearances/"><button class="btn btn-primary btn-sm submit-btn">Back</button></a>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <div class="block">
+        <div class="block-content block-content-full">
+            <div class="block-content block-content-full">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Company Name <span class="text-danger"></span>:</label></br>
+                            <span>{{company_obj.company_name}}</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Company Type <span class="text-danger"></span>:</label></br>
+                            <span>{{company_obj.fk_company_type.company_type}}</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Company Location <span class="text-danger"></span>:</label></br>
+                            <span>{{company_obj.company_location}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-xs-6">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Company Main Address <span class="text-danger"></span>:</label></br>
+                            <span>{{company_obj.company_main_address}}</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 col-xs-6">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Company Other Detail <span class="text-danger"></span>:</label></br>
+                            <span>{% if company_obj.company_other_detail %}{{company_obj.company_other_detail}}{% else %}Not Available{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="block-content block-content-full">
+                <div class="table-responsive">
+                    <table class="table table-vcenter table-bordered" id="mydatatable">
+                        <thead style="background-color: #f5f3f3;">
+                            <tr>
+                                <th class="text-center" style="width: 15% !important;" rowspan="2">Interview Location</th>
+                                <th colspan="3" class="text-center">Job Detail</th>
+                                <th colspan="4" class="text-center">Selection Process Detail</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in company_appearance_obj %}
+                                <tr>
+                                    <td style="width: 15% !important;">{{i.company_interview_location}}</td>
+                                    <td colspan="3" style="width: 30% !important;" style="width: 100%;">
+                                        <table style="width: 100%;">
+                                            <thead style="background-color: #f5f3f3;">
+                                                <th style="width: 10% !important;padding: 0.25rem !important;">Job Type</th>
+                                                <th style="width: 10% !important;padding: 0.25rem !important;">Package</th>
+                                                <th style="width: 10% !important;padding: 0.25rem !important;">Job Location</th>
+                                            </thead>
+                                            <tbody>
+                                                {% for j in i.fk_company_appearance_job_type_detail_list.all %}
+                                                    <tr style="width: 100%;">
+                                                        <td style="width: 10% !important;">{% for k in j.fk_job_type.all %}{{k.job_type}}{% endfor %}</td>
+                                                        <td style="width: 10% !important;">{{j.package}}</td>
+                                                        <td style="width: 10% !important;">{{j.job_location}}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td colspan="4" style="width: 40% !important;" style="width: 100%;">
+                                        <table style="width: 100%;">
+                                            <thead style="background-color: #f5f3f3;">
+                                                <tr>
+                                                    <th style="width: 10% !important;padding: 0.25rem !important;">Test Name</th>
+                                                    <th style="width: 10% !important;padding: 0.25rem !important;">Date</th>
+                                                    <th style="width: 10% !important;padding: 0.25rem !important;">Start Time</th>
+                                                    <th style="width: 10% !important;padding: 0.25rem !important;">End Time</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for j in i.fk_company_appearance_date_time_list.all %}
+                                                    <tr style="width: 100%;">
+                                                        <td style="width: 10% !important;">{{j.fk_selection_process_test.test_name}}</td>
+                                                        <td style="width: 10% !important;">{{j.date|date:'d-m-Y'}}</td>
+                                                        <td style="width: 10% !important;">{{j.start_time|date:'h:i A'}}</td>
+                                                        <td style="width: 10% !important;">{{j.end_time|date:'h:i A'}}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal fade" id="CompanyVisitAddUpdateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" style="text-align: justify;">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Modal Header</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" id="submitapplycompany" method="post" role="form" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="hidden" id="modal_company_visiting_id" name="modal_company_visiting_id">
+                                <div class="row" >
+                                    <div class="col-lg-6 col-sm-6 col-xs-6 padding5px">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Company Name<span style="color:red"></span>:</label></br>
+                                            <span id="modal_company_name"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-6 padding5px">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Company Main Address<span style="color:red"></span>:</label></br>
+                                            <span id="modal_company_main_address"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" >
+                                    <div class="col-lg-6 col-sm-6 col-xs-6 padding5px">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Company Location<span style="color:red"></span>:</label></br>
+                                            <span id="modal_company_location"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-6 padding5px">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Company Type<span style="color:red"></span>:</label></br>
+                                            <span id="modal_company_type"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" data-toggle="custom-file-input" id="modal_student_resume" name="modal_student_resume">
+                                                <label class="custom-file-label" for="modal_student_resume">Choose file</label>
+                                            </div>
+                                            <input type="hidden" id="student_resume">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Resume :</label>
+                                            <a href="" id="student_resume_link"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                                <div class="modal-footer">
+                                    <button class="btn btn-sm btn-outline-danger js-tooltip-enabled" style="display: none;" id="modal_Cancelregistration_Button" onclick="Cancelregistration()">Cancel Registration</button>
+                                    <input type="submit" class="btn btn-sm btn-outline-danger js-tooltip-enabled" form="submitapplycompany" />
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+function apply_visiting_company_modal_detail(id){
+    $("#CompanyVisitAddUpdateModal").modal('show');
+    $.ajax({
+        url : "/apply-visiting-company-modal-detail/",
+        method : "POST",
+        data : {
+            "id":id
+        },
+        success : function(response){
+            console.log(response)
+            $("#modal_company_visiting_id").val(response['list_data'][0]['id'])
+            $("#modal_appledcompanyappearance_id").val(response['list_data'][0]['appled_company_appearance_id'])
+            $("#modal_company_name").html(response['list_data'][0]['company_name'])
+            $("#modal_company_main_address").html(response['list_data'][0]['company_main_address'])
+            $("#modal_company_location").html(response['list_data'][0]['company_location'])
+            $("#modal_company_type").html(response['list_data'][0]['fk_company_type'])
+            $("#student_resume_link").html(response['list_data'][0]['resume_name'])
+            $("#student_resume").html(response['list_data'][0]['resume'])
+            $("#student_resume_link").attr("href",response['list_data'][0]['resume']);
+            if(response['list_data'][0]['applied_status'] == "Applied"){
+              $("#Cancelregistration_Button").show();
+              $("#modal_Cancelregistration_Button").show();
+            }
+        }
+    })
+}
+    $(document).ready(function () {
+        $("#submitapplycompany").submit(function (e) {
+            e.preventDefault();
+
+            var formdata = new FormData();
+            formdata.append("modal_student_resume", $("#modal_student_resume")[0].files[0])
+            formdata.append("modal_company_visiting_id", $("#modal_company_visiting_id").val())
+            console.log(formdata)
+            $.ajax({
+                url: "/apply-visiting-company/",
+                method: "POST",
+                enctype: 'multipart/form-data',
+                async: false,
+                cache: false,
+                contentType: false,
+                enctype: 'multipart/form-data',
+                processData: false,
+                data: formdata,
+                success: function (response) {
+                    $("#CompanyVisitAddUpdateModal").modal('hide');
+                    if (response == "success") {
+                        swal("Applied Succesfully!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+            })
+        })
+    });
+
+    function Cancelregistration() {
+        var modal_appledcompanyappearance_id = $("#modal_appledcompanyappearance_id").val();
+        swal({
+        title: "Are you sure?",
+        text: "To Cancel Registration!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,})
+        .then((willDelete) => {
+        if(willDelete) {
+            $.ajax({
+                url: "/cancel-company-registration/",
+                method: "POST",
+                data: {
+                    "modal_appledcompanyappearance_id": modal_appledcompanyappearance_id
+                },
+                success: function (response) {
+                    if (response == "success") {
+                        swal("The Registration has been Cancel Successfully!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+            })
+        }
+        else {
+            swal("Registration is NOT Cancel!");
+        }
+    });
+    }
+</script>
+{% endblock content %}

@@ -1,0 +1,146 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+<input type="hidden" id="modal_appledcompanyappearance_id" name="modal_appledcompanyappearance_id" value="{{appled_company_appearance_id}}">
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">Company Detail</h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                <a href="{% url 'add-test-result-placement' id=company_appearance_obj.id %}"><button class="btn btn-primary btn-sm submit-btn">Add Test Result</button></a>
+                <a href="{% url 'edit-company-appearances' id=company_appearance_obj.fk_company.id %}"><button class="btn btn-primary btn-sm submit-btn">Back</button></a>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <div class="row">
+        <div class="col-6 col-md-3 col-lg-6 col-xl-3" style="padding-left: 0px;">
+            <a class="block block-rounded block-link-pop border-left border-primary border-4x" href="javascript:void(0)" style="margin-bottom: 0px !important;">
+                <div class="block-content block-content-full">
+                    <div class="font-size-sm font-w600 text-uppercase text-muted">Course</div>
+                    <div class="font-w400 text-dark">
+                        <span>{{company_appearance_obj.fk_company.company_name}}</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-3 col-lg-6 col-xl-3" style="padding-left: 0px;">
+            <a class="block block-rounded block-link-pop border-left border-primary border-4x" href="javascript:void(0)" style="margin-bottom: 0px !important;">
+                <div class="block-content block-content-full">
+                    <div class="font-size-sm font-w600 text-uppercase text-muted">Selection Process Date</div>
+                    <div class="font-w400 text-dark">
+                        <span>{{min_date}} to {{max_date}}</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-3 col-lg-6 col-xl-3" style="padding-left: 0px;">
+            <a class="block block-rounded block-link-pop border-left border-primary border-4x" href="javascript:void(0)" style="margin-bottom: 0px !important;">
+                <div class="block-content block-content-full">
+                    <div class="font-size-sm font-w600 text-uppercase text-muted">No. of Student Attended</div>
+                    <div class="font-w400 text-dark">
+                        <span>{{apple_company_appearance_obj.count}}</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-3 col-lg-6 col-xl-3" style="padding-left: 0px;">
+            <a class="block block-rounded block-link-pop border-left border-primary border-4x" href="javascript:void(0)" style="margin-bottom: 0px !important;">
+                <div class="block-content block-content-full">
+                    <div class="font-size-sm font-w600 text-uppercase text-muted">No. of Student Placed</div>
+                    <div class="font-w400 text-dark">
+                        <span>{{placed_student_count}}</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <div class="block">
+        <div class="block-content block-content-full">
+            <div class="block-content block-content-full">
+                <div class="table-responsive">
+                    <table class="table table-vcenter table-bordered" id="mydatatable">
+                        <thead style="background-color: #f5f3f3;">
+                            <tr>
+                                <th class="text-center" style="width: 15% !important;">Student Name</th>
+                                <th class="text-center" style="width: 15% !important;">Status</th>
+                                <th class="text-center" style="width: 15% !important;">Detail</th>
+                                {% for i in company_appearance_obj.fk_company_appearance_date_time_list.all %}
+                                    <th class="text-center" style="width: 15% !important;">{{i.fk_selection_process_test.test_name}}</th>
+                                {% endfor %}
+                                <th class="text-center" style="width: 5% !important;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in apple_company_appearance_obj %}
+                                <tr>
+                                    <td>{{i.fk_user_info.first_name}} {{i.fk_user_info.last_name}}</td>
+                                    <td>
+                                        <select class="form-control form-control-sm" id="placement_status_{{i.id}}" onchange="SavePlacementStatus({{i.id}})">
+                                            {% if i.placement_status == "Placed" %}
+                                                <option value="Placed" selected>Placed</option>
+                                                <option value="Not Placed">Not Placed</option>
+                                            {% elif i.placement_status == "Not Placed" %}
+                                                <option value="Placed">Placed</option>
+                                                <option value="Not Placed" selected >Not Placed</option>
+                                            {% else %}
+                                                <option value="">Select Placement Status</option>
+                                                <option value="Placed">Placed</option>
+                                                <option value="Not Placed" >Not Placed</option>
+                                            {% endif %}
+                                        </select>
+                                    </td>
+                                    <td>Course : {{i.fk_academic_info.fk_course.course}}<br>Semester : {{i.fk_academic_info.fk_semesters.semester}}<br>Sections : {{i.fk_academic_info.fk_sections.sections}}</td>
+                                    {% for j in company_appearance_obj.fk_company_appearance_date_time_list.all %}
+                                        {% for k in company_appearance_test_result_obj %}
+                                            {% if i.id == k.fk_appled_company_appearance.id and k.fk_selection_process_test.id == j.fk_selection_process_test.id and k.fk_user_info.id == i.fk_user_info.id %}
+                                                <td class="text-center" style="width: 15% !important;">{% if k.test_status %}{{k.test_status}}{% else %}Not Available{% endif %}</td>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                    <td>
+                                        <a href="{% url 'placement-student-performance' id=i.fk_user_info.id %}"><button type="button" class="btn btn-sm btn-outline-secondary js-tooltip-enabled" style="margin-bottom: 5px;">View Detail</button></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#PlacementMainNavPage').addClass('open');
+        $('#CompanyAppearanceNavPage').addClass('active');
+        $(".datepicker").datepicker({autoclose: true});
+        $('#mydatatable').DataTable();
+    });
+    function SavePlacementStatus(id){
+        var placement_status = $("#placement_status_"+id).val();
+        $.ajax({
+            "url" : "/save-placement-status/",
+            "method" : "POST",
+            data  : {
+                "placement_status" : placement_status,
+                "id" : id,
+            },
+            success : function(response){
+                console.log(response)
+                if (response == "success") {
+                        swal("Placement Status has been updated successfully!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                        });
+                    }
+            }
+        })
+    }
+</script>
+{% endblock content %}

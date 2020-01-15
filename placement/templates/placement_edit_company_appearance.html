@@ -1,0 +1,868 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+<style>
+    @media (min-width: 992px) {
+        .modal-lg {
+            max-width: 60% !important;
+        }
+    }
+
+    @media (min-width: 576px) {
+        .modal-dialog {
+            max-width: 75% !important;
+        }
+    }
+    .padding5px {
+        padding-right: 5px !important;
+        padding-left: 5px !important;
+    }
+    .modaltable th {
+        padding: .25rem !important;
+    }
+</style>
+<a href="http://127.0.0.1:8070/media/Placement_Apply_Student/Student_Apply.csv" style="display: none" id="Download_Csv_File"></a>
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">Company Detail</h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                <a href="/company-appearances/"><button class="btn btn-primary btn-sm submit-btn">Back</button></a>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <input type="hidden" id="company_id" name="company_id" value="{{company_obj.id}}">
+    <div class="block">
+        <div class="block-content block-content-full">
+            <div class="row">
+                <div class="col-lg-4 col-sm-4 col-xs-4">
+                    <div class="form-group">
+                        <label class="form-control-label text-right">Company Name <span class="text-danger"></span>:</label></br>
+                        <span>{{company_obj.company_name}}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-4 col-xs-4">
+                    <div class="form-group">
+                        <label class="form-control-label text-right">Company Type <span class="text-danger"></span>:</label></br>
+                        <span>{{company_obj.fk_company_type.company_type}}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-4 col-xs-4">
+                    <div class="form-group">
+                        <label class="form-control-label text-right">Company Location <span class="text-danger"></span>:</label></br>
+                        <span>{{company_obj.company_location}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 col-xs-6">
+                    <div class="form-group">
+                        <label class="form-control-label text-right">Company Main Address <span class="text-danger"></span>:</label></br>
+                        <span>{{company_obj.company_main_address}}</span>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-xs-6">
+                    <div class="form-group">
+                        <label class="form-control-label text-right">Company Other Detail <span class="text-danger"></span>:</label></br>
+                        <span>{% if company_obj.company_other_detail %}{{company_obj.company_other_detail}}{% else %}Not Available{% endif %}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-sm-4 col-xs-4">
+                    <div class="form-group">
+                        <label class="form-control-label text-right">Contact Person 1 Name <span class="text-danger"></span>:</label></br>
+                        <span>{{company_obj.contact_person_one_name}}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-4 col-xs-4">
+                    <div class="form-group">
+                        <label class="form-control-label text-right">Contact Person 1 Email <span class="text-danger"></span>:</label></br>
+                        <span>{{company_obj.contact_person_one_email}}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-4 col-xs-4">
+                    <div class="form-group">
+                        <label class="form-control-label text-right">Contact Person 1 Mobile No. <span class="text-danger"></span>:</label></br>
+                        <span>{{company_obj.contact_person_one_mobile_no}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-sm-4 col-xs-4">
+                    <div class="form-group">
+                        <label class="form-control-label text-right">Contact Person 2 Name <span class="text-danger"></span>:</label></br>
+                        <span>{% if company_obj.contact_person_two_name %}{{company_obj.contact_person_two_name}}{% else %}Not Available{% endif %}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-4 col-xs-4">
+                    <div class="form-group">
+                        <label class="form-control-label text-right">Contact Person 2 Email <span class="text-danger"></span>:</label></br>
+                        <span>{% if company_obj.contact_person_two_email %}{{company_appearance_obj.contact_person_two_email}}{% else %}Not Available{% endif %}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-4 col-xs-4">
+                    <div class="form-group">
+                        <label class="form-control-label text-right">Contact Person 2 Mobile No. <span class="text-danger"></span>:</label></br>
+                        <span>{% if company_obj.contact_person_two_mobile_no %}{{company_appearance_obj.contact_person_two_mobile_no}}{% else %}Not Available{% endif %}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block-content block-content-full">
+            <button type="button" class="btn btn-sm btn-primary" style="float: right;" data-toggle="modal" data-target="#CompanyVisitAddUpdateModal">Add</button>
+            <div class="table-responsive">
+                <table class="table table-vcenter table-bordered" id="mydatatable">
+                    <thead style="background-color: #f5f3f3;">
+                        <tr>
+                            <th class="text-center" style="width: 15% !important;" rowspan="2">Interview Location</th>
+                            <th colspan="3" class="text-center">Job Detail</th>
+                            <th colspan="4" class="text-center">Selection Process Detail</th>
+                            <th style="width: 5% !important;" rowspan="2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in company_appearance_obj %}
+                            <tr>
+                                <td style="width: 15% !important;">{{i.company_interview_location}}</td>
+                                <td colspan="3" style="width: 30% !important;" style="width: 100%;">
+                                    <table style="width: 100%;">
+                                        <thead style="background-color: #f5f3f3;">
+                                            <th style="width: 10% !important;padding: 0.25rem !important;">Job Type</th>
+                                            <th style="width: 10% !important;padding: 0.25rem !important;">Package</th>
+                                            <th style="width: 10% !important;padding: 0.25rem !important;">Job Location</th>
+                                        </thead>
+                                        <tbody>
+                                            {% for j in i.fk_company_appearance_job_type_detail_list.all %}
+                                                <tr style="width: 100%;">
+                                                    <td style="width: 10% !important;">{% for k in j.fk_job_type.all %}{{k.job_type}}{% endfor %}</td>
+                                                    <td style="width: 10% !important;">{{j.package}}</td>
+                                                    <td style="width: 10% !important;">{{j.job_location}}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td colspan="4" style="width: 40% !important;" style="width: 100%;">
+                                    <table style="width: 100%;">
+                                        <thead style="background-color: #f5f3f3;">
+                                            <tr>
+                                                <th style="width: 10% !important;padding: 0.25rem !important;">Test Name</th>
+                                                <th style="width: 10% !important;padding: 0.25rem !important;">Date</th>
+                                                <th style="width: 10% !important;padding: 0.25rem !important;">Start Time</th>
+                                                <th style="width: 10% !important;padding: 0.25rem !important;">End Time</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for j in i.fk_company_appearance_date_time_list.all %}
+                                                <tr style="width: 100%;">
+                                                    <td style="width: 10% !important;">{{j.fk_selection_process_test.test_name}}</td>
+                                                    <td style="width: 10% !important;">{{j.date|date:'d-m-Y'}}</td>
+                                                    <td style="width: 10% !important;">{{j.start_time|date:'h:i A'}}</td>
+                                                    <td style="width: 10% !important;">{{j.end_time|date:'h:i A'}}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td style="width: 5% !important;">
+                                    {% if i.id in company_appearance_not_apply_obj %}
+                                    {% else %}
+                                    <div class="btn-group" style="margin-bottom: 5px;">
+                                        <button type="button" style="padding: .15rem 0.9rem;=" class="btn btn-sm btn-outline-primary js-tooltip-enabled"
+                                                data-toggle="tooltip" title="" data-original-title="Edit Client"
+                                                onclick="edit_visiting_company_detail({{i.id}})">
+                                            <i class="fa fa-fw fa-pencil-alt"></i>
+                                        </button>
+                                        <button type="button" style="padding: .15rem 0.9rem;" class="btn btn-sm btn-outline-danger js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Remove Client" onclick="delete_company({{i.id}})">
+                                            <i class="fa fa-fw fa-times"></i>
+                                        </button>
+                                    </div>
+                                    {% endif %}
+                                    <a href="{% url 'view-company-appearances-detail' id=i.id %}"><button type="button" class="btn btn-sm btn-outline-secondary js-tooltip-enabled" style="margin-bottom: 5px;">View Detail</button></a>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary js-tooltip-enabled" style="padding: .15rem 1.8rem;margin-bottom: 5px;" onclick="download_excel_file({{i.id}})">Excel</button>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal fade" id="CompanyVisitAddUpdateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" style="text-align: justify;">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Company Visiting Details</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="company_visiting_id" name="company_visiting_id">
+                        <div class="row" >
+                            <div class="col-lg-6 col-sm-6 col-xs-6 padding5px">
+                                <div class="form-group">
+                                    <label class="form-control-label">Company Interview Location <span style="color:red">*</span>:</label>
+                                    <textarea class="form-control form-control-sm form-control-alternative" id="company_visiting_interview_address" name="company_visiting_interview_address" maxlength="450"></textarea>
+                                    <span style="display:none;color:red;" id="err_company_visiting_interview_address">Please Enter Company Interview Location</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-xs-6 padding5px">
+                                <div class="form-group">
+                                    <label class="form-control-label">Company Other Detail <span style="color:red"></span>:</label>
+                                    <textarea class="form-control form-control-sm form-control-alternative" id="company_visiting_other_detail" name="company_visiting_other_detail" maxlength="450"></textarea>
+                                    <span style="display:none;color:red;" id="err_company_visiting_other_detail">Please Enter Company Other Detail</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-xs-6 padding5px">
+                                <div class="row">
+                                    <div class="col-lg-4 col-sm-4 col-xs-4 padding5px">
+                                        <input type="hidden" id="company_visiting_job_type_package_job_location_id" name="company_visiting_job_type_package_job_location_id">
+                                        <label class="form-control-label">Job Type <span style="color:red">*</span>:</label>
+                                            <select class="form-control form-control-sm" multiple id="company_visiting_job_type" name="company_visiting_job_type" data-style="btn-white" data-live-search="true">
+                                                <option value="" hidden>Select Faculty</option>
+                                                {% for j in job_type_obj %}
+                                                <option value="{{j.id}}">{{j.job_type}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        <span style="display:none;color:red;" id="err_company_visiting_job_type">Please Select Job Type</span>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-3 col-xs-3 padding5px">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Package <span style="color:red">*</span>:</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control form-control-sm form-control-alternative" id="company_visiting_package" name="company_visiting_package" maxlength="10" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                <div class="input-group-append" style="height: 27px;">
+                                                    <span class="input-group-text">
+                                                        P.A
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span style="display:none;color:red;" id="err_company_visiting_package">Please Enter Package</span>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-3 col-xs-3 padding5px">
+                                        <label class="form-control-label">Job Location <span style="color:red">*</span>:</label>
+                                        <input name="company_visiting_job_location" id="company_visiting_job_location" class="form-control form-control-sm form-control-alternative">
+                                        <span style="display:none;color:red;" id="err_company_visiting_job_location">Please Enter Job Location</span>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-2 col-xs-2 padding5px">
+                                        <buttton class="btn btn-sm btn-success" style="margin-top: 20px;" id="AddCompanyVisitingJobtypePackageJoblocation_Button" onclick="add_company_visiting_job_type_package_job_location()">Add</buttton>
+                                        <buttton class="btn btn-sm btn-success" style="margin-top: 20px;display: none;" id="UpdateCompanyVisitingJobtypePackageJoblocation_Button" onclick="update_company_visiting_job_type_package_job_location()">Update</buttton>
+                                    </div>
+                                </div>
+                                <table class="table table-vcenter modaltable" id="CompanyVisitingJobtypePackageJoblocation" style="margin-top: 10px;">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th>Job Type</th>
+                                        <th>Package</th>
+                                        <th>Job Location</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead >
+                                    <tbody id="CompanyVisitingJobtypePackageJoblocation_Tablebody">
+                                    </tbody>
+                                </table>
+                                <span id="err_CompanyVisitingJobtypePackageJoblocation" style="color: red;display: none;">Please insert one selection process</span>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-xs-6 padding5px">
+                                <div class="row">
+                                    <input type="hidden" id="company_visiting_selection_process_date_time_id" name="company_visiting_selection_process_date_time_id">
+                                    <div class="col-lg-4 col-sm-4 col-xs-4 padding5px">
+                                        <label class="form-control-label">Selection Precess Test <span style="color:red">*</span>:</label></br>
+                                         <select class="form-control form-control-sm" id="company_visiting_selection_process_test" name="company_visiting_selection_process_test" data-style="btn-white" data-live-search="true">
+                                            <option value="" hidden>Select Faculty</option>
+                                            {% for t in selection_process_test_obj %}
+                                            <option value="{{t.id}}">{{t.test_name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <span style="display:none;color:red;font-size: 12px;" id="err_company_visiting_selection_precess_test">Please Select Job Type</span>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-2 col-xs-2 padding5px">
+                                        <label class="form-control-label text-right">Date <span class="text-danger">*</span>:</label>
+                                        <input name="company_visited_date" id="company_visited_date" data-date-start-date="0d" class="form-control form-control-sm form-control-alternative datepicker" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
+                                        <span style="display:none;color:red;font-size: 12px;" id="err_company_visited_date">Please Select date</span>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-6 padding5px">
+                                        <div class="row">
+                                            <div class="col-lg-5 col-sm-5 col-xs-5 padding5px">
+                                                <label class="form-control-label text-right">Start Time <span class="text-danger"></span>:</label>
+                                                <input name="company_visited_start_time" id="company_visited_start_time" class="form-control form-control-sm form-control-alternative timepicker" placeholder="HH:mm p">
+                                                <span style="display:none;color:red;font-size: 12px;" id="err_company_visited_start_time">Please Select Start Time</span>
+                                            </div>
+                                            <div class="col-lg-5 col-sm-5 col-xs-5 padding5px">
+                                                <label class="form-control-label text-right">End Time <span class="text-danger"></span>:</label>
+                                                <input name="company_visited_end_time" id="company_visited_end_time" class="form-control form-control-sm form-control-alternative timepicker" placeholder="HH:mm p">
+                                                <span style="display:none;color:red;font-size: 12px;" id="err_company_visited_end_time">Please Select End Time</span>
+                                            </div>
+                                            <div class="col-lg-2 col-sm-2 col-xs-2 padding5px">
+                                                <buttton class="btn btn-sm btn-success" style="margin-top: 20px;" id="AddCompanyVisitingSelectionprecessDateTime_Button" onclick="add_company_visiting_selection_precess_date_time()">Add</buttton>
+                                                <buttton class="btn btn-sm btn-success" style="margin-top: 20px;display: none;" id="UpdateCompanyVisitingSelectionprecessDateTime_Button" onclick="update_company_visiting_selection_precess_date_time()">Update</buttton>
+                                            </div>
+                                        </div>
+                                         <span style="display:none;color:red;font-size: 12px;" id="err_company_visited_time_valid">Start-time must be smaller then End-time.</span>
+                                    </div>
+                                </div>
+                                <table class="table table-vcenter modaltable" id="CompanyVisitingDateTime" style="margin-top: 10px;">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th>Test Name</th>
+                                        <th>Date</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="CompanyVisitingDateTime_Tablebody">
+                                    </tbody>
+                                </table>
+                                <span id="err_CompanyVisitingDateTime" style="color: red;display: none;">Please insert one selection process</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <buttton class="btn btn-sm btn-success" id="AddCompanyVistingDetail_Button" onclick="add_company_visting_detail()">Save</buttton>
+                        <buttton class="btn btn-sm btn-success" id="UpdateCompanyVistingDetail_Button" style="display:none;" onclick="update_company_visting_detail()">Update</buttton>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $('#PlacementMainNavPage').addClass('open');
+        $('#CompanyAppearanceNavPage').addClass('active');
+        $('#company_visiting_job_type').selectpicker({
+        });
+        $(".datepicker").datepicker({
+            autoclose: true,
+            minDate: 0
+        });
+        $( '.timepicker' ).flatpickr({
+            noCalendar: true,
+            enableTime: true,
+            dateFormat: 'h:i K'
+          });
+    });
+
+
+
+
+
+    $("#company_visiting_selection_process_test").change(function(){
+        $("#err_company_visiting_selection_precess_test").hide();
+    });$("#company_visited_date").change(function(){
+        $("#err_company_visited_date").hide();
+    });$("#company_visited_start_time").change(function(){
+        $("#err_company_visited_time_valid").hide();
+    });$("#company_visited_end_time").change(function(){
+        $("#err_company_visited_time_valid").hide();
+    });
+    function add_company_visiting_selection_precess_date_time(){
+        var company_visiting_selection_process_test = $("#company_visiting_selection_process_test").val();
+        var company_visited_date = $("#company_visited_date").val();
+        var company_visited_start_time = $("#company_visited_start_time").val();
+        var company_visited_end_time = $("#company_visited_end_time").val();
+
+        var start_time = $("#company_visited_start_time").val();
+
+        //end time
+        var end_time = $("#company_visited_end_time").val();
+
+        //convert both time into timestamp
+        var stt = new Date("November 13, 2013 " + start_time);
+        stt = stt.getTime();
+
+        var endt = new Date("November 13, 2013 " + end_time);
+        endt = endt.getTime();
+
+        //by this you can see time stamp value in console via firebug
+        console.log("Time1: "+ stt + " Time2: " + endt);
+
+        if(company_visiting_selection_process_test == ""){
+            $("#err_company_visiting_selection_precess_test").show();
+        }else if(company_visited_date == ""){
+            $("#err_company_visited_date").show();
+        }else if(company_visited_start_time != "" && company_visited_end_time != "" && stt >= endt){
+            $("#err_company_visited_time_valid").show();
+        }else{
+            $.ajax({
+                url : "/add-company-visiting-selection-precess-date-time/",
+                method: "POST",
+                data :{
+                    "company_visiting_selection_process_test":company_visiting_selection_process_test,
+                    "company_visited_date":company_visited_date,
+                    "company_visited_start_time":company_visited_start_time,
+                    "company_visited_end_time":company_visited_end_time
+                },
+                success : function(response){
+                    console.log(response)
+                    var newRowContent = "";
+                    newRowContent += "<tr id='"+response['list_data'][0]['id']+"'>";
+                    newRowContent += "<td>"+response['list_data'][0]['fk_selection_process_test_name']+"</td>";
+                    newRowContent += "<td>"+response['list_data'][0]['date']+"</td>";
+                    newRowContent += "<td>"+response['list_data'][0]['start_time']+"</td>";
+                    newRowContent += "<td>"+response['list_data'][0]['end_time']+"</td>";
+                    newRowContent += "<td><button type='button' class='btn btn-sm btn-outline-primary js-tooltip-enabled' data-toggle='tooltip' title='' data-original-title='Edit Client' onclick='edit_company_visiting_selection_precess_date_time("+response['list_data'][0]['id']+",this)'><i class='fa fa-fw fa-pencil-alt'></i></button>";
+                    newRowContent += "<button type='button' class='btn btn-sm btn-outline-danger js-tooltip-enabled' data-toggle='tooltip' title='' data-original-title='Remove Client' onclick='delete_company_visiting_selection_precess_date_time("+response['list_data'][0]['id']+",this)'><i class='fa fa-fw fa-times'></i></button></td>";
+                    newRowContent += "</tr>";
+
+                    console.log(newRowContent)
+
+                    $("#CompanyVisitingDateTime_Tablebody").append(newRowContent);
+                    $("#company_visiting_selection_process_test").val("");
+                    $("#company_visited_date").val("");
+                    $("#company_visited_start_time").val("");
+                    $("#company_visited_end_time").val("");
+                }
+            });
+        }
+    }
+
+    function edit_company_visiting_selection_precess_date_time(id,t) {
+        $.ajax({
+            url : "/edit-company-visiting-selection-precess-date-time/",
+            method: "POST",
+            data :{
+                "id":id
+            },
+            success : function(response){
+                console.log(response)
+                $("#company_visiting_selection_process_date_time_id").val(response['list_data'][0]['id']);
+                $("#company_visiting_selection_process_test").val(response['list_data'][0]['fk_selection_process_test_id']);
+                $("#company_visited_date").val(response['list_data'][0]['date']);
+                $("#company_visited_start_time").val(response['list_data'][0]['start_time']);
+                $("#company_visited_end_time").val(response['list_data'][0]['end_time']);
+
+                $("#AddCompanyVisitingSelectionprecessDateTime_Button").hide();
+                $("#UpdateCompanyVisitingSelectionprecessDateTime_Button").show();
+                t.closest("tr").remove();
+            }
+        });
+    }
+
+    function update_company_visiting_selection_precess_date_time() {
+        var company_visiting_selection_process_date_time_id = $("#company_visiting_selection_process_date_time_id").val();
+        var company_visiting_selection_process_test = $("#company_visiting_selection_process_test").val();
+        var company_visited_date = $("#company_visited_date").val();
+        var company_visited_start_time = $("#company_visited_start_time").val();
+        var company_visited_end_time = $("#company_visited_end_time").val();
+
+        var start_time = $("#company_visited_start_time").val();
+
+        //end time
+        var end_time = $("#company_visited_end_time").val();
+
+        //convert both time into timestamp
+        var stt = new Date("November 13, 2013 " + start_time);
+        stt = stt.getTime();
+
+        var endt = new Date("November 13, 2013 " + end_time);
+        endt = endt.getTime();
+
+        //by this you can see time stamp value in console via firebug
+        console.log("Time1: "+ stt + " Time2: " + endt);
+
+        if(company_visiting_selection_process_test == ""){
+            $("#err_company_visiting_selection_precess_test").show();
+        }else if(company_visited_date == ""){
+            $("#err_company_visited_date").show();
+        }else if(company_visited_start_time != "" && company_visited_end_time != "" && stt >= endt){
+            $("#err_company_visited_time_valid").show();
+        }else{
+            $.ajax({
+                url : "/update-company-visiting-selection-precess-date-time/",
+                method: "POST",
+                data :{
+                    "company_visiting_selection_process_date_time_id":company_visiting_selection_process_date_time_id,
+                    "company_visiting_selection_process_test":company_visiting_selection_process_test,
+                    "company_visited_date":company_visited_date,
+                    "company_visited_start_time":company_visited_start_time,
+                    "company_visited_end_time":company_visited_end_time
+                },
+                success : function(response){
+                    console.log(response)
+                    var newRowContent = "";
+                    newRowContent += "<tr id='"+response['list_data'][0]['id']+"'>";
+                    newRowContent += "<td>"+response['list_data'][0]['fk_selection_process_test_name']+"</td>";
+                    newRowContent += "<td>"+response['list_data'][0]['date']+"</td>";
+                    newRowContent += "<td>"+response['list_data'][0]['start_time']+"</td>";
+                    newRowContent += "<td>"+response['list_data'][0]['end_time']+"</td>";
+                    newRowContent += "<td><button type='button' class='btn btn-sm btn-outline-primary js-tooltip-enabled' data-toggle='tooltip' title='' data-original-title='Edit Client' onclick='edit_company_visiting_selection_precess_date_time("+response['list_data'][0]['id']+",this)'><i class='fa fa-fw fa-pencil-alt'></i></button>";
+                    newRowContent += "<button type='button' class='btn btn-sm btn-outline-danger js-tooltip-enabled' data-toggle='tooltip' title='' data-original-title='Remove Client' onclick='delete_company_visiting_selection_precess_date_time("+response['list_data'][0]['id']+",this)'><i class='fa fa-fw fa-times'></i></button></td>";
+                    newRowContent += "</tr>";
+
+                    console.log(newRowContent)
+
+                    $("#CompanyVisitingDateTime_Tablebody").append(newRowContent);
+                    $("#company_visiting_selection_process_test").val("");
+                    $("#company_visited_date").val("");
+                    $("#company_visited_start_time").val("");
+                    $("#company_visited_end_time").val("");
+
+                    $("#AddCompanyVisitingSelectionprecessDateTime_Button").show();
+                $("#UpdateCompanyVisitingSelectionprecessDateTime_Button").hide();
+                }
+            });
+        }
+    }
+
+    function delete_company_visiting_selection_precess_date_time(id,t) {
+        swal({
+            title: "Are you sure?",
+            text: "To delete this Detail!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if(willDelete) {
+                $.ajax({
+                    url: "/delete-company-visiting-selection-precess-date-time/",
+                    method: "POST",
+                    data: {
+                        "id": id
+                    },
+                    success: function (response) {
+                        if (response == "success") {
+                            swal("The Detail has been successfully Deleted!", {
+                                icon: "success",
+                                button: "Ok",
+                                closeOnClickOutside: false,
+                            }).then(function () {
+                                t.closest("tr").remove();
+                            });
+                        }
+                    }
+                })
+            }else {
+                swal("Detail is NOT deleted!");
+            }
+        });
+    }
+
+    function add_company_visiting_job_type_package_job_location() {
+        var company_visiting_job_type = $("#company_visiting_job_type").val();
+        var company_visiting_package = $("#company_visiting_package").val();
+        var company_visiting_job_location = $("#company_visiting_job_location").val();
+        if(company_visiting_job_type == ""){
+            $("#err_company_visiting_job_type").show();
+        }else if(company_visiting_package == ""){
+            $("#err_company_visiting_package").show();
+        }else if(company_visiting_job_location == ""){
+            $("#err_company_visiting_job_location").show();
+        }else{
+            $.ajax({
+                url : "/add-company-visiting-job-type-package-job-location/",
+                method: "POST",
+                data :{
+                    "company_visiting_job_type[]":company_visiting_job_type,
+                    "company_visiting_package":company_visiting_package,
+                    "company_visiting_job_location":company_visiting_job_location
+                },
+                success : function(response){
+                    console.log(response)
+                    var newRowContent = "";
+                    newRowContent += "<tr id='"+response['list_data'][0]['id']+"'>";
+                    newRowContent += "<td>";
+                    for(i = 0;i<response['list_data'][0]['fk_job_type'].length;i++){
+                        newRowContent += response['list_data'][0]['fk_job_type'][i]['job_type_name']+",";
+                    }
+                    newRowContent +="</td>";
+                    newRowContent += "<td>"+response['list_data'][0]['package']+"</td>";
+                    newRowContent += "<td>"+response['list_data'][0]['job_location']+"</td>";
+                    newRowContent += "<td><button type='button' class='btn btn-sm btn-outline-primary js-tooltip-enabled' data-toggle='tooltip' title='' data-original-title='Edit Client' onclick='edit_company_visiting_job_type_package_job_location("+response['list_data'][0]['id']+",this)'><i class='fa fa-fw fa-pencil-alt'></i></button>";
+                    newRowContent += "<button type='button' class='btn btn-sm btn-outline-danger js-tooltip-enabled' data-toggle='tooltip' title='' data-original-title='Remove Client' onclick='delete_company_visiting_job_type_package_job_location("+response['list_data'][0]['id']+",this)'><i class='fa fa-fw fa-times'></i></button></td>";
+                    newRowContent += "</tr>";
+
+                    console.log(newRowContent)
+
+                    $("#CompanyVisitingJobtypePackageJoblocation_Tablebody").append(newRowContent);
+
+                    $("#company_visiting_job_type").val('default');
+                    $("#company_visiting_job_type").selectpicker("refresh");
+                    $("#company_visiting_package").val("");
+                    $("#company_visiting_job_location").val("");
+                }
+            });
+        }
+    }
+
+    function edit_company_visiting_job_type_package_job_location(id,t) {
+        $.ajax({
+            url : "/edit-company-visiting-job-type-package-job-location/",
+            method: "POST",
+            data :{
+                "id":id
+            },
+            success : function(response){
+                console.log(response)
+                $('#company_visiting_job_type_package_job_location_id').val(response['list_data'][0]['id']);
+                $('#company_visiting_job_type').selectpicker('val', response['list_data'][0]['fk_job_type']);
+                $("#company_visiting_package").val(response['list_data'][0]['package']);
+                $("#company_visiting_job_location").val(response['list_data'][0]['job_location']);
+
+                $("#AddCompanyVisitingJobtypePackageJoblocation_Button").hide();
+                $("#UpdateCompanyVisitingJobtypePackageJoblocation_Button").show();
+                t.closest("tr").remove();
+            }
+        });
+    }
+
+    function update_company_visiting_job_type_package_job_location() {
+        var company_visiting_job_type_package_job_location_id = $("#company_visiting_job_type_package_job_location_id").val();
+        var company_visiting_job_type = $("#company_visiting_job_type").val();
+        var company_visiting_package = $("#company_visiting_package").val();
+        var company_visiting_job_location = $("#company_visiting_job_location").val();
+        if(company_visiting_job_type == ""){
+            $("#err_company_visiting_job_type").show();
+        }else if(company_visiting_package == ""){
+            $("#err_company_visiting_package").show();
+        }else if(company_visiting_job_location == ""){
+            $("#err_company_visiting_job_location").show();
+        }else{
+            $.ajax({
+                url : "/update-company-visiting-job-type-package-job-location/",
+                method: "POST",
+                data :{
+                    "company_visiting_job_type_package_job_location_id":company_visiting_job_type_package_job_location_id,
+                    "company_visiting_job_type[]":company_visiting_job_type,
+                    "company_visiting_package":company_visiting_package,
+                    "company_visiting_job_location":company_visiting_job_location
+                },
+                success : function(response){
+                    console.log(response)
+                    var newRowContent = "";
+                    newRowContent += "<tr id='"+response['list_data'][0]['id']+"'>";
+                    newRowContent += "<td>";
+                    for(i = 0;i<response['list_data'][0]['fk_job_type'].length;i++){
+                        newRowContent += response['list_data'][0]['fk_job_type'][i]['job_type_name']+",";
+                    }
+                    newRowContent +="</td>";
+                    newRowContent += "<td>"+response['list_data'][0]['package']+"</td>";
+                    newRowContent += "<td>"+response['list_data'][0]['job_location']+"</td>";
+                    newRowContent += "<td><button type='button' class='btn btn-sm btn-outline-primary js-tooltip-enabled' data-toggle='tooltip' title='' data-original-title='Edit Client' onclick='edit_company_visiting_job_type_package_job_location("+response['list_data'][0]['id']+",this)'><i class='fa fa-fw fa-pencil-alt'></i></button>";
+                    newRowContent += "<button type='button' class='btn btn-sm btn-outline-danger js-tooltip-enabled' data-toggle='tooltip' title='' data-original-title='Remove Client' onclick='delete_company_visiting_job_type_package_job_location("+response['list_data'][0]['id']+",this)'><i class='fa fa-fw fa-times'></i></button></td>";
+                    newRowContent += "</tr>";
+
+                    console.log(newRowContent)
+
+                    $("#CompanyVisitingJobtypePackageJoblocation_Tablebody").append(newRowContent);
+
+                    $("#company_visiting_job_type").val('default');
+                    $("#company_visiting_job_type").selectpicker("refresh");
+                    $("#company_visiting_package").val("");
+                    $("#company_visiting_job_location").val("");
+                }
+            });
+        }
+    }
+
+    function delete_company_visiting_job_type_package_job_location(id,t){
+        swal({
+            title: "Are you sure?",
+            text: "To delete this Detail!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if(willDelete) {
+                $.ajax({
+                    url: "/delete-company-visiting-job-type-package-job-location/",
+                    method: "POST",
+                    data: {
+                        "id": id
+                    },
+                    success: function (response) {
+                        if (response == "success") {
+                            swal("The Detail has been successfully Deleted!", {
+                                icon: "success",
+                                button: "Ok",
+                                closeOnClickOutside: false,
+                            }).then(function () {
+                                t.closest("tr").remove();
+                            });
+                        }
+                    }
+                })
+            }else {
+                swal("Detail is NOT deleted!");
+            }
+        });
+    }
+
+    $("#company_visiting_interview_address").keyup(function(){
+        $("#err_company_visiting_interview_address").hide();
+    });
+
+    function add_company_visting_detail(){
+        var company_id = $("#company_id").val();
+        var company_visiting_interview_address = $("#company_visiting_interview_address").val();
+        var company_visiting_other_detail = $("#company_visiting_other_detail").val();
+        var company_visiting_job_type_package_job_location_list = [];
+        var company_visiting_date_time_list = [];
+
+        if(company_visiting_interview_address == ""){
+            $("#err_company_visiting_interview_address").show();
+        }else if($('#CompanyVisitingJobtypePackageJoblocation_Tablebody tr').length < 1){
+            $("#err_CompanyVisitingJobtypePackageJoblocation").show();
+        }else if($('#CompanyVisitingDateTime_Tablebody tr').length < 1){
+            $("#err_CompanyVisitingDateTime").show();
+        }else{
+            $("#CompanyVisitingJobtypePackageJoblocation_Tablebody tr").each(function() {
+                company_visiting_job_type_package_job_location_list.push(this.id);
+            });
+            $("#CompanyVisitingDateTime_Tablebody tr").each(function() {
+                company_visiting_date_time_list.push(this.id);
+            });
+            $.ajax({
+                url : "/add-company-visting-detail/",
+                method : "POST",
+                data : {
+                    "company_id":company_id,
+                    "company_visiting_interview_address":company_visiting_interview_address,
+                    "company_visiting_other_detail":company_visiting_other_detail,
+                    "company_visiting_job_type_package_job_location_list[]":company_visiting_job_type_package_job_location_list,
+                    "company_visiting_date_time_list[]":company_visiting_date_time_list,
+                },
+                success:function (response) {
+                    $("#CompanyVisitAddUpdateModal").modal('hide');
+                    if (response == "success") {
+                        swal("Company Visiting Detail Added Succesfully!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+            });
+        }
+    }
+
+    function edit_visiting_company_detail(id){
+        $("#CompanyVisitAddUpdateModal").modal('show');
+        $.ajax({
+            url : "/edit-visiting-company-detail/",
+            method : "POST",
+            data : {
+                "id":id
+            },
+            success : function(response){
+                console.log(response)
+
+                $("#company_visiting_id").val(response['list_data'][0]['id'])
+                $("#company_visiting_interview_address").val(response['list_data'][0]['company_interview_location'])
+                $("#company_visiting_other_detail").val(response['list_data'][0]['company_visiting_other_detail'])
+
+                var newRowContent = "";
+                for(i = 0;i<response['list_data'][0]['fk_company_appearance_job_type_detail_list'].length;i++) {
+                    newRowContent += "<tr id='" + response['list_data'][0]['fk_company_appearance_job_type_detail_list'][i]['fk_company_appearance_job_type_detail_list_id'] + "'>";
+                    newRowContent += "<td>";
+                    for (j = 0; j < response['list_data'][0]['fk_company_appearance_job_type_detail_list'][i]['fk_job_type'].length; j++) {
+                        newRowContent += response['list_data'][0]['fk_company_appearance_job_type_detail_list'][i]['fk_job_type'][j]['job_type'] + ",";
+                    }
+                    newRowContent += "</td>";
+                    newRowContent += "<td>" + response['list_data'][0]['fk_company_appearance_job_type_detail_list'][i]['package'] + "</td>";
+                    newRowContent += "<td>" + response['list_data'][0]['fk_company_appearance_job_type_detail_list'][i]['job_location'] + "</td>";
+                    newRowContent += "<td><button type='button' class='btn btn-sm btn-outline-primary js-tooltip-enabled' data-toggle='tooltip' title='' data-original-title='Edit Client' onclick='edit_company_visiting_job_type_package_job_location(" + response['list_data'][0]['fk_company_appearance_job_type_detail_list'][i]['fk_company_appearance_job_type_detail_list_id'] + ",this)'><i class='fa fa-fw fa-pencil-alt'></i></button>";
+                    newRowContent += "<button type='button' class='btn btn-sm btn-outline-danger js-tooltip-enabled' data-toggle='tooltip' title='' data-original-title='Remove Client' onclick='delete_company_visiting_job_type_package_job_location(" + response['list_data'][0]['fk_company_appearance_job_type_detail_list'][i]['fk_company_appearance_job_type_detail_list_id'] + ",this)'><i class='fa fa-fw fa-times'></i></button></td>";
+                    newRowContent += "</tr>";
+                }
+
+                $("#CompanyVisitingJobtypePackageJoblocation_Tablebody").html("");
+                $("#CompanyVisitingJobtypePackageJoblocation_Tablebody").append(newRowContent);
+
+                var newRowContent = "";
+                for(i = 0;i<response['list_data'][0]['fk_company_appearance_date_time_list'].length;i++) {
+                    newRowContent += "<tr id='" + response['list_data'][0]['fk_company_appearance_date_time_list'][i]['fk_company_appearance_date_time_list_id'] + "'>";
+                    newRowContent += "<td>" + response['list_data'][0]['fk_company_appearance_date_time_list'][i]['fk_selection_process_test'] + "</td>";
+                    newRowContent += "<td>" + response['list_data'][0]['fk_company_appearance_date_time_list'][i]['date'] + "</td>";
+                    newRowContent += "<td>" + response['list_data'][0]['fk_company_appearance_date_time_list'][i]['start_time'] + "</td>";
+                    newRowContent += "<td>" + response['list_data'][0]['fk_company_appearance_date_time_list'][i]['end_time'] + "</td>";
+                    newRowContent += "<td><button type='button' class='btn btn-sm btn-outline-primary js-tooltip-enabled' data-toggle='tooltip' title='' data-original-title='Edit Client' onclick='edit_company_visiting_selection_precess_date_time(" + response['list_data'][0]['fk_company_appearance_date_time_list'][i]['fk_company_appearance_date_time_list_id'] + ",this)'><i class='fa fa-fw fa-pencil-alt'></i></button>";
+                    newRowContent += "<button type='button' class='btn btn-sm btn-outline-danger js-tooltip-enabled' data-toggle='tooltip' title='' data-original-title='Remove Client' onclick='delete_company_visiting_selection_precess_date_time(" + response['list_data'][0]['fk_company_appearance_date_time_list'][i]['fk_company_appearance_date_time_list_id'] + ",this)'><i class='fa fa-fw fa-times'></i></button></td>";
+                    newRowContent += "</tr>";
+                }
+                console.log(newRowContent)
+
+                $("#CompanyVisitingDateTime_Tablebody").html("");
+                $("#CompanyVisitingDateTime_Tablebody").append(newRowContent);
+                $("#AddCompanyVistingDetail_Button").hide();
+                $("#UpdateCompanyVistingDetail_Button").show();
+
+            }
+        })
+    }
+
+    function update_company_visting_detail() {
+        var company_id = $("#company_id").val();
+        var company_visiting_id = $("#company_visiting_id").val();
+        var company_visiting_interview_address = $("#company_visiting_interview_address").val();
+        var company_visiting_other_detail = $("#company_visiting_other_detail").val();
+        var company_visiting_job_type_package_job_location_list = [];
+        var company_visiting_date_time_list = [];
+
+        if(company_visiting_interview_address == ""){
+            $("#err_company_visiting_interview_address").show();
+        }else if($('#CompanyVisitingJobtypePackageJoblocation_Tablebody tr').length < 1){
+            $("#err_CompanyVisitingJobtypePackageJoblocation").show();
+        }else if($('#CompanyVisitingDateTime_Tablebody tr').length < 1){
+            $("#err_CompanyVisitingDateTime").show();
+        }else{
+            $("#CompanyVisitingJobtypePackageJoblocation_Tablebody tr").each(function() {
+                company_visiting_job_type_package_job_location_list.push(this.id);
+            });
+            $("#CompanyVisitingDateTime_Tablebody tr").each(function() {
+                company_visiting_date_time_list.push(this.id);
+            });
+            $.ajax({
+                url : "/update-company-visting-detail/",
+                method : "POST",
+                data : {
+                    "company_id":company_id,
+                    "company_visiting_id":company_visiting_id,
+                    "company_visiting_interview_address":company_visiting_interview_address,
+                    "company_visiting_other_detail":company_visiting_other_detail,
+                    "company_visiting_job_type_package_job_location_list[]":company_visiting_job_type_package_job_location_list,
+                    "company_visiting_date_time_list[]":company_visiting_date_time_list,
+                },
+                success:function (response) {
+                    $("#CompanyVisitAddUpdateModal").modal('hide');
+                    if (response == "success") {
+                        swal("Company Visiting Detail Updated Succesfully!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+            });
+        }
+    }
+
+    function download_excel_file(id) {
+        $.ajax({
+            url : "/download-excel-file/",
+            method : "POST",
+            data : {
+                "id" : id,
+            },
+            success : function (response) {
+                console.log(response)
+                var href = $('#Download_Csv_File').attr('href');
+                window.location.href = href;
+            }
+        })
+    }
+
+
+
+</script>
+{% endblock content %}

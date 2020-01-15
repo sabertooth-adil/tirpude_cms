@@ -1,0 +1,580 @@
+{% extends 'index_base.html' %}
+{% block content %}
+    {% load static %}
+    {#{% for i in  user_operation_obj %}#}
+    {#{% if i.fk_modules.module_url == "notice" %}#}
+    {#{% if i.view_data == "Y" %}#}
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .hideInbox {
+            display: none;
+        }
+
+        .input-group {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-group {
+            margin-bottom: 1rem !important;
+        }
+
+        .nu-button-size {
+            padding: 3px 6px 3px 6px;
+        }
+
+        .nu-button-size:hover {
+            padding: 3px 6px 3px 6px;
+        }
+
+        .nu-button-newsize {
+            padding: 5px 6px 5px 6px;
+        }
+
+        .nu-button-newsize:hover {
+            padding: 5px 6px 5px 6px;
+        }
+
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.css" rel="stylesheet">
+    <form method="post" action="/save-notice/">
+        <div class="bg-body-light">
+            <div class="content" style="padding: 10px !important;">
+                <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+                    <h1 class="flex-sm-fill h3 my-2">Notice</h1>
+                    <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                        <a href="#" class="btn btn-sm btn-primary nu-button-size showInboxFunction showInbox show ">My
+                            Inbox</a>
+                        <a href="#"
+                           class="btn btn-sm btn-primary nu-button-newsize hideInboxFunction hideInbox show fixMyInbox">All
+                            Notices</a>
+                        {#                    {% for i in  user_operation_obj %}#}
+                        {#                    {% if i.fk_modules.module_url == "notice" %}#}
+                        {#                    {% if i.save_data == "Y" %}#}
+                        <a href="#" class="btn btn-sm btn-success showButton show nu-button-size">Add Notice</a>
+                        {#                    {% endif %}#}
+                        {#                    {% endif %}#}
+                        {#                    {% endfor %}#}
+                        <a href="#" class="btn btn-sm btn-primary nu-button-newsize hideButton hidden hide"> <i
+                                class="fa fa-arrow-left"></i> Back</a>
+                        <button type="submit" class="btn btn-sm nu-button-size btn-success  hidden">Publish Notice
+                        </button>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="content" style="padding: 10px !important;" id="filterdata_div">
+            <a class="block block-rounded block-link-pop border-left border-primary border-4x"
+               style="width: 100%;margin-bottom: 0rem;">
+                <div class="block-content block-content-full" style="padding-bottom: 0px !important;">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-xs-2">
+                            <div class="form-group tab-responsive">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">Course</div>
+                                <div class="font-w400 text-dark">
+                                    <select class="form-control form-control-sm" id="filter_course"
+                                            onchange="GetFilterSubjects()">
+                                        <option value="" selected hidden>Select Course</option>
+                                        {% for i in course_obj %}
+                                            <option value="{{ i.id }}">{{ i.course }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_course">Please Select
+                                    Course</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-xs-2">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">Semesters</div>
+                                <div class="font-w400 text-dark">
+                                    <select class="form-control form-control-sm" id="filter_semesters"
+                                            onchange="GetFilterSubjects()">
+                                        <option value="" selected hidden>Select Semester</option>
+                                        {% for i in semester_obj %}
+                                            <option value="{{ i.id }}">{{ i.semester }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_semesters">Please Select
+                                    Semester</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-xs-2">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">Sections</div>
+                                <div class="font-w400 text-dark">
+                                    <select class="form-control form-control-sm" id="filter_sections">
+                                        <option value="" selected hidden>Select Section</option>
+                                        {% for i in section_obj %}
+                                            <option value="{{ i.id }}">{{ i.sections }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_sections">Please Select
+                                    Section</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-xs-2">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">Audience</div>
+                                <div class="font-w400 text-dark">
+                                    <select class="form-control form-control-sm" id="filter_audience">
+                                        <option value="" selected hidden>Select Audience</option>
+                                        <option value="Student">Student</option>
+                                        <option value="Faculty">Faculty</option>
+                                        <option value="All">All</option>
+                                    </select>
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_subject">Please Select
+                                    Audience</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-6">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-xs-6">
+                                    <div class="form-group">
+                                        <div class="font-size-sm font-w600 text-uppercase text-muted">From Date</div>
+                                        <div class="font-w400 text-dark">
+                                            <input name="filter_chartfromdate" id="filter_chartfromdate"
+                                                   class="form-control form-control-sm form-control-alternative datepicker"
+                                                   data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY"
+                                                   value="{{ fromdate|date:'d-m-Y' }}">
+                                            <span style="display:none;color:red;" id="err_specialization">Please Select From
+                                            Date</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-6">
+                                    <div class="form-group">
+                                        <div class="font-size-sm font-w600 text-uppercase text-muted">To Date</div>
+                                        <div class="font-w400 text-dark">
+                                            <input name="filter_charttodate" id="filter_charttodate"
+                                                   class="form-control form-control-sm form-control-alternative datepicker"
+                                                   data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY"
+                                                   value="{{ todate|date:'d-m-Y' }}">
+                                            <span style="display:none;color:red;" id="err_semesters">Please Select To
+                                            Date</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-xs-1">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted"></div>
+                                <div class="font-w400 text-dark">
+                                    <buttton class="btn btn-warning submit-btn btn-block btn-sm nu-orange-button"
+                                             onclick="FilterNotice()" style="margin: 10px;">
+                                        <i class="fa fa-filter" aria-hidden="true"></i> Filter
+                                    </buttton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="content" style="padding: 10px !important;">
+            <div class="block">
+                <div class="block-content block-content-full">
+                    <div class="row">
+                        <!-- col start -->
+                        <div class="col">
+                            <div class="show showInbox" id="NoticeFilterData_div">
+                                <div class="table-responsive">
+                                    <table class="table table-vcenter" id="mydatatable">
+                                        <thead class="thead-light">
+                                        <tr>
+                                            <th class="text-center" style="width: 7% !important;">Sr No.</th>
+                                            <th scope="col" style="width: 8% !important;">Date</th>
+                                            <th style="width: 6% !important;">Audience</th>
+                                            <th style="width: 8% !important;">Course</th>
+                                            <th style="width: 8% !important;">Semester</th>
+                                            <th style="width: 8% !important;">Section</th>
+                                            <th>Title</th>
+                                            {#                                            {% for i in  user_operation_obj %}#}
+                                            {#                                            {% if i.fk_modules.module_url == "notice" %}#}
+                                            {#                                            {% if i.delete_data == "Y" %}#}
+                                            <th scope="col" style="width: 5%;">Action</th>
+                                            {#                                            {% endif %}#}
+                                            {#                                            {% endif %}#}
+                                            {#                                            {% endfor %}#}
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for i in show_notice %}
+                                            <tr>
+                                                <td class="text-center font-size-sm">{{ forloop.counter }}</td>
+                                                <td>
+                                                    {{ i.date|date:'d-m-Y' }}
+                                                </td>
+                                                <td class="text-center font-size-sm">{{ i.audience }}</td>
+                                                <td scope="row" class="name">
+                                                    {% if i.fk_course.course %}
+                                                        Course {{ i.fk_course.course }}
+                                                    {% endif %}
+                                                </td>
+                                                <td scope="row" class="name">
+                                                    {% if i.fk_semester.semester %}
+                                                        Semester {{ i.fk_semester.semester }}
+                                                    {% endif %}
+                                                </td>
+                                                <td scope="row" class="name">
+                                                    {% if i.fk_section.sections %}
+                                                        Section {{ i.fk_section.sections }}
+                                                    {% endif %}
+                                                </td>
+                                                <td scope="row">
+                                                    <a href="#" onclick="showdetail({{ i.id }})" data-toggle="modal"
+                                                       data-target="#myModal">
+                                                        <div class="media align-items-center">
+                                                            <div class="media-body">
+                                                                <span class="mb-0 text-sm">{{ i.notice_title }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                {#                                            {% for i in  user_operation_obj %}#}
+                                                {#                                            {% if i.fk_modules.module_url == "notice" %}#}
+                                                {#                                            {% if i.delete_data == "Y" %}#}
+                                                <td>
+                                                    <button type="button"
+                                                            class="btn btn-outline-danger btn-sm nu-button-size "
+                                                            onclick="delete_notice({{ i.id }})"><i
+                                                            class="fa fa-fw fa-times"></i></button>
+                                                </td>
+                                                {#                                            {% endif %}#}
+                                                {#                                            {% endif %}#}
+                                                {#                                            {% endfor %}#}
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="hideInbox">
+                                <div class="table-responsive">
+                                    <table class="table table-vcenter" id="mydatatable">
+                                        <thead class="thead-light">
+                                        <tr>
+                                            <th class="text-center" style="width: 7% !important;">Sr No.</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Title</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for i in my_notice %}
+                                            <tr>
+                                                <td class="text-center font-size-sm">{{ forloop.counter }}</td>
+                                                <td style="width: 20%">
+                                                    {{ i.date }}
+                                                </td>
+                                                <td scope="row">
+                                                    <a href="#" onclick="showdetail({{ i.id }})" data-toggle="modal"
+                                                       data-target="#myModal">
+                                                        <div class="media align-items-center">
+                                                            <div class="media-body">
+                                                                <span class="mb-0 text-sm">{{ i.notice_title }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="myModal" role="dialog">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <div id="noticebody_div">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger btn-sm nu-button-size "
+                                                    data-dismiss="modal">
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hidden">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-lg-3" style="padding-left: 0px;">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-email">Audience<span
+                                                        class="text-danger">*</span>:</label>
+                                                <select class="form-control form-control-sm" name="audience"
+                                                        id="audience"
+                                                        required>
+                                                    <option value=""> Select an option</option>
+                                                    <option value="Student">Students</option>
+                                                    <option value="Faculty">Faculty</option>
+                                                    <option value="All" name="All">All</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group focused">
+                                                <label class="form-control-label" for="input-username">Course<span
+                                                        class="text-danger">*</span>:</label>
+                                                <select class="form-control form-control-sm" name="course" id="course"
+                                                        required>
+                                                    <!-- form mein data bhejna hai toh send by name and not id -->
+                                                    <option value=""> Select an option</option>
+                                                    {% for i in course_obj %}
+                                                        <option value="{{ i.id }}">{{ i.course }}</option>
+                                                        <!-- course is from models file the name of the variable and not the function -->
+                                                    {% endfor %}
+                                                    <option value="All">All</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-email">Semesters<span
+                                                        class="text-danger">*</span>:</label>
+                                                <select class="form-control form-control-sm" name="semester"
+                                                        id="semester"
+                                                        required>
+                                                    <option value=""> Select an option</option>
+                                                    {% for i in semester_obj %}
+                                                        <option value="{{ i.id }}">{{ i.semester }}</option>
+                                                    {% endfor %}
+                                                    <option value="All">All</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3" style="padding-right: 0px;">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-email">Sections<span
+                                                        class="text-danger">*</span>:</label>
+                                                <select class="form-control form-control-sm" name="section" id="section"
+                                                        required>
+                                                    <option value=""> Select an option</option>
+                                                    {% for i in section_obj %}
+                                                        <option value="{{ i.id }}">{{ i.sections }}</option>
+                                                    {% endfor %}
+                                                    <option value="All" name="All">All</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-default"
+                                              style="color: black"><b>Title<span
+                                                class="text-danger">*</span>:</b></span>
+                                        </div>
+                                        <input type="text" name="title_name" class="form-control" aria-label="Default"
+                                               style="color: #000" maxlength="120"
+                                               aria-describedby="inputGroup-sizing-default"
+                                               placeholder="Write a short Title for future references" required>
+                                    </div>
+                                </div>
+                                <div class="container-fluid">
+                                <textarea type="textarea" name="editor_data" class="js-summernote" id="summernote"
+                                          required>
+                                    <h3 style="text-align: center; "><b>NOTICE</b></h3>
+                                </textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+        $(document).ready(function () {
+            $(".datepicker").datepicker({autoclose: true});
+            $('#mydatatable').DataTable();
+            $('#NoticeNavPage').addClass('active');
+            $('#summernote').summernote({
+                height: 450,                 // set editor height
+                minHeight: 450,             // set minimum height of editor
+                maxHeight: 450,             // set maximum height of editor
+                focus: false,
+                disableDragAndDrop: true,
+                popover: {
+                    air: []
+                },
+                toolbar: [
+                    //  [groupName, [list of button]]
+                    ['fontstyle', ['style', 'bold', 'italic', 'underline', 'clear']],
+                    ['insert', ['table', 'link', 'hr', 'picture']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['misc', ['undo', 'redo', 'help']]
+                ]
+            });
+        });
+        $(function () {
+            $('.showButton').click(function () {
+                $('.hidden').show();
+                $('.show').hide();
+                $('.hideInbox').hide();
+                $('.showInbox').hide();
+                $('#filterdata_div').hide();
+            });
+            $('.hideButton').click(function () {
+                $('.hidden').hide();
+                $('.show').show();
+                $('.fixMyInbox').hide();
+                $('.hideInbox').hide();
+                $('.showInbox').show();
+                $('#filterdata_div').show();
+            });
+        });
+        $(function () {
+            $('.showInboxFunction').click(function () {
+                $('.hideInbox').show();
+                $('.showInbox').hide();
+                $('#filterdata_div').hide();
+            });
+            $('.hideInboxFunction').click(function () {
+                $('.hideInbox').hide();
+                $('.showInbox').show();
+                $('#filterdata_div').show();
+            });
+        });
+        $(function () {
+            $("#course").change(function () {
+                if ($(this).val() == "All") {
+                    $("#semester").prop("disabled", true);
+                    $("#semester").val('All')
+                    $("#section").prop("disabled", true);
+                    $("#section").val('All')
+
+                }
+                else {
+                    $("#semester").prop("disabled", false);
+                    $("#section").prop("disabled", false);
+                }
+            });
+        });
+        $(function () {
+            $("#semester").change(function () {
+                if ($(this).val() == "All") {
+                    $("#section").prop("disabled", true);
+                    $("#section").val('All')
+
+                }
+                else
+                    $('#section').prop('disabled', false);
+            });
+        });
+
+        function showdetail(id) {
+            console.log(id)
+            $.ajax({
+                url: "/get-single-notice-detail/",
+                method: "POST",
+                data: {
+                    "id": id
+                },
+                success: function (response) {
+                    console.log(response)
+                    $("#noticebody_div").html("")
+                    $("#noticebody_div").append(response['notice_body'])
+                }
+
+            })
+        }
+
+        function delete_notice(id) {
+            console.log(id)
+            swal({
+                title: "Are you sure?",
+                text: "To delete this published notice!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: "/delete-single-notice-detail/",
+                        method: "POST",
+                        data: {
+                            "id": id
+                        },
+                        success: function (response) {
+                            if (response == "success") {
+                                swal("The notice has been successfully Deleted!", {
+                                    icon: "success",
+                                    button: "Ok",
+                                    closeOnClickOutside: false,
+                                }).then(function () {
+                                    location.reload();
+                                });
+                            }
+                        }
+                    })
+                }
+                else {
+                    swal("Notice is NOT deleted!");
+                }
+            });
+        }
+
+        $(function () {
+            $("#audience").change(function () {
+                if ($(this).val() == "All") {
+                    $("#course").prop("disabled", true);
+                    $("#course").val('All')
+                    $("#semester").prop("disabled", true);
+                    $("#semester").val('All')
+                    $("#section").prop("disabled", true);
+                    $("#section").val('All')
+
+                } else if ($(this).val() == "Faculty") {
+                    $("#course").prop("disabled", true);
+                    $("#semester").prop("disabled", true);
+                    $("#section").prop("disabled", true);
+                } else {
+                    $("#course").prop("disabled", false);
+                    $("#semester").prop("disabled", false);
+                    $("#section").prop("disabled", false);
+                }
+            });
+        });
+
+        function FilterNotice() {
+            var filter_course = $("#filter_course").val();
+            var filter_semesters = $("#filter_semesters").val();
+            var filter_sections = $("#filter_sections").val();
+            var filter_audience = $("#filter_audience").val();
+            var filter_chartfromdate = $("#filter_chartfromdate").val();
+            var filter_charttodate = $("#filter_charttodate").val();
+            $.ajax({
+                url: "/filter-notice/",
+                method: "POST",
+                data: {
+                    "filter_course": filter_course,
+                    "filter_semesters": filter_semesters,
+                    "filter_sections": filter_sections,
+                    "filter_audience": filter_audience,
+                    "filter_from_date": filter_chartfromdate,
+                    "filter_to_date": filter_charttodate,
+                },
+                success: function (response) {
+                    console.log(response)
+                    $("#NoticeFilterData_div").html("");
+                    $("#NoticeFilterData_div").append(response);
+                }
+            })
+        }
+    </script>
+    {#{% endif %}#}
+    {#{% endif %}#}
+    {#{% endfor %}#}
+{% endblock content %}
