@@ -659,9 +659,9 @@ def filter_publish_list(request):
         mylist_data = []
 
         if start_date:
-            start_date = datetime.datetime.strptime(request.POST.get("start_date"), '%Y-%m-%d')
+            start_date = datetime.datetime.strptime(str(request.POST.get("start_date")), '%d/%m/%Y').strftime('%Y-%m-%d')
         if end_date:
-            end_date = datetime.datetime.strptime(request.POST.get("end_date"), '%Y-%m-%d')
+            end_date = datetime.datetime.strptime(str(request.POST.get("end_date")), '%d/%m/%Y').strftime('%Y-%m-%d')
 
         filter_str = "AptitudeSet.objects.filter(status='Attempted')"
         if sem:
@@ -716,10 +716,10 @@ def filter_test_list(request):
         mylist_data = []
 
         if start_date:
-            start_date = datetime.datetime.strptime(request.POST.get("start_date"), '%Y-%m-%d')
+            start_date = datetime.datetime.strptime(str(request.POST.get("start_date")), '%d/%m/%Y').strftime('%Y-%m-%d')
 
         if end_date:
-            end_date = datetime.datetime.strptime(request.POST.get("end_date"), '%Y-%m-%d')
+            end_date = datetime.datetime.strptime(str(request.POST.get("end_date")), '%d/%m/%Y').strftime('%Y-%m-%d')
 
         filter_str = "AptitudeSet.objects.filter(status='Attempted')"
         if sem:
@@ -779,9 +779,10 @@ def filter_select_list(request):
         mylist_data = []
 
         if start_date:
-            start_date = datetime.datetime.strptime(request.POST.get("start_date"), '%Y-%m-%d')
+            start_date = datetime.datetime.strptime(str(request.POST.get("start_date")), '%d/%m/%Y').strftime('%Y-%m-%d')
+
         if end_date:
-            end_date = datetime.datetime.strptime(request.POST.get("end_date"), '%Y-%m-%d')
+            end_date = datetime.datetime.strptime(str(request.POST.get("end_date")), '%d/%m/%Y').strftime('%Y-%m-%d')
 
         filter_str = "AptitudeSet.objects.filter(status='Attempted')"
         if sem:

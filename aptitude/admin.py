@@ -24,7 +24,9 @@ class AptitudeQuestions(admin.ModelAdmin):
 admin.site.register(AptitudeQuestion, AptitudeQuestions)
 
 class AptitudeScore(admin.ModelAdmin):
-
+    """
+    Aptitude Score Admin table
+    """
 
     list_display = ("id","score")
 

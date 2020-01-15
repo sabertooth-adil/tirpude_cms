@@ -388,8 +388,8 @@
                                                                         </option>
                                                                         <option value="">All</option>
                                                                         {% for i in faculty_obj %}
-                                                                        <option value="{{i.id}}">{{i.first_name}} {{
-                                                                            i.last_name }}
+                                                                        <option value="{{i.id}}">{{i.first_name}}
+                                                                            {{ i.last_name }}
                                                                         </option>
                                                                         {% endfor %}
                                                                     </select>
@@ -409,8 +409,8 @@
                                                                 <div class="font-size-h2 font-w400 text-dark">
                                                                     <input id="start_date1"
                                                                            class="form-control form-control-sm form-control-alternative js-datepicker"
-                                                                           data-date-format="yyyy-mm-dd"
-                                                                           placeholder="YYYY/MM/DD" required>
+                                                                           data-date-format="dd/mm/yyyy"
+                                                                           placeholder="DD/MM/YYYY" required>
                                                                 </div>
                                                                 </br>
                                                                 <div class="font-size-sm font-w600 text-uppercase text-muted">
@@ -419,8 +419,8 @@
                                                                 <div class="font-size-h2 font-w400 text-dark">
                                                                     <input id="end_date1"
                                                                            class="form-control form-control-sm form-control-alternative js-datepicker"
-                                                                           data-date-format="yyyy-mm-dd"
-                                                                           placeholder="YYYY/MM/DD" required>
+                                                                           data-date-format="dd/mm/yyyy"
+                                                                           placeholder="DD/MM/YYYY" required>
                                                                 </div>
                                                             </div>
                                                         </a>
