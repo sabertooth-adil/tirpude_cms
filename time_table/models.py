@@ -5,6 +5,9 @@ from master_forms.models import Course, Semester, Section, Subject, Lecture, Day
 
 
 class TimeTableMaster(models.Model):
+    """
+    Time Table Master
+    """
     fk_course = models.ForeignKey(Course, blank=True, null=True, on_delete=models.CASCADE)
     fk_semesters = models.ForeignKey(Semester, blank=True, null=True, on_delete=models.CASCADE)
     fk_sections = models.ForeignKey(Section, blank=True, null=True, on_delete=models.CASCADE)
@@ -17,6 +20,9 @@ class TimeTableMaster(models.Model):
 
 
 class TimeTableDetail(models.Model):
+    """
+    Time Table Detail
+    """
     fk_timetable_master = models.ForeignKey(TimeTableMaster, blank=True, null=True, on_delete=models.CASCADE)
     fk_subjects = models.ForeignKey(Subject, blank=True, null=True, on_delete=models.CASCADE)
     fk_day = models.ForeignKey(Day, blank=True, null=True, on_delete=models.CASCADE)
