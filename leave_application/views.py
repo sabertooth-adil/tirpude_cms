@@ -30,7 +30,6 @@ def error_save(error):
     return error
 
 
-# leave application function for students and faculty
 @csrf_exempt
 def leave_application(request):
     """
@@ -40,7 +39,6 @@ def leave_application(request):
         session = request.session.get('user_id')
         if session:
             user_info_obj = UserInfo.objects.get(id=session)
-            print("user_info_obj", user_info_obj)
             reason_obj = LeaveReason.objects.all()
             course_obj = Course.objects.all()
             faculty_obj = UserInfo.objects.filter(fk_user_type__user_type="Faculty")
@@ -58,13 +56,14 @@ def leave_application(request):
                 academic_info_obj = AcademicInfo.objects.all()
                 course_obj = Course.objects.all()
                 return render(request, "faculty_leave_application.html", {"user_info_obj": user_info_obj,
-                                                                          "leave_application_obj": leave_application_obj,
+                                                                          "leave_application_obj":
+                                                                              leave_application_obj,
                                                                           "academic_info_obj": academic_info_obj,
                                                                           "course_obj": course_obj,
                                                                           "faculty_obj": faculty_obj})
         else:
             return redirect("/")
-    except:
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -89,9 +88,6 @@ def leave_application_submit(request):
         semester = academic_info_obj.fk_semesters.id
         sections = academic_info_obj.fk_sections.id
         course = academic_info_obj.fk_course.id
-        print(semester)
-        print(sections)
-        print(course)
         leave_application_obj = LeaveApplication(fk_leave_reason_id=reason, fk_user_info_id=session,
                                                  fk_faculty_user_id=faculty, fk_course_id=course,
                                                  fk_semesters_id=semester, fk_sections_id=sections,
@@ -99,7 +95,7 @@ def leave_application_submit(request):
                                                  status=status, reason=reason_detail, file=file)
         leave_application_obj.save()
         return redirect('/leave-application/')
-    except :
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -113,16 +109,14 @@ def approve_disapprove_application(request):
     try:
         id = request.POST.get("id")
         action_status = request.POST.get("action_status")
-        print(action_status)
         leave_application_obj = LeaveApplication.objects.get(id=id)
         if action_status == "Approved":
             leave_application_obj.action_status = "Disapproved"
         else:
             leave_application_obj.action_status = "Approved"
         leave_application_obj.save()
-        print(id)
         return HttpResponse("success")
-    except :
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -141,7 +135,7 @@ def view_leave_application_detail(request):
         leave_application_obj.save()
         academic_info_obj = AcademicInfo.objects.get(fk_user_info=leave_application_obj.fk_user_info)
         user_info_obj = UserInfo.objects.get(id=leave_application_obj.fk_user_info.id)
-        dict['student_name'] = user_info_obj.first_name+" "+user_info_obj.last_name
+        dict['student_name'] = user_info_obj.first_name + " " + user_info_obj.last_name
         dict['semester'] = academic_info_obj.fk_semesters.semester
         dict['sections'] = academic_info_obj.fk_sections.sections
         dict['course'] = academic_info_obj.fk_course.course
@@ -151,7 +145,7 @@ def view_leave_application_detail(request):
         dict['end_date'] = leave_application_obj.end_date.strftime('%d-%m-%Y')
         dict['date_post'] = leave_application_obj.date_post.strftime('%d-%m-%Y')
         return JsonResponse(dict)
-    except :
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -166,7 +160,7 @@ def get_leave_application_detail(request):
         leave_application_list_id = request.POST.get("leave_application_list_id")
         leave_application_obj = LeaveApplication.objects.get(id=leave_application_list_id)
         return JsonResponse({"detail": leave_application_obj.reason, "status": leave_application_obj.status})
-    except :
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -180,8 +174,8 @@ def filter_leave_applications(request):
     try:
         start_date_filter = request.POST.get("start_date_filter")
         if start_date_filter:
-            start_date_filter = datetime.datetime.strptime(str(request.POST.get("start_date_filter")), '%d-%m-%Y').strftime(
-                '%Y-%m-%d')
+            start_date_filter = datetime.datetime.strptime(str(request.POST.get("start_date_filter")),
+                                                           '%d-%m-%Y').strftime('%Y-%m-%d')
         end_date_filter = request.POST.get("end_date_filter")
         if end_date_filter:
             end_date_filter = datetime.datetime.strptime(str(request.POST.get("end_date_filter")), '%d-%m-%Y').strftime(
@@ -191,81 +185,30 @@ def filter_leave_applications(request):
         faculty_filter = request.POST.get("faculty_filter")
         academic_info_obj = AcademicInfo.objects.all()
         course_obj = Course.objects.all()
-        faculty_obj = UserInfo.objects.filter(fk_user_type__user_type ="Faculty")
+        faculty_obj = UserInfo.objects.filter(fk_user_type__user_type="Faculty")
 
-        if request.POST.get("course_filter") and request.POST.get("faculty_filter") and request.POST.get(
-                "start_date_filter") and request.POST.get("end_date_filter") and request.POST.get("status_filter"):
-            leave_application_obj = LeaveApplication.objects.filter(fk_course_id=course_filter,
-                                                                    fk_faculty_user_id=faculty_filter,
-                                                                    date_post__range=[start_date_filter, end_date_filter],
-                                                                    action_status=status_filter)
+        filter_str = "LeaveApplication.objects"
+        if start_date_filter:
+            filter_str += ".filter(date_post=start_date_filter)"
+        if end_date_filter:
+            filter_str += ".filter(date_post=end_date_filter)"
+        if status_filter:
+            filter_str += ".filter(action_status=status_filter)"
+        if course_filter:
+            filter_str += ".filter(fk_course_id=course_filter)"
+        if faculty_filter:
+            filter_str += ".filter(fk_faculty_user_id=faculty_filter)"
+        if filter_str == "LeaveApplication.objects" :
+            filter_str += ".all()"
 
-        elif request.POST.get("course_filter") and request.POST.get("faculty_filter") and request.POST.get("status_filter"):
-            leave_application_obj = LeaveApplication.objects.filter(fk_course_id=course_filter,
-                                                                    fk_faculty_user_id=faculty_filter,
-                                                                    action_status=status_filter)
-
-        elif request.POST.get("course_filter") and request.POST.get("faculty_filter"):
-            leave_application_obj = LeaveApplication.objects.filter(fk_course_id=course_filter,
-                                                                    fk_faculty_user_id=faculty_filter)
-
-        elif request.POST.get("course_filter") and request.POST.get("start_date_filter"):
-            leave_application_obj = LeaveApplication.objects.filter(fk_course_id=course_filter, date_post=start_date_filter)
-
-        elif request.POST.get("course_filter") and request.POST.get("end_date_filter"):
-            leave_application_obj = LeaveApplication.objects.filter(fk_course_id=course_filter, date_post=end_date_filter)
-
-        elif request.POST.get("course_filter") and request.POST.get("status_filter"):
-            leave_application_obj = LeaveApplication.objects.filter(fk_course_id=course_filter, action_status=status_filter)
-
-        elif request.POST.get("course_filter") and request.POST.get("status_filter"):
-            leave_application_obj = LeaveApplication.objects.filter(fk_course_id=course_filter, action_status=status_filter)
-
-        elif request.POST.get("faculty_filter") and request.POST.get("start_date_filter"):
-            leave_application_obj = LeaveApplication.objects.filter(fk_faculty_user_id=faculty_filter,
-                                                                    date_post=start_date_filter)
-
-        elif request.POST.get("faculty_filter") and request.POST.get("end_date_filter"):
-            leave_application_obj = LeaveApplication.objects.filter(fk_faculty_user_id=faculty_filter,
-                                                                    date_post=end_date_filter)
-
-        elif request.POST.get("faculty_filter") and request.POST.get("status_filter"):
-            leave_application_obj = LeaveApplication.objects.filter(fk_faculty_user_id=faculty_filter,
-                                                                    action_status=status_filter)
-
-        elif request.POST.get("start_date_filter") and request.POST.get("end_date_filter"):
-            leave_application_obj = LeaveApplication.objects.filter(date_post__range=[start_date_filter, end_date_filter])
-
-        elif request.POST.get("start_date_filter") and request.POST.get("status_filter"):
-            leave_application_obj = LeaveApplication.objects.filter(date_post=start_date_filter,
-                                                                    action_status=status_filter)
-
-        elif request.POST.get("end_date_filter") and request.POST.get("status_filter"):
-            leave_application_obj = LeaveApplication.objects.filter(date_post=end_date_filter, action_status=status_filter)
-
-        elif request.POST.get("start_date_filter"):
-            leave_application_obj = LeaveApplication.objects.filter(date_post=start_date_filter)
-
-        elif request.POST.get("end_date_filter"):
-            leave_application_obj = LeaveApplication.objects.filter(date_post=end_date_filter)
-
-        elif request.POST.get("course_filter"):
-            leave_application_obj = LeaveApplication.objects.filter(fk_course_id=course_filter)
-
-        elif request.POST.get("faculty_filter"):
-            leave_application_obj = LeaveApplication.objects.filter(fk_faculty_user_id=faculty_filter)
-
-        elif request.POST.get("status_filter"):
-            leave_application_obj = LeaveApplication.objects.filter(action_status=status_filter)
-
-        else:
-            leave_application_obj = LeaveApplication.objects.all()
-        render_string = render_to_string("filter_leave_application.html", {"leave_application_obj": leave_application_obj,
-                                                                           "academic_info_obj": academic_info_obj,
-                                                                           "course_obj": course_obj,
-                                                                           "faculty_obj": faculty_obj})
+        leave_application_obj = eval(filter_str)
+        render_string = render_to_string("filter_leave_application.html",
+                                         {"leave_application_obj": leave_application_obj,
+                                          "academic_info_obj": academic_info_obj,
+                                          "course_obj": course_obj,
+                                          "faculty_obj": faculty_obj})
         return HttpResponse(render_string)
-    except :
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
 
@@ -281,6 +224,6 @@ def delete_leave_application(request):
         leave_application_obj = LeaveApplication.objects.get(id=id)
         leave_application_obj.delete()
         return HttpResponse("success")
-    except :
+    except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
