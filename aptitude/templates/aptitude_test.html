@@ -1,0 +1,486 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+{#{% for u in  user_operation_obj %}#}
+{#{% if u.fk_screen.screen_url == "aptitude_test" %}#}
+{#{% if u.view_data == "Y" %}#}
+<style>
+    th {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+        padding-top: 0.4rem !important;
+    }
+
+    td {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+        padding-top: 0.4rem !important;
+    }
+
+    .modal-backdrop {
+        display: none;
+    }
+
+    .modal-open {
+        overflow-y: auto;
+    }
+
+    .content .block, .content .items-push > div, .content .push, .content p {
+        margin-bottom: 0px !important;
+    }
+
+    .nu-orange-button {
+        padding: 3px 6px 3px 6px;
+    }
+
+    .nu-orange-button:hover {
+        padding: 3px 6px 3px 6px;
+    }
+
+    .nu-green-button {
+        padding: 3px 6px 3px 6px;
+    }
+
+    .nu-green-button:hover {
+        padding: 3px 6px 3px 6px;
+    }
+
+</style>
+<input id="aptitude_id" type="hidden">
+<div class="block block-header bg-body-light" style="margin-bottom: 0rem;">
+    <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+        <h1 class="flex-sm-fill h3 my-2">
+            Aptitude Test
+        </h1>
+    </div>
+</div>
+<div class="container-fluid mt--7" id="filter_div" style="padding-bottom: 0rem; padding-top: 0.7rem;">
+    <a class="block block-rounded block-link-pop border-left border-primary border-4x"
+       style="width: 100%;margin-bottom: 0rem;">
+        <div class="block-content block-content-full">
+            <div class="row order-xl-1">
+                <div class="form-group tab-responsive" style="width:16%; padding-right: 2rem;">
+                    <label for="course">Course</label>
+                    <select class="form-control form-control-sm" id="course">
+                        <option value="" selected hidden>Select Course</option>
+                        <option value="">All</option>
+                        {% for i in course_obj %}
+                        <option value="{{i.id}}">{{i.course}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group" style="width:16%; padding-right: 2rem;">
+                    <label for="semesters">Semesters</label>
+                    <select class="form-control form-control-sm" id="semesters">
+                        <option value="" selected hidden>Select Semesters</option>
+                        <option value="">All</option>
+                        {% for i in semesters_obj %}
+                        <option value="{{i.id}}">{{i.semester}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group" style="width:16%; padding-right: 2rem;">
+                    <label for="sections">Sections</label>
+                    <select class="form-control form-control-sm" id="sections">
+                        <option value="" selected hidden>Select Sections</option>
+                        <option value="">All</option>
+                        {% for i in section_obj %}
+                        <option value="{{i.id}}">{{i.sections}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group" style="width:15%; padding-right: 2rem;">
+                    <label for="faculty">Faculty</label>
+                    <select class="form-control form-control-sm" id="faculty">
+                        <option value="" selected hidden>Select Faculty</option>
+                        <option value="">All</option>
+                        {% for i in faculty_obj %}
+                        <option value="{{i.id}}">{{i.first_name}} {{ i.last_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group" style="width:15%; padding-right: 2rem;">
+                    <label for="start_date">Form</label>
+                    <input id="start_date"
+                           class="form-control form-control-sm form-control-alternative js-datepicker"
+                           data-date-format="dd/mm/yyyy" placeholder="DD/MM/YYYY" required>
+                </div>
+                <div class="form-group" style="width:15%; padding-right: 2rem;">
+                    <label for="end_date">To</label>
+                    <input id="end_date"
+                           class="form-control form-control-sm form-control-alternative js-datepicker"
+                           data-date-format="dd/mm/yyyy" placeholder="DD/MM/YYYY" required>
+                </div>
+                <div class="form-group cols-lg-1">
+                    <label for="end_date">&nbsp;</label>
+                    <buttton class="btn btn-warning submit-btn btn-block btn-sm"
+                             onclick="filterpublishtest()">
+                        <i class="fa fa-filter" aria-hidden="true"></i> Filter
+                    </buttton>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+<div class="container-fluid mt--7" style="padding-top: 0.7rem;">
+    <div class="block">
+        <div class="block-header">
+            <h3 class="block-title border-bottom pb-2">Tests
+            </h3>
+            <form action="" method="POST" id="AptitudeTestDetails" role="form" style="margin-bottom: -1;">
+                <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+{#                    {% for u in user_operation_obj %}#}
+{#                    {% if u.fk_screen.screen_url == "aptitude_test" %}#}
+{#                    {% if u.save_data == "Y" %}#}
+                    <div class="btn btn-primary btn-sm" id="add_test_button" onclick="editmaster(1)">Add</div>
+{#                    {% endif %}#}
+{#                    {% endif %}#}
+{#                    {% endfor %}#}
+                    <div class="btn btn-danger btn-sm submit-btn" onclick="ShowAddSubject_Div()" id="close_button"
+                         style="display: none;">Cancel
+                    </div>
+                    <button class="btn btn-success nu-green-button btn-sm" id="aptitudesetsubmit" style="display:none;"
+                            type="submit">Save
+                    </button>
+                </nav>
+        </div>
+        <div id="ShowAddTest" style="display: none;">
+        </div>
+        <div class="block block-content block-content-full">
+            <div class="table-responsive">
+                <table class="table table-vcenter" id="Test_Table">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">
+                        </th>
+                        <th scope="col">
+                            Test Name
+                        </th>
+                        <th scope="col">
+                            Total Que
+                        </th>
+                        <th scope="col">
+                            Duration
+                        </th>
+                        <th scope="col">
+                            Schedule
+                        </th>
+                        <th scope="col">
+                            Detail
+                        </th>
+                        <th>
+                            Created By
+                        </th>
+                        <th scope="col">
+                            Status
+                        </th>
+{#                        {% for u in user_operation_obj %}#}
+{#                        {% if u.fk_screen.screen_url == "aptitude_test" %}#}
+{#                        {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                        <th scope="col">
+                            Actions
+                        </th>
+{#                        {% endif %}#}
+{#                        {% endif %}#}
+{#                        {% endfor %}#}
+                    </tr>
+                    </thead>
+                    <tbody class="list" id="masteraptitudetest_div">
+                    {% for i in test_obj reversed %}
+                    {% if i.test_name != "sample" %}
+                    {% if i.test_name != "UploadSample" %}
+                    <tr class="btn-light">
+                        <th scope="row"></th>
+                        <th scope="row" class="name"
+                            style="text-overflow: ellipsis;width: 300px;overflow: hidden; white-space: nowrap;">
+                            {{ i.test_name }}
+                        </th>
+                        <td class="budget">
+                            {% for j in my_list %}
+                            {% if j.id == i.id %}
+                            {{ j.total }}
+                            {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td class="status">
+                            {% if i.test_duration %}
+                            {{ i.test_duration}} Minutes
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div>
+                                {{ i.schedule }}
+                            </div>
+                        </td>
+                        <td>{% if not i.fk_course and not i.fk_semesters and not i.fk_sections %}
+                            All
+                            {% else %}
+                            {% if i.fk_course %}
+                            Course : {{ i.fk_course.course }} <br>
+                            {% endif %}
+                            {% if i.fk_semesters %}
+                            Sem : {{ i.fk_semesters.semester }} <br>
+                            {% endif %}
+                            {% if i.fk_sections %}
+                            Section : {{ i.fk_sections.sections }}
+                            {% endif %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ i.fk_faculty.first_name }} {{ i.fk_faculty.last_name }}
+                        </td>
+                        <td>
+                            {{ i.status }}
+                        </td>
+{#                        {% for u in user_operation_obj %}#}
+{#                        {% if u.fk_screen.screen_url == "aptitude_test" %}#}
+{#                        {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                        <td class="completion">
+                            {% if i.status == "Unassigned" or i.status == "Scheduled" %}
+{#                            {% if u.edit_data == "Y" %}#}
+                            <div class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target=""
+                                 onclick="editmaster({{i.id}},'edit')"><i class="si si-pencil"></i>
+                            </div>
+{#                            {% endif %}#}
+{#                            {% if u.delete_data == "Y" %}#}
+                            <div class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target=""
+                                 onclick="delete_fun({{i.id}})"><i class="fa fa-fw fa-times"></i>
+                            </div>
+{#                            {% endif %}#}
+                            {% else %}
+{#                            {% if u.edit_data == "Y" %}#}
+                            <div class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target=""
+                                 onclick="editmaster({{i.id}},'view')"><i class="fa fa-chevron-right"></i>
+                            </div>
+{#                            {% endif %}#}
+                            {% endif %}
+                        </td>
+{#                        {% endif %}#}
+{#                        {% endif %}#}
+{#                        {% endfor %}#}
+                    </tr>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#AptitudeMainNavPage').addClass('open');
+        $('#AptitudeTestNavPage').addClass('active');
+    });
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+
+        var fd = new FormData();
+        fd.append('file', $("#customFile")[0].files[0]);
+        fd.append('test_id', '{{ aptitude_set_obj.id }}');
+        $.ajax({
+            url: "/UploadQuestionFile/",
+            method: "POST",
+            async: false,
+            cache: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            processData: false,
+            data: fd,
+            success: function (response) {
+                console.log(response)
+                if (response['error'] == "Not in proper format") {
+                    $("#file_error").html(response['error'])
+                }
+                else {
+                    $("#SelectQuestionModel").modal('show');
+                    $("#selectquestions").html("");
+                    $("#selectquestions").append(response['render_string']);
+                    $("#file_error").html(response['error'])
+                }
+            }
+        })
+    });
+
+    function filterpublishtest() {
+        course = $("#course").val()
+        section = $("#sections").val()
+        semester = $("#semesters").val()
+        faculty = $("#faculty").val()
+        start_date = $("#start_date").val()
+        end_date = $("#end_date").val()
+        $.ajax({
+            url: "/filter-test-list/",
+            method: "POST",
+            data: {
+                "course": course,
+                "section": section,
+                "sem": semester,
+                "faculty": faculty,
+                "start_date": start_date,
+                "end_date": end_date,
+            },
+            success: function (response) {
+                $("#masteraptitudetest_div").html("")
+                $("#masteraptitudetest_div").append(response)
+            }
+        })
+    }
+
+    function publishconfirm(id) {
+        $("#PublishModal").modal('show')
+    }
+
+    function editalert() {
+        alert("Ongoing test cannot be edited or deleted ! ");
+    }
+
+    function deletemaster(id) {
+        console.log(id)
+        $.ajax({
+            url: "/delete-master-aptitude-details/",
+            method: "POST",
+            data: {
+                "id": id,
+            },
+            success: function (response) {
+                console.log(response)
+                location.reload()
+            }
+        })
+    }
+
+    function editmaster(id, edit_view) {
+        $("#aptitude_id").val(id);
+        $.ajax({
+            url: "/edit-master-aptitude-details/",
+            method: "POST",
+            data: {
+                "id": id,
+                "edit_view": edit_view
+            },
+            success: function (response) {
+                console.log(response)
+                $("#ShowAddTest").show();
+                $("#ShowAddTest").html("");
+                $("#ShowAddTest").append(response['render_string'])
+                $("#close_button").show()
+                $("#add_test_button").hide()
+                $("#Test_Table").hide()
+                $("#filter_div").hide()
+                if (edit_view != "view") {
+                    $("#aptitudesetsubmit").show()
+                }
+                if ($("#question_type").val() == "Objective") {
+                    $("#sampletest_objective").show();
+                    $("#sampletest_subjective").hide();
+                }
+                else {
+                    $("#sampletest_objective").hide();
+                    $("#sampletest_subjective").show();
+                }
+            }
+        })
+    }
+
+    function editquestion(id) {
+        $.ajax({
+            url: "/edit-question/",
+            method: "POST",
+            data: {
+                "id": id,
+            },
+            success: function (response) {
+                console.log(response)
+                $(this).closest('tr').remove();
+                $("#optionA").val(response['optionA']);
+                $("#optionB").val(response['optionB'])
+                $("#optionC").val(response['optionC'])
+                $("#optionD").val(response['optionD'])
+                $("#objective_question").val(response['question'])
+                $("#subjective_question").val(response['question'])
+                $("#que_answer").val(response['answer'])
+                $("#getquestionid").val(id)
+                $(".addquestion_button").html("Update");
+
+            }
+        })
+    }
+
+    function delete_fun(id) {
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, will not be recover!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+            if(willDelete) {
+                deletemaster(id)
+                swal("Aptitude test has been deleted!", {
+                    icon: "success",
+                });
+            }
+        }
+    )
+        ;
+    }
+
+    $(document).ready(function () {
+        $('#Test_Table').DataTable();
+        $("#sampletest_subjective").hide()
+        $("#sampletest_objective").attr('disabled', 'disabled');
+        $("#sampletest_subjective").attr('disabled', 'disabled');
+        $("#customFile").attr('disabled', 'disabled');
+        $('#AptitudeMainNavPage').addClass('open');
+        $('#AptitudeTestNavPage').addClass('active');
+
+
+        $("#close_button").click(function () {
+            $("#ShowAddTest").hide()
+            $("#close_button").hide()
+            $("#add_test_button").show()
+            $("#Test_Table").show()
+            $("#filter_div").show()
+            location.reload();
+        })
+        $("#question_type").change(function () {
+            if ($("#question_type").val() == "Objective") {
+                $("#sampletest_objective").show();
+                $("#sampletest_subjective").hide();
+            }
+            else {
+                $("#sampletest_objective").hide();
+                $("#sampletest_subjective").show();
+            }
+        });
+
+        <!--  Reload Page on Close Modal   -->
+
+        $("#AssignmentModel").on("hidden.bs.modal", function () {
+            location.reload();
+        });
+
+        <!--  Load Question for select on change of Sample Test    -->
+
+
+        $("#addquestion_div").hide();
+        $("#options_answer").hide();
+
+        <!--      $("#sampletest_div").hide();-->
+
+        $("#add_question").click(function () {
+            $("#addquestion_div").show();
+        });
+    });
+
+</script>
+{#{% endif %}#}
+{#{% endif %}#}
+{#{% endfor %}#}
+{% endblock content %}

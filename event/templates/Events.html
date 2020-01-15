@@ -1,0 +1,1136 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from sitetemplate.demo.ithemeslab.com/fizcon/index-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 29 Nov 2019 11:04:22 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>Tirpude Events</title>
+    <!-- Stylesheets -->
+    <link href="{% static 'Events/css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'Events/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'Events/css/responsive.css' %}" rel="stylesheet">
+
+    <link rel="shortcut icon" href="{% static 'Events/images/favicon.png' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'Events/images/favicon.png' %}" type="image/x-icon">
+
+    <!-- Responsive -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link href="https://cdn.jsdelivr.net/gh/StephanWagner/jBox@v1.0.5/dist/jBox.all.min.css" rel="stylesheet">
+    <!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+    <!--[if lt IE 9]><script src="js/respond.js"></script><![endif]-->
+    <style>
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <!-- Preloader -->
+    <div class="preloader"></div>
+
+    <!-- Main Header-->
+    <header class="main-header header-style-two">
+        <!--Header-Upper-->
+        <div class="header-upper">
+            <div class="outer-container">
+                <div class="clearfix">
+                    <div class="pull-left logo-box">
+                        <div class="logo"><a href="index.html"><img src="{% static 'Events/images/logo-2.png' %}"
+                                                                    style="height: 40px" alt="" title=""></a></div>
+                    </div>
+
+                    <!--Outer Box-->
+                    <div class="outer-box">
+                        <!-- Nav Toggler -->
+                        <div class="nav-toggler">
+                            <button class="nav-btn"><span class="icon flaticon-arrows"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Header Upper-->
+    </header>
+    <!--End Main Header -->
+
+    <!--Form Back Drop-->
+    <div class="form-back-drop"></div>
+
+    <!-- Hidden Bar -->
+    <section class="hidden-bar">
+        <div class="inner-box">
+            <div class="cross-icon"><span class="fa fa-times"></span></div>
+            <div class="title">
+                <h2>Get Event Info</h2>
+            </div>
+
+            <!--Appointment Form-->
+            <div class="appointment-form">
+                <form method="post" action="http://sitetemplate.demo.ithemeslab.com/fizcon/contact.html">
+                    <div class="form-group">
+                        <input type="text" name="text" value="" placeholder="Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" value="" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="phone" value="" placeholder="Phone no." required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Message"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="theme-btn btn-style-one">Submit now</button>
+                    </div>
+                </form>
+            </div>
+
+            <!--Contact Info Box-->
+            <div class="contact-info-box">
+                <ul class="info-list">
+                    <li><a href="http://sitetemplate.demo.ithemeslab.com/cdn-cgi/l/email-protection"
+                           class="__cf_email__" data-cfemail="4a2925243e2b293e0a2c233029252464292527">[email&#160;protected]</a>
+                    </li>
+                    <li>+(123) 456 7890</li>
+                </ul>
+                <ul class="social-list clearfix">
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Linkedin</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Google +</a></li>
+                    <li><a href="#">Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!--End Hidden Bar -->
+
+    <!-- Bnner Section -->
+    <section class="banner-section-two" style="background-image:url({% static 'Events/images/main-slider/4.jpg' %})">
+        <div class="auto-container">
+            <div class="content-box">
+                <div class="title-box">
+                    <h4>7 Events 28 Activities</h4>
+                    <h1>Tripude Events Fest</h1>
+                </div>
+                <!-- Countdown -->
+                <div class="timer">
+                    <div class="cs-countdown" data-countdown="4/24/2019 05:06:59"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Bnner Section -->
+
+    <!-- Feature Section Two -->
+    <!--End Feature Section Two -->
+
+    <!-- Events Section -->
+    <section class="events-section" style="padding-top: 5rem">
+        <div class="anim-icons">
+            <span class="icon icon-circle-1 wow zoomIn"></span>
+            <span class="icon icon-circle-2 wow zoomIn" data-wow-delay="300ms"></span>
+            <span class="icon icon-circle-3 wow zoomIn" data-wow-delay="600ms"></span>
+            <span class="icon icon-circle-4 wow zoomIn" data-wow-delay="900ms"></span>
+        </div>
+        <div class="auto-container">
+            <div class="events-carousel owl-carousel owl-theme">
+                <!-- Slide item -->
+                {% for i in event_obj %}
+                    <div class="slide-item">
+                        <div class="row">
+                            <div class="content-column order-2 col-lg-5 col-md-12 col-sm-12">
+                                <div class="inner-column">
+                                    <span class="title">{{ i.event_form }}</span>
+                                    <h2>{{ i.event_title }}</h2>
+                                    <div class="text">{{ i.event_details }}</div>
+                                    <div class="btn-box"><a href="#event_schedule_tab"
+                                                            class="theme-btn btn-style-three" >Register</a></div>
+                                </div>
+                            </div>
+
+                            <div class="info-column col-lg-7 col-md-12 col-sm-12">
+                                <div class="inner-column"
+                                     style="background-image: url({% static 'Events/images/resource/image-1.png' %});padding-top:200px;">
+                                    <div class="inner">
+                                        <div class="info-box location">
+                                            <span class="icon flaticon-location-pin"></span>
+                                            <div class="text">Tirpude College, Civil Line, Nagpur</div>
+                                        </div>
+
+                                        <div class="info-box date">
+                                            <span class="icon flaticon-small-calendar"></span>
+                                            <div class="text">{{ i.start_date |date:'d/m/Y' }}</div>
+                                        </div>
+
+                                        <div class="info-box time">
+                                            <span class="icon flaticon-clock-1"></span>
+                                            <div class="text"> 8:00 am 5:00 pm</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sec-title" style="margin-top: 10rem;">
+                            <h2>Event Schedules</h2>
+                        </div>
+                        <div class="events-tab tabs-box" style="margin-top: 1rem;margin-left: 1rem;" id="event_schedule_tab">
+
+                            <!--Tabs Content-->
+                            <div class="tabs-content">
+                                <!--Tab / Active Tab-->
+                                <div class="tab active-tab" id="tab-1">
+                                    <div class="content">
+                                        <div class="row">
+                                            <!-- Shedule Column -->
+
+                                            <!-- Author Column -->
+                                            <div class="author-column col-lg-12 col-sm-12 col-sm-12">
+                                                <div class="inner-column">
+                                                    <div class="row">
+                                                        <!-- Author block -->
+                                                        {% for j in activity_obj %}
+                                                            {% if j.fk_student_events.id == i.id %}
+                                                                <div class="author-block col-lg-4 col-md-6 col-sm-12">
+                                                                    <div class="inner-box">
+                                                                        <div class="thumb">
+                                                                            <img src="/static/Events/images/resource/author-thumb-{{ forloop.counter }}.png"
+                                                                                 style="height: 10rem; width: 10rem; border-radius:20% 50%;"
+                                                                                 alt="">
+                                                                        </div>
+                                                                        <div class="info">
+                                                                            <h5 class="title"><a
+                                                                                    href="#">{{ j.activity_name }}</a>
+                                                                            </h5>
+                                                                            <span class="date">{{ j.schedule_date }}<br>{{ j.start_time }} - {{ j.end_time }}</span>
+                                                                        </div>
+                                                                        <div class="text">{{ j.activity_details }}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                        {% endfor %}
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Tab-->
+                                <div class="tab" id="tab-2">
+                                    <div class="content">
+                                        <div class="row">
+                                            <!-- Shedule Column -->
+                                            <div class="shedule-column col-lg-5 col-md-12 col-sm-12">
+                                                <div class="inner-column">
+                                                    <div class="shedule-box">
+                                                        <h3 class="day">DAY 2</h3>
+                                                        <span class="date">8th January, Wednesday </span>
+                                                        <div class="text">Ut quo decore libris erroribus, vel ne omnium
+                                                            invidunt, ut eos dicat aeque intellegat. Diam tota omnesque
+                                                            vim
+                                                            ad, sea et prim
+                                                        </div>
+                                                        <div class="link-box"><a href="schedule.html"><span
+                                                                class="fa fa-angle-right"></span> More Details</a></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Author Column -->
+                                            <div class="author-column col-lg-7 col-sm-12 col-sm-12">
+                                                <div class="inner-column">
+                                                    <div class="row">
+                                                        <!-- Author block -->
+                                                        <div class="author-block col-lg-6 col-md-6 col-sm-12">
+                                                            <div class="inner-box">
+                                                                <div class="thumb">
+                                                                    <img src="/static/Events/images/resource/author-thumb-1.png"
+                                                                         alt="">
+                                                                    <span class="name">Dominika</span>
+                                                                </div>
+                                                                <div class="info">
+                                                                    <h5 class="title"><a href="#">Big Data &amp;
+                                                                        Analytics</a></h5>
+                                                                    <span class="date">10:00am, 7 jan 2019</span>
+                                                                </div>
+                                                                <div class="text">Ut quo decore libris erroribus, vel ne
+                                                                    omnium invidunt, ut eos dicat aeque int elle gat.
+                                                                    Diam
+                                                                    tota omnesqu Sed liber accumsan appemp prodesset.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Author block -->
+                                                        <div class="author-block col-lg-6 col-md-6 col-sm-12">
+                                                            <div class="inner-box">
+                                                                <div class="thumb">
+                                                                    <img src="/static/Events/images/resource/author-thumb-2.png"
+                                                                         alt="">
+                                                                    <span class="name">Dominika</span>
+                                                                </div>
+                                                                <div class="info">
+                                                                    <h5 class="title"><a href="#">Mobile 360 MENA</a>
+                                                                    </h5>
+                                                                    <span class="date">11:00am, 7 jan 2019</span>
+                                                                </div>
+                                                                <div class="text">Ut quo decore libris erroribus, vel ne
+                                                                    omnium invidunt, ut eos dicat aeque int elle gat.
+                                                                    Diam
+                                                                    tota omnesqu Sed liber accumsan appemp prodesset.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Author block -->
+                                                        <div class="author-block col-lg-6 col-md-6 col-sm-12">
+                                                            <div class="inner-box">
+                                                                <div class="thumb">
+                                                                    <img src="/static/Events/images/resource/author-thumb-3.png"
+                                                                         alt="">
+                                                                    <span class="name">Dominika</span>
+                                                                </div>
+                                                                <div class="info">
+                                                                    <h5 class="title"><a href="#">DAM San Diego</a></h5>
+                                                                    <span class="date">12:00am, 7 jan 2019</span>
+                                                                </div>
+                                                                <div class="text">Ut quo decore libris erroribus, vel ne
+                                                                    omnium invidunt, ut eos dicat aeque int elle gat.
+                                                                    Diam
+                                                                    tota omnesqu Sed liber accumsan appemp prodesset.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Author block -->
+                                                        <div class="author-block col-lg-6 col-md-6 col-sm-12">
+                                                            <div class="inner-box">
+                                                                <div class="thumb">
+                                                                    <img src="/static/Events/images/resource/author-thumb-4.png"
+                                                                         alt="">
+                                                                    <span class="name">Dominika</span>
+                                                                </div>
+                                                                <div class="info">
+                                                                    <h5 class="title"><a href="#">Mobile UX London</a>
+                                                                    </h5>
+                                                                    <span class="date">9:00am, 7 jan 2019</span>
+                                                                </div>
+                                                                <div class="text">Ut quo decore libris erroribus, vel ne
+                                                                    omnium invidunt, ut eos dicat aeque int elle gat.
+                                                                    Diam
+                                                                    tota omnesqu Sed liber accumsan appemp prodesset.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Tab-->
+                                <div class="tab" id="tab-3">
+                                    <div class="content">
+                                        <div class="row">
+                                            <!-- Shedule Column -->
+                                            <div class="shedule-column col-lg-5 col-md-12 col-sm-12">
+                                                <div class="inner-column">
+                                                    <div class="shedule-box">
+                                                        <h3 class="day">DAY 3</h3>
+                                                        <span class="date">9th January, Wednesday </span>
+                                                        <div class="text">Ut quo decore libris erroribus, vel ne omnium
+                                                            invidunt, ut eos dicat aeque intellegat. Diam tota omnesque
+                                                            vim
+                                                            ad, sea et prim
+                                                        </div>
+                                                        <div class="link-box"><a href="schedule.html"><span
+                                                                class="fa fa-angle-right"></span> More Details</a></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Author Column -->
+                                            <div class="author-column col-lg-7 col-sm-12 col-sm-12">
+                                                <div class="inner-column">
+                                                    <div class="row">
+                                                        <!-- Author block -->
+                                                        <div class="author-block col-lg-6 col-md-6 col-sm-12">
+                                                            <div class="inner-box">
+                                                                <div class="thumb">
+                                                                    <img src="/static/Events/images/resource/author-thumb-1.png"
+                                                                         alt="">
+                                                                    <span class="name">Dominika</span>
+                                                                </div>
+                                                                <div class="info">
+                                                                    <h5 class="title"><a
+                                                                            href="{% static 'Events/#">Big Data &amp; Analytics</a></h5>
+                                                        <span class=" date">10:00am, 7 jan 2019</span>
+                                                                </div>
+                                                                <div class="text">Ut quo decore libris erroribus, vel ne
+                                                                    omnium invidunt, ut eos dicat aeque int elle gat.
+                                                                    Diam
+                                                                    tota omnesqu Sed liber accumsan appemp prodesset.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Author block -->
+                                                        <div class="author-block col-lg-6 col-md-6 col-sm-12">
+                                                            <div class="inner-box">
+                                                                <div class="thumb">
+                                                                    <img src="/static/Events/images/resource/author-thumb-2.png"
+                                                                         alt="">
+                                                                    <span class="name">Dominika</span>
+                                                                </div>
+                                                                <div class="info">
+                                                                    <h5 class="title"><a
+                                                                            href="{% static 'Events/#">Mobile 360 MENA</a></h5>
+                                                        <span class=" date">11:00am, 7 jan 2019</span>
+                                                                </div>
+                                                                <div class="text">Ut quo decore libris erroribus, vel ne
+                                                                    omnium invidunt, ut eos dicat aeque int elle gat.
+                                                                    Diam
+                                                                    tota omnesqu Sed liber accumsan appemp prodesset.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Author block -->
+                                                        <div class="author-block col-lg-6 col-md-6 col-sm-12">
+                                                            <div class="inner-box">
+                                                                <div class="thumb">
+                                                                    <img src="/static/Events/images/resource/author-thumb-3.png"
+                                                                         alt="">
+                                                                    <span class="name">Dominika</span>
+                                                                </div>
+                                                                <div class="info">
+                                                                    <h5 class="title"><a
+                                                                            href="{% static 'Events/#">DAM San Diego</a></h5>
+                                                        <span class=" date">12:00am, 7 jan 2019</span>
+                                                                </div>
+                                                                <div class="text">Ut quo decore libris erroribus, vel ne
+                                                                    omnium invidunt, ut eos dicat aeque int elle gat.
+                                                                    Diam
+                                                                    tota omnesqu Sed liber accumsan appemp prodesset.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Author block -->
+                                                        <div class="author-block col-lg-6 col-md-6 col-sm-12">
+                                                            <div class="inner-box">
+                                                                <div class="thumb">
+                                                                    <img src="/static/Events/images/resource/author-thumb-4.png"
+                                                                         alt="">
+                                                                    <span class="name">Dominika</span>
+                                                                </div>
+                                                                <div class="info">
+                                                                    <h5 class="title"><a
+                                                                            href="{% static 'Events/#">Mobile UX London</a></h5>
+                                                        <span class=" date">9:00am, 7 jan 2019</span>
+                                                                </div>
+                                                                <div class="text">Ut quo decore libris erroribus, vel ne
+                                                                    omnium invidunt, ut eos dicat aeque int elle gat.
+                                                                    Diam
+                                                                    tota omnesqu Sed liber accumsan appemp prodesset.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sec-title" style="margin-top: 0.2rem;">
+                            {% if time_now|date:'Y-m-d' < i.end_date|date:'Y-m-d' %}
+                            <div class="btn-box"><a href="#registration_form" style="float: right;"
+                                                    class="theme-btn btn-style-three link view-speaker ts-image-popup"
+                                                    data-effect="mfp-zoom-in"
+                                                    onclick="registration_form({{ i.id }},this)">Register Now</a></div>
+                            {% else %}
+                            <div class="btn-box"><a href="#registration_form" style="float: right;"
+                                                    class="theme-btn btn-style-three link view-speaker ts-image-popup"
+                                                    data-effect="mfp-zoom-in"
+                                                    disabled>Registeration Close</a></div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+                <!-- Slide item -->
+            </div>
+        </div>
+    </section>
+    <!--End Events Section -->
+
+    <!-- Event Highlight -->
+    <!--End Event Highlight -->
+
+    <!-- Speakers Section Two -->
+    <section class="sponsor-section speakers-section-two">
+        <span class="float-text">Event Gallery</span>
+        <div class="large-container">
+            <div class="sec-title">
+                <h2 class="text-white">Event Gallery</h2>
+            </div>
+
+            <div class="speakers-area clearfix">
+                <!-- Feature Block -->
+                <div class="speaker-block-two wow fadeInUp">
+                    <div class="image-box">
+                        <figure class="image"><img src="{% static 'Events/images/resource/TPL-2.jpg' %}" alt="">
+                        </figure>
+                        <div class="overlay-box">
+                            <a href="{% static 'Events/#popup_11" class="link view-speaker ts-image-popup" data-effect="mfp-zoom-in"><span class="flaticon-add-1"></span></a>
+                            <div class=" info">
+                            <h5 class="name">Madness</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- popup start-->
+                <div id="popup_11" class="container ts-speaker-popup mfp-hide">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="ts-speaker-popup-img">
+                                <img src="{% static 'Events/images/resource/speaker-popup.jpg' %}" alt="">
+                            </div>
+                        </div><!-- col end-->
+                        <div class="col-lg-6">
+                            <div class="ts-speaker-popup-content">
+                                <h3 class="ts-title">Shaunta Deni</h3>
+                                <span class="speakder-designation">General Manager</span>
+                                <p>
+                                    World is committed to making participation in the event a harass ment free
+                                    experience
+                                    for everyone, regardless of level experience gender, gender identity and expression
+                                </p>
+                                <h4 class="session-name">
+                                    Sessions by David
+                                </h4>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="speaker-session-info">
+                                            <h4>Day 1</h4>
+                                            <span> 10.30 - 11.30 am </span>
+                                            <p> Marketing Matters </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="speaker-session-info">
+                                            <h4>Day 1</h4>
+                                            <span> 10.30 - 11.30 am </span>
+                                            <p> Marketing Matters </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ts-speakers-social">
+                                    <a href="{% static 'Events/#"><i class="fab fa-facebook"></i></a>
+                                        <a href="{% static 'Events/#"><i class="fab fa-twitter"></i></a>
+                                    <a href="{% static 'Events/#"><i class="fab fa-instagram"></i></a>
+                                        <a href="{% static 'Events/#"><i class="fab fa-google-plus"></i></a>
+                                    <a href="{% static 'Events/#"><i class="fab fa-linkedin"></i></a>
+                                    </div>
+                                </div><!-- ts-speaker-popup-content end-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature Block -->
+                <div class=" speaker-block-two wow fadeInUp" data-wow-delay="400ms">
+                                    <div class="image-box">
+                                        <figure class="image"><img
+                                                src="{% static 'Events/images/resource/madness-3.jpg' %}" alt="">
+                                        </figure>
+                                        <div class="overlay-box">
+                                            <a href="#popup_12" class="link view-speaker ts-image-popup"
+                                               data-effect="mfp-zoom-in"><span class="flaticon-add-1"></span></a>
+
+                                            <div class="info">
+                                                <h5 class="name">TIRE</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- popup start-->
+                                    <div id="popup_12" class="container ts-speaker-popup mfp-hide">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="ts-speaker-popup-img">
+                                                    <img src="{% static 'Events/images/resource/speaker-popup.jpg' %}"
+                                                         alt="">
+                                                </div>
+                                            </div><!-- col end-->
+                                            <div class="col-lg-6">
+                                                <div class="ts-speaker-popup-content">
+                                                    <h3 class="ts-title">Shaunta Deni</h3>
+                                                    <span class="speakder-designation">General Manager</span>
+                                                    <p>
+                                                        World is committed to making participation in the event a harass
+                                                        ment free experience
+                                                        for everyone, regardless of level experience gender, gender
+                                                        identity and expression
+                                                    </p>
+                                                    <h4 class="session-name">
+                                                        Sessions by David
+                                                    </h4>
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="speaker-session-info">
+                                                                <h4>Day 1</h4>
+                                                                <span> 10.30 - 11.30 am </span>
+                                                                <p> Marketing Matters </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="speaker-session-info">
+                                                                <h4>Day 1</h4>
+                                                                <span> 10.30 - 11.30 am </span>
+                                                                <p> Marketing Matters </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ts-speakers-social">
+                                                        <a href="#"><i class="fab fa-facebook"></i></a>
+                                                        <a href="#"><i class="fab fa-twitter"></i></a>
+                                                        <a href="#"><i class="fab fa-instagram"></i></a>
+                                                        <a href="#"><i class="fab fa-google-plus"></i></a>
+                                                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                                                    </div>
+                                                </div><!-- ts-speaker-popup-content end-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Feature Block -->
+                                <div class="speaker-block-two wow fadeInUp" data-wow-delay="800ms">
+                                    <div class="image-box">
+                                        <figure class="image"><img
+                                                src="{% static 'Events/images/resource/madness-2.jpg' %}" alt="">
+                                        </figure>
+                                        <div class="overlay-box">
+                                            <a href="#popup_13" class="link view-speaker ts-image-popup"
+                                               data-effect="mfp-zoom-in"><span class="flaticon-add-1"></span></a>
+
+                                            <div class="info">
+                                                <h5 class="name">TPL</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- popup start-->
+                                    <div id="popup_13" class="container ts-speaker-popup mfp-hide">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="ts-speaker-popup-img">
+                                                    <img src="{% static 'Events/images/resource/speaker-popup.jpg' %}"
+                                                         alt="">
+                                                </div>
+                                            </div><!-- col end-->
+                                            <div class="col-lg-6">
+                                                <div class="ts-speaker-popup-content">
+                                                    <h3 class="ts-title">Shaunta Deni</h3>
+                                                    <span class="speakder-designation">General Manager</span>
+                                                    <p>
+                                                        World is committed to making participation in the event a harass
+                                                        ment free experience
+                                                        for everyone, regardless of level experience gender, gender
+                                                        identity and expression
+                                                    </p>
+                                                    <h4 class="session-name">
+                                                        Sessions by David
+                                                    </h4>
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="speaker-session-info">
+                                                                <h4>Day 1</h4>
+                                                                <span> 10.30 - 11.30 am </span>
+                                                                <p> Marketing Matters </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="speaker-session-info">
+                                                                <h4>Day 1</h4>
+                                                                <span> 10.30 - 11.30 am </span>
+                                                                <p> Marketing Matters </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ts-speakers-social">
+                                                        <a href="#"><i class="fab fa-facebook"></i></a>
+                                                        <a href="#"><i class="fab fa-twitter"></i></a>
+                                                        <a href="#"><i class="fab fa-instagram"></i></a>
+                                                        <a href="#"><i class="fab fa-google-plus"></i></a>
+                                                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                                                    </div>
+                                                </div><!-- ts-speaker-popup-content end-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Feature Block -->
+                                <div class="speaker-block-two wow fadeInUp" data-wow-delay="1200ms">
+                                    <div class="image-box">
+                                        <figure class="image"><img
+                                                src="{% static 'Events/images/resource/crescendo-1.jpg' %}" alt="">
+                                        </figure>
+                                        <div class="overlay-box">
+                                            <a href="#popup_14" class="link view-speaker ts-image-popup"
+                                               data-effect="mfp-zoom-in"><span class="flaticon-add-1"></span></a>
+
+                                            <div class="info">
+                                                <h5 class="name">Crescendo</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- popup start-->
+                                        <div id="registration_form"
+                                             class="container ts-speaker-popup mfp-hide">
+                                        </div>
+                                </div>
+
+                                <!-- Feature Block -->
+                                <div class="speaker-block-two wow fadeInUp">
+                                    <div class="image-box">
+                                        <figure class="image"><img
+                                                src="{% static 'Events/images/resource/Erudition-1.jpg' %}" alt="">
+                                        </figure>
+                                        <div class="overlay-box">
+                                            <a href="#popup_15" class="link view-speaker ts-image-popup"
+                                               data-effect="mfp-zoom-in"><span class="flaticon-add-1"></span></a>
+
+                                            <div class="info">
+                                                <h5 class="name">Erudition</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- popup start-->
+                                    <div id="popup_15" class="container ts-speaker-popup mfp-hide">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="ts-speaker-popup-img">
+                                                    <img src="{% static 'Events/images/resource/speaker-popup.jpg' %}"
+                                                         alt="">
+                                                </div>
+                                            </div><!-- col end-->
+                                            <div class="col-lg-6">
+                                                <div class="ts-speaker-popup-content">
+                                                    <h3 class="ts-title">Shaunta Deni</h3>
+                                                    <span class="speakder-designation">General Manager</span>
+                                                    <p>
+                                                        World is committed to making participation in the event a harass
+                                                        ment free experience
+                                                        for everyone, regardless of level experience gender, gender
+                                                        identity and expression
+                                                    </p>
+                                                    <h4 class="session-name">
+                                                        Sessions by David
+                                                    </h4>
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="speaker-session-info">
+                                                                <h4>Day 1</h4>
+                                                                <span> 10.30 - 11.30 am </span>
+                                                                <p> Marketing Matters </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="speaker-session-info">
+                                                                <h4>Day 1</h4>
+                                                                <span> 10.30 - 11.30 am </span>
+                                                                <p> Marketing Matters </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ts-speakers-social">
+                                                        <a href="#"><i class="fab fa-facebook"></i></a>
+                                                        <a href="#"><i class="fab fa-twitter"></i></a>
+                                                        <a href="#"><i class="fab fa-instagram"></i></a>
+                                                        <a href="#"><i class="fab fa-google-plus"></i></a>
+                                                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                                                    </div>
+                                                </div><!-- ts-speaker-popup-content end-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Feature Block -->
+                                <div class="speaker-block-two wow fadeInUp" data-wow-delay="400ms">
+                                    <div class="image-box">
+                                        <figure class="image"><img
+                                                src="{% static 'Events/images/resource/Tire-1.jpg' %}" alt="">
+                                        </figure>
+                                        <div class="overlay-box">
+                                            <a href="#popup_16" class="link view-speaker ts-image-popup"
+                                               data-effect="mfp-zoom-in"><span class="flaticon-add-1"></span></a>
+
+                                            <div class="info">
+                                                <h5 class="name">Mindquest</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- popup start-->
+                                    <div id="popup_16" class="container ts-speaker-popup mfp-hide">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="ts-speaker-popup-img">
+                                                    <img src="{% static 'Events/images/resource/speaker-popup.jpg' %}"
+                                                         alt="">
+                                                </div>
+                                            </div><!-- col end-->
+                                            <div class="col-lg-6">
+                                                <div class="ts-speaker-popup-content">
+                                                    <h3 class="ts-title">Shaunta Deni</h3>
+                                                    <span class="speakder-designation">General Manager</span>
+                                                    <p>
+                                                        World is committed to making participation in the event a harass
+                                                        ment free experience
+                                                        for everyone, regardless of level experience gender, gender
+                                                        identity and expression
+                                                    </p>
+                                                    <h4 class="session-name">
+                                                        Sessions by David
+                                                    </h4>
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="speaker-session-info">
+                                                                <h4>Day 1</h4>
+                                                                <span> 10.30 - 11.30 am </span>
+                                                                <p> Marketing Matters </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="speaker-session-info">
+                                                                <h4>Day 1</h4>
+                                                                <span> 10.30 - 11.30 am </span>
+                                                                <p> Marketing Matters </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ts-speakers-social">
+                                                        <a href="#"><i class="fab fa-facebook"></i></a>
+                                                        <a href="#"><i class="fab fa-twitter"></i></a>
+                                                        <a href="#"><i class="fab fa-instagram"></i></a>
+                                                        <a href="#"><i class="fab fa-google-plus"></i></a>
+                                                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                                                    </div>
+                                                </div><!-- ts-speaker-popup-content end-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Feature Block -->
+                                <div class="speaker-block-two wow fadeInUp" data-wow-delay="800ms">
+                                    <div class="image-box">
+                                        <figure class="image"><img
+                                                src="{% static 'Events/images/resource/sip.jpg' %}" alt="">
+                                        </figure>
+                                        <div class="overlay-box">
+                                            <a href="#popup_17" class="link view-speaker ts-image-popup"
+                                               data-effect="mfp-zoom-in"><span class="flaticon-add-1"></span></a>
+
+                                            <div class="info">
+                                                <h5 class="name">Mindquest</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- popup start-->
+                                    <div id="popup_17" class="container ts-speaker-popup mfp-hide">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="ts-speaker-popup-img">
+                                                    <img src="{% static 'Events/images/resource/speaker-popup.jpg' %}"
+                                                         alt="">
+                                                </div>
+                                            </div><!-- col end-->
+                                            <div class="col-lg-6">
+                                                <div class="ts-speaker-popup-content">
+                                                    <h3 class="ts-title">Shaunta Deni</h3>
+                                                    <span class="speakder-designation">General Manager</span>
+                                                    <p>
+                                                        World is committed to making participation in the event a harass
+                                                        ment free experience
+                                                        for everyone, regardless of level experience gender, gender
+                                                        identity and expression
+                                                    </p>
+                                                    <h4 class="session-name">
+                                                        Sessions by David
+                                                    </h4>
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="speaker-session-info">
+                                                                <h4>Day 1</h4>
+                                                                <span> 10.30 - 11.30 am </span>
+                                                                <p> Marketing Matters </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="speaker-session-info">
+                                                                <h4>Day 1</h4>
+                                                                <span> 10.30 - 11.30 am </span>
+                                                                <p> Marketing Matters </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ts-speakers-social">
+                                                        <a href="#"><i class="fab fa-facebook"></i></a>
+                                                        <a href="#"><i class="fab fa-twitter"></i></a>
+                                                        <a href="#"><i class="fab fa-instagram"></i></a>
+                                                        <a href="#"><i class="fab fa-google-plus"></i></a>
+                                                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                                                    </div>
+                                                </div><!-- ts-speaker-popup-content end-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    </section>
+    <!--End Speakers Section -->
+
+    <!-- Pricing Section -->
+    <!--End Pricing Section -->
+
+    <!-- Topics Section -->
+    <section class="topics-section">
+        <span class="float-text">Event topics</span>
+        <div class="anim-icons">
+            <span class="icon icon-circle-5 wow zoomIn"></span>
+            <span class="icon icon-circle-6 wow zoomIn" data-wow-delay="400ms"></span>
+            <span class="icon icon-circle-7 wow zoomIn" data-wow-delay="800ms"></span>
+            <span class="icon icon-wave-line"></span>
+        </div>
+
+        <div class="auto-container">
+            <div class="sec-title">
+                <h2>Events</h2>
+            </div>
+
+            <div class="row">
+                <div class="left-column col-lg-3 col-md-6 col-sm-12">
+                    <div class="inner-column">
+                        <ul class="topic-list">
+                            <li><a href="#">Crescendo <span class="icon fa fa-chevron-right"></span></a></li>
+                            <li><a href="#">TPL(Tirpude Premier League) <span class="icon fa fa-chevron-right"></span></a></li>
+                            <li><a href="#">MADNESS (Management Aptitude Development) <span class="icon fa fa-chevron-right"></span></a></li>
+                            <li><a href="#">TIRE (Tirpude Industry Readiness Exercise) <span class="icon fa fa-chevron-right"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="right-column col-lg-3 col-md-6 col-sm-12 order-3">
+                    <div class="inner-column">
+                        <ul class="topic-list">
+                            <li><a href="#">Erudition<span class="icon fa fa-chevron-right"></span></a></li>
+                            <li><a href="#">Implementation recommendations <span
+                                    class="icon fa fa-chevron-right"></span></a></li>
+                            <li><a href="#">Mindquest(UG Students)<span class="icon fa fa-chevron-right"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="center-column col-lg-6 col-md-12 col-sm-12">
+                    <div class="inner-column">
+                        <figure class="image wow zoomInDown"><img
+                                src="{% static 'Events/images/resource/topic-girl.png' %}" alt=""></figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--End Topics Section -->
+
+    <!-- Sponsor Section -->
+    <!--End Sponsor Section -->
+
+    <!-- News Section -->
+    <section class="news-section">
+        <span class="float-text">Latest News</span>
+        <div class="auto-container">
+            <div class="sec-title">
+                <h2>Latest News</h2>
+            </div>
+
+            <div class="row">
+                <!-- News block -->
+                <div class="news-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
+                    <div class="inner-box">
+                        <div class="image-box">
+                            <figure class="image"><a href="blog-single.html"><img
+                                    src="{% static 'Events/images/resource/news-1.jpg' %}" alt=""></a></figure>
+                        </div>
+                        <div class="lower-content">
+                            <div class="info-box">
+                                <span class="date">19- JAN- 2019</span>
+                                <span class="author">Jamie Ashbrook</span>
+                            </div>
+                            <h4><a href="blog-single.html">Why Lead Generation Is Key For Business Growth.</a></h4>
+                            <div class="text">Te probo omnis clita mea. In suas singulis consectetuer sed, vim fugit
+                                homero labores
+                            </div>
+                            <div class="link-box"><a href="blog-single.html"><span class="fa fa-angle-right"></span>Read
+                                More</a></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- News block -->
+                <div class="news-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="400ms">
+                    <div class="inner-box">
+                        <div class="image-box">
+                            <figure class="image"><a href="blog-single.html"><img
+                                    src="{% static 'Events/images/resource/news-2.jpg' %}" alt=""></a></figure>
+                        </div>
+                        <div class="lower-content">
+                            <div class="info-box">
+                                <span class="date">19- JAN- 2019</span>
+                                <span class="author">Jamie Ashbrook</span>
+                            </div>
+                            <h4><a href="blog-single.html">How To Increase In-App Purchases In 2019.</a></h4>
+                            <div class="text">Te probo omnis clita mea. In suas singulis consectetuer sed, vim fugit
+                                homero labores
+                            </div>
+                            <div class="link-box"><a href="blog-single.html"><span class="fa fa-angle-right"></span>Read
+                                More</a></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- News block -->
+                <div class="news-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="800ms">
+                    <div class="inner-box">
+                        <div class="image-box">
+                            <figure class="image"><a href="blog-single.html"><img
+                                    src="{% static 'Events/images/resource/news-3.jpg' %}" alt=""></a></figure>
+                        </div>
+                        <div class="lower-content">
+                            <div class="info-box">
+                                <span class="date">19- JAN- 2019</span>
+                                <span class="author">Jamie Ashbrook</span>
+                            </div>
+                            <h4><a href="blog-single.html">Voxburner Launches Youth Trends Report 2018.</a></h4>
+                            <div class="text">Te probo omnis clita mea. In suas singulis consectetuer sed, vim fugit
+                                homero labores
+                            </div>
+                            <div class="link-box"><a href="blog-single.html"><span class="fa fa-angle-right"></span>Read
+                                More</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- News Section -->
+
+    <!-- Main Footer -->
+    <div class="main-footer style-two">
+        <div class="anim-icons">
+            <span class="icon icon-twist-line-1 wow zoomIn"></span>
+            <span class="icon icon-circle-6 wow zoomIn" data-wow-delay="400ms"></span>
+            <span class="icon icon-circle-8 wow zoomIn" data-wow-delay="1200ms"></span>
+        </div>
+        <div class="auto-container">
+            <div class="sec-title text-center">
+                <h2>Get latest news from us!</h2>
+            </div>
+
+            <!--Newsletter Form-->
+            <div class="newsletter-form">
+                <form method="post" action="http://sitetemplate.demo.ithemeslab.com/fizcon/blog.html">
+                    <div class="form-group">
+                        <input type="email" name="field-name" value="" placeholder="email@gmail.com" required>
+                        <button type="submit" class="theme-btn btn-style-three">Send</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Social Links -->
+            <div class="social-links">
+                <ul>
+                    <li><a href="#"><span class="fab fa-facebook-f"></span></a></li>
+                    <li><a href="#"><span class="fab fa-twitter"></span></a></li>
+                    <li><a href="#"><span class="fab fa-dribbble"></span></a></li>
+                    <li><a href="#"><span class="fab fa-instagram"></span></a></li>
+                    <li><a href="#"><span class="fab fa-linkedin-in"></span></a></li>
+                </ul>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom clearfix">
+                <div class="copyright">Copyright &copy; 2019. All Rights Reserved.</div>
+                <ul>
+                    <li>We Accept</li>
+                    <li><a href="#"><img src="{% static 'Events/images/icons/cart-1.jpg' %}" alt=""></a></li>
+                    <li><a href="#"><img src="{% static 'Events/images/icons/cart-2.jpg' %}" alt=""></a></li>
+                    <li><a href="#"><img src="{% static 'Events/images/icons/cart-3.jpg' %}" alt=""></a></li>
+                    <li><a href="#"><img src="{% static 'Events/images/icons/cart-4.jpg' %}" alt=""></a></li>
+                </ul>
+            </div>
+            <!-- Copyright -->
+        </div>
+    </div>
+    <!-- End Footer -->
+
+
+</div>
+<!--End pagewrapper-->
+
+<!--Scroll to top-->
+<div class="scroll-to-top scroll-to-target" data-target="html"><span class="fa fa-angle-double-up"></span></div>
+<script>
+    function registration_form(id,e){
+        var event_id = id
+        $.ajax({
+            url:"/event-registration-form/",
+            method: "POST",
+            data:{
+                "event_id":event_id,
+            },
+            success: function (response) {
+                console.log(response)
+                $("#registration_form").html("")
+                $("#registration_form").html(response)
+            }
+        })
+    }
+</script>
+<script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="{% static 'Events/js/jquery.js' %}"></script>
+<script src="{% static 'Events/js/popper.min.js' %}"></script>
+<script src="{% static 'Events/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'Events/js/jquery-ui.js' %}"></script>
+<script src="{% static 'Events/js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+<script src="{% static 'Events/js/jquery.fancybox.js' %}"></script>
+<script src="{% static 'Events/js/magnific-popup.min.js' %}"></script>
+<script src="{% static 'Events/js/appear.js' %}"></script>
+<script src="{% static 'Events/js/owl.js' %}"></script>
+<script src="{% static 'Events/js/wow.js' %}"></script>
+<script src="{% static 'Events/js/countdown.js' %}"></script>
+<script src="{% static 'Events/js/script.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/gh/StephanWagner/jBox@v1.0.5/dist/jBox.all.min.js"></script>
+</body>
+
+<!-- Mirrored from sitetemplate.demo.ithemeslab.com/fizcon/index-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 29 Nov 2019 11:06:02 GMT -->
+</html>

@@ -1,0 +1,778 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+{#{% for u in  user_operation_obj %}#}
+{#{% if u.fk_screen.screen_url == "assignment" %}#}
+{#{% if u.view_data == "Y" %}#}
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">Assignment</h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+{#                {% for u in  user_operation_obj %}#}
+{#                {% if u.fk_screen.screen_url == "assignment" %}#}
+{#                {% if u.save_data == "Y" %}#}
+                <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAddAssigement_Div()" id="ShowAddAssigement_Button">Add Assignment</button>
+{#                {% endif %}#}
+{#                {% endif %}#}
+{#                {% endfor %}#}
+                <button class="btn btn-danger btn-sm submit-btn" onclick="ShowAllAssigement_Div()" id="ShowAllAssigement_Button" style="display: none;">Cancel</button>
+                <button class="btn btn-success btn-sm" type="submit" style="display:none" form="submitassignment" id="assignment_submit_button">Submit</button>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="content" style="padding: 10px !important;" id="filterdata_div">
+    <a class="block block-rounded block-link-pop border-left border-primary border-4x"
+        style="width: 100%;margin-bottom: 0rem;">
+        <div class="block-content block-content-full" style="padding-bottom: 0px !important;">
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-xs-2">
+                    <div class="form-group tab-responsive">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">Course</div>
+                        <div class="font-w400 text-dark">
+                            <select class="form-control form-control-sm" id="filter_course"
+                                onchange="GetFilterSubjects()">
+                                <option value="" selected hidden>Select Course</option>
+                                {% for i in course_obj %}
+                                <option value="{{i.id}}">{{i.course}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_course">Please Select
+                                Course</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-xs-2">
+                    <div class="form-group">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">Semesters</div>
+                        <div class="font-w400 text-dark">
+                            <select class="form-control form-control-sm" id="filter_semesters"
+                                onchange="GetFilterSubjects()">
+                                <option value="" selected hidden>Select Semester</option>
+                                {% for i in semester_obj %}
+                                <option value="{{i.id}}">{{i.semester}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_semesters">Please Select
+                                Semester</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-xs-2">
+                    <div class="form-group">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">Sections</div>
+                        <div class="font-w400 text-dark">
+                            <select class="form-control form-control-sm" id="filter_sections">
+                                <option value="" selected hidden>Select Section</option>
+                                {% for i in section_obj %}
+                                <option value="{{i.id}}">{{i.sections}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_sections">Please Select
+                                Section</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-xs-2">
+                    <div class="form-group">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">Subject</div>
+                        <div class="font-w400 text-dark">
+                            <select class="form-control form-control-sm" id="filter_subject">
+                                <option value="" selected hidden>Select Subject</option>
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_subject">Please Select Subject</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-xs-6">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">From Date</div>
+                                <div class="font-w400 text-dark">
+                                    <input name="filter_from_date" id="filter_from_date"
+                                        class="form-control form-control-sm form-control-alternative js-datepicker"
+                                            data-date-format="dd/mm/yyyy" placeholder="DD/MM/YYYY" required autocomplete="off"
+                                           value="{{from_date|date:'d/m/Y'}}">
+                                    <span style="display:none;color:red;" id="err_specialization">Please Select From
+                                        Date</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">To Date</div>
+                                <div class="font-w400 text-dark">
+                                    <input name="filter_to_date" id="filter_to_date"
+                                        class="form-control form-control-sm form-control-alternative js-datepicker"
+                                            data-date-format="dd/mm/yyyy" placeholder="DD/MM/YYYY" required autocomplete="off"
+                                           value="{{to_date|date:'d/m/Y'}}">
+                                    <span style="display:none;color:red;" id="err_semesters">Please Select To
+                                        Date</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-1 col-md-1 col-xs-1">
+                    <div class="form-group">
+                        <div class="font-size-sm font-w600 text-uppercase text-muted">&nbsp;</div>
+                        <div class="font-w400 text-dark">
+                            <buttton class="btn btn-warning submit-btn btn-block btn-sm" onclick="filter_assignments()">
+                                <i class="fa fa-filter" aria-hidden="true"></i> Filter
+                            </buttton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+
+<div class="container-fluid mt--7" style="padding-top: 0.7rem;">
+    <div class="block">
+    <div class="block-header"></div>
+        <div id="ShowAddAssigement_Div" style="display: none;">
+            <div id="tabsJustifiedContent" class="tab-content">
+                <div id="PersonalInfo" class="tab-pane fade active show">
+                    <div class="card-body">
+                        <input type="hidden" name="assigementid" id="assigementid">
+                        <form action="" id="submitassignment" method="post" role="form" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="pl-lg-4">
+                                <div class="row">
+                                    <div class="col-lg-3 col-sm-4 col-xs-4">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="final_date">Date of Submission<span
+                                                    class="text-danger">*</span>:</label></span>&nbsp &nbsp<span
+                                                style="color:red" id="time_error"></span>
+                                            <input name="final_date" id="final_date"
+                                                class="form-control form-control-sm form-control-alternative js-datepicker"
+                                                data-date-format="dd/mm/yyyy" placeholder="DD/MM/YYYY" autocomplete="off" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-4 col-xs-4">
+                                        <div class="form-group clearfix">
+                                            <label class="form-control-label text-right">Course<span
+                                                    class="text-danger">*</span>:</label>
+                                            <select name="course"
+                                                class="form-control form-control-sm form-control-alternative"
+                                                id="course" required onchange="GetSubjects('second')">
+                                                <option value="" selected>Select Course</option>
+                                                {% for i in course_obj %}
+                                                <option value="{{i.id}}">{{i.course}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-4 col-xs-4">
+                                        <div class="form-group clearfix">
+                                            <label class="form-control-label text-right">Semester<span
+                                                    class="text-danger">*</span>:</label>
+                                            <select name="semester"
+                                                class="form-control form-control-sm form-control-alternative"
+                                                id="semester" required disabled="disabled"
+                                                onchange="GetSubjects('second')">
+                                                <option value="" selected>Select Semesters
+                                                </option>
+                                                {% for i in semester_obj %}
+                                                <option value="{{i.id}}">{{i.semester}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-4 col-xs-4">
+                                        <div class="form-group">
+                                            <label class="form-control-label text-right">Section<span
+                                                    class="text-danger">*</span>:</label>
+                                            <select name="section"
+                                                class="form-control form-control-sm form-control-alternative"
+                                                id="sections" required disabled="disabled">
+                                                <option value="" selected>Select Sections
+                                                </option>
+                                                {% for i in section_obj %}
+                                                <option value="{{i.id}}">{{i.sections}}</option>
+                                                {% endfor %}
+                                                <option value="">All</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-4 col-xs-4">
+                                        <div class="form-group">
+                                            <label class="form-control-label text-right">Subject<span
+                                                    class="text-danger">*</span>:</label>
+                                            <select name="subject" id="subject"
+                                                class="form-control  form-control-sm form-control-alternative" required>
+                                                <option value="" selected hidden>Select Subject</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-title">Topic<span
+                                                    class="text-danger">*</span>:</label>
+                                            <input type="text" id="title" name="title" autocomplete="off"
+                                                class="form-control form-control-sm  form-control-alternative"
+                                                placeholder="Assignment Title" value="" required>
+                                        </div>
+                                        <div class="form-group" id="customFile_div">
+                                            <label class="form-control-label" for="final_date">Upload File<span
+                                                    class="text-danger">*</span>:</label>
+                                            <div class="custom-file">
+                                                <input type="file"
+                                                    class="custom-file-input cfile form-control form-control-sm form-control-alternative"
+                                                    id="customFile" required>
+                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                            </div>
+                                            <a id="editcustomFilename" style="padding-left:0.5rem"></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label"
+                                                for="exampleFormControlTextarea1">Assigment
+                                                Info</label>
+                                            <textarea class="form-control form-control-sm form-control-alternative"
+                                                name="assignment info" id="exampleFormControlTextarea1" rows="5"
+                                                placeholder="Write a large text here ..."></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="btn btn-dark" id="filter_button" onclick="SelectedSection()"
+                                        style="display:none;">Filter Students
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+
+                    </div>
+                </div>
+                <div id="studentlist_div"></div>
+                </form>
+            </div>
+        </div>
+        <div class="table-responsive" id="ShowAllAssigement_Div">
+            <div id="assignment_table">
+                <table class="table align-items-center dtable">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">
+                                Topic
+                            </th>
+                            <th scope="col">
+                                Subject
+                            </th>
+                            <th scope="col">
+                                Course
+                            </th>
+                            <th scope="col">
+                                Sem
+                            </th>
+                            <th scope="col">
+                                Section
+                            </th>
+                            <th scope="col">
+                                Date Post
+                            </th>
+                            <th scope="col">
+                                Due Date
+                            </th>
+                            <th scope="col">
+                                status
+                            </th>
+{#                            {% for u in  user_operation_obj %}#}
+{#                            {% if u.fk_screen.screen_url == "assignment" %}#}
+{#                            {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                            <th scope="col" style="width: 10%;">Action</th>
+{#                            {% endif %}#}
+{#                            {% endif %}#}
+{#                            {% endfor %}#}
+                        </tr>
+                    </thead>
+                    <tbody class="list">
+                        {% for i in assignment_obj %}
+                        <tr class="btn-light" style="cursor:pointer;">
+                            <td class="status" data-toggle="modal" data-target="#myModal{{ i.id }}"
+                                style="text-overflow: ellipsis;width: 200px;overflow: hidden; white-space: nowrap;padding-left: 1rem">
+                                {{ i.assignment_title }}
+                            </td>
+                            <td scope="row" data-toggle="modal" data-target="#myModal{{ i.id }}">
+                                {{ i.fk_subjects.subjects }}
+                            </td>
+                            <td scope="row" class="name" data-toggle="modal" data-target="#myModal{{ i.id }}">
+                                Course : {{ i.fk_course.course }}
+                            </td>
+                            <td scope="row" data-toggle="modal" data-target="#myModal{{ i.id }}">
+                                Semester {{ i.fk_semesters.semester }}
+                            </td>
+                            <td scope="row" data-toggle="modal" data-target="#myModal{{ i.id }}">
+                                Section {{ i.fk_sections.sections }}
+                            </td>
+                            <td class="budget" data-toggle="modal" data-target="#myModal{{ i.id }}">
+                                {{ i.date_post|date:'d/m/Y' }}
+                            </td>
+                            <td data-toggle="modal" data-target="#myModal{{ i.id }}">
+                                {{ i.date_final|date:'d/m/Y' }}
+                            </td>
+                            <td class="completion">
+                                {% if time_now < i.date_final %}
+                                Active
+                                {% else %}
+                                Expired
+                                {% endif %}
+                            </td>
+{#                            {% for u in  user_operation_obj %}#}
+{#                            {% if u.fk_screen.screen_url == "assignment" %}#}
+{#                            {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                            <td>
+                                {% if time_now < i.date_final %}
+                                <div class="btn-group">
+{#                                    {% if u.edit_data == "Y" %}#}
+                                    <button type="button" class="btn btn-sm btn-outline-primary js-tooltip-enabled"
+                                        data-toggle="tooltip" title="" data-original-title="Edit Client"
+                                        onclick="edit_assigement({{i.id}})">
+                                        <i class="fa fa-fw fa-pencil-alt"></i>
+                                    </button>
+{#                                    {% endif %}#}
+{#                                    {% if u.delete_data == "Y" %}#}
+                                    <button type="button" class="btn btn-sm btn-outline-danger js-tooltip-enabled"
+                                        data-toggle="tooltip" title="" data-original-title="Remove Client"
+                                        onclick="delete_assigement({{i.id}})">
+                                        <i class="fa fa-fw fa-times"></i>
+                                    </button>
+{#                                    {% endif %}#}
+                                </div>
+                                {% endif %}
+                            </td>
+{#                            {% endif %}#}
+{#                            {% endif %}#}
+{#                            {% endfor %}#}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% for m in assignment_obj %}
+<div class="modal fade" id="myModal{{ m.id }}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Submitted Assignments</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <table class="table align-items-center">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">
+                                Roll No
+                            </th>
+                            <th scope="col">
+                                Student
+                            </th>
+                            <th scope="col">
+                                Date Post
+                            </th>
+                            <th scope="col">
+                                File
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="list">
+                        {% for n in submitted_assignments_obj %}
+                        {% if m.id == n.fk_assignment_title.id %}
+                        <tr>
+                            <td class="budget">
+                                {% for j in academic_info_obj %}
+                                {% if n.fk_user_info.id == j.fk_user_info.id %}
+                                {{ j.roll_no }}
+                                {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td scope="row" class="name">
+                                {{ n.fk_user_info.first_name }} {{ n.fk_user_info.last_name }}
+                            </td>
+                            <td class="budget">
+                                {{ n.submission_date }}
+                            </td>
+                            <td>
+                                {% if n.submission_date %}
+                                <a target="_blank" href="{{ n.submitted_file.url }}">
+                                    <div
+                                        style="text-overflow: ellipsis;width: 400px;overflow: hidden; white-space: nowrap;">
+                                        {{ n.submitted_file }}</div>
+                                </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+<script>
+    function ShowAddAssigement_Div() {
+        $("#ShowAddAssigement_Div").show();
+        $("#ShowAllAssigement_Div").hide();
+        $("#ShowAddAssigement_Button").hide();
+        $("#ShowAllAssigement_Button").show();
+        $("#assignment_submit_button").show();
+        $("#filterdata_div").hide();
+    }
+
+    function ShowAllAssigement_Div() {
+        location.reload()
+        $("#ShowAddAssigement_Div").hide();
+        $("#ShowAllAssigement_Div").show();
+        $("#ShowAddAssigement_Button").show();
+        $("#ShowAllAssigement_Button").hide();
+        $("#ShowUpdateAssigement_Div").hide();
+        $("#assignment_submit_button").hide();
+        $("#filterdata_div").show();
+
+
+    }
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+
+    function SelectedSection() {
+        var sections = $("#sections").val();
+        var semester = $("#semester").val();
+        var course = $("#course").val();
+        var specialization = $("#specialization").val()
+        $.ajax({
+            url: "/assignment-get-student-list/",
+            method: "POST",
+            data: {
+                "sections": sections,
+                "semester": semester,
+                "course": course,
+                "specialization": specialization
+            },
+            success: function (response) {
+                console.log(response)
+                $("#studentlist_div").html("");
+                $("#studentlist_div").html(response);
+            }
+        })
+    }
+
+    function editSelectedSection() {
+        var sections = $("#editsections").val();
+        var semester = $("#editsemester").val();
+        var course = $("#editcourse").val();
+        // var specialization = $("#specialization").val()
+        $.ajax({
+            url: "/assignment-get-student-list/",
+            method: "POST",
+            data: {
+                "sections": sections,
+                "semester": semester,
+                "course": course
+            },
+            success: function (response) {
+                console.log(response)
+                $("#studentlist_div").html("");
+                $("#studentlist_div").html(response);
+            }
+        })
+    }
+
+    function GetSubjects(st) {
+        var course = $("#course").val();
+        var semesters = $("#semester").val();
+        console.log("course ", course)
+        $.ajax({
+            method: "POST",
+            url: "/GetSubjects/",
+            data: {
+                "course": course,
+                "semesters": semesters
+            },
+            success: function (response) {
+                console.log(response)
+                $("#subject").html("")
+                if (JSON.parse(response).length == 0) {
+                    $("#subject").html("<option value='' selected hidden>Subjects Not Found</option>")
+                    $("#subject").html("<option value='' selected hidden>Select Subject</option><option value=''>All</option>")
+                }
+                else {
+                    $("#subject").html("<option value='' selected hidden>Select Subject</option><option value=''>All</option>")
+                }
+                for (i = 0; i < JSON.parse(response).length; i++) {
+                    cit = document.createElement('option');
+                    cit.value = JSON.parse(response)[i][0]
+                    cit.innerHTML = JSON.parse(response)[i][1]
+                    $("#subject").append(cit)
+                }
+
+            }
+        })
+    }
+
+    function GetFilterSubjects() {
+        var course = $("#filter_course").val();
+        var semesters = $("#filter_semesters").val();
+        $.ajax({
+            method: "POST",
+            url: "/GetSubjects/",
+            data: {
+                "course": course,
+                "semesters": semesters
+            },
+            success: function (response) {
+                console.log(response)
+                $("#filter_subject").html("")
+                if (JSON.parse(response).length == 0) {
+                    $("#filter_subject").html("<option value='' selected hidden>Subjects Not Found</option>")
+                    $("#filter_subject").html("<option value='' selected hidden>Select Subject</option><option value=''>All</option>")
+                }
+                else {
+                    $("#filter_subject").html("<option value='' selected hidden>Select Subject</option><option value=''>All</option>")
+                }
+                for (i = 0; i < JSON.parse(response).length; i++) {
+                    cit = document.createElement('option');
+                    cit.value = JSON.parse(response)[i][0]
+                    cit.innerHTML = JSON.parse(response)[i][1]
+                    $("#filter_subject").append(cit)
+                }
+
+            }
+        })
+    }
+
+    function delete_assigement(id) {
+        console.log(id)
+        swal({
+            title: "Are you sure?",
+            text: "To delete this published Assigemet!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: "/delete-assignment/",
+                        method: "POST",
+                        data: {
+                            "id": id
+                        },
+                        success: function (response) {
+                            if (response == "success") {
+                                swal("The Assigement has been successfully Deleted!", {
+                                    icon: "success",
+                                    button: "Ok",
+                                    closeOnClickOutside: false,
+                                }).then(function () {
+                                    location.reload();
+                                });
+                            }
+                        }
+                    })
+                }
+                else {
+                    swal("Assigement is NOT deleted!");
+                }
+            });
+    }
+
+    function edit_assigement(id) {
+        $("#ShowAddAssigement_Div").hide();
+        $("#ShowAllAssigement_Div").hide();
+        $("#ShowAddAssigement_Div").show();
+        $("#ShowAddAssigement_Button").hide();
+        $("#ShowAllAssigement_Button").show();
+        $.ajax({
+            url: "/edit-assignment/",
+            method: "POST",
+            data: {
+                "id": id
+            },
+            success: function (response) {
+                console.log(response['list'][0]['fk_subjects'])
+                $("#subject").html("<option value='' selected hidden>Select Subject</option>{% for i in subject_obj %}<option value='{{i.id}}'>{{i.subjects}}</option>{% endfor %}")
+                $("#assigementid").val(response['list'][0]['id'])
+                $("#final_date").val(response['list'][0]['date_final'])
+                $("#course").val(response['list'][0]['fk_course'])
+                $("#semester").val(response['list'][0]['fk_semesters'])
+                if (response['list'][0]['fk_sections']) {
+                    $("#sections").val(response['list'][0]['fk_sections'])
+                }
+                else {
+                    $("#sections option:last").attr("selected", "selected");
+                }
+                $("#subject").val(response['list'][0]['fk_subjects'])
+                $("#title").val(response['list'][0]['assignment_title'])
+                $("#exampleFormControlTextarea1").val(response['list'][0]['assignment_info'])
+                $("#editcustomFilename").text(response['list'][0]['assignment_file'])
+                $("#customFile").removeAttr("required")
+                $("#editcustomFilename").attr("href", response['list'][0]['assignment_file_url'])
+                $("#assignment_submit_button").html("Update")
+                $("#sections").removeAttr("disabled");
+                $("#semester").removeAttr("disabled");
+                $("#assignment_submit_button").show();
+                $("#filter_button").show();
+                $("#filterdata_div").hide();
+                $.ajax({
+                    url: "/edit-student-list/",
+                    method: "POST",
+                    data: {
+                        "id": id
+                    },
+                    success: function (response) {
+                        $("#studentlist_div").html("")
+                        $("#studentlist_div").html(response);
+                    }
+                })
+            }
+        })
+    }
+    function filter_assignments() {
+        var filter_course = $("#filter_course").val();
+        var filter_semesters = $("#filter_semesters").val();
+        var filter_sections = $("#filter_sections").val();
+        var filter_subject = $("#filter_subject").val();
+        var filter_from_date = $("#filter_from_date").val();
+        var filter_to_date = $("#filter_to_date").val();
+        $.ajax({
+            url: "/filter_assignment/",
+            method: "POST",
+            data: {
+                "filter_course": filter_course,
+                "filter_semesters": filter_semesters,
+                "filter_sections": filter_sections,
+                "filter_subject": filter_subject,
+                "filter_from_date": filter_from_date,
+                "filter_to_date": filter_to_date,
+            },
+            success: function (response) {
+                console.log(response)
+                $("#assignment_table").html("");
+                $("#assignment_table").append(response);
+            }
+
+        })
+    }
+
+    $(document).ready(function () {
+        $('#StudentManagementMainNavPage').addClass('open');
+		$('#AssignmentNavPage').addClass('active');
+        $("#submitassignment").submit(function (e) {
+            e.preventDefault();
+
+            SelectedStudentList = [];
+            $("#studentselect:checked").each(function () {
+                SelectedStudentList.push($(this).val());
+            });
+            console.log("student select list ",SelectedStudentList)
+            var formdata = new FormData();
+            formdata.append("file", $("#customFile")[0].files[0])
+            formdata.append("title", $("#title").val())
+            formdata.append("info", $("#exampleFormControlTextarea1").val())
+            formdata.append("date_final", $("#final_date").val())
+            formdata.append("subject", $("#subject").val())
+            formdata.append("section", $("#sections").val())
+            formdata.append("semester", $("#semester").val())
+            formdata.append("course", $("#course").val())
+            formdata.append("student_list", SelectedStudentList)
+            formdata.append("key", $("#assignment_submit_button").html())
+            formdata.append("assignment_id", $("#assigementid").val())
+            console.log(SelectedStudentList)
+
+            if (new Date($("#final_date").val()).getTime() < new Date().getTime()) {
+                $("#time_error").html("Please Enter Future Time")
+            }
+            else {
+                $.ajax({
+                    url: "/save-assignment/",
+                    method: "POST",
+                    enctype: 'multipart/form-data',
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    data: formdata,
+                    success: function (response) {
+                        window.location.href = '/assignment/'
+                    }
+
+                })
+            }
+
+
+        })
+
+
+        $('.dtable').DataTable();
+
+        $("#course").change(function () {
+            if ($("#course").val().length != 0) {
+                $("#semester").removeAttr("disabled");
+                $("#studentlist_div").html("")
+            }
+            else {
+                $("#sections").val("");
+                $("#sections").attr('disabled', 'disabled');
+                $("#semester").val("");
+                $("#studentlist_div").html("");
+                $("#semester").attr('disabled', 'disabled');
+                $("#filter_button").hide()
+            }
+        });
+
+        $("#semester").change(function () {
+            if ($("#semester").val().length != 0) {
+                $("#sections").removeAttr("disabled");
+                $("#studentlist_div").html("")
+            }
+            else {
+                $("#sections").val("");
+                $("#sections").attr('disabled', 'disabled');
+                $("#filter_button").hide();
+                $("#studentlist_div").html("");
+            }
+        });
+
+        $("#sections").change(function () {
+            if ($("#sections").val().length != 0) {
+                $("#filter_button").show()
+                $("#studentlist_div").html("")
+            }
+            else {
+                $("#filter_button").hide()
+                $("#studentlist_div").html("");
+
+            }
+        });
+
+    })
+</script>
+{#{% endif %}#}
+{#{% endif %}#}
+{#{% endfor %}#}
+{% endblock content %}

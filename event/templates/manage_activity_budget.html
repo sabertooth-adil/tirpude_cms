@@ -1,0 +1,299 @@
+{% for i in activity_obj reversed %}
+    <tr style="display:none" id="edit_activity_budget_row{{ i.id }}">
+        <td class="status" style="width: 3rem">
+            &nbsp;&nbsp;{{ i.activity_name }}
+        </td>
+        <td scope="row" colspan="5" style="padding:0rem">
+            <table class="table" style="background-color: white">
+                <tbody>
+                <tr id="add_item_row{{ i.id }}">
+                    <td style="width: 4rem"><input type="text" name="item_name3" id="item_name{{ i.id }}" maxlength="20"
+                                                   value="{{ event_obj.event_title }}"
+                                                   class="form-control form-control-sm  form-control-alternative"
+                                                   placeholder="Enter Item Name" form="save_item{{ i.id }}" required>
+                    </td>
+                    <td style="width: 4rem"><input type="number" name="item_name4" id="item_cost{{ i.id }}"
+                                                   value="{{ event_obj.event_title }}"
+                                                   class="form-control form-control-sm  form-control-alternative"
+                                                   placeholder="Per Item Cost" form="save_item{{ i.id }}" required></td>
+                    <td style="width: 4rem"><input type="number" name="item_name6"
+                                                                      id="item_quantity{{ i.id }}"
+                                                                      value="{{ event_obj.event_title }}"
+                                                                      class="form-control form-control-sm  form-control-alternative"
+                                                                      placeholder="Quantity" form="save_item{{ i.id }}"
+                                                                      required></td>
+                    <td style="width: 5rem">
+                        <form action="" id="save_item{{ i.id }}" method="post" role="form"
+                              enctype="multipart/form-data">
+                            <button class="btn btn-sm btn-primary js-tooltip-enabled" style="font-size: small;">Add Item
+                            </button>
+                        </form>
+                    </td>
+                    <td style="width: 1rem"></td>
+                </tr>
+{#                <tr id="save_cancel{{ i.id }}" style="display:none">#}
+{#                    <td>#}
+{#                        <form action="" id="save_item{{ i.id }}" method="post" role="form"#}
+{#                              enctype="multipart/form-data">#}
+{#                            <button class="btn btn-sm btn-primary js-tooltip-enabled">Save#}
+{#                            </button>#}
+{#                            <div class="btn btn-sm btn-outline-danger js-tooltip-enabled"#}
+{#                                 data-toggle="tooltip" title="" data-original-title="Remove Client"#}
+{#                                 onclick="cancel_item({{ i.id }})">Cancel#}
+{#                            </div>#}
+{#                        </form>#}
+{#                    </td>#}
+{#                </tr>#}
+                </tbody>
+                <tbody id="item_list{{ i.id }}">
+                {% for j in activity_item_obj reversed %}
+                    {% if j.fk_activity.id == i.id %}
+                        <tr id="item_row{{ j.id }}">
+                            <td style="width: 5rem">{{ j.item }}</td>
+                            <td style="width: 4rem">Rs.{{ j.item_cost }}</td>
+                            <td style="width: 5rem">{{ j.item_quantity }}</td>
+                            <td style="width: 5rem">Rs.{% widthratio j.item_cost 1 j.item_quantity %}</td>
+                            <td scope="row" style="width: 1rem">
+                                <div class="btn-group">
+                                    <i class="fa fa-fw fa-pencil-alt btn-light" style="cursor: pointer" onclick="edit_item({{ j.id }})"></i>&nbsp; &nbsp;
+                                    <i class="far fa-trash-alt" style="cursor: pointer" onclick="delete_item({{ j.id }})"></i>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr id="edit_item_row{{ j.id }}" style="display:none">
+                            <td style="width: 5rem"><input type="text" name="item_name3" id="item_name{{ j.id }}" maxlength="20"
+                                                           value="{{ j.item }}"
+                                                           class="form-control form-control-sm  form-control-alternative"
+                                                           placeholder="Enter Item Name"
+                                                           required>
+                            </td>
+                            <td style="width: 4rem"><input type="number" name="item_name4" id="item_cost{{ j.id }}"
+                                                           value="{{ j.item_cost }}"
+                                                           class="form-control form-control-sm  form-control-alternative"
+                                                           placeholder="Cost" required></td>
+                            <td style="text-align: center;width: 5rem"><input type="number" name="item_name6"
+                                                                              id="item_quantity{{ j.id }}"
+                                                                              value="{{ j.item_quantity }}"
+                                                                              class="form-control form-control-sm  form-control-alternative"
+                                                                              placeholder="Quantity"
+                                                                              required></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary js-tooltip-enabled" style="font-size: small;" onclick="update_item({{ j.id }},{{ i.id }})">Save
+                                </button>
+                                <div class="btn btn-sm btn-outline-danger js-tooltip-enabled" style="font-size: small;"
+                                     data-toggle="tooltip" title="" data-original-title="Remove Client"
+                                     onclick="cancel_edit_item({{ j.id }})">Cancel
+                                </div>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </td>
+        <td scope="row">
+            <input type="number" id="proposed{{ i.id }}" value="{{ i.propose }}"
+                   class="form-control form-control-sm  form-control-alternative" placeholder="Proposed Budget" min="0"
+                   required>
+        </td>
+        <td scope="row">
+            <input type="number" id="allotted{{ i.id }}" value="{{ i.allotted }}"
+                   class="form-control form-control-sm  form-control-alternative" placeholder="Alloted Budget" min="0"
+                   required>
+        </td>
+        <td scope="row">
+            <input type="number" id="actual{{ i.id }}" value="{{ i.actual }}"
+                   class="form-control form-control-sm  form-control-alternative" placeholder="Actual Budget" ,min="0"
+                   required>
+        </td>
+        <td scope="row">
+            <div class="btn-group">
+                <div class="btn btn-sm btn-outline-info js-tooltip-enabled"
+                     data-toggle="tooltip" title="" data-original-title="Edit Client"
+                     onclick="save_budget({{ i.id }})">
+                    <i class="fa fa-fw fa-save"></i>
+                </div>
+                <div class="btn btn-sm btn-outline-danger js-tooltip-enabled"
+                     data-toggle="tooltip" title="" data-original-title="Remove Client"
+                     onclick="manage_finance_modal()">
+                    <i class="fa fa-fw fa-times"></i>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr id="activity_budget_row{{ i.id }}">
+        <td class="status" style="width: 3rem;">
+            &nbsp;&nbsp;{{ i.activity_name }}
+        </td>
+        <td scope="row" colspan="5">
+            <table class="table table-borderless"  style="background-color: white">
+                {% for j in activity_item_obj reversed%}
+                    {% if j.fk_activity.id == i.id %}
+                        <tr>
+                            <td style="width: 5rem">{{ j.item }}</td>
+                            <td style="width: 4rem">Rs.{{ j.item_cost }}</td>
+                            <td style="width: 5rem">{{ j.item_quantity }}</td>
+                            <td style="width: 5rem">Rs.{% widthratio j.item_cost 1 j.item_quantity %}</td>
+                            <td style="width: 1rem"></td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                <tr>
+                    <td style="width: 5rem"></td>
+                    <td style="width: 4rem"><b>Total</b></td>
+                    <td style="width: 5rem"></td>
+                    <td style="width: 5rem">
+                        {% for j in my_list_data %}
+                            {% if j.id == i.id %}
+                                <b>Rs.{{ j.total }}</b>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td style="width: 1rem"></td>
+                </tr>
+            </table>
+        </td>
+        <td scope="row">
+         Rs.{{ i.propose }}
+        </td>
+        <td scope="row">
+            Rs.{{ i.allotted }}
+        </td>
+        <td scope="row">
+            Rs.{{ i.actual }}
+        </td>
+        <td scope="row">
+            <div class="btn-group">
+                <div class="btn btn-sm btn-outline-info js-tooltip-enabled p_hide"
+                     data-toggle="tooltip" title="" data-original-title="Edit Client"
+                     onclick="edit_activity_budget({{ i.id }})">
+                    <i class="fa fa-fw fa-pencil-alt"></i>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <script>
+        $(document).ready(function () {
+            $("#save_item{{ i.id }}").submit(function (e) {
+                e.preventDefault();
+                var id =
+                {{ i.id }}
+                var item_name = $("#item_name{{ i.id }}").val()
+                var item_cost = $("#item_cost{{ i.id }}").val()
+                var item_quantity = $("#item_quantity{{ i.id }}").val()
+                $.ajax({
+                    url: "/save-item/",
+                    method: "POST",
+                    data: {
+                        "activity_id": id,
+                        "item_name": item_name,
+                        "item_cost": item_cost,
+                        "item_quantity": item_quantity,
+                    },
+                    success: function (response) {
+                        console.log(response)
+                        $("#item_list" + id).html("")
+                        $("#item_list" + id).html(response)
+                        $("#item_name{{ i.id }}").val("")
+                        $("#item_cost{{ i.id }}").val("")
+                        $("#item_quantity{{ i.id }}").val("")
+                    }
+                })
+            })
+        })
+    </script>
+{% endfor %}
+<tr style="background-color: #ebebeb;">
+        <td class="status">
+        </td>
+        <td scope="row" colspan="2" style="width: 7rem;">
+        </td>
+        <td style="text-align:center">
+            <b>Total</b>
+        </td>
+        <td scope="row" style="text-align: center">
+         <b>Rs.{{ total_dict.event_total_item_cost }}</b>
+        </td>
+        <td class="status">
+        </td>
+        <td scope="row">
+            <b>Rs.{{ total_dict.total_propose_budget }}</b>
+        </td>
+        <td scope="row">
+            <b>Rs.{{ total_dict.total_allotted_budget }}</b>
+        </td>
+        <td scope="row">
+            <b>Rs.{{ total_dict.total_actual_budget }}</b>
+        </td>
+        <td scope="row">
+        </td>
+    </tr>
+<script>
+    function edit_activity_budget(id) {
+        $("#activity_budget_row" + id).hide()
+        $("#edit_activity_budget_row" + id).show()
+    }
+
+    function cancel_activity_budget(id) {
+        $("#activity_budget_row" + id).show()
+        $("#edit_activity_budget_row" + id).hide()
+    }
+
+    function cancel_item(id) {
+        $("#add_item_row" + id).hide()
+        $("#add_item_button" + id).show()
+        $("#save_cancel" + id).hide()
+    }
+    function edit_item(id) {
+        console.log("edit_item id  ",id)
+        $("#item_row" + id).hide()
+        $("#edit_item_row" + id).show()
+    }
+    function cancel_edit_item(id) {
+        $("#item_row" + id).show()
+        $("#edit_item_row" + id).hide()
+    }
+    function update_item(id,aid){
+        var item_id = id
+        var item_name = $("#item_name" + id).val()
+        var item_cost = $("#item_cost" + id).val()
+        var item_quantity = $("#item_quantity" + id).val()
+        if (item_cost.length == 0){
+            console.log("item_cost ",item_cost)
+            item_cost = 0
+        }
+        if (item_quantity.length == 0){
+            item_quantity = 1
+        }
+        $.ajax({
+            url:"/update-activity-item/",
+            method: "POST",
+            data:{
+                "item_id":item_id,
+                "item_name":item_name,
+                "item_cost":item_cost,
+                "item_quantity":item_quantity,
+            },
+            success: function (response) {
+                console.log(response)
+                $("#item_list" + response['activity_id']).html("")
+                $("#item_list" + response['activity_id']).html(response['render_string'])
+            }
+        })
+
+    }
+    function delete_item(id) {
+        var item_id = id
+        $.ajax({
+            url:"/delete-activity-item/",
+            method: "POST",
+            data:{
+                "item_id":item_id,
+            },
+            success: function (response) {
+                $("#edit_item_row" + id).remove()
+                $("#item_row" + id).remove()
+            }
+        })
+    }
+</script>

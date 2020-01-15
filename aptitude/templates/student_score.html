@@ -1,0 +1,116 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="block block-header" style="margin-bottom: 0rem;">
+    <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+        <h1 class="flex-sm-fill h3 my-2">
+            Test Scores
+        </h1>
+    </div>
+</div>
+
+<div class="content" >
+    <div class="table-responsive"  id="publish_test_table_student">
+        <div class="block">
+            <div class="block-header">
+                <h3 class="block-title border-bottom pb-2">Attempted Tests
+                </h3>
+            </div>
+            <table class="table align-items-center dtable">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">
+                    </th>
+                    <th scope="col">
+                        Sr. no
+                    </th>
+                    <th scope="col">
+                        Test
+                    </th>
+                    <th scope="col">
+                        Publish on
+                    </th>
+                    <th scope="col">
+                        Marks
+                    </th>
+                    <th scope="col">
+                        Percent
+                    </th>
+                    <th class="text-center">
+                        View Answers
+                    </th>
+                </tr>
+                </thead>
+                <tbody class="list">
+                {% for i in aptitudescore_obj %}
+                {% for j in AptitudeSet_obj %}
+                {% if i.fk_aptitude_test.id == j.id %}
+                <tr class="btn-light">
+                    <th scope="col">
+                    </th>
+                    <th scope="row">
+                        {{ forloop.counter }}
+                    </th>
+                    <th scope="row" style="text-overflow: ellipsis;width: 400px;overflow: hidden; white-space: nowrap;">
+                        {{ j.test_name }}
+                    </th>
+                    <td class="status">
+                        {{ j.schedule}}
+                    </td>
+                    <td>
+                        <div >
+                            {{ i.score}} out of {{ i.out_of }}
+                        </div>
+                    </td>
+                    <td class="completion">
+                        {{ i.percent }}
+                    </td>
+                    <td class="text-center">
+                        <div class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target=""
+                             onclick="viewstudentanswer({{i.id}})">View
+                        </div>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+        <script>
+        function viewstudentanswer(id) {
+        id = id
+        console.log(id)
+        $.ajax({
+            url : "/view-student-answer/",
+            method : "POST",
+            data : {
+                "student_score_id":id,
+                },
+                success : function(response){
+                console.log(response)
+                $("#publish_test_table_student").hide();
+                $("#student_answer_table").show()
+                $("#student_answer_table").html("")
+                $("#student_answer_table").append(response)
+                // $("#student_score_table").hide()
+                }
+        })
+    }
+
+        </script>
+    </div>
+    <div class="card shadow" id="student_answer_table">
+        </div>
+</div>
+<script>
+$(document).ready(function() {
+    $('.dtable').DataTable();
+    $('#AptitudeMainNavPage').addClass('open');
+    $('#AptitudeScoreNavPage').addClass('active');
+})
+</script>
+{% endblock content %}

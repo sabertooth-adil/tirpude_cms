@@ -1,0 +1,94 @@
+{% for i in question_obj %}
+<div class="table-responsive" style="margin-bottom: -1.4rem">
+
+    <table class="table align-items-center" style="margin-bottom: 0rem;">
+        <tbody class="thead-light">
+        <tr>
+            <td scope="col" width="5%">
+                Q no.{{forloop.counter}}
+            </td>
+            <td scope="col" width="89%" class="padding_class">
+                <span style="white-space: initial">{{ i.fk_question.questions }}</span>
+            </td>
+            <td scope="col" width="3%" class="padding_class">
+                <button class="btn btn-info btn-sm" data-toggle="modal" data-target=""
+                        onclick="editquestion({{i.fk_question.id}})"><i
+                        class="si si-pencil"></i>
+                </button>
+            </td>
+            <td scope="col" width="3%" class="padding_class">
+                <button class="btn btn-danger btn-sm" data-toggle="modal" onclick="deletequestion({{i.id}},this)"
+                        style="float: right">
+                    <i class="far fa-trash-alt"></i>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table align-items-center options_table table-borderless">
+        <tbody class="thead-light">
+        <tr>
+            <td scope="col" width="2%">
+                A
+            </td>
+            <td scope="col" width="15%" class="padding_class">
+                <span style="white-space: initial">{{ i.fk_question.option_a }}</span>
+            </td>
+            <td scope="col" width="2%">
+                B
+            </td>
+            <td scope="col" width="15%" class="padding_class">
+                <span style="white-space: initial">{{ i.fk_question.option_b }}</span>
+            </td>
+            <td scope="col" width="2%">
+                C
+            </td>
+            <td scope="col" width="15%" class="padding_class">
+                <span style="white-space: initial">{{ i.fk_question.option_c }}</span>
+            </td>
+            <td scope="col" width="2%">
+                D
+            </td>
+            <td scope="col" width="15%" class="padding_class">
+                <span style="white-space: initial">{{ i.fk_question.option_d }}</span>
+            </td>
+            <td scope="col" width="2%">
+                Ans
+            </td>
+            <td scope="col" width="15%" class="padding_class">
+                {{ i.fk_question.answer }}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table align-items-center table-borderless">
+        <tbody class="thead-light">
+        <tr>
+            <td scope="col" width="5%">
+                Solution:
+            </td>
+            <td scope="col" width="89%" class="padding_class">
+                <span style="white-space: initial">{{ i.fk_question.solution }}</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+</div>
+<script>
+      function deletequestion(id,e){
+  console.log(id)
+   $.ajax({
+        url : "/delete-aptitude-question/",
+        method : "POST",
+        data : {
+            "id":id,
+            },
+            success : function(response){
+            console.log(response)
+            $(e).closest('div').remove();
+           }
+    })
+  }
+</script>
+{% endfor %}

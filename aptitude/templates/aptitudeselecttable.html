@@ -1,0 +1,49 @@
+{% for i in publish_test_obj reversed %}
+{% if i.test_name != "sample" %}
+{% if i.test_name != "UploadSample" %}
+<tr class="btn-light">
+    <th scope="row"></th>
+    <th scope="row" class="name">
+        {{ i.test_name }}
+    </th>
+    <td class="budget">
+        {% for j in my_list %}
+        {% if j.id == i.id %}
+        {{ j.total }}
+        {% endif %}
+        {% endfor %}
+    </td>
+    <td class="status">
+        {{ i.test_duration}}
+    </td>
+    <td>
+        <div style="text-overflow: ellipsis;width: 200px;overflow: hidden; white-space: nowrap;">
+            {{ i.schedule }}
+        </div>
+    </td>
+    <td>
+        {{ i.fk_course.course }}
+    </td>
+    <td>
+        {{ i.fk_semesters.semester }}
+    </td>
+    <td>
+        {{ i.fk_sections.sections }}
+    </td>
+    <td>
+        {{ i.fk_faculty.first_name }} {{ i.fk_faculty.last_name }}
+    </td>
+    <td>
+        {{ i.status }}
+    </td>
+    <td class="completion">
+        <div class="btn btn-info btn-sm" data-toggle="modal"
+             data-target=""
+             onclick="selecttest({{i.id}},'view')"><i
+                class="fa fa-chevron-right"></i>
+        </div>
+    </td>
+</tr>
+{% endif %}
+{% endif %}
+{% endfor %}

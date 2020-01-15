@@ -1,0 +1,434 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+{#{% for u in  user_operation_obj %}#}
+{#{% if u.fk_screen.screen_url == "syllabus" %}#}
+{#{% if u.view_data == "Y" %}#}
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">Syllabus</h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+{#                {% for u in  user_operation_obj %}#}
+{#                {% if u.fk_screen.screen_url == "syllabus" %}#}
+{#                {% if u.save_data == "Y" %}#}
+                <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAddSyllabus_Div()" id="ShowAddSyllabus_Button">Add Syllabus</button>
+{#                {% endif %}#}
+{#                {% endif %}#}
+{#                {% endfor %}#}
+                <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAllSyllabus_Div()" id="ShowAllSyllabus_Button" style="display: none;">All Syllabus</button>
+                <button class="btn btn-success btn-sm" type="submit" form="UpdateSyllabus" id="UpdateSyllabus_button" style="display: none;" >Update</button>
+                <button class="btn btn-success btn-sm" onclick="updatesyllabus()" id="updatesyllabus_button" style="display:none;">Update</button>
+                <button class="btn btn-success btn-sm" type="submit" form="AddSyllabus" id="AddSyllabus_button" style="display: none;" >Save</button>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <div class="block">
+        <div class="block-content block-content-full">
+            <div id="ShowAddSyllabus_Div" style="display: none;">
+                <form method="post" enctype="multipart/form-data" id="AddSyllabus">
+                    {% csrf_token %}
+                    <div class="pl-lg-4">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-6" style="padding-right: 0px;padding-left: 0px;">
+                                        <div class="form-group clearfix">
+                                            <label class="form-control-label text-right">Course<span class="text-danger">*</span>:</label>
+                                            <select name="course" class="form-control form-control-sm form-control-alternative" id="course" required>
+                                                <option value="" selected hidden>Select Course</option>
+                                                {% for i in course_obj %}
+                                                <option value="{{i.id}}">{{i.course}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <span style="display:none;color:red;font-size: 12px;" id="err_course">Please Enter Course</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-6" style="padding-right: 0px;">
+                                        <div class="form-group clearfix">
+                                            <label class="form-control-label text-right">Semester<span class="text-danger">*</span>:</label>
+                                            <select name="semester" class="form-control form-control-sm form-control-alternative" id="semester" required>
+                                                <option value="" selected hidden>Select Semesters
+                                                </option>
+                                                {% for i in semester_obj %}
+                                                <option value="{{i.id}}">{{i.semester}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <span style="display:none;color:red;font-size: 12px;" id="err_semester">Please Enter Semester</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-title">Topic<span style="color:red">*</span>:</label>
+                                    <input type="text" id="title" name="title" class="form-control form-control-sm  form-control-alternative" placeholder="Syllabus Title" maxlength="195" required>
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_title">Please Enter Title</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="final_date">Upload File<span style="color:red">*</span>:</label>
+                                    <div class="custom-file">
+                                        <input type="hidden" id="customFilehidden">
+                                        <input type="file" name="file" class="custom-file-input cfile form-control form-control-sm form-control-alternative" id="customFile" required>
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_customFile">Please Enter Custom File</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-xs-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="exampleFormControlTextarea1">Syllabus Info</label>
+                                    <textarea class="form-control form-control-sm form-control-alternative" name="syllabus_info" id="syllabus_info" rows="8" maxlength="195" placeholder="Write a large text here ..."></textarea>
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_syllabus_info">Please Enter Syllabus Information </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="ShowUpdateSyllabus_Div" style="display: none;">
+                <form method="post" enctype="multipart/form-data" id="UpdateSyllabus">
+                    <input type="hidden" name="syllabusid" id="syllabusid">
+                    <div class="pl-lg-4">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-xs-6" style="padding-right: 0px;padding-left: 0px;">
+                                        <div class="form-group clearfix">
+                                            <label class="form-control-label text-right">Course<span
+                                                    class="text-danger">*</span>:</label>
+                                            <select name="editcourse"
+                                                    class="form-control form-control-sm form-control-alternative"
+                                                    id="editcourse" required>
+                                                <option value="" selected hidden>Select Course</option>
+                                                {% for i in course_obj %}
+                                                <option value="{{i.id}}">{{i.course}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-xs-6" style="padding-right: 0px;">
+                                        <div class="form-group clearfix">
+                                            <label class="form-control-label text-right">Semester<span class="text-danger">*</span>:</label>
+                                            <select name="editsemester"
+                                                    class="form-control form-control-sm form-control-alternative"
+                                                    id="editsemester" required>
+                                                <option value="" selected hidden>Select Semesters
+                                                </option>
+                                                {% for i in semester_obj %}
+                                                <option value="{{i.id}}">{{i.semester}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-title">Topic<span
+                                            style="color:red">*</span>:</label>
+                                    <input type="text" id="edittitle" name="edittitle"
+                                           class="form-control form-control-sm  form-control-alternative"
+                                           placeholder="Syllabus Title" maxlength="195" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="final_date">Upload
+                                        File<span style="color:red">*</span>:</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="editfile"
+                                               class="custom-file-input cfile form-control form-control-sm form-control-alternative"
+                                               id="editcustomFile">
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                </div>
+                                <a id="editcustomFilename" target="_blank"></a>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-xs-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="exampleFormControlTextarea1">Syllabus
+                                        Info</label>
+                                    <textarea class="form-control form-control-sm form-control-alternative"
+                                              name="editsyllabus_info" id="editsyllabus_info" rows="8"
+                                              placeholder="Write a large text here ..." maxlength="195"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="table-responsive" id="ShowAllSyllabus_Div">
+                <table class="table table-vcenter dtable" id="mydatatable">
+                    <thead class="thead-light">
+                    <tr>
+                        <th class="text-center" style="width: 7% !important;">Sr No.</th>
+                        <th style="width: 8% !important;">Date Post</th>
+                        <th style="width: 8% !important;">For</th>
+                        <th>Topic</th>
+                        <th>File</th>
+                        <th>Detail</th>
+{#                        {% for u in  user_operation_obj %}#}
+{#                            {% if u.fk_screen.screen_url == "syllabus" %}#}
+{#                                {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                                    <th class="text-center" style="width: 5% !important;">Actions</th>
+{#                                {% endif %}#}
+{#                            {% endif %}#}
+{#                        {% endfor %}#}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in syllabus_obj %}
+                    <tr>
+                        <td class="text-center font-size-sm">{{forloop.counter}}</td>
+                        <td class="font-w600 font-size-sm">{{ i.date_post }}</td>
+                        <td class="font-w600 font-size-sm">
+                            {{ i.fk_course.course }},<br>
+                            Semester {{ i.fk_semesters.semester }}
+                        </td>
+                        <td class="font-w600 font-size-sm">{{ i.syllabus_title }}</td>
+                        <td class="font-w600 font-size-sm"><a target="_blank" href="{{i.syllabus_file.url}}">{{ i.syllabus_file }}</a>
+                        </td>
+                        <td class="font-w600 font-size-sm">
+                            <div style="text-overflow: ellipsis;width: 400px;overflow: hidden; white-space: nowrap;">
+                                {% if i.syllabus_detail %}
+                                {{ i.syllabus_detail }}
+                                {% else %}
+                                No Detail Avaliable
+                                {% endif %}
+                            </div>
+                        </td>
+{#                        {% for u in  user_operation_obj %}#}
+{#                            {% if u.fk_screen.screen_url == "syllabus" %}#}
+{#                                {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                                    <td class="text-center">
+                                        <div class="btn-group">
+{#                                            {% if u.edit_data == "Y" %}#}
+                                                <button type="button" class="btn btn-sm btn-outline-primary js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Edit Client" onclick="edit_syllabus({{i.id}})"><i class="fa fa-fw fa-pencil-alt"></i></button>
+{#                                            {% endif %}#}
+{#                                            {% if u.delete_data == "Y" %}#}
+                                                <button type="button" class="btn btn-sm btn-outline-danger js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Remove Client" onclick="delete_syllabus({{i.id}})"><i class="fa fa-fw fa-times"></i></button>
+{#                                            {% endif %}#}
+                                        </div>
+                                    </td>
+{#                                {% endif %}#}
+{#                            {% endif %}#}
+{#                        {% endfor %}#}
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% for m in syllabus_obj %}
+<div class="modal fade" id="myModal{{ m.id }}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><b></b></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table class="table align-items-center">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Roll No</th>
+                        <th scope="col">Student</th>
+                        <th scope="col">Date Post</th>
+                        <th scope="col">File</th>
+                    </tr>
+                    </thead>
+                    <tbody class="list">
+                    {% for n in syllabus_obj %}
+                    {% if m.id == n.FK_syllabus_title.id %}
+
+                    <tr>
+                        <td class="budget">
+                            {% for j in academic_info_obj %}
+                            {% if n.fk_user_info.id == j.fk_user_info.id %}
+                            {{ j.roll_no }}
+                            {% endif %}
+                            {% endfor %}
+                        </td>
+                        <th scope="row" class="name">
+                            {{ n.fk_user_info.first_name }} {{ n.fk_user_info.last_name }}
+                        </th>
+                        <td class="budget">
+                            {{ n.syllabus_date }}
+                        </td>
+                        <td>
+                            <a target="_blank" href="{{ n.submitted_file.url }}">
+                                <div style="text-overflow: ellipsis;width: 400px;overflow: hidden; white-space: nowrap;">
+                                    {{ n.submitted_file }}
+                                </div>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+<script>
+    $(document).ready(function () {
+        $("#AddSyllabus").submit(function(e) {
+        e.preventDefault();
+            var formdata = new FormData();
+            formdata.append("course", $("#course").val())
+            formdata.append("semester", $("#semester").val())
+            formdata.append("title", $("#title").val())
+            formdata.append("syllabus_info", $("#syllabus_info").val())
+            formdata.append("file", $("#customFile")[0].files[0])
+            $.ajax({
+                url:"/add_syllabus/",
+                method:"POST",
+                enctype: 'multipart/form-data',
+                async: false,
+                cache: false,
+                contentType: false,
+                enctype: 'multipart/form-data',
+                processData: false,
+                data: formdata,
+                success: function (response) {
+                    swal("The syllabus has been Added Successfully!!", {
+                    icon: "success",
+                    button: "Ok",
+                    closeOnClickOutside: false,
+                    }).then(function () {
+                        location.reload();
+                    });
+                }
+            })
+        })
+
+        $("#UpdateSyllabus").submit(function(e) {
+        e.preventDefault();
+            var formdata = new FormData();
+            formdata.append("syllabus_id", $("#syllabusid").val())
+            formdata.append("edit_course", $("#editcourse").val())
+            formdata.append("edit_semester", $("#editsemester").val())
+            formdata.append("edit_title", $("#edittitle").val())
+            formdata.append("edit_syllabus_info", $("#editsyllabus_info").val())
+            formdata.append("edit_file", $("#editcustomFile")[0].files[0])
+            $.ajax({
+                url:"/update_syllabus/",
+                method:"POST",
+                enctype: 'multipart/form-data',
+                async: false,
+                cache: false,
+                contentType: false,
+                enctype: 'multipart/form-data',
+                processData: false,
+                data: formdata,
+                success: function (response) {
+                    swal("The syllabus has been Updated Successfully!!", {
+                    icon: "success",
+                    button: "Ok",
+                    closeOnClickOutside: false,
+                    }).then(function () {
+                        location.reload();
+                    });
+                }
+            })
+        })
+
+        $('#StudentManagementMainNavPage').addClass('open');
+        $('#mydatatable').DataTable();
+		$('#SyllabusNavPage').addClass('active');
+        $("#AssignmentModal").on("hidden.bs.modal", function () {
+            location.reload();
+        });
+    });
+    function delete_syllabus(id){
+    console.log(id)
+    swal({
+        title: "Are you sure?",
+        text: "To delete this published syllabus!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,})
+        .then((willDelete) => {
+        if(willDelete) {
+            $.ajax({
+                url: "/delete_syllabus/",
+                method: "POST",
+                data: {
+                    "id": id
+                },
+                success: function (response) {
+                    if (response == "success") {
+                        swal("The syllabus has been successfully Deleted!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+            })
+        }
+        else {
+            swal("Syllabus is NOT deleted!");
+        }
+    });
+    }
+
+    function ShowAddSyllabus_Div(){
+        $("#ShowAddSyllabus_Div").show();
+        $("#ShowAllSyllabus_Div").hide();
+        $("#ShowAddSyllabus_Button").hide();
+        $("#ShowAllSyllabus_Button").show();
+        $("#AddSyllabus_button").show();
+    }
+    function ShowAllSyllabus_Div(){
+        $("#ShowAddSyllabus_Div").hide();
+        $("#ShowAllSyllabus_Div").show();
+        $("#ShowAddSyllabus_Button").show();
+        $("#ShowAllSyllabus_Button").hide();
+        $("#ShowUpdateSyllabus_Div").hide();
+        $("#AddSyllabus_button").hide();
+        $("#UpdateSyllabus_button").hide();
+    }
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+    function edit_syllabus(id){
+        $("#ShowUpdateSyllabus_Div").show();
+        $("#ShowAllSyllabus_Div").hide();
+        $("#ShowAddSyllabus_Button").hide();
+        $("#ShowAllSyllabus_Button").show();
+        $("#UpdateSyllabus_button").show();
+        $.ajax({
+             url: "/edit_syllabus/",
+             method: "POST",
+             data: {
+                 "id": id
+             },
+             success: function (response) {
+                 console.log(response)
+                 $("#syllabusid").val(response['list'][0]['id'])
+                 $("#editcourse").val(response['list'][0]['fk_course'])
+                 $("#editsemester").val(response['list'][0]['fk_semesters'])
+                 $("#editsubject").val(response['list'][0]['fk_subjects'])
+                 $("#edittitle").val(response['list'][0]['syllabus_title'])
+                 $("#editsyllabus_info").val(response['list'][0]['syllabus_detail'])
+                 $("#editcustomFilename").text(response['list'][0]['syllabus_file'])
+                 $("#editcustomFilename").attr("href", response['list'][0]['syllabus_file_name']);
+             }
+         })
+    }
+
+</script>
+{#{% endif %}#}
+{#{% endif %}#}
+{#{% endfor %}#}
+{% endblock content %}

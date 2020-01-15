@@ -1,0 +1,151 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+<div class="block block-header" style="margin-bottom: 0rem;">
+    <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+        <h1 class="flex-sm-fill h3 my-2">
+            Assignment
+        </h1>
+    </div>
+</div>
+<div class="content">
+    <div class="block">
+        <div class="block-header">
+            <h3 class="block-title border-bottom pb-2">Assignment</h3>
+        </div>
+            <div class="table-responsive">
+                <div class="block">
+                <table class="table align-items-center dtable">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">
+                            Topic
+                        </th>
+                        <th scope="col">
+                            Subject
+                        </th>
+                        <th scope="col">
+                            Faculty
+                        </th>
+                        <th scope="col">
+                            Date Post
+                        </th>
+                        <th scope="col">
+                            Due Date
+                        </th>
+                        <th scope="col">
+                            Status
+                        </th>
+                        <th scope="col">
+                            Submission
+                        </th>
+                        <th scope="col" class="text-center">
+                            Action
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="list">
+                    {% for i in assignment_obj %}
+                    <tr>
+                        <td class="budget" style="text-overflow: ellipsis;width: 300px;overflow: hidden; white-space: nowrap;padding-left: 1rem">
+                            {{ i.fk_assignment_title.assignment_title }}
+                        </td>
+                        <td class="budget">
+                            {{ i.fk_assignment_title.fk_subjects.subjects }}
+                        </td>
+                        <td>
+                            {{ i.fk_assignment_title.fk_user_info.first_name }} {{ i.fk_assignment_title.fk_user_info.last_name }}<br>
+                        </td>
+                        <td scope="row" class="name">
+                            {{ i.fk_assignment_title.date_post }}
+                        </td>
+                        <td>
+                            {{ i.fk_assignment_title.date_final }}
+                        </td>
+                        <td>
+                            {% if time_now < i.fk_assignment_title.date_final %}
+                                Active
+                            {% else %}
+                                Expired
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if i.submitted_file %}
+                                Submitted
+                            {% else %}
+                                Not Submitted
+                            {% endif %}
+                        </td>
+                        <td  class="text-center">
+                            <a href='#' target="_blank" class="btn btn-outline-primary btn-sm" data-toggle="modal"
+                               data-target="#myModal{{ i.id }}" style="font-size:x-small">View Detail</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                    </div>
+            </div>
+
+    </div>
+    {% for i in assignment_obj %}
+        <div class="modal show" id="myModal{{ i.id }}" >
+            <div class="modal-dialog" role="document">
+                <form action="{% url 'save_assignment' %}" method="post" enctype="multipart/form-data">
+                <div class="modal-content">
+                    <div class="block block-themed block-transparent mb-0">
+                        <div class="block-header bg-primary-dark">
+                            <h3 class="block-title">{{ i.fk_assignment_title.assignment_title }}</h3>
+                            <div class="block-options">
+                                <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                                    <i class="fa fa-fw fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="block-content font-size-sm">
+                        <input type="hidden" id="assignment_title" name="assignment_title" value="{{i.fk_assignment_title.id}}">
+                            <p><b>Due Date : </b>{{ i.fk_assignment_title.date_final }}</p>
+                            <p><b>Subject : </b>{{ i.fk_assignment_title.fk_subjects.subjects }}</p>
+                            <p><b>Detail : </b>{{ i.fk_assignment_title.assignment_info }}</p>
+                            <p><b>Attachment : </b><a target="_blank" href="{{i.fk_assignment_title.assignment_file.url}}"> {{ i.fk_assignment_title.assignment_file }}</a></p>
+                            {% if time_now < i.fk_assignment_title.date_final %}
+                            <p><b>Submit Assignment File : </b>
+                            <div class="custom-file">
+                                    <input type="file" name="file"
+                                           class="custom-file-input form-control form-control-alternative"
+                                           id="customFile" required>
+                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                            </p>
+                            {% endif %}
+                            {% if i.submitted_file %}
+                                    <p><b>Submitted File : </b><a  target="_blank" href="{{ i.submitted_file.url }}"> {{ i.submitted_file }}</a></p>
+                            {% endif %}
+                        </div>
+                        <div class="block-content block-content-full text-right border-top">
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+                            {% if time_now < i.fk_assignment_title.date_final %}
+                                <button type="submit" class="btn btn-sm btn-success">Submit</button>
+                            {% else %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<script>
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+    $(document).ready(function(){
+        $('.dtable').DataTable();
+        $('#StudentManagementMainNavPage').addClass('open');
+        $('#AssignmentNavPage').addClass('active');
+    });
+</script>
+{% endblock content %}

@@ -1,0 +1,75 @@
+{% for i in publish_test_obj reversed %}
+{% if i.test_name != "sample" %}
+{% if i.test_name != "UploadSample" %}
+<tr class="btn-light">
+    <th scope="row"></th>
+    <th scope="row" class="name"  style="text-overflow: ellipsis;width: 300px;overflow: hidden; white-space: nowrap;">
+        {{ i.test_name }}
+    </th>
+    <td class="budget">
+        {% for j in my_list %}
+        {% if j.id == i.id %}
+        {{ j.total }}
+        {% endif %}
+        {% endfor %}
+    </td>
+    <td class="status">
+        {% if i.test_duration %}
+        {{ i.test_duration}} Minutes
+        {% endif %}
+    </td>
+    <td>
+        <div>
+            {{ i.schedule }}
+        </div>
+    </td>
+    <td>{% if not i.fk_course and not i.fk_semesters and not i.fk_sections %}
+        All
+        {% else %}
+        {% if i.fk_course %}
+        Course : {{ i.fk_course.course }} <br>
+        {% endif %}
+        {% if i.fk_semesters %}
+        Sem : {{ i.fk_semesters.semester }} <br>
+        {% endif %}
+        {% if i.fk_sections %}
+        Section : {{ i.fk_sections.sections }}
+        {% endif %}
+        {% endif %}
+    </td>
+    <td>
+        {{ i.fk_faculty.first_name }} {{ i.fk_faculty.last_name }}
+    </td>
+    <td>
+        {{ i.status }}
+    </td>
+{#    {% for u in  user_operation_obj %}#}
+{#        {% if u.fk_screen.screen_url == "aptitude_test" %}#}
+{#            {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                <td class="completion">
+                    {% if i.status == "Unassigned" or i.status == "Scheduled" %}
+                        {% if u.edit_data == "Y" %}
+                            <div class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target=""
+                                 onclick="editmaster({{i.id}},'edit')"><i class="si si-pencil"></i>
+                            </div>
+                        {% endif %}
+{#                        {% if u.delete_data == "Y" %}#}
+{#                            <div class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target=""#}
+{#                                 onclick="delete_fun({{i.id}})"><i class="fa fa-fw fa-times"></i>#}
+{#                            </div>#}
+{#                        {% endif %}#}
+                    {% else %}
+{#                        {% if u.edit_data == "Y" %}#}
+                            <div class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target=""
+                                 onclick="editmaster({{i.id}},'view')"><i class="fa fa-chevron-right"></i>
+                            </div>
+{#                        {% endif %}#}
+                    {% endif %}
+                </td>
+{#            {% endif %}#}
+{#        {% endif %}#}
+{#    {% endfor %}#}
+</tr>
+{% endif %}
+{% endif %}
+{% endfor %}

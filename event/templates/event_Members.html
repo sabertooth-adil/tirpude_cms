@@ -1,0 +1,39 @@
+{% for i in event_member_obj reversed %}
+    <tr id="event_member_row{{ i.id }}">
+        <td>
+            {{ forloop.counter }}
+        </td>
+        <td scope="row">
+            <div class="media align-items-center">
+                <div class="media-body">
+                    <span class="mb-0 text-sm">{{ i.fk_user_info.first_name }} {{ i.fk_user_info.middle_name }} {{ i.fk_user_info.last_name }}</span>
+                </div>
+            </div>
+        </td>
+        <td scope="row">
+            {{ i.fk_user_info.fk_user_type.user_type }}
+        </td>
+        <td scope="row">
+            {{ i.fk_course.course }}
+        </td>
+        <td scope="row">
+            {{ i.fk_semesters.semester }}
+        </td>
+        <td>
+            {{ i.fk_sections.sections }}
+        </td>
+        <td>
+            {{ i.fk_user_info.email }}
+        </td>
+        <td>
+            {{ i.fk_user_info.phone_no }}
+        </td>
+        <td style="text-align: center">
+            <div class="btn btn-sm btn-danger js-tooltip-enabled p_hide"
+                 data-toggle="tooltip" title="" data-original-title="Remove Client"
+                 onclick="delete_event_member({{ i.id }})">
+                <i class="fa fa-fw fa-times"></i>
+            </div>
+        </td>
+    </tr>
+{% endfor %}

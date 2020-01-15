@@ -1,0 +1,41 @@
+{% for j in activity_item_obj reversed %}
+    <tr id="item_row{{ j.id }}">
+        <td style="width: 6rem">{{ j.item }}</td>
+        <td style="width: 4rem">Rs.{{ j.item_cost }}</td>
+        <td style="width: 4rem">{{ j.item_quantity }}</td>
+        <td style="width: 5rem">Rs.{% widthratio j.item_cost 1 j.item_quantity %}</td>
+        <td scope="row" style="width: 1rem">
+            <div class="btn-group">
+                <i class="fa fa-fw fa-pencil-alt btn-light" style="cursor: pointer" onclick="edit_item({{ j.id }})"></i>&nbsp; &nbsp;
+                <i class="far fa-trash-alt" style="cursor: pointer" onclick="delete_item({{ j.id }})"></i>
+            </div>
+        </td>
+    </tr>
+    <tr id="edit_item_row{{ j.id }}" style="display:none">
+        <td style="width: 6rem"><input type="text" name="item_name3" id="item_name{{ j.id }}" maxlength="20"
+                                       value="{{ j.item }}"
+                                       class="form-control form-control-sm  form-control-alternative"
+                                       placeholder="Enter Item Name"
+                                       required>
+        </td>
+        <td style="width: 5rem"><input type="number" name="item_name4" id="item_cost{{ j.id }}"
+                                       value="{{ j.item_cost }}"
+                                       class="form-control form-control-sm  form-control-alternative"
+                                       placeholder="Cost" required></td>
+        <td style="text-align: center;width: 5rem"><input type="number" name="item_name6"
+                                                          id="item_quantity{{ j.id }}"
+                                                          value="{{ j.item_quantity }}"
+                                                          class="form-control form-control-sm  form-control-alternative"
+                                                          placeholder="Quantity"
+                                                          required></td>
+        <td>
+            <button class="btn btn-sm btn-primary js-tooltip-enabled" onclick="update_item({{ j.id }})">Save
+            </button>
+            <div class="btn btn-sm btn-danger js-tooltip-enabled"
+                 data-toggle="tooltip" title="" data-original-title="Remove Client"
+                 onclick="cancel_edit_item({{ j.id }})">Cancel
+            </div>
+        </td>
+    </tr>
+
+{% endfor %}

@@ -1,0 +1,123 @@
+<div class="block">
+    <div class="block-header">
+        <h3 class="block-title border-bottom pb-2">Publish Tests
+        </h3>
+        <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+            <div id="close_score_table" class="btn btn-primary submit-btn">
+                <i class="fa fa-arrow-left"></i>
+                Back
+            </div>
+        </nav>
+    </div>
+        <div class="table-responsive">
+            <div class="block">
+            <table class="table align-items-center dtable" id="tabsJustifiedContent">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">
+                    </th>
+                    <th scope="col">
+                        Sr. no
+                    </th>
+                    <th scope="col">
+                        Name
+                    </th>
+                    <th scope="col">
+                        Score
+                    </th>
+                    <th scope="col">
+                        Percent
+                    </th>
+                    <th scope="col">
+                        Course
+                    </th>
+                    <th scope="col">
+                        Section
+                    </th>
+                    <th>
+                        Sem
+                    </th>
+                    <th scope="col">
+                        Roll no.
+                    </th>
+                    <th class="text-center">
+                        View Student Answers
+                    </th>
+                </tr>
+                </thead>
+                <tbody class="list">
+                {% for i in aptitudescore_obj %}
+                {% for j in academic_obj %}
+                {% if i.fk_user_info_id == j.fk_user_info_id %}
+                <tr class="btn-light">
+                    <th scope="col">
+                    </th>
+                    <td scope="row">
+                        {{ forloop.counter }}
+                    </td>
+                    <td scope="row" scope="row" style="text-overflow: ellipsis;width: 400px;overflow: hidden; white-space: nowrap;">
+                        {{ i.fk_user_info.first_name }} {{ i.fk_user_info.last_name }}
+                    </td>
+                    <td class="status">
+                        {{ i.score}} out of {{ i.out_of }}
+                    </td>
+                    <td>
+                        {{ i.percent }}
+                    </td>
+                    <td>
+                        {{ j.fk_course.course }}
+                    </td>
+                    <td>
+                        {{ j.fk_sections.sections }}
+                    </td>
+                    <td>
+                        {{ j.fk_semesters.semester }}
+                    </td>
+                    <td>
+                        {{ j.roll_no }}
+                    </td>
+                    <td class="text-center">
+                        <div class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target=""
+                             onclick="viewstudentanswer({{i.id}})">View
+                        </div>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+</div>
+<script>
+$(document).ready(function() {
+    $("#close_score_table").click(function() {
+        $("#publish_test_table").show();
+        $("#student_score_table").hide();
+        $("#filter_div").show();
+
+    })
+    $('.dtable').DataTable();
+})
+
+function viewstudentanswer(id) {
+        id = id
+        console.log(id)
+        $.ajax({
+            url : "/view-student-answer/",
+            method : "POST",
+            data : {
+                "student_score_id":id,
+                },
+                success : function(response){
+                console.log(response)
+                $("#student_score_table").hide();
+                $("#student_answer_table").show()
+                $("#student_answer_table").html("")
+                $("#student_answer_table").append(response)
+                // $("#student_score_table").hide()
+                }
+        })
+    }
+</script>

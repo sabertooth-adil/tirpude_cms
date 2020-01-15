@@ -1,0 +1,992 @@
+{% load static %}
+<style>
+    input::placeholder {
+    font-size: small;
+}
+</style>
+        <div id="tabsJustifiedContent" class="tab-content">
+            <div id="PersonalInfo" class="tab-pane fade active show">
+                <div class="block" >
+                    <div class="pl-lg-4">
+                            <div class="row border-bottom pb-3">
+                                <div class="col-md-3">
+                                        <div class="form-group" style="width: 100%; margin-bottom: 1.2rem !important;">
+                                            <label class="form-control-label" for="test_name">Name<span
+                                                    style="color:red">*</span>&nbsp &nbsp<span style="color:red"
+                                                                                               id="name_error"></span></label>
+                                            <input type="text" id="test_name" name="testname" style="font-size: small"
+                                                   class="form-control form-control  form-control-alternative"
+                                                   placeholder="Name of Test" value="{{ aptitude_set_obj.test_name }}" required>
+                                        </div>
+                                </div>
+                                <div class="col-md-3">
+                                        <div class="form-group clearfix" style="width: 100%;">
+                                            <label class="form-control-label text-right">Time Schedule
+                                                :</label></span>&nbsp &nbsp<span style="color:red" id="time_error"></span>
+                                            <input type="datetime-local" id="schedule" name="schedule"  style="font-size: small"
+                                                   class="form-control form-control  form-control-alternative"
+                                                   placeholder="Name of Test" value="{{ aptitude_set_obj.schedule|date:'Y-m-d' }}T{{ aptitude_set_obj.schedule|date:'H:i' }}" required>
+                                        </div>
+                                </div>
+                                <div class="col-md-2">
+                                        <div class="form-group clearfix"
+                                             style="width: 100%; margin-bottom: 1.4rem !important;">
+                                            <label class="form-control-label text-right">Test Duration:</label>
+                                            &nbsp &nbsp<span style="color:red" id="duration_error"></span>
+                                            <input type="number" id="test_duration" name="test_duration"  style="font-size: small"
+                                                   class="form-control form-control  form-control-alternative"
+                                                   placeholder="Enter Duration in Minutes" value="{{ aptitude_set_obj.test_duration }}">
+                                        </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group" style="width: 100%; margin-bottom: 1.4rem !important;">
+                                        <label class="form-control-label"
+                                               for="exampleFormControlTextarea1">Test
+                                            Details</label>
+                                        <textarea
+                                                class="form-control form-control form-control-alternative"
+                                                name="test info"  style="font-size: small"
+                                                id="exampleFormControlTextarea1" rows="1"
+                                                placeholder="Write a large text here ...">{{ aptitude_set_obj.test_info }}</textarea>
+                                    </div>
+                                </div>
+                                    <div class="col-md-2 hidable_div">
+                                        <label class="form-control-label"
+                                               for="course">Select Course :</label>
+                                        <select name="course"
+                                                class="form-control coursec form-control form-control-alternative"
+                                                id="courses" style="font-size: small">
+                                            <option value="" selected>Select Course
+                                            </option>
+                                            {% for i in course_obj %}
+                                            <option value="{{ i.id }}">{{ i.course }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 hidable_div">
+                                        <label class="form-control-label"
+                                               for="sem">Select Semester :</label>
+                                        <select name="course"
+                                                class="form-control form-control-alternative"
+                                                id="sem"  disabled="disabled" style="font-size: small">
+                                            <option value="" selected>Select Sem
+                                            </option>
+                                            {% for i in semesters_obj %}
+                                            <option value="{{ i.id }}">{{ i.semester }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 hidable_div">
+                                        <label class="form-control-label"
+                                               for="section">Select Section :</label>
+                                        <select name="course"
+                                                class="form-control form-control form-control-alternative"
+                                                id="section"  disabled="disabled" style="font-size: small">
+                                            <option value="" selected>Select Section
+                                            </option>
+                                            {% for i in section_obj %}
+                                            <option value="{{ i.id }}">{{ i.sections }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                <div class="col-md-3 hidable_div">
+                                        <div class="form-group" id="upload_file">
+                                            <label class="form-control-label" for="final_date">Upload
+                                                                        File &nbsp &nbsp<span style="color:red" id="file_error"></span></label>
+                                            <div class="custom-file">
+                                                <input type="file" name="file"  style="font-size: small"
+                                                       class="custom-file-input cfile form-control form-control-sm form-control-alternative"
+                                                       id="customFile">
+                                                <label class="custom-file-label"
+                                                       for="customFile">Choose file</label>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="col-md-3 hidable_div">
+                                        <button type="button" class="btn btn-secondary" onclick="selecttest_modal()" style="margin-top:1.3rem">
+                                            Select From Other Test
+                                    </div>
+                                <div class="form-control-label" id="SelectQuestionModel_div">
+
+                                </div>
+                                <br>
+                                <br>
+                                <br>
+                                <!--<div class="row" id="aptitudesetsubmit">-->
+                                    <!--<div class="col-lg-4 col-sm-4 col-xs-4">-->
+                                        <!--<button class="btn btn-info" type="submit">save-->
+                                        <!--</button>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--                                                        <div class="row" id="aptitudesetsubmit">-->
+                                <!--                                                            <div class="col-lg-4 col-sm-4 col-xs-4">-->
+                                <!--                                                                <button class="btn btn-info" type="submit">Submit-->
+                                <!--                                                                </button>-->
+                                <!--                                                            </div>-->
+                                <!--                                                        </div>-->
+                            </div>
+                        </form>
+                        <!--                    <div class="row">-->
+                        <!--                    <div class="col-lg-4">-->
+                        <!--                       <div class="form-group" id="upload_file">-->
+                        <!--                        <label class="form-control-label" for="final_date">Upload File</label>-->
+                        <!--                        <div class="custom-file">-->
+                        <!--                            <input type="file" name="file" class="custom-file-input cfile form-control form-control-sm form-control-alternative" id="customFile">-->
+                        <!--                            <label class="custom-file-label" for="customFile">Choose file</label>-->
+                        <!--                          </div>-->
+                        <!--                        </div>-->
+                        <!--                    </div>-->
+                        <!--                    </div>-->
+                        <form action="" method="POST" id="addsubjective_question_edit" role="form">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group" id="options_answer">
+                                        <div class="table-responsive">
+                                            <div>
+                                                <table class="table align-items-center">
+                                                    <tbody class="thead-light">
+                                                    <tr>
+                                                        <th scope="col" width="5%">
+                                                            Question :
+                                                        </th>
+                                                        <th scope="col" width="85%" class="padding_class">
+                                                            <input type="text" id="subjective_question"
+                                                                   name="subjective_question"
+                                                                   class="form-control form-control-sm  form-control-alternative"
+                                                                   placeholder="Enter Question" value="">
+                                                        </th>
+                                                        <th scope="col" width="15%" class="padding_class">
+                                                            <button type="submit" id="addquestion_button"
+                                                                    class="btn btn-primary addquestion_button"
+                                                                    data-toggle="modal"
+                                                                    data-target="" style="float: right">Add
+                                                            </button>
+                                                            <input id="getquestionid" value="" type="hidden">
+                                                        </th>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form action="" method="POST" id="addquestion_edit" role="form" style="margin-bottom: 0rem;">
+                            <div class="content row bg-body-light">
+                                <div class="col-lg-12">
+                                    <div class="form-group" id="addquestion_div" style="margin-bottom: 0rem;">
+                                        <div class="table-responsive">
+                                            <div>
+                                                <table class="table align-items-center">
+                                                    <tbody class="thead-light">
+                                                    <tr>
+                                                        <th scope="col" width="5%">
+                                                            Question :
+                                                        </th>
+                                                        <th scope="col" width="85%" class="padding_class">
+                                                            <textarea type="text" id="objective_question" maxlength="995"
+                                                                      name="objective_question"
+                                                                      class="form-control form-control-sm  form-control-alternative"
+                                                                      placeholder="Enter Question" value="" required
+                                                                      rows="2"></textarea>
+                                                        </th>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table class="table align-items-center">
+                                                    <tbody class="thead-light">
+                                                    <tr>
+                                                        <th scope="col" width="2%" style="padding-top: 0;">
+                                                            A
+                                                        </th>
+                                                        <th scope="col" width="42%" class="padding_class">
+                                                            <textarea rows="1" type="text" id="optionA" name="optionA" maxlength="99"
+                                                                      class="form-control form-control-sm  form-control-alternative"
+                                                                      placeholder="Option A" value=""
+                                                                      required></textarea>
+                                                        </th>
+                                                        <th scope="col" width="2%">
+                                                            B
+                                                        </th>
+                                                        <th scope="col" width="42%" class="padding_class">
+                                                            <textarea rows="1" type="text" id="optionB" name="optionB" maxlength="99"
+                                                                      class="form-control form-control-sm  form-control-alternative"
+                                                                      placeholder="Option B" value=""
+                                                                      required></textarea>
+                                                        </th>
+                                                        <th scope="col" width="15%" class="padding_class">
+                                                            <button type="submit"
+                                                                    class="btn btn-info addquestion_button btn-block btn-sm"
+                                                                    id="addquestion_button" data-toggle="modal"
+                                                                    data-target="" style="float: right">Add
+                                                            </button>
+                                                            <input id="getquestionid" value="" type="hidden">
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="col" width="2%">
+                                                            C
+                                                        </th>
+                                                        <th scope="col" width="42%" class="padding_class">
+                                                            <textarea rows="1" type="text" id="optionC" name="optionC" maxlength="99"
+                                                                      class="form-control form-control-sm  form-control-alternative"
+                                                                      placeholder="Option C" value=""
+                                                                      required></textarea>
+                                                        </th>
+                                                        <th scope="col" width="2%">
+                                                            D
+                                                        </th>
+                                                        <th scope="col" width="42%" class="padding_class">
+                                                            <textarea rows="1" type="text" id="optionD" name="optionD" maxlength="99"
+                                                                      class="form-control form-control-sm  form-control-alternative"
+                                                                      placeholder="Option D" value=""
+                                                                      required></textarea>
+                                                        </th>
+                                                        <th scope="col" width="25%" class="padding_class">
+                                                            <select id="que_answer" name="que_answer"
+                                                                    class="form-control form-control-sm  form-control-alternative"
+                                                                    required>
+                                                                <option value="" selected hidden>Select Answer</option>
+                                                                <option>A</option>
+                                                                <option>B</option>
+                                                                <option>C</option>
+                                                                <option>D</option>
+                                                            </select>
+                                                        </th>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table class="table align-items-center">
+                                                    <tbody class="thead-light">
+                                                    <tr>
+                                                        <th scope="col" width="5%">
+                                                            Solution :
+                                                        </th>
+                                                        <th scope="col" width="85%" class="padding_class">
+                                                            <textarea type="text" id="objective_solution" maxlength="995"
+                                                                      name="objective_question"
+                                                                      class="form-control form-control-sm  form-control-alternative"
+                                                                      placeholder="Enter Solution" value=""
+                                                                      rows="1"></textarea>
+                                                        </th>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="modal fade" id="SelectQuestionModel" data-keyboard="false" data-backdrop="static">
+                                <div class="modal-dialog modal-lg" style="max-width:80%!important">
+                                    <div class="shadow-lg modal-content">
+
+                                        <!-- Modal Header -->
+                                        <div class="modal-header bg-primary-dark" style="padding: 0.5rem;">
+                                                <div class="col-md-8">
+                                                    <h4 class="modal-title text-white"><b>Sample Test Questions</b></h4>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="btn btn-primary btn-sm" data-toggle="modal" id="add_selected_question"
+                                                                 onclick="add_selected_questions()" style="display: none">
+                                                        Add Selected Question
+                                                    </div>
+                                                    <div class="btn btn-danger btn-sm" data-toggle="modal" id="close_selectquestions"
+                                                                 onclick="close_selectquestions()" style="display: none">
+                                                         Back
+                                                    </div>
+
+                                                </div>
+                                            <button type="button" class="btn btn-sm" data-dismiss="modal">&times;</button></div>
+
+                                        <!-- Modal body -->
+
+                                        <div class="col-lg-12 col-sm-12 col-xs-12" id="selectquestions">
+                                        </div>
+
+                                        <!-- Modal footer -->
+                                        <div id="footer_div">
+                                            <div class="content" id="filter_div">
+                                                <div class="row">
+                                                    <div class="col-6 col-md-3 col-lg-6 col-xl-3"
+                                                         style="padding-left: 0px;">
+                                                        <a class="block block-rounded block-link-pop border-left border-primary border-4x"
+                                                           href="javascript:void(0)">
+                                                            <div class="block-content block-content-full">
+                                                                <div class="font-size-sm font-w600 text-uppercase text-muted">
+                                                                    Course
+                                                                </div>
+                                                                <div class="font-size-h2 font-w400 text-dark">
+                                                                    <select class="form-control form-control-sm"
+                                                                            id="course1">
+                                                                        <option value="" selected hidden>Select Course
+                                                                        </option>
+                                                                        <option value="">All</option>
+                                                                        {% for i in course_obj %}
+                                                                        <option value="{{i.id}}">{{i.course}}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                    <span style="display:none;color:red;"
+                                                                          id="err_course">Please Select Course</span>
+                                                                </div>
+                                                                <br>
+                                                                <div class="font-size-sm font-w600 text-uppercase text-muted">
+                                                                    Semesters
+                                                                </div>
+                                                                <div class="font-size-h2 font-w400 text-dark">
+                                                                    <select class="form-control form-control-sm"
+                                                                            id="semesters1">
+                                                                        <option value="" selected hidden>Select
+                                                                            Semesters
+                                                                        </option>
+                                                                        <option value="">All</option>
+                                                                        {% for i in semesters_obj %}
+                                                                        <option value="{{i.id}}">{{i.semester}}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                    <span style="display:none;color:red;"
+                                                                          id="err_semesters">Please Select Semesters</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-6 col-xl-3">
+                                                        <a class="block block-rounded block-link-pop border-left border-primary border-4x"
+                                                           href="javascript:void(0)">
+                                                            <div class="block-content block-content-full">
+                                                                <div class="font-size-sm font-w600 text-uppercase text-muted">
+                                                                    Sections
+                                                                </div>
+                                                                <div class="font-size-h2 font-w400 text-dark">
+                                                                    <select class="form-control form-control-sm"
+                                                                            id="sections1">
+                                                                        <option value="" selected hidden>Select
+                                                                            Sections
+                                                                        </option>
+                                                                        <option value="">All</option>
+                                                                        {% for i in section_obj %}
+                                                                        <option value="{{i.id}}">{{i.sections}}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                    <span style="display:none;color:red;"
+                                                                          id="err_sections">Please Select Sections</span>
+                                                                </div>
+                                                                <br>
+                                                                <div class="font-size-sm font-w600 text-uppercase text-muted">
+                                                                    Faculty
+                                                                </div>
+                                                                <div class="font-size-h2 font-w400 text-dark">
+                                                                    <select class="form-control form-control-sm"
+                                                                            id="faculty1">
+                                                                        <option value="" selected hidden>Select
+                                                                            Faculty
+                                                                        </option>
+                                                                        <option value="">All</option>
+                                                                        {% for i in faculty_obj %}
+                                                                        <option value="{{i.id}}">{{i.first_name}}
+                                                                            {{ i.last_name }}
+                                                                        </option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                    <span style="display:none;color:red;"
+                                                                          id="err_course">Please Select Course</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-6 col-xl-3">
+                                                        <a class="block block-rounded block-link-pop border-left border-primary border-4x"
+                                                           href="javascript:void(0)">
+                                                            <div class="block-content block-content-full">
+                                                                <div class="font-size-sm font-w600 text-uppercase text-muted">
+                                                                    From
+                                                                </div>
+                                                                <div class="font-size-h2 font-w400 text-dark">
+                                                                    <input id="start_date1"
+                                                                           class="form-control form-control-sm form-control-alternative js-datepicker"
+                                                                           data-date-format="dd/mm/yyyy"
+                                                                           placeholder="DD/MM/YYYY" required>
+                                                                </div>
+                                                                </br>
+                                                                <div class="font-size-sm font-w600 text-uppercase text-muted">
+                                                                    To
+                                                                </div>
+                                                                <div class="font-size-h2 font-w400 text-dark">
+                                                                    <input id="end_date1"
+                                                                           class="form-control form-control-sm form-control-alternative js-datepicker"
+                                                                           data-date-format="dd/mm/yyyy"
+                                                                           placeholder="DD/MM/YYYY" required>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-6 col-xl-3"
+                                                         style="padding-right: 0px;">
+                                                        <a href="javascript:void(0)">
+                                                            <div class="block-content block-content-full">
+                                                                <div class="font-size-h2 font-w400 text-dark"
+                                                                     style="padding: 24px;">
+                                                                    <buttton
+                                                                            class="btn btn-warning submit-btn btn-block"
+                                                                            style="padding: 14px;"
+                                                                            onclick="filterselecttest()">
+                                                                        <i class="fa fa-filter" aria-hidden="true"></i>
+                                                                        Filter
+                                                                    </buttton>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div >
+                                                <div class="table-responsive">
+                                                    <table class="table align-items-center" id="filter_select_table">
+                                                        <thead class="thead-light">
+                                                        <tr>
+                                                            <th scope="col">
+
+                                                            </th>
+                                                            <th scope="col">
+                                                                Test Name
+                                                            </th>
+                                                            <th scope="col">
+                                                                Total Que
+                                                            </th>
+                                                            <th scope="col">
+                                                                Duration
+                                                            </th>
+                                                            <th scope="col">
+                                                                Schedule
+                                                            </th>
+                                                            <th scope="col">
+                                                                Course
+                                                            </th>
+                                                            <th scope="col">
+                                                                Sem
+                                                            </th>
+                                                            <th scope="col">
+                                                                Section
+                                                            </th>
+                                                            <th>
+                                                                Created By
+                                                            </th>
+                                                            <th scope="col">
+                                                                Status
+                                                            </th>
+                                                            <th scope="col">
+                                                                Actions
+                                                            </th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody class="list" id="selectestlist">
+                                                        {% for i in test_obj reversed %}
+                                                        {% if i.test_name != "sample" %}
+                                                        {% if i.test_name != "UploadSample" %}
+                                                        <tr class="btn-light">
+                                                            <th scope="row"></th>
+                                                            <th scope="row" class="name">
+                                                                {{ i.test_name }}
+                                                            </th>
+                                                            <td class="budget">
+                                                                {% for j in my_list %}
+                                                                {% if j.id == i.id %}
+                                                                {{ j.total }}
+                                                                {% endif %}
+                                                                {% endfor %}
+                                                            </td>
+                                                            <td class="status">
+                                                                {{ i.test_duration}}
+                                                            </td>
+                                                            <td>
+                                                                <div style="text-overflow: ellipsis;width: 200px;overflow: hidden; white-space: nowrap;">
+                                                                    {{ i.schedule }}
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                {{ i.fk_course.course }}
+                                                            </td>
+                                                            <td>
+                                                                {{ i.fk_semesters.semester }}
+                                                            </td>
+                                                            <td>
+                                                                {{ i.fk_sections.sections }}
+                                                            </td>
+                                                            <td>
+                                                                {{ i.fk_faculty.first_name }} {{ i.fk_faculty.last_name }}
+                                                            </td>
+                                                            <td>
+                                                                {{ i.status }}
+                                                            </td>
+                                                            <td class="completion">
+                                                                <div class="btn btn-outline-primary btn-sm" data-toggle="modal"
+                                                                     data-target=""
+                                                                     onclick="selecttest({{i.id}},'view')"><i
+                                                                        class="fa fa-chevron-right"></i>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        {% endif %}
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-sm-12 col-xs-12" id="showquestions_edit">
+                                {% for i in question_obj %}
+                                <div class="table-responsive" style="margin-bottom: -1.4rem">
+
+                                    <table class="table align-items-center">
+                                        <tbody class="thead-light">
+                                        <tr>
+                                            <td scope="col" width="5%">
+                                                <b>Q no.{{forloop.counter}}</b>
+                                            </td>
+                                            <td scope="col" width="89%" class="padding_class">
+                                                <span style="white-space: initial">{{ i.fk_question.questions }}</span>
+                                            </td>
+                                            <td scope="col" width="3%" class="padding_class">
+                                                <button class="btn btn-info btn-sm" data-toggle="modal" data-target=""
+                                                        onclick="editquestion({{i.fk_question.id}})"><i
+                                                        class="si si-pencil"></i>
+                                                </button>
+                                            </td>
+                                            <td scope="col" width="3%" class="padding_class">
+                                                <button class="btn btn-danger btn-sm" data-toggle="modal"
+                                                        onclick="deletequestion({{i.id}},this)" style="float: right"><i
+                                                        class="fa fa-trash-alt"></i></button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table align-items-center options_table table-borderless" style="margin-bottom: 0.5rem;">
+                                        <tbody class="thead-light">
+                                        <tr>
+                                            <td scope="col" width="2%">
+                                                <b>A:</b>
+                                            </td>
+                                            <td scope="col" width="15%" class="padding_class">
+                                                <span style="white-space: initial">{{ i.fk_question.option_a }}</span>
+                                            </td>
+                                            <td scope="col" width="2%">
+                                                <b>B:</b>
+                                            </td>
+                                            <td scope="col" width="15%" class="padding_class">
+                                                <span style="white-space: initial">{{ i.fk_question.option_b }}</span>
+                                            </td>
+                                            <td scope="col" width="2%">
+                                                <b>C:</b>
+                                            </td>
+                                            <td scope="col" width="15%" class="padding_class">
+                                                <span style="white-space: initial">{{ i.fk_question.option_c }}</span>
+                                            </td>
+                                            <td scope="col" width="2%">
+                                                <b>D:</b>
+                                            </td>
+                                            <td scope="col" width="15%" class="padding_class">
+                                                <span style="white-space: initial">{{ i.fk_question.option_d }}</span>
+                                            </td>
+                                            <td scope="col" width="2%">
+                                                <b>Ans:</b>
+                                            </td>
+                                            <td scope="col" width="15%" class="padding_class">
+                                                {{ i.fk_question.answer }}
+                                            </td>
+                                            <td scope="col" width="15%" class="padding_class">
+
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table align-items-center table-borderless">
+                                        <tbody class="thead-light">
+                                        <tr>
+                                            <td scope="col" width="5%">
+                                                <b>Solution:</b>
+                                            </td>
+                                            <td scope="col" width="89%" class="padding_class">
+                                                <span style="white-space: initial">{{ i.fk_question.solution }}</span>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <br>
+                                </div>
+                                <script>
+      function deletequestion(id,e){
+  console.log(id)
+   $.ajax({
+        url : "/delete-aptitude-question/",
+        method : "POST",
+        data : {
+            "id":id,
+            },
+            success : function(response){
+            console.log(response)
+            $(e).closest('div').remove();
+           }
+    })
+  }
+
+                                </script>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<script src="{% static 'js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
+<script>jQuery(function () {
+    One.helpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'rangeslider']);
+});</script>
+<script>
+
+// Add the following code if you want the name of the file appear on select
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+
+   var fd = new FormData();
+   fd.append( 'file', $("#customFile")[0].files[0] );
+   fd.append( 'test_id', '{{ aptitude_set_obj.id }}' );
+   $.ajax({
+            url : "/UploadQuestionFile/",
+            method : "POST",
+            async: false,
+       cache: false,
+       contentType: false,
+       enctype: 'multipart/form-data',
+       processData: false,
+            data : fd,
+                success : function(response){
+                console.log(response)
+                if (response['error'] == "Not in proper format") {
+                    $("#file_error").html(response['error'])
+                }
+                else {
+                    $("#SelectQuestionModel").modal('show');
+                    $("#selectquestions").html("");
+                    $("#selectquestions").append(response['render_string']);
+                    $("#file_error").html(response['error'])
+                   }
+                }
+        })
+});
+
+
+function selecttest_modal() {
+    $("#footer_div").show()
+    $("#add_selected_question").hide()
+    $("#close_selectquestions").hide()
+    $("#selectquestions").html("")
+    $("#SelectQuestionModel").modal("show")
+
+}
+
+function filterselecttest() {
+        course = $("#course1").val()
+        section = $("#sections1").val()
+        semester = $("#semesters1").val()
+        faculty = $("#faculty1").val()
+        start_date = $("#start_date1").val()
+        end_date = $("#end_date1").val()
+        $.ajax({
+            url : "/fliter-select-list/",
+            method : "POST",
+            data : {
+                "course":course,
+                "section":section,
+                "sem":semester,
+                "faculty":faculty,
+                "start_date":start_date,
+                "end_date":end_date,
+                },
+                success : function(response){
+                $("#selectestlist").html("")
+                $("#selectestlist").append(response)
+                }
+        })
+    }
+
+function selecttest(test_id) {
+        console.log(test_id)
+        $.ajax({
+            url : "/select-question/",
+            method : "POST",
+            data : {
+                "test_id":test_id,
+                },
+                success : function(response){
+                console.log(response)
+                $("#SelectQuestionModel").modal('show');
+                $("#selectquestions").html("");
+                $("#selectquestions").append(response['render_string']);
+                $("#add_selected_question").show()
+                $("#close_selectquestions").show()
+                $("#footer_div").hide()
+                }
+        })
+ }
+
+
+    $(document).ready(function() {
+        $("#courses").val("{{ aptitude_set_obj.fk_course.id }}")
+        {% if aptitude_set_obj.fk_semesters.id %}
+            $("#sem").removeAttr("disabled");
+            $("#sem").val("{{ aptitude_set_obj.fk_semesters.id }}")
+        {% endif %}
+        {% if aptitude_set_obj.fk_sections.id %}
+            $("#section").removeAttr("disabled");
+            $("#section").val("{{ aptitude_set_obj.fk_sections.id }}")
+        {% endif %}
+     $("#courses").change(function(){
+          if($("#courses").val().length != 0){
+              $("#sem").removeAttr("disabled");
+          }
+          else{
+              $("#section").val("");
+              $("#section").attr('disabled','disabled');
+              $("#sem").val("");
+              $("#sem").attr('disabled','disabled');
+          }
+      });
+
+      $("#sem").change(function(){
+          if($("#sem").val().length != 0){
+              $("#section").removeAttr("disabled");
+          }
+          else{
+              $("#section").val("");
+              $("#section").attr('disabled','disabled');
+          }
+      });
+
+    $('#filter_select_table').DataTable();
+
+
+    if ('{{ edit_view }}' == "view") {
+    $("#test_name").attr('disabled','disabled');
+    $("#test_duration").attr('disabled','disabled');
+    $("#exampleFormControlTextarea1").attr('disabled','disabled');
+    $("#schedule").attr('disabled','disabled');
+    $(".coursec").attr('disabled','disabled');
+    $("#sem").attr('disabled','disabled');
+    $("#section").attr('disabled','disabled');
+    $("#customFile").attr('disabled','disabled');
+    $("#SelectQuestionModel_div").hide();
+    $(".hidable_div").hide();
+    $("#addquestion_div").hide();
+    $(".btn-sm").hide();
+    $("#close_button").show();
+    }
+
+
+    $("#AptitudeTestDetails").submit(function(e) {
+        e.preventDefault();
+
+        test_info = $("#exampleFormControlTextarea1").val()
+<!--    question_type = $("#question_type").val()-->
+        test_name = $("#test_name").val()
+        test_id = $("#aptitude_id").val()
+        schedule = $("#schedule").val()
+        test_duration = $("#test_duration").val()
+        course = $("#courses").val()
+        sem = $("#sem").val()
+        section = $("#section").val()
+        console.log(test_id)
+
+        if ($("#test_name").val() == "") {
+            $("#name_error").html("Please Enter Name")
+        }
+
+        else if  (new Date(schedule).getTime() <  new Date().getTime()) {
+           $("#time_error").html("Please Enter Future Time")
+        }
+
+        else if (($("#schedule").val().length != 0) && ($("#test_duration").val().length == 0)) {
+            $("#duration_error").html("Forget to enter Duration !!")
+        }
+        else {
+
+            $.ajax({
+                url: "/aptitude-test-details/",
+                method: "POST",
+                data: {
+                    "test_name": test_name,
+                    <!--                "question_type":question_type,-->
+                    "test_info": test_info,
+                    "test_id": test_id,
+                    "schedule": schedule,
+                    "test_duration": test_duration,
+                    "course":course,
+                    "sem":sem,
+                    "section":section,
+                },
+                success: function (response) {
+                    console.log(response['id'])
+                    if (response['status'] == "1") {
+                        location.reload();
+                    }
+                    else {
+                        $("#name_error").html("Same Test Slot Already Exists !");
+                        $("#masteraptitudetest_div").html("");
+                        $("#masteraptitudetest_div").append(response['render_string']);
+                    }
+                }
+            })
+        }
+      })
+
+
+        test_name = "{{ aptitude_set_obj.test_name }}"
+        if (test_name == "sample") {
+            $("#test_name").val("");
+        }
+
+        $('.modal-content').resizable({
+        alsoResize: ".modal-dialog",
+        minHeight: 100,
+        minWidth: 100
+        });
+        $('.modal-dialog').draggable()
+
+        $('#SelectQuestionModel').on('show.bs.modal', function () {
+            $(this).find('.modal-body').css({
+                'max-height':'100%'
+            });
+        });
+
+        $(".sample_test").change(function(){
+        question_type = '{{ aptitude_set_obj.question_type }}';
+        if(question_type == "Objective"){
+            test_id = $("#sampletest_objective").val()
+        }
+        else{
+            test_id = $("#sampletest_subjective").val()
+        }
+        console.log(test_id)
+        $.ajax({
+            url : "/select-question/",
+            method : "POST",
+            data : {
+                "test_id":test_id,
+                },
+                success : function(response){
+                console.log(response)
+                $("#SelectQuestionModel").modal('show');
+                $("#selectquestions").html("");
+                $("#selectquestions").append(response['render_string']);
+                }
+        })
+      })
+
+        console.log('{{ aptitude_set_obj.question_type }}')
+            if('{{ aptitude_set_obj.question_type }}' == "Objective"){
+                $("#addsubjective_question_edit").hide()
+                $("#sampletest_objective").show();
+                $("#sampletest_subjective").hide();
+            }
+            else{
+                $("#addquestion_edit").hide()
+                $(".options_table").hide()
+                $("#sampletest_objective").hide();
+                $("#sampletest_subjective").show();
+            }
+
+        $("#addquestion_edit").submit(function(e) {
+        e.preventDefault();
+        question_type = '{{ aptitude_set_obj.question_type }}';
+        console.log(question_type)
+        if(question_type == "Objective"){
+            question = $("#objective_question").val()
+        }
+        else{
+            question = $("#subjective_question").val()
+        }
+        aptitude_id = {{ aptitude_set_obj.id }};
+        optionA = $("#optionA").val()
+        optionB = $("#optionB").val()
+        optionC = $("#optionC").val()
+        optionD = $("#optionD").val()
+        que_answer = $("#que_answer").val()
+        key = $("#addquestion_button").html()
+        questionid = $("#getquestionid").val()
+        solution = $("#objective_solution").val()
+        console.log("solution ",solution)
+        $.ajax({
+            url : "/add-question/",
+            method : "POST",
+            data : {
+                "aptitude_id":aptitude_id,
+                "question_type":question_type,
+                "question":question,
+                "optionA":optionA,
+                "optionB":optionB,
+                "optionC":optionC,
+                "optionD":optionD,
+                "que_answer":que_answer,
+                "key":key,
+                "solution":solution,
+                "questionid":questionid,
+                },
+                success : function(response){
+                console.log(response)
+                $("#showquestions_edit").html("");
+                $("#showquestions_edit").append(response);
+                $("#addquestion_button").html("Add");
+                $("#optionA").val("");
+                $("#optionB").val("");
+                $("#optionC").val("");
+                $("#optionD").val("");
+                $("#objective_question").val("");
+                $("#subjective_question").val("");
+                $("#que_answer").val("");
+                $("#objective_solution").val("");
+    <!--            $("#AssignmentModel").modal('hide');-->
+               }
+        })
+        })
+
+        $("#addsubjective_question_edit").submit(function(e) {
+        e.preventDefault();
+        question = $("#subjective_question").val()
+        question_type = '{{ aptitude_set_obj.question_type }}'
+        aptitude_id = {{ aptitude_set_obj.id }};
+        key = $("#addquestion_button").html()
+        questionid = $("#getquestionid").val()
+        console.log(question)
+        $.ajax({
+            url : "/add-question/",
+            method : "POST",
+            data : {
+                "aptitude_id":aptitude_id,
+                "question_type":question_type,
+                "question":question,
+                "key":key,
+                "questionid":questionid
+                },
+                success : function(response){
+                console.log(response)
+                $("#showquestions_edit").html("");
+                $("#showquestions_edit").append(response);
+    <!--            $("#AssignmentModel").modal('hide');-->
+               }
+        })
+      })
+    })
+</script>

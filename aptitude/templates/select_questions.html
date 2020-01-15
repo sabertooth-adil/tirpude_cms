@@ -1,0 +1,122 @@
+<div class="row" style="float:right;margin-right: 1.25rem;"><div class="btn btn-light btn-sm" id="checkall">Select All</div><div class="btn btn-light btn-sm" id="uncheckall" style="display: none">Unselect All</div></div>
+{% for i in question_obj %}
+<div class="table-responsive" style="margin-bottom: -1.4rem">
+
+    <table class="table align-items-center">
+        <tbody class="thead-light">
+        <tr>
+            <td scope="col" width="5%">
+                Q no.{{forloop.counter}}
+            </td>
+            <td scope="col" width="89%" class="padding_class">
+                <span style="white-space: initial">{{ i.fk_question.questions }}</span>
+            </td>
+            <td scope="col" width="3%" class="padding_class">
+                <div class="form-check">
+                    <input value="{{ i.id }}" type="checkbox" class="form-check-input" id="QuestionCheckbox">
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    {% if question_type != "Subjective" %}
+    <table class="table align-items-center answer_table">
+        <tbody class="thead-light">
+        <tr>
+            <td scope="col" width="2%">
+                A :
+            </td>
+            <td scope="col" width="15%" class="padding_class">
+                <span style="white-space: initial">{{ i.fk_question.option_a }}</span>
+            </td>
+            <td scope="col" width="2%">
+                B :
+            </td>
+            <td scope="col" width="15%" class="padding_class">
+                <span style="white-space: initial">{{ i.fk_question.option_b }}</span>
+            </td>
+            <td scope="col" width="2%">
+                C :
+            </td>
+            <td scope="col" width="15%" class="padding_class">
+                <span style="white-space: initial">{{ i.fk_question.option_c }}</span>
+            </td>
+            <td scope="col" width="2%">
+                D :
+            </td>
+            <td scope="col" width="15%" class="padding_class">
+                <span style="white-space: initial">{{ i.fk_question.option_d }}</span>
+            </td>
+            <td scope="col" width="2%">
+                Ans :
+            </td>
+            <td scope="col" width="15%" class="padding_class" id="answer_td">
+                {{ i.fk_question.answer }}
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+    {% endif %}
+    <br>
+</div>
+{% endfor %}
+<script>
+
+
+$(document).ready(function(){
+// Check All
+             $('#checkall').click(function() {
+                 $(":checkbox").attr("checked", true);
+                 $("#checkall").hide()
+                 $("#uncheckall").show()
+
+             });
+             // Uncheck All
+             $('#uncheckall').click(function() {
+                 $(":checkbox").attr("checked", false);
+                 $("#uncheckall").hide()
+                 $("#checkall").show()
+             });
+});
+
+function add_selected_questions(){
+        SelectedQuestionList = [];
+    $("#QuestionCheckbox:checked").each(function(){
+        SelectedQuestionList.push($(this).val());
+    });
+
+    console.log(SelectedQuestionList)
+    aptitude_id = $("#aptitude_id").val();
+        $.ajax({
+        url : "/add-selected-questions/",
+        method : "POST",
+        data : {
+            "id_list[]":SelectedQuestionList,
+            "aptitude_id":aptitude_id
+            },
+            success : function(response){
+            $("#selectquestions").html("");
+            // $("#SelectQuestionModel").modal('hide');
+            $("#showquestions_edit").show();
+            $("#showquestions_edit").html("");
+            $("#showquestions_edit").append(response);
+            swal( "Questions Added Successfully!!", {
+                    icon: "success",
+                    button: "Ok",
+                    closeOnClickOutside: false,
+                    })
+            $("#footer_div").show()
+            $("#add_selected_question").hide()
+            $("#close_selectquestions").hide()
+           }
+        });
+    }
+
+function close_selectquestions() {
+    $("#footer_div").show()
+    $("#add_selected_question").hide()
+    $("#close_selectquestions").hide()
+    $("#selectquestions").html("");
+}
+</script>
