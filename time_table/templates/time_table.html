@@ -1,0 +1,269 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+{#{% for u in  user_operation_obj %}#}
+{#    {% if u.fk_screen.screen_url == "time-table" %}#}
+{#        {% if u.view_data == "Y" %}#}
+        <style type="text/css">
+            .nu-orange-button{
+                    background-color: #F6743D;
+                    border-color: #F6743D;
+                    padding: 3px 6px 3px 6px;
+                }
+
+                .nu-orange-button:hover{
+                    background-color: #F6743D;
+                    border-color: #F6743D;
+                    padding: 3px 6px 3px 6px;
+                }
+        </style>
+            <div class="bg-body-light">
+                <div class="content" style="padding: 10px !important;">
+                    <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+                        <h1 class="flex-sm-fill h3 my-2">Time Table</h1>
+                        <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+{#                            {% for u in user_operation_obj %}#}
+{#                                {% if u.fk_screen.screen_url == "time-table" %}#}
+{#                                    {% if u.save_data == "Y" %}#}
+                                        <a href="#" class="btn btn-sm btn-primary" id="CreateTimeTable_Button" onclick="CreateTimeTable()">Create Time-Table</a>
+{#                                    {% endif %}#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+                            <a href="#" class="btn btn-sm btn-primary" id="ShowTableTable_Button" style="display:none;" onclick="ShowTableTable()()">Show Time-Table</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="content" style="padding: 10px !important;" id="TableList_Div">
+                <div class="block">
+                    <div class="block-content block-content-full">
+                        <div id="tabsJustifiedContent" class="tab-content">
+                            <div id="MondayInfo" class="tab-pane fade active show">
+                                <div class="card-body">
+                                    <table class="table table-vcenter" id="mydatatable">
+                                        <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Course</th>
+                                            <th scope="col">Semesters</th>
+                                            <th scope="col">Section</th>
+{#                                            {% for u in user_operation_obj %}#}
+{#                                                {% if u.fk_screen.screen_url == "time-table" %}#}
+{#                                                    {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                                                        <th scope="col">Action</th>
+{#                                                    {% endif %}#}
+{#                                                {% endif %}#}
+{#                                            {% endfor %}#}
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for i in time_table_detail_obj %}
+                                        <tr>
+                                            <th scope="col">{{i.fk_course.course}}</th>
+                                            <th scope="col">{{i.fk_semesters.semester}}</th>
+                                            <th scope="col">{{i.fk_sections.sections}}</th>
+{#                                            {% for u in user_operation_obj %}#}
+{#                                                {% if u.fk_screen.screen_url == "time-table" %}#}
+{#                                                    {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                                                        <th scope="col">
+{#                                                        {% if u.edit_data == "Y" %}#}
+                                                            <a href="{% url 'edit-time-table' id=i.id %}" class="btn btn-sm btn-outline-primary"><i class="fa fa-fw fa-pencil-alt"></i></a>
+{#                                                        {% endif %}#}
+{#                                                        {% if u.delete_data == "Y" %}#}
+                                                            <button type="button" class="btn btn-sm btn-outline-danger js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Remove Client" onclick="delete_timetable({{i.id}})">
+                                                                <i class="fa fa-fw fa-times"></i>
+                                                            </button>
+{#                                                        {% endif %}#}
+                                                        </th>
+{#                                                    {% endif %}#}
+{#                                                {% endif %}#}
+{#                                            {% endfor %}#}
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content" style="display:none;padding: 10px !important;" id="TableAdd_Div">
+                <div class="row">
+                    <div class="col-6 col-md-3 col-lg-6 col-xl-3" style="padding-left: 0px;">
+                        <a class="block block-rounded block-link-pop border-left border-primary border-4x"
+                           href="javascript:void(0)">
+                            <div class="block-content block-content-full">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">Course</div>
+                                <div class="font-w400 text-dark">
+                                    <select class="form-control form-control-sm" id="course">
+                                        <option value="" selected hidden>Select Course</option>
+                                        {% for i in course_obj %}
+                                        <option value="{{i.id}}">{{i.course}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_course">Please Select Course</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-6 col-xl-3" style="padding-left: 0px;">
+                        <a class="block block-rounded block-link-pop border-left border-primary border-4x" href="javascript:void(0)">
+                            <div class="block-content block-content-full">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">Semesters</div>
+                                <div class="font-w400 text-dark">
+                                    <select class="form-control form-control-sm" id="semesters">
+                                        <option value="" selected hidden>Select Semesters</option>
+                                        {% for i in semester_obj %}
+                                        <option value="{{i.id}}">{{i.semester}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_semesters">Please Select Semesters</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-6 col-xl-3" style="padding-left: 0px;">
+                        <a class="block block-rounded block-link-pop border-left border-primary border-4x" href="javascript:void(0)">
+                            <div class="block-content block-content-full">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">Section</div>
+                                <div class="font-w400 text-dark">
+                                    <select class="form-control form-control-sm" id="sections">
+                                        <option value="" selected hidden>Select Section</option>
+                                        {% for i in section_obj %}
+                                        <option value="{{i.id}}">{{i.sections}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_sections">Please Select Section</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-6 col-xl-3" style="padding-left: 0px;">
+                        <a href="javascript:void(0)">
+                            <div>
+                                <div class="font-size-sm font-w600 text-uppercase text-muted"></div>
+                                <div class="font-w400 text-dark">
+                                    <buttton class="btn btn-primary submit-btn btn-block nu-orange-button" onclick="FilterTimeTable()" style="margin-top: 25px;"><i class="fa fa-filter" aria-hidden="true" style="margin-right: 3px;"></i>Filter</buttton>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div id="FilterTimetable_div">
+                </div>
+            </div>
+            </div>
+
+
+<script>
+    $(document).ready(function () {
+      $('#TimeTableMainNavPage').addClass('open');
+      $('#TimeTableNavPage').addClass('active');
+      $('#mydatatable').DataTable();
+    });
+    function CreateTimeTable(){
+      $("#TableList_Div").hide();
+      $("#TableAdd_Div").show();
+      $("#CreateTimeTable_Button").hide();
+      $("#ShowTableTable_Button").show();
+    }
+
+    function ShowTableTable(){
+      $("#TableList_Div").show();
+      $("#TableAdd_Div").hide();
+      $("#CreateTimeTable_Button").show();
+      $("#ShowTableTable_Button").hide();
+      location.reload();
+    }
+
+    $("#course").change(function(){
+        $("#err_course").hide();
+    });
+    $("#specialization").change(function(){
+        $("#err_specialization").hide();
+    });
+    $("#semesters").change(function(){
+        $("#err_semesters").hide();
+    });
+    $("#sections").change(function(){
+        $("#err_sections").hide();
+    });
+
+    function FilterTimeTable(){
+      var course = $("#course").val();
+      // var specialization = $("#specialization").val();
+      var semesters = $("#semesters").val();
+      var sections = $("#sections").val();
+      if(course == ""){
+        $("#err_course").show();
+      }
+      // else if(specialization == ""){
+      //   $("#err_specialization").show();
+      // }
+      else if(semesters == ""){
+        $("#err_semesters").show();
+      }
+      else if(sections == ""){
+        $("#err_sections").show();
+      }
+      else{
+        $("#loading").show();
+        $.ajax({
+          url :"/filter-time-table/",
+          method : "POST",
+          data : {
+            "course":course,
+            // "specialization":specialization,
+            "semesters":semesters,
+            "sections":sections
+          },
+          success : function(response){
+              $("#loading").hide();
+              $("#FilterTimetable_div").show();
+              $("#FilterTimetable_div").html("");
+              $("#FilterTimetable_div").append(response);
+          }
+        })
+      }
+    }
+    function delete_timetable(id){
+        console.log(id)
+        swal({
+            title: "Are you sure?",
+            text: "To delete this Time Table!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,})
+            .then((willDelete) => {
+            if(willDelete) {
+                $.ajax({
+                    url: "/delete-time-table/",
+                    method: "POST",
+                    data: {
+                        "id": id
+                    },
+                    success: function (response) {
+                        if (response == "success") {
+                            swal("The Time Table has been successfully Deleted!", {
+                                icon: "success",
+                                button: "Ok",
+                                closeOnClickOutside: false,
+                            }).then(function () {
+                                location.reload();
+                            });
+                        }
+                    }
+                })
+            }
+            else {
+                swal("Time Table is NOT deleted!");
+            }
+        });
+    }
+</script>
+{#{% endif %}#}
+{#{% endif %}#}
+{#{% endfor %}#}
+{% endblock content %}

@@ -1,0 +1,39 @@
+{% for i in academicinfo_obj %}
+    {% if i.fk_user_info.id not in event_member_id_list %}
+    <tr>
+        <td>
+            <label><input name="student{{ i.fk_user_info_id }}" id="studentselect" type="checkbox"
+                          value="{{ i.fk_user_info_id }}"></label>
+        </td>
+        <td scope="row">
+            <div class="media align-items-center">
+                <div class="media-body">
+                    <span class="mb-0 text-sm">{{ i.fk_user_info.first_name }} {{ i.fk_user_info.middle_name }} {{ i.fk_user_info.last_name }}</span>
+                </div>
+            </div>
+        </td>
+        <td>
+            {{ i.roll_no }}
+        </td>
+    </tr>
+    {% endif %}
+{% endfor %}
+{% for i in faculty_obj %}
+    {% if i.id not in event_member_id_list %}
+    <tr>
+        <td>
+            <label><input name="student{{ i.id }}" id="studentselect" type="checkbox"
+                          value="{{ i.id }}"></label>
+        </td>
+        <td scope="row">
+            <div class="media align-items-center">
+                <div class="media-body">
+                    <span class="mb-0 text-sm">{{ i.first_name }} {{ i.middle_name }} {{ i.last_name }}</span>
+                </div>
+            </div>
+        </td>
+        <td>
+        </td>
+    </tr>
+    {% endif %}
+{% endfor %}

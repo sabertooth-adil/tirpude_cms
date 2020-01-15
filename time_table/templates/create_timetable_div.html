@@ -1,0 +1,753 @@
+<style>
+    .bootstrap-select .bs-ok-default::after {
+        width: 0.3em;
+        height: 0.6em;
+        border-width: 0 0.1em 0.1em 0;
+        transform: rotate(45deg) translateY(0.5rem);
+    }
+
+    .btn.dropdown-toggle:focus {
+        outline: none !important;
+    }
+
+</style>
+<div class="block">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <div class="row">
+                    <div class="input-daterange input-group" data-date-format="dd-mm-yyyy" data-week-start="1" data-autoclose="true" data-today-highlight="true" >
+                        <div class="col-lg-6" style="padding-right: 5px !important;padding-left: 5px !important;">
+                            <label>Start Date:<span style="color:red">*</span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="start_date" style="text-align: left;" name="start_date" placeholder="From" data-week-start="1" data-autoclose="true" data-today-highlight="true" value="{{timetable_obj.from_date|date:'d-m-Y'}}">
+                            <span style="color: red;display: none;" id="err_start_date">Please Enter From Date</span>
+                        </div>
+                        <div class="col-lg-6" style="padding-right: 5px !important;padding-left: 5px !important;">
+                            <label>End Date:<span style="color:red">*</span>:</label>
+                            <input type="text" class="form-control form-control-sm" id="end_date" name="end_date" style="text-align: left;" placeholder="To" data-week-start="1" data-autoclose="true" data-today-highlight="true" value="{{timetable_obj.to_date|date:'d-m-Y'}}">
+                            <span style="color: red;display: none;" id="err_end_date">Please Enter to Date</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-lg-11" style="padding-right: 5px !important;padding-left: 5px !important;">
+                    <div class="form-group">
+                        <label class="form-control-label">Note<span style="color:red"></span>:</label>
+                        <textarea class="form-control form-control-sm form-control-alternative" name="note" rows="1" id="note" placeholder="Write a Note here ...">{{timetable_obj.note}}</textarea>
+                    </div>
+                </div>
+                <div class="col-lg-1" style="padding-right: 5px !important;padding-left: 5px !important;">
+                    {% if timetable_obj %}
+                        <button type="button" class="btn btn-sm btn-success" style="margin-top: 25%;" onclick="Save_Date_Note()">Update</button>
+                    {% else %}
+                        <button type="button" class="btn btn-sm btn-success" style="margin-top: 25%;" onclick="Save_Date_Note()">Save</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% if timetable_obj %}
+<div class="block" id="daywise_timetable_div">
+{% else %}
+<div class="block" style="display: none;" id="daywise_timetable_div">
+{% endif %}
+    <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled" data-toggle="tabs" role="tablist">
+        <li class="nav-item"><a href="#PersonalInfo" data-toggle="tab" class="nav-link small text-uppercase active"
+                                onclick="showdaystimetable(1,'Monday')">Monday</a></li>
+        <li class="nav-item"><a href="#TuesdayInfo" data-toggle="tab" class="nav-link small text-uppercase"
+                                onclick="showdaystimetable(2,'Tuesday')">Tuesday</a></li>
+        <li class="nav-item"><a href="#WednesdayInfo" data-toggle="tab" class="nav-link small text-uppercase"
+                                onclick="showdaystimetable(3,'Wednesday')">Wednesday</a></li>
+        <li class="nav-item"><a href="#ThursdayInfo" data-toggle="tab" class="nav-link small text-uppercase"
+                                onclick="showdaystimetable(4,'Thursday')">Thursday</a></li>
+        <li class="nav-item"><a href="#FridayInfo" data-toggle="tab" class="nav-link small text-uppercase"
+                                onclick="showdaystimetable(5,'Friday')">Friday</a></li>
+        <li class="nav-item"><a href="#SaturdayInfo" data-toggle="tab" class="nav-link small text-uppercase"
+                                onclick="showdaystimetable(6,'Saturday')">Saturday</a></li>
+        <li class="nav-item ml-auto" style="margin: 10px 10px 0px 0px;">
+            <button type="button" class="btn btn-sm btn-primary" onclick="ShowAddLectureModal()">Create</button>
+        </li>
+    </ul>
+    <div id="tabsJustifiedContent" class="tab-content">
+        <div id="PersonalInfo" class="tab-pane fade active show">
+            <div class="card-body">
+                <table class="table table-vcenter" id="mytable">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">lecture</th>
+                        <th scope="col">Subject</th>
+                        <th scope="col">From</th>
+                        <th scope="col">Till</th>
+                        <th scope="col">Faculty</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="daytime_monday">
+                    {% for i in time_table_detail_obj %}
+                    {% if i.lecture_break == "Break" %}
+                    <tr style="background: gainsboro;">
+                        <th>{{i.lecture_break}}</th>
+                        <th colspan="4" style="text-align: center;">{{i.fk_time_start.time|date:'h:i A'}} to
+                            {{i.fk_time_end.time|date:'h:i A'}}
+                        </th>
+                        <th>
+                            <button class="btn btn-sm btn-primary" onclick="edit_day_time_table({{i.id}})"><i
+                                    class="fa fa-fw fa-pencil-alt"></i></button>
+                        </th>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <th>{{i.fk_lecture.lecture}}</th>
+                        <th>{{i.fk_subjects.subjects}}</th>
+                        <th>{{i.fk_time_start.time|date:'h:i A'}}</th>
+                        <th>{{i.fk_time_end.time|date:'h:i A'}}</th>
+                        <th>{{i.fk_faculty_user_info1.first_name}} {{i.fk_faculty_user_info1.last_name}}
+                            {% if i.fk_faculty_user_info2 %}
+                            / {{i.fk_faculty_user_info2.first_name}} {{i.fk_faculty_user_info2.last_name}}
+                            {% endif %}
+                        </th>
+                        <th>
+                            <button class="btn btn-sm btn-primary" onclick="edit_day_time_table({{i.id}})"><i class="fa fa-fw fa-pencil-alt"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-danger js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Remove Client" onclick="delete_timetable_row({{i.id}},this)">
+                                <i class="fa fa-fw fa-times"></i>
+                            </button>
+                        </th>
+                    </tr>
+                    {% endif%}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="TuesdayInfo" class="tab-pane fade">
+            <div class="card-body">
+                <table class="table table-vcenter" id="mytable">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">lecture</th>
+                        <th scope="col">Subject</th>
+                        <th scope="col">From</th>
+                        <th scope="col">Till</th>
+                        <th scope="col">Faculty</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="daytime_tuesday">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="WednesdayInfo" class="tab-pane fade">
+            <div class="card-body">
+                <table class="table table-vcenter" id="mytable">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">lecture</th>
+                        <th scope="col">Subject</th>
+                        <th scope="col">From</th>
+                        <th scope="col">Till</th>
+                        <th scope="col">Faculty</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="daytime_wednesday">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="ThursdayInfo" class="tab-pane fade">
+            <div class="card-body">
+                <table class="table table-vcenter" id="mytable">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">lecture</th>
+                        <th scope="col">Subject</th>
+                        <th scope="col">From</th>
+                        <th scope="col">Till</th>
+                        <th scope="col">Faculty</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="daytime_thursday">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="FridayInfo" class="tab-pane fade">
+            <div class="card-body">
+                <table class="table table-vcenter" id="mytable">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">lecture</th>
+                        <th scope="col">Subject</th>
+                        <th scope="col">From</th>
+                        <th scope="col">Till</th>
+                        <th scope="col">Faculty</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="daytime_friday">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="SaturdayInfo" class="tab-pane fade">
+            <div class="card-body">
+                <table class="table table-vcenter" id="mytable">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">lecture</th>
+                        <th scope="col">Subject</th>
+                        <th scope="col">From</th>
+                        <th scope="col">Till</th>
+                        <th scope="col">Faculty</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="daytime_saturday">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="TimeTableModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     data-backdrop="static" data-keyboard="false" style="text-align: justify;">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="time_table_detail_id">
+                <input type="hidden" id="time_table_master_id">
+                <div class="row">
+                    <div class="col-xl-2 col-lg-6">
+                        <label class="form-control-label">Lecture/Break<span style="color:red">*</span>:</label>
+                        <select class="form-control form-control-sm" id="lecture_break" onchange="SelectLectureBreak()">
+                            <option value="" hidden>Select Lecture/Break</option>
+                            <option value="Lecture">Lecture</option>
+                            <option value="Break">Break</option>
+                        </select>
+                        <span style="display:none;color:red;" id="err_lecturebreak">Please Select Lecture/Break</span>
+                    </div>
+                    <div class="col-xl-2 col-lg-6" id="Lecture_Div">
+                        <label class="form-control-label">Lecture<span style="color:red">*</span>:</label>
+                        <select class="form-control form-control-sm" id="lecture">
+                            <option value="" hidden>Select Lecture</option>
+                            {% for i in lecture_obj %}
+                            <option value="{{i.id}}">{{i.lecture}}</option>
+                            {% endfor %}
+                        </select>
+                        <span style="display:none;color:red;" id="err_lecture">Please Select Lecture No.</span>
+                    </div>
+                    <div class="col-xl-4 col-lg-6" id="Faculty_Div">
+                        <label class="form-control-label">Faculty<span style="color:red">*</span>:</label>
+                        <select class="form-control form-control-sm" multiple id="faculty" data-style="btn-white"
+                                data-live-search="true">
+                            <option value="" hidden>Select Faculty</option>
+                            {% for i in user_info_faculty_obj %}
+                            <option value="{{i.id}}">{{i.first_name}} {{i.last_name}}</option>
+                            {% endfor %}
+                        </select>
+                        <span style="display:none;color:red;" id="err_faculty">Please Select Faculty</span>
+                    </div>
+                    <div class="col-xl-4 col-lg-6" id="Subject_Div">
+                        <label class="form-control-label">Subject<span style="color:red">*</span>:</label>
+                        <select class="form-control form-control-sm" id="subject">
+                            <option value="" hidden>Select Subject</option>
+                            {% for i in subjects_obj %}
+                            <option value="{{i.id}}">{{i.subjects}}</option>
+                            {% endfor %}
+                        </select>
+                        <span style="display:none;color:red;" id="err_subject">Please Select Subject</span>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xl-4 col-lg-6">
+                        <label class="form-control-label">Day<span style="color:red">*</span>:</label>
+                        <select class="form-control form-control-sm" id="day">
+                            <option value="" hidden>Select Days</option>
+                            {% for i in days_obj %}
+                            <option value="{{i.id}}">{{i.day}}</option>
+                            {% endfor %}
+                        </select>
+                        <span style="display:none;color:red;" id="err_day">Please Select Day</span>
+                    </div>
+                    <div class="col-xl-4 col-lg-6">
+                        <label class="form-control-label">Start Time<span style="color:red">*</span>:</label>
+                        <select class="form-control form-control-sm" id="start_time">
+                            <option value="" hidden>Start Time</option>
+                            {% for i in time_obj %}
+                            <option value="{{i.id}}">{{i.time|date:'h:i A'}}</option>
+                            {% endfor %}
+                        </select>
+                        <span style="display:none;color:red;" id="err_starttime">Please Select Start Time</span>
+                    </div>
+                    <div class="col-xl-4 col-lg-6">
+                        <label class="form-control-label">End Time<span style="color:red">*</span>:</label>
+                        <select class="form-control form-control-sm" id="end_time">
+                            <option value="" hidden>End Time</option>
+                            {% for i in time_obj %}
+                            <option value="{{i.id}}">{{i.time|date:'h:i A'}}</option>
+                            {% endfor %}
+                        </select>
+                        <span style="display:none;color:red;" id="err_endtime">Please Select End Time</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span style="display:none;color:red;" id="err_lecture_exists">This Lecture No. Already Used</span>
+                <span style="display:none;color:red;" id="err_time_exists">This Start & End Time Already Used</span>
+                <span style="display:none;color:red;" id="err_time_invalid">Please Select Valid Start & End Time</span>
+                <span style="display:none;color:red;" id="err_faculty_busy">Selected Faculty is busy at this time</span>
+                <buttton class="btn btn-sm btn-success" id="AddLecture_Button" onclick="Add()">Add</buttton>
+                <buttton class="btn btn-sm btn-success" id="UpdateLectureButton" style="display:none;"
+                         onclick="Update()">Update
+                </buttton>
+            </div>
+        </div>
+    </div>
+    <script>jQuery(function(){ One.helpers(['datepicker', 'colorpicker', 'maxlength', 'select2', 'rangeslider']); });</script>
+    <script>
+        $(document).ready(function () {
+            $('#faculty').selectpicker({
+                maxOptions: 2
+            });
+        });
+        $("#course").change(function () {
+            $("#err_course").hide();
+            $("#FilterTimetable_div").hide();
+            $("#err_faculty_busy").hide();
+        });
+        $("#specialization").change(function () {
+            $("#err_specialization").hide();
+            $("#FilterTimetable_div").hide();
+            $("#err_faculty_busy").hide();
+        });
+        $("#semesters").change(function () {
+            $("#err_semesters").hide();
+            $("#FilterTimetable_div").hide();
+            $("#err_faculty_busy").hide();
+        });
+        $("#sections").change(function () {
+            $("#err_sections").hide();
+            $("#FilterTimetable_div").hide();
+            $("#err_faculty_busy").hide();
+        });
+        $("#lecture_break").change(function () {
+            $("#err_lecturebreak").hide();
+            $("#err_lecture_exists").hide();
+            $("#err_time_exists").hide();
+            $("#err_faculty_busy").hide();
+        });
+        $("#lecture").change(function () {
+            $("#err_lecture").hide();
+            $("#err_lecture_exists").hide();
+            $("#err_faculty_busy").hide();
+        });
+        $("#faculty").change(function () {
+            $("#err_faculty").hide();
+            $("#err_faculty_busy").hide();
+        });
+        $("#subject").change(function () {
+            $("#err_subject").hide();
+            $("#err_faculty_busy").hide();
+        });
+        $("#day").change(function () {
+            $("#err_day").hide();
+            $("#err_faculty_busy").hide();
+        });
+        $("#start_time").change(function () {
+            $("#err_starttime").hide();
+            $("#err_time_exists").hide();
+            $("#err_time_invalid").hide();
+            $("#err_faculty_busy").hide();
+        });
+        $("#end_time").change(function () {
+            $("#err_starttime").hide();
+            $("#err_time_exists").hide();
+            $("#err_time_invalid").hide();
+            $("#err_faculty_busy").hide();
+        });
+
+        function ShowAddLectureModal() {
+            console.log("dfcgdsgdfjhdghj")
+            $("#TimeTableModal").modal('show');
+            $("#faculty").val('default').selectpicker("refresh");
+            $("#AddLecture_Button").show();
+            $("#UpdateLectureButton").hide();
+            $("#err_faculty_busy").hide();
+            $("#lecture").val("");
+            $("#subject").val("");
+            $("#day").val("");
+            $("#start_time").val("");
+            $("#end_time").val("");
+            $("#lecture_break").val("");
+            SelectLectureBreak();
+        }
+
+        function Add() {
+            var course = $("#course").val();
+            var specialization = $("#specialization").val();
+            var semesters = $("#semesters").val();
+            var sections = $("#sections").val();
+            var lecture_break = $("#lecture_break").val();
+            var lecture = $("#lecture").val();
+            var subject = $("#subject").val();
+            var day = $("#day").val();
+            var start_time = $("#start_time").val();
+            var end_time = $("#end_time").val();
+            var faculty = $("#faculty").val();
+            if (lecture_break == "") {
+                $("#err_lecturebreak").show();
+            }
+            else if (lecture_break == "Lecture" && lecture == "") {
+                $("#err_lecture").show();
+            }
+            else if (lecture_break == "Lecture" && subject == "") {
+                $("#err_subject").show();
+            }
+            else if (lecture_break == "Lecture" && faculty.length == 0) {
+                $("#err_faculty").show();
+            }
+            else if (day == "") {
+                $("#err_day").show();
+            }
+            else if (start_time == "") {
+                $("#err_starttime").show();
+            }
+            else if (end_time == "") {
+                $("#err_endtime").show();
+            }
+            else if (parseInt(start_time) > parseInt(end_time) || parseInt(start_time) == parseInt(end_time)) {
+                $("#err_time_invalid").show();
+            }
+            else {
+                $("#loading").show();
+                $.ajax({
+                    url: "/add-time-table/",
+                    method: "POST",
+                    data: {
+                        "course": course,
+                        "specialization": specialization,
+                        "semesters": semesters,
+                        "sections": sections,
+                        "lecture": lecture,
+                        "subject": subject,
+                        "day": day,
+                        "faculty[]": faculty,
+                        "start_time": start_time,
+                        "end_time": end_time,
+                        "lecture_break": lecture_break
+                    },
+                    success: function (response) {
+                        $("#loading").hide();
+                        console.log(response)
+                        if (response['status'] == "0") {
+                            if (response['msg'] == "Lecture No Already Exists") {
+                                $("#err_lecture_exists").show();
+                            }
+                            else if (response['msg'] == "Faculty is Busy") {
+                                $("#err_faculty_busy").show();
+                            }
+                            else {
+                                $("#err_time_exists").show();
+                            }
+                        }
+                        else {
+                            $("#TimeTableModal").modal('hide');
+                            if (day == 1) {
+                                $('.nav-tabs a[href="#PersonalInfo"]').tab('show');
+                                $('a[href="#PersonalInfo"]').trigger('click');
+                            } else if (day == 2) {
+                                $('.nav-tabs a[href="#TuesdayInfo"]').tab('show');
+                                $('a[href="#TuesdayInfo"]').trigger('click');
+                            } else if (day == 3) {
+                                $('.nav-tabs a[href="#WednesdayInfo"]').tab('show');
+                                $('a[href="#WednesdayInfo"]').trigger('click');
+                            } else if (day == 4) {
+                                $('.nav-tabs a[href="#ThursdayInfo"]').tab('show');
+                                $('a[href="#ThursdayInfo"]').trigger('click');
+                            } else if (day == 5) {
+                                $('.nav-tabs a[href="#FridayInfo"]').tab('show');
+                                $('a[href="#FridayInfo"]').trigger('click');
+                            } else if (day == 6) {
+                                $('.nav-tabs a[href="#SaturdayInfo"]').tab('show');
+                                $('a[href="#SaturdayInfo"]').trigger('click');
+                            }
+                            showdaystimetable($("#day").val(), $("#day").text());
+                        }
+                    }
+                })
+            }
+        }
+
+        function SelectLectureBreak() {
+            var lecture_break = $("#lecture_break").val();
+            if (lecture_break == "Break") {
+                $("#Lecture_Div").hide();
+                $("#Subject_Div").hide();
+                $("#Faculty_Div").hide();
+            }
+            else {
+                $("#Lecture_Div").show();
+                $("#Subject_Div").show();
+                $("#Faculty_Div").show();
+            }
+
+        }
+
+        function Update() {
+            var time_table_detail_id = $("#time_table_detail_id").val();
+            var time_table_master_id = $("#time_table_master_id").val();
+            var lecture = $("#lecture").val();
+            var subject = $("#subject").val();
+            var day = $("#day").val();
+            var start_time = $("#start_time").val();
+            var end_time = $("#end_time").val();
+            var lecture_break = $("#lecture_break").val();
+            var faculty = $("#faculty").val();
+            if (lecture_break == "") {
+                $("#err_lecturebreak").show();
+            }
+            else if (lecture_break == "Lecture" && lecture == "") {
+                $("#err_lecture").show();
+            }
+            else if (lecture_break == "Lecture" && subject == "") {
+                $("#err_subject").show();
+            }
+            else if (lecture_break == "Lecture" && faculty.length == 0) {
+                $("#err_faculty").show();
+            }
+            else if (day == "") {
+                $("#err_day").show();
+            }
+            else if (start_time == "") {
+                $("#err_starttime").show();
+            }
+            else if (end_time == "") {
+                $("#err_endtime").show();
+            }
+            else if (parseInt(start_time) > parseInt(end_time) || parseInt(start_time) == parseInt(end_time)) {
+                $("#err_time_invalid").show();
+            }
+            else {
+                $("#loading").show();
+                $.ajax({
+                    url: "/update-time-table/",
+                    method: "POST",
+                    data: {
+                        "time_table_detail_id": time_table_detail_id,
+                        "time_table_master_id": time_table_master_id,
+                        "lecture": lecture,
+                        "subject": subject,
+                        "day": day,
+                        "faculty[]": faculty,
+                        "start_time": start_time,
+                        "end_time": end_time,
+                        "lecture_break": lecture_break
+                    },
+                    success: function (response) {
+                        $("#loading").hide();
+                        if (response['status'] == "0") {
+                            if (response['msg'] == "Lecture No Already Exists") {
+                                $("#err_lecture_exists").show();
+                            }
+                            else if (response['msg'] == "Faculty is Busy") {
+                                $("#err_faculty_busy").show();
+                            }
+                            else {
+                                $("#err_time_exists").show();
+                            }
+                        }
+                        else {
+                            $("#TimeTableModal").modal('hide');
+                            if (day == 1) {
+                                $('.nav-tabs a[href="#PersonalInfo"]').tab('show');
+                                $('a[href="#PersonalInfo"]').trigger('click');
+                            } else if (day == 2) {
+                                $('.nav-tabs a[href="#TuesdayInfo"]').tab('show');
+                                $('a[href="#TuesdayInfo"]').trigger('click');
+                            } else if (day == 3) {
+                                $('.nav-tabs a[href="#WednesdayInfo"]').tab('show');
+                                $('a[href="#WednesdayInfo"]').trigger('click');
+                            } else if (day == 4) {
+                                $('.nav-tabs a[href="#ThursdayInfo"]').tab('show');
+                                $('a[href="#ThursdayInfo"]').trigger('click');
+                            } else if (day == 5) {
+                                $('.nav-tabs a[href="#FridayInfo"]').tab('show');
+                                $('a[href="#FridayInfo"]').trigger('click');
+                            } else if (day == 6) {
+                                $('.nav-tabs a[href="#SaturdayInfo"]').tab('show');
+                                $('a[href="#SaturdayInfo"]').trigger('click');
+                            }
+                            showdaystimetable($("#day").val(), $("#day").text());
+                        }
+                    }
+                })
+            }
+        }
+
+        function showdaystimetable(count, days) {
+            console.log(count)
+            console.log(days)
+            var course = $("#course").val();
+            var specialization = $("#specialization").val();
+            var semesters = $("#semesters").val();
+            var sections = $("#sections").val();
+            $("#loading").show();
+            $.ajax({
+                url: "/change-time-table-day/",
+                method: "POST",
+                data: {
+                    "course": course,
+                    "specialization": specialization,
+                    "semesters": semesters,
+                    "sections": sections,
+                    "day": count
+                },
+                success: function (response) {
+                    $("#loading").hide();
+                    console.log(response)
+                    if (days == "Tuesday") {
+                        $("#daytime_tuesday").html("");
+                        $("#daytime_tuesday").append(response);
+                    }
+                    else if (days == "Monday") {
+                        $("#daytime_monday").html("");
+                        $("#daytime_monday").append(response);
+                    }
+                    else if (days == "Wednesday") {
+                        $("#daytime_wednesday").html("");
+                        $("#daytime_wednesday").append(response);
+                    }
+                    else if (days == "Thursday") {
+                        $("#daytime_thursday").html("");
+                        $("#daytime_thursday").append(response);
+                    }
+                    else if (days == "Friday") {
+                        $("#daytime_friday").html("");
+                        $("#daytime_friday").append(response);
+                    }
+                    else {
+                        $("#daytime_saturday").html("");
+                        $("#daytime_saturday").append(response);
+                    }
+                }
+            })
+        }
+
+        function edit_day_time_table(id) {
+            $.ajax({
+                url: "/edit-day-time-table/",
+                method: "POST",
+                data: {
+                    "id": id
+                },
+                success: function (response) {
+                    $("#TimeTableModal").modal('show');
+                    $("#AddLecture_Button").hide();
+                    $("#UpdateLectureButton").show();
+                    $("#lecture_break").val(response['list_data'][0]['lecture_break']);
+                    $("#lecture").val(response['list_data'][0]['fk_lecture']);
+                    $("#subject").val(response['list_data'][0]['fk_subjects']);
+                    $("#day").val(response['list_data'][0]['fk_day']);
+                    $("#start_time").val(response['list_data'][0]['fk_time_start']);
+                    $("#end_time").val(response['list_data'][0]['fk_time_end']);
+                    $("#time_table_detail_id").val(response['list_data'][0]['id']);
+                    $("#time_table_master_id").val(response['list_data'][0]['fk_timetable_master']);
+                    $('#faculty').selectpicker('val', response['list_data'][0]['faculty_list']);
+                    SelectLectureBreak();
+                }
+            })
+        }
+
+        $("#start_date").change(function () {
+            $("#err_start_date").hide();
+        });
+        $("#end_date").change(function () {
+            $("#err_end_date").hide();
+        });
+        function Save_Date_Note() {
+            var course = $("#course").val();
+            var semesters = $("#semesters").val();
+            var sections = $("#sections").val();
+            var start_date = $("#start_date").val();
+            var end_date = $("#end_date").val();
+            var note = $("#note").val();
+            if(start_date == ""){
+                $("#err_start_date").show();
+            }else if(end_date == ""){
+                $("#err_end_date").show();
+            }
+            else{
+                $.ajax({
+                    url : "/save-update-date-note-timetable/",
+                    method: "POST",
+                    data : {
+                        "course":course,
+                        "semesters":semesters,
+                        "sections":sections,
+                        "start_date":start_date,
+                        "end_date":end_date,
+                        "note":note,
+                    },
+                    success:function (response) {
+                        if (response == "success") {
+                            swal("The Detail has been Updated successfully!", {
+                                icon: "success",
+                                button: "Ok",
+                                closeOnClickOutside: false,
+                            }).then(function () {
+                                $("#daywise_timetable_div").show();
+                            });
+                        }
+                    }
+                })
+            }
+        }
+
+        function delete_timetable_row(id,t){
+            console.log(id)
+            swal({
+                title: "Are you sure?",
+                text: "To delete this Time Table Row!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,})
+                .then((willDelete) => {
+                if(willDelete) {
+                    $.ajax({
+                        url: "/delete-time-table-row/",
+                        method: "POST",
+                        data: {
+                            "id": id
+                        },
+                        success: function (response) {
+                            if (response == "success") {
+                                swal("The Time Table Row has been successfully Deleted!", {
+                                    icon: "success",
+                                    button: "Ok",
+                                    closeOnClickOutside: false,
+                                }).then(function () {
+                                    t.closest("tr").remove();
+                                });
+                            }
+                        }
+                    })
+                }
+                else {
+                    swal("Time Table Row is NOT deleted!");
+                }
+            });
+        }
+
+
+    </script>
+</div>

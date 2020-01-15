@@ -1,0 +1,186 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">Time Table</h1>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <div class="block">
+        <div class="block-content block-content-full">
+            <table class="table table-vcenter" id="mydatatable" style="width: 100%;">
+                <thead class="thead-light" style="text-align:center;">
+                <tr>
+                    <th style="width: 10%;font-weight: bold;font-size: 13px;">Time/Day</th>
+                    {% if time_table_detail_monday_obj %}
+                    <th style="font-weight: bold;font-size: 13px;" scope="col">Monday</th>
+                    {% endif %}
+                    {% if time_table_detail_tuesday_obj %}
+                    <th style="font-weight: bold;font-size: 13px;" scope="col">Tuesday</th>
+                    {% endif %}
+                    {% if time_table_detail_wednesday_obj %}
+                    <th style="font-weight: bold;font-size: 13px;" scope="col">Wednesday</th>
+                    {% endif %}
+                    {% if time_table_detail_thursday_obj %}
+                    <th style="font-weight: bold;font-size: 13px;" scope="col">Thursday</th>
+                    {% endif %}
+                    {% if time_table_detail_friday_obj %}
+                    <th style="font-weight: bold;font-size: 13px;" scope="col">Friday</th>
+                    {% endif %}
+                    {% if time_table_detail_saturday_obj %}
+                    <th style="font-weight: bold;font-size: 13px;" scope="col">Saturday</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for t in list_data %}
+                <tr>
+                    <th>{{t.time|date:'h:i A'}} to {{t.next_time|date:'h:i A'}}</th>
+                    {% if time_table_detail_monday_obj %}
+                        <td>
+                            <table class="align-items-center borderless" style="text-align:center;width :100% !important;">
+                                {% for i in time_table_detail_monday_obj %}
+                                {% if t.time >= i.fk_time_start.time and t.next_time <= i.fk_time_end.time%}
+                                <tr>
+                                    {% if i.lecture_break == "Break" %}
+                                    <td style="background: gainsboro;">BREAK</td>
+                                    {% else %}
+                                    <td>{{i.fk_subjects.subjects}}
+                                        <br>{{i.fk_faculty_user_info1.first_name}} {{i.fk_faculty_user_info1.last_name}}
+                                        {% if i.fk_faculty_user_info2 %}
+                                        / {{i.fk_faculty_user_info2.first_name}} {{i.fk_faculty_user_info2.last_name}}
+                                        {% endif %}
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </table>
+                        </td>
+                    {% endif %}
+                    {% if time_table_detail_tuesday_obj %}
+                        <td>
+                            <table class="align-items-center borderless" style="text-align:center;width :100% !important;">
+                                {% for i in time_table_detail_tuesday_obj %}
+                                {% if t.time >= i.fk_time_start.time and t.next_time <= i.fk_time_end.time%}
+                                <tr>
+                                    {% if i.lecture_break == "Break" %}
+                                    <td style="background: gainsboro;">BREAK</td>
+                                    {% else %}
+                                    <td>{{i.fk_subjects.subjects}}
+                                        <br>{{i.fk_faculty_user_info1.first_name}} {{i.fk_faculty_user_info1.last_name}}
+                                        {% if i.fk_faculty_user_info2 %}
+                                        / {{i.fk_faculty_user_info2.first_name}} {{i.fk_faculty_user_info2.last_name}}
+                                        {% endif %}
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </table>
+                        </td>
+                    {% endif %}
+                    {% if time_table_detail_wednesday_obj %}
+                        <td>
+                            <table class="align-items-center borderless" style="text-align:center;width :100% !important;">
+                                {% for i in time_table_detail_wednesday_obj %}
+                                {% if t.time >= i.fk_time_start.time and t.next_time <= i.fk_time_end.time%}
+                                <tr>
+                                    {% if i.lecture_break == "Break" %}
+                                    <td style="background: gainsboro;">BREAK</td>
+                                    {% else %}
+                                    <td>{{i.fk_subjects.subjects}}
+                                        <br>{{i.fk_faculty_user_info1.first_name}} {{i.fk_faculty_user_info1.last_name}}
+                                        {% if i.fk_faculty_user_info2 %}
+                                        / {{i.fk_faculty_user_info2.first_name}} {{i.fk_faculty_user_info2.last_name}}
+                                        {% endif %}
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </table>
+                        </td>
+                    {% endif %}
+                    {% if time_table_detail_thursday_obj %}
+                        <td>
+                            <table class="align-items-center borderless" style="text-align:center;width :100% !important;">
+                                {% for i in time_table_detail_thursday_obj %}
+                                {% if t.time >= i.fk_time_start.time and t.next_time <= i.fk_time_end.time%}
+                                <tr>
+                                    {% if i.lecture_break == "Break" %}
+                                    <td style="background: gainsboro;">BREAK</td>
+                                    {% else %}
+                                    <td>{{i.fk_subjects.subjects}}
+                                        <br>{{i.fk_faculty_user_info1.first_name}} {{i.fk_faculty_user_info1.last_name}}
+                                        {% if i.fk_faculty_user_info2 %}
+                                        / {{i.fk_faculty_user_info2.first_name}} {{i.fk_faculty_user_info2.last_name}}
+                                        {% endif %}
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </table>
+                        </td>
+                    {% endif %}
+                    {% if time_table_detail_friday_obj %}
+                        <td>
+                            <table class="align-items-center borderless" style="text-align:center;width :100% !important;">
+                                {% for i in time_table_detail_friday_obj %}
+                                {% if t.time >= i.fk_time_start.time and t.next_time <= i.fk_time_end.time%}
+                                <tr>
+                                    {% if i.lecture_break == "Break" %}
+                                    <td style="background: gainsboro;">BREAK</td>
+                                    {% else %}
+                                    <td>{{i.fk_subjects.subjects}}
+                                        <br>{{i.fk_faculty_user_info1.first_name}} {{i.fk_faculty_user_info1.last_name}}
+                                        {% if i.fk_faculty_user_info2 %}
+                                        / {{i.fk_faculty_user_info2.first_name}} {{i.fk_faculty_user_info2.last_name}}
+                                        {% endif %}
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </table>
+                        </td>
+                    {% endif %}
+                    {% if time_table_detail_saturday_obj %}
+                        <td>
+                            <table class="align-items-center borderless" style="text-align:center;width :100% !important;">
+                                {% for i in time_table_detail_saturday_obj %}
+                                {% if t.time >= i.fk_time_start.time and t.next_time <= i.fk_time_end.time%}
+                                <tr>
+                                    {% if i.lecture_break == "Break" %}
+                                    <td style="background: gainsboro;">BREAK</td>
+                                    {% else %}
+                                    <td>{{i.fk_subjects.subjects}}
+                                        <br>{{i.fk_faculty_user_info1.first_name}} {{i.fk_faculty_user_info1.last_name}}
+                                        {% if i.fk_faculty_user_info2 %}
+                                        / {{i.fk_faculty_user_info2.first_name}} {{i.fk_faculty_user_info2.last_name}}
+                                        {% endif %}
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </table>
+                        </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+ $(document).ready(function () {
+  $('#TimeTableNavPage').addClass('active');
+});
+ </script>
+{% endblock content %}

@@ -1,0 +1,249 @@
+<tr class="btn-light" style="display:none" id="add_activity_row">
+    <td class="status"
+        style="text-overflow: ellipsis;width: 200px;overflow: hidden; white-space: nowrap;padding-left: 1rem">
+        <input type="text" id="activity_name" name="activity_name" maxlength="30"
+               class="form-control form-control-sm  form-control-alternative"
+               placeholder="Enter Activity Name" value="" form="save_activity_edit" required>
+    </td>
+    <td scope="row">
+        <input id="activity_date" style="width:115px"
+               class="form-control form-control-sm form-control-alternative js-datepicker"
+               data-date-format="yyyy-mm-dd" placeholder="YYYY/MM/DD" required autocomplete="off"
+               form="save_activity_edit"
+               value="{{ fromdate|date:'Y-m-d' }}">
+        <span style="color:red" id="date_error"></span>
+    </td>
+    <td scope="row">
+        <input type="time" id="activity_from" name="schedule" style="width:115px"
+               class="form-control form-control form-control-sm form-control-alternative"
+               placeholder=""
+               value=""
+               form="save_activity_edit"
+               required>
+        <span style="color:red" id="from_error"></span>
+    </td>
+    <td scope="row">
+        <input type="time" id="activity_to" name="schedule" style="width:115px"
+               class="form-control form-control form-control-sm form-control-alternative"
+               placeholder=""
+               value=""
+               form="save_activity_edit"
+               required>
+        <span style="color:red" id="to_error"></span>
+    </td>
+    <td scope="row"
+        style="text-overflow: ellipsis;width: 200px;overflow: hidden; white-space: nowrap">
+                                <textarea class="form-control form-control-sm form-control-alternative" maxlength="450"
+                                          name="assignment info" id="exampleFormControlTextarea11" rows="1"
+                                          placeholder="Write a large text here ..."
+                                          form="save_activity_edit"></textarea>
+    </td>
+    <td scope="row" style="width: 110px;">
+        <select class="form-control form-control-sm" id="activity_type" form="save_activity_edit">
+            <option value="Single">Single</option>
+            <option value="Group 2">Group 2</option>
+            <option value="Group 3">Group 3</option>
+            <option value="Group 4">Group 4</option>
+            <option value="Group 5">Group 5</option>
+            <option value="Group 6">Group 6</option>
+            <option value="Group 7">Group 7</option>
+            <option value="Group 8">Group 8</option>
+            <option value="Group 9">Group 9</option>
+            <option value="Group 10">Group 10</option>
+            <option value="Group 11">Group 11</option>
+        </select>
+    </td>
+    <td>
+
+    </td>
+    <td scope="row">
+        <input type="text" id="activity_venue" maxlength="20"
+               class="form-control form-control form-control-sm  form-control-alternative"
+               placeholder="Venue"
+               value=""
+               form="save_activity_edit"
+               required>
+    </td>
+    <td>
+
+    </td>
+    <td>
+
+    </td>
+    <td>
+        <form action="" id="save_activity_edit" method="post" role="form"
+              enctype="multipart/form-data">
+            <div class="btn-group">
+                <button class="btn btn-sm btn-outline-info js-tooltip-enabled">
+                    <i class="fa fa-fw fa-save"></i>
+                </button>
+                <div class="btn btn-sm btn-outline-danger js-tooltip-enabled" id="cancel_activity_button">
+                    <i class="fa fa-fw fa-times"></i>
+                </div>
+            </div>
+        </form>
+    </td>
+</tr>
+{% for i in activity_obj %}
+    <tr class="btn-light" id="activit_row{{ i.id }}">
+        <td class="status"
+            style="text-overflow: ellipsis;width: 200px;overflow: hidden; white-space: nowrap;padding-left: 1rem">
+            {{ i.activity_name }}
+        </td>
+        <td scope="row">
+            {{ i.schedule_date|date:'d/m/Y' }}
+        </td>
+        <td scope="row">
+            {{ i.start_time }}
+        </td>
+        <td scope="row">
+            {{ i.end_time }}
+        </td>
+        <td scope="row">
+            {{ i.activity_details }}
+        </td>
+        <td scope="row">
+            {{ i.activity_type }}
+        </td>
+        <td>
+            <div class="btn btn-sm btn-outline-primary" style="text-align: center">
+                View
+            </div>
+        </td>
+        <td scope="row">
+            {{ i.activity_venue }}
+        </td>
+        <td>
+            <button class="btn btn-sm btn-outline-primary" onclick="manage_member_modal({{ i.id }})">
+                Manage
+            </button>
+        </td>
+        <td>
+            <button class="btn btn-sm btn-outline-primary" onclick="manage_guest_modal({{ i.id }})">
+                Manage
+            </button>
+        </td>
+        <td>
+            <div class="btn-group">
+                <div class="btn btn-sm btn-outline-primary js-tooltip-enabled"
+                     data-toggle="tooltip" title="" data-original-title="Edit Client"
+                     onclick="edit_activity({{ i.id }})">
+                    <i class="fa fa-fw fa-pencil-alt"></i>
+                </div>
+                <div class="btn btn-sm btn-outline-danger js-tooltip-enabled"
+                     data-toggle="tooltip" title="" data-original-title="Remove Client"
+                     onclick="delete_activity({{ i.id }})">
+                    <i class="far fa-trash-alt"></i>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr class="btn-light" id="activit_edit_row{{ i.id }}" style="display:none">
+        <td class="status"
+            style="text-overflow: ellipsis;width: 200px;overflow: hidden; white-space: nowrap;padding-left: 1rem">
+            <input type="text" id="activity_name{{ i.id }}" name="activity_name{{ i.id }}" maxlength="30"
+                                       class="form-control form-control-sm  form-control-alternative"
+                                       placeholder="Enter Activity Name" value="{{ i.activity_name }}" required>
+            <span style="color:red;display:none" id="activity_name_error{{ i.id }}">Please Enter Name !</span>
+        </td>
+        <td scope="row">
+            <input type="date" id="activity_date{{ i.id }}"
+                   class="form-control form-control-sm form-control-alternative js-datepicker"
+                   data-date-format="yyyy-mm-dd" placeholder="YYYY/MM/DD" required autocomplete="off"
+                   value="{{ i.schedule_date|date:'Y-m-d' }}">
+            <span style="color:red;display:none" id="activity_date_error{{ i.id }}">Please Enter Date !</span>
+        </td>
+        <td scope="row">
+            <input type="time" id="activity_from{{ i.id }}" name="schedule" style="width:115px"
+                   class="form-control form-control form-control-sm form-control-alternative"
+                   placeholder=""
+                   value="{{ i.start_time|date:'H:i' }}"
+                   required>
+            <span style="color:red;display:none" id="activity_from_error{{ i.id }}">Please Enter Time !</span>
+        </td>
+        <td scope="row">
+            <input type="time" id="activity_to{{ i.id }}"name="schedule" style="width:115px"
+                   class="form-control form-control form-control-sm form-control-alternative"
+                   placeholder=""
+                   value="{{ i.end_time|date:'H:i' }}"
+                   required>
+            <span style="color:red;display:none" id="activity_to_error{{ i.id }}">Please Enter Time !</span>
+        </td>
+        <td scope="row">
+            <textarea class="form-control form-control-sm form-control-alternative" maxlength="450"
+                                          name="assignment info" id="exampleFormControlTextarea11{{ i.id }}" rows="1"
+                                          placeholder="Write a large text here ..." >{{ i.activity_details }}</textarea>
+        </td>
+        <td scope="row" style="width: 110px;">
+            <select class="form-control form-control-sm" id="activity_type{{ i.id }}" value="{{ i.activity_type }}">
+                <option value="Single" {% if i.activity_type == "Single" %} selected {% endif %}>Single</option>
+                <option value="Group 2" {% if i.activity_type == "Group 2" %} selected {% endif %}>Group 2</option>
+                <option value="Group 3" {% if i.activity_type == "Group 3" %} selected {% endif %}>Group 3</option>
+                <option value="Group 4" {% if i.activity_type == "Group 4" %} selected {% endif %}>Group 4</option>
+                <option value="Group 5" {% if i.activity_type == "Group 5" %} selected {% endif %}>Group 5</option>
+                <option value="Group 6" {% if i.activity_type == "Group 6" %} selected {% endif %}>Group 6</option>
+                <option value="Group 7" {% if i.activity_type == "Group 7" %} selected {% endif %}>Group 7</option>
+                <option value="Group 8" {% if i.activity_type == "Group 8" %} selected {% endif %}>Group 8</option>
+                <option value="Group 9" {% if i.activity_type == "Group 9" %} selected {% endif %}>Group 9</option>
+                <option value="Group 10" {% if i.activity_type == "Group 10" %} selected {% endif %}>Group 10</option>
+                <option value="Group 11" {% if i.activity_type == "Group 11" %} selected {% endif %}>Group 11</option>
+            </select>
+        </td>
+        <td>
+        </td>
+        <td scope="row">
+            <input type="text" id="activity_venue{{ i.id }}" maxlength="30"
+                   class="form-control form-control form-control-sm  form-control-alternative"
+                   placeholder="Venue"
+                   value="{{ i.activity_venue }}"
+                   required>
+            <span style="color:red;;display:none" id="activity_venue_error{{ i.id }}">Please Enter Venue !</span>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td>
+            <div class="btn-group">
+                <div class="btn btn-sm btn-outline-primary js-tooltip-enabled"
+                     data-toggle="tooltip" title="" data-original-title="Edit Client"
+                     onclick="update_activity({{ i.id }})">
+                    <i class="fa fa-fw fa-save"></i>
+                </div>
+                <div class="btn btn-sm btn-outline-danger js-tooltip-enabled"
+                     data-toggle="tooltip" title="" data-original-title="Remove Client"
+                     onclick="cancel_activity({{ i.id }})">
+                    <i class="fa fa-fw fa-times"></i>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <script>
+        $(document).ready(function () {
+            $("#activity_type" +{{ i.id }}).val("{{ i.activity_type }}")
+        })
+    </script>
+{% endfor %}
+<script>
+    $(document).ready(function () {
+    $('#cancel_activity_button').click(function () {
+            $('#add_activity_row').hide()
+            $('#add_activity_button').show()
+            $('#cancel_activity_button').hide()
+        })
+    })
+    $(function () {
+        $('#items_table').find('.datepicker').datepicker( "option", "dateFormat", "dd-mm-yy" );
+        $.datepicker.setDefaults({dateFormat: 'yyyy-mm-dd'}); // Defaults for all datepickers
+        $('.js-datepicker').datepicker(); // Initialisation
+    });
+
+    function edit_activity(id) {
+        $("#activit_row"+id).hide()
+        $("#activit_edit_row"+id).show()
+    }
+    function cancel_activity(id) {
+        $("#activit_row"+id).show()
+        $("#activit_edit_row"+id).hide()
+    }
+</script>

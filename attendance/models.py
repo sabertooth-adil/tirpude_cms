@@ -6,6 +6,9 @@ from master_forms.models import Course, Semester, Section, Subject
 
 
 class StudentAttendance(models.Model):
+    """
+    Student Attendance
+    """
     fk_student_user_info = models.ForeignKey(UserInfo, null=True, blank=True, related_name='fk_student_user_info',
                                              on_delete=models.CASCADE)
     fk_faculty_user_info = models.ForeignKey(UserInfo, null=True, blank=True, related_name='fk_faculty_user_info',

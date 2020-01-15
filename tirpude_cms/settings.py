@@ -41,7 +41,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentication',
     'master_forms',
+    'library',
+    'notice',
     'attendance',
+    'time_table',
+    'authenticate_user',
+    'placement',
+    'manage_student',
+    'aptitude',
+    'event',
 ]
 
 MIDDLEWARE = [
@@ -74,7 +82,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tirpude_cms.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -87,16 +94,15 @@ WSGI_APPLICATION = 'tirpude_cms.wsgi.application'
 
 
 DATABASES = {
-   'default': {
+    'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tirpude_cms',
+        'NAME': 'tirpude_cms_new',
         'USER': 'root',
         'PASSWORD': 'Newuser@123',
         'HOST': '3.6.127.100',
         'PORT': '3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -116,7 +122,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -129,7 +134,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_USE_TLS = True
@@ -147,3 +151,5 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR,"static"),)
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+SESSION_COOKIE_AGE = 600

@@ -30,8 +30,8 @@ class UserInfo(models.Model):
     fk_blood_group = models.ForeignKey(BloodGroup, blank=True, null=True, on_delete=models.CASCADE)
     registration_date = models.DateField(default=datetime.date.today, null=True, blank=True)
 
-    def __str__(self):
-        return self.first_name + '-' + self.last_name
+    # def __str__(self):
+    #     return self.first_name + '-' + self.last_name
 
 
 class AddressDetail(models.Model):
@@ -56,8 +56,8 @@ class AddressDetail(models.Model):
     correspondence_tehsil = models.CharField(max_length=100, blank=True)
     correspondence_pin_code = models.CharField(max_length=20, blank=True, null=True)
 
-    def __str__(self):
-        return self.address
+    # def __str__(self):
+        # return str(self.id)
 
 
 class AcademicInfo(models.Model):
@@ -116,5 +116,5 @@ class AcademicInfo(models.Model):
     resume = models.FileField(upload_to="resume/", null=True, blank=True)
     fk_academic_session = models.ForeignKey(AcademicSession, blank=True, null=True, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.fk_user_info.first_name
+    # def __str__(self):
+    #     return self.fk_user_info.first_name

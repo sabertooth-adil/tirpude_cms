@@ -1,0 +1,637 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+
+    <div class="block block-header" style="margin-bottom: 0rem;">
+        <div class="d-flex flex-column flex-sm-row xdfjustify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">
+                Students Event
+            </h1>
+        </div>
+        <nav class="text-right">
+            <button class="btn btn-primary btn-sm" id="Add_Event_button" onclick="edit_event()">Add Event
+            </button>
+            <button class="btn btn-sm" id="Cancle_button" style="display:none">Cancel
+            </button>
+            <button class="btn btn-primary btn-sm" style="display:none" id="save_button" form="save_event">Save
+            </button>
+        </nav>
+    </div>
+    <div class="container-fluid mt--7" style="padding-top: 0.7rem" id="Event_list">
+        <div class="block">
+            <div class="block-header">
+                <h3 class="block-title border-bottom pb-2">Events</h3>
+            </div>
+            <div class="table-responsive">
+                <div>
+                    <table class="table align-items-center dtable">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col" style="width: 12rem">
+                                Event Name
+                            </th>
+                            <th scope="col"  style="width: 12rem">
+                                Start Date
+                            </th>
+                            <th scope="col"  style="width: 12rem">
+                                End Date
+                            </th>
+                            <th scope="col"  style="width: 12rem">
+                                Activity Name
+                            </th>
+                            <th scope="col"  style="width: 12rem">
+                                Activity Date
+                            </th>
+                            <th scope="col"  style="width: 12rem">
+                                Timing
+                            </th>
+                            <th scope="col" style="width: 6rem;">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody id="event_list_div">
+                        {% for i in event_obj %}
+                                    <tr class="btn-light" id="event_row{{ i.id }}">
+                                        <td class="status"
+                                            style="text-overflow: ellipsis;width: 12rem;overflow: hidden; white-space: nowrap;padding-left: 1rem">
+                                            {{ i.event_title }}
+                                        </td >
+                                        <td scope="row"  style="width: 12rem">
+                                            {{ i.start_date|date:'d / m / Y' }}
+                                        </td>
+                                        <td scope="row"  style="width: 12rem">
+                                            {{ i.end_date|date:'d / m / Y' }}
+                                        </td>
+                                        <td scope="row" colspan="3"  style="width: 36rem">
+                                            <table class="table-borderless table-sm" style="width: 100%;">
+                                                <tbody>
+                                                {% for j in activity_obj %}
+                                                    {% if j.fk_student_events.id == i.id %}
+                                                    <tr>
+                                                        <td   style="width: 12rem">
+                                                            {{ j.activity_name }}
+                                                        </td>
+                                                        <td  style="width: 12rem">
+                                                            {{ j.schedule_date|date:'d / m / Y' }}
+                                                        </td>
+                                                        <td  style="width: 12rem">
+                                                            {{ j.start_time }} to {{ j.end_time }}
+                                                        </td>
+                                                    </tr>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                        <td   style="width: 6rem">
+                                            <div class="btn-group">
+                                                <div class="btn btn-sm btn-outline-info js-tooltip-enabled"
+                                                     data-toggle="tooltip" title="" data-original-title="Edit Client"
+                                                     onclick="edit_event({{ i.id }})">
+                                                    <i class="fa fa-fw fa-pencil-alt"></i>
+                                                </div>
+                                                <div class="btn btn-sm btn-outline-danger js-tooltip-enabled"
+                                                     data-toggle="tooltip" title="" data-original-title="Remove Client"
+                                                     onclick="delete_event({{ i.id }})">
+                                                    <i class="far fa-trash-alt"></i>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                        {% endfor %}
+                        </tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="edit_event">
+        <div class="container-fluid mt--7" style="padding-top: 0.7rem; display:none" id="Event_content">
+            <div class="block" style="margin-bottom: 0;">
+                <div class="block-header">
+                    <h3 class="block-title border-bottom pb-2">Event</h3>
+                </div>
+                <input id="event_id" type="hidden">
+                <div id="ShowAddAssigement_Div">
+                    <div id="tabsJustifiedContent" class="tab-content">
+                        <div id="PersonalInfo" class="tab-pane fade active show">
+                            <div class="card-body">
+                                <form action="" id="save_event" method="post" role="form" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="pl-lg-4">
+                                        <div class="row">
+                                            <div class="col-lg-4 col-sm-4 col-xs-4">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-title">Event Title<span
+                                                            class="text-danger">*</span>:</label>
+                                                    <input type="text" id="title" name="title"
+                                                           class="form-control form-control-sm  form-control-alternative"
+                                                           placeholder="Enter Event Title" value="" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-sm-6 col-xs-6">
+                                                <div class="row">
+                                                    <div class="input-daterange input-group"
+                                                         data-date-format="yyyy-mm-dd"
+                                                         data-week-start="1" data-autoclose="true"
+                                                         data-today-highlight="true"
+                                                         style="margin-right: -1rem !important;">
+                                                        <div style="padding-right: 5%;">
+                                                            <label>Start Date<span class="text-danger">*</span>:</label>
+                                                            <input type="text" autocomplete="off"
+                                                                   class="form-control form-control-sm form-control-alternative"
+                                                                   id="start_date" style="text-align: left;"
+                                                                   name="start"
+                                                                   placeholder="From" data-week-start="1"
+                                                                   data-autoclose="true"
+                                                                   data-today-highlight="true" required>
+                                                        </div>
+                                                        <div>
+                                                            <label>End Date<span class="text-danger">*</span>:</label>
+                                                            <input type="text" autocomplete="off"
+                                                                   class="form-control form-control-sm" id="end_date"
+                                                                   name="end_date" style="text-align: left;"
+                                                                   placeholder="To"
+                                                                   data-week-start="1" data-autoclose="true"
+                                                                   value = "{{ event_obj.end_date }}"
+                                                                   data-today-highlight="true" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-sm-4 col-xs-4">
+                                                <div class="form-group">
+                                                    <label class="form-control-label text-right">Event Type:</label>
+                                                    <select class="form-control form-control-sm" id="event_type">
+                                                    <option value="" selected hidden>Select Event Type</option>
+                                                    <option value="Curricular Activities">Curricular Activities</option>
+                                                    <option value="Curricular Activities">Co-Curricular Activities</option>
+                                                    <option value="Extra-Curricular Activities">Extra-Curricular Activities</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4 col-sm-4 col-xs-4">
+                                                    <label class="form-control-label text-right">Details:</label>
+                                                <textarea
+                                                            class="form-control form-control-sm form-control-alternative"
+                                                            name="assignment info" id="exampleFormControlTextarea1"
+                                                            rows="1"
+                                                            placeholder="Write a large text here ..."></textarea>
+                                            </div>
+                                            <div class="col-lg-4 col-sm-4 col-xs-4">
+                                            </div>
+                                            <div class="col-lg-4 col-sm-4 col-xs-4">
+                                                <label class="form-control-label text-right">&nbsp;</label>
+                                                <nav class="text-right">
+                                                    <div class="btn btn-primary btn-sm" id="manage_finance" data-toggle="modal">Manage
+                                                        Finance
+                                                    </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <div class="btn btn-primary  btn-sm" id="add_member" data-toggle="modal" data-target="#SelectQuestionModel">Add Member
+                                                    </div>
+                                                </nav>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                    </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+            </div>
+        </div>
+        <div style="padding-top: 0.7rem; display:none" id="Activity_list">
+            <div class="block">
+                <div class="block-header">
+                    <h3 class="block-title border-bottom pb-2">Activity List</h3>
+                    <nav class="text-right">
+                        <button class="btn btn-primary btn-sm" id="add_activity_button">Add Activity
+                        </button>
+                        <button class="btn btn-primary btn-sm" style="display:none" id="cancel_activity_button">Cancel
+                        </button>
+                    </nav>
+                </div>
+                <div class="table-responsive">
+                    <div>
+                        <table class="table align-items-center dtable">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">
+                                    Activity Name
+                                </th>
+                               <th scope="col">
+                                    Date
+                                </th>
+                               <th scope="col">
+                                    From
+                                </th>
+                                <th scope="col">
+                                    To
+                                </th>
+                                <th scope="col">
+                                    Activity Detail
+                                </th>
+                                <th scope="col">
+                                    Type
+                                </th>
+                                <th scope="col">
+                                    Participant
+                                </th>
+                                <th scope="col">
+                                    Venue
+                                </th>
+                                <th scope="col">
+                                    Team
+                                </th>
+                                <th scope="col">
+                                    Guest
+                                </th>
+                                <th scope="col" style="width: 10%;">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody class="list" id="assignment_table">
+                            <tr class="btn-light" style="display:none" id="add_activity_row">
+                                <form action="" id="save_activity" method="post" role="form"
+                                      enctype="multipart/form-data">
+                                    <td class="status"
+                                        style="text-overflow: ellipsis;width: 200px;overflow: hidden; white-space: nowrap;padding-left: 1rem">
+                                        <input type="text" id="activity_name" name="activity_name"
+                                               class="form-control form-control-sm  form-control-alternative"
+                                               placeholder="Enter Activity Name" value="" required>
+                                    </td>
+                                    <td scope="row">
+                                        <input id="activity_date"
+                                           class="form-control form-control-sm form-control-alternative js-datepicker"
+                                            data-date-format="yyyy-mm-dd" placeholder="YYYY/MM/DD" required autocomplete="off"
+                                           value="{{fromdate|date:'Y-m-d'}}">
+                                    </td>
+                                    <td scope="row">
+                                        <input type="time" id="activity_from" name="schedule" style="width:115px"
+                                               class="form-control form-control form-control-sm form-control-alternative"
+                                               placeholder=""
+                                               value=""
+                                               required>
+                                    </td>
+                                    <td scope="row">
+                                        <input type="time" id="activity_to" name="schedule" style="width:115px"
+                                               class="form-control form-control form-control-sm form-control-alternative"
+                                               placeholder=""
+                                               value=""
+                                               required>
+                                    </td>
+                                    <td scope="row"  style="text-overflow: ellipsis;width: 200px;overflow: hidden; white-space: nowrap">
+                                <textarea class="form-control form-control-sm form-control-alternative"
+                                          name="assignment info" id="exampleFormControlTextarea11" rows="1"
+                                          placeholder="Write a large text here ..."></textarea>
+                                    </td>
+                                    <td scope="row" style="width: 110px;">
+                                        <select class="form-control form-control-sm" id="activity_type">
+                                            <option value="Single">Single</option>
+                                            <option value="Group 2">Group 2</option>
+                                            <option value="Group 3">Group 3</option>
+                                            <option value="Group 4">Group 4</option>
+                                            <option value="Group 5">Group 5</option>
+                                            <option value="Group 6">Group 6</option>
+                                            <option value="Group 7">Group 7</option>
+                                            <option value="Group 8">Group 8</option>
+                                            <option value="Group 9">Group 9</option>
+                                            <option value="Group 10">Group 10</option>
+                                            <option value="Group 11">Group 11</option>
+                                        </select>
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                    <td scope="row">
+                                        <input type="text" id="activity_venue"
+                                               class="form-control form-control form-control-sm  form-control-alternative"
+                                               placeholder="Venue"
+                                               value=""
+                                               required>
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                    <td style="text-align: center">
+                                        <button class="btn btn-sm btn-info">
+                                            Save
+                                        </button>
+                                    </td>
+                                </form>
+                            </tr>
+                            </tbody>
+                            <tbody id="activity_list_div">
+                            </tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+<script>
+    $(document).ready(function() {
+        $('.dtable').DataTable();
+        {#$('#Add_Event_button').click(function () {#}
+        {#    $.ajax({#}
+        {#        url: "/add-event/",#}
+        {#        method: "POST",#}
+        {#        success: function (response) {#}
+        {#            console.log(response)#}
+        {#            $('#event_id').val(response['event_id'])#}
+        {#            $('#Event_content').show()#}
+        {#            $('#Cancle_button').show()#}
+        {#            $('#Add_Event_button').hide()#}
+        {#            $('#save_button').show()#}
+        {#            $('#Activity_list').show()#}
+        {#            $('#Event_list').hide()#}
+        {#        }#}
+        {#    })#}
+        {#})#}
+
+    $("#member_key").change(function () {
+        if ($("#member_key").val() == "Student") {
+            $("#coursem").removeAttr("disabled");
+            $("#Member_list_div").html("")
+        }
+        else {
+            $("#coursem").val("");
+            $("#coursem").attr('disabled', 'disabled');
+            $("#sectionm").val("");
+            $("#sectionm").attr('disabled', 'disabled');
+            $("#semesterm").val("");
+            $("#semesterm").attr('disabled', 'disabled');
+            $("#Member_list_div").html("")
+        }
+    })
+
+    $("#coursem").change(function () {
+        if ($("#coursem").val().length != 0) {
+            $("#semesterm").removeAttr("disabled");
+            $("#Member_list_div").html("")
+        }
+        else {
+            $("#sectionm").val("");
+            $("#sectionm").attr('disabled', 'disabled');
+            $("#semesterm").val("");
+            $("#semesterm").attr('disabled', 'disabled');
+        }
+    });
+
+    $("#semesterm").change(function () {
+        if ($("#semesterm").val().length != 0) {
+            $("#sectionm").removeAttr("disabled");
+            $("#Member_list_div").html("")
+        }
+        else {
+            $("#sectionm").val("");
+            $("#sectionm").attr('disabled', 'disabled');
+        }
+    });
+    })
+
+    $("#save_event").submit(function (e) {
+        e.preventDefault();
+        var id = $("#event_id").val();
+        var title = $("#title").val();
+        var start_date = $("#start_date").val();
+        var end_date = $("#end_date").val();
+        var event_details = $("#exampleFormControlTextarea1").val();
+        var departments = $("#course").val();
+        var event_type = $("#event_type").val();
+        $.ajax({
+            url: "/save-event/",
+            method: "POST",
+            data: {
+                "id": id,
+                "title": title,
+                "start_date": start_date,
+                "end_date": end_date,
+                "event_details": event_details,
+                "departments": departments,
+                "event_type":event_type,
+            },
+            success: function (response) {
+                console.log(response)
+                location.reload()
+            }
+        })
+
+    })
+
+    $("#save_activity").submit(function (e) {
+        e.preventDefault();
+        var id = $("#event_id").val();
+        var activity_name = $("#activity_name").val();
+        var activity_date = $("#activity_date").val();
+        var activity_from = $("#activity_from").val();
+        var activity_to = $("#activity_to").val();
+        var activity_detail = $("#exampleFormControlTextarea11").val()
+        var activity_type = $("#activity_type").val()
+        var activity_venue = $("#activity_venue").val()
+        console.log("activity_detail ",activity_detail)
+
+        if (new Date('1/1/1999 ' + $("#activity_from").val()).getTime() > new Date('1/1/1999 ' + $("#activity_to").val()).getTime()) {
+            $("#date_error").html("Please Enter Future Time")
+        }
+        else {
+            $.ajax({
+                url: "/save-activity/",
+                method: "POST",
+                data: {
+                    "id": id,
+                    "activity_name": activity_name,
+                    "activity_start_date": activity_date,
+                    "activity_from": activity_from,
+                    "activity_to": activity_to,
+                    "activity_type": activity_type,
+                    "activity_venue": activity_venue,
+                    "activity_detail": activity_detail,
+                },
+                success: function (response) {
+                    console.log("event id ", id)
+                    $("#activity_list_div").html("");
+                    $("#activity_list_div").append(response);
+                    $("#activity_name").val("");
+                    $("#activity_start_date").val("");
+                    $("#activity_end_date").val("");
+                    $("#exampleFormControlTextarea11").val("");
+                    $('#add_activity_row').hide()
+                    $('#add_activity_button').show()
+                    $('#cancel_activity_button').hide()
+                }
+            })
+        }
+
+    })
+    function update_activity(id) {
+        var id = id
+        var activity_name = $("#activity_name"+id).val()
+        var activity_date = $("#activity_date"+id).val()
+        var activity_from = $("#activity_from"+id).val()
+        var activity_to = $("#activity_to"+id).val()
+        var activity_type = $("#activity_type"+id).val()
+        var activity_venue = $("#activity_venue"+id).val()
+        var activity_detail = $("#exampleFormControlTextarea11"+id).val()
+        $.ajax({
+            url:"/update-activity/",
+            method: "POST",
+            data: {
+                "activity_id":id,
+                "activity_name":activity_name,
+                "activity_date":activity_date,
+                "activity_from":activity_from,
+                "activity_to":activity_to,
+                "activity_type":activity_type,
+                "activity_venue":activity_venue,
+                "activity_detail":activity_detail,
+            },
+            success: function (response) {
+                $("#activity_list_div").html("");
+                $("#activity_list_div").append(response);
+            }
+        })
+    }
+
+    function edit_event(id) {
+        var id = id
+        $.ajax({
+            url:"/edit-event/",
+            method:"POST",
+            data: {
+                "event_id":id,
+            },
+            success: function (response) {
+                console.log(response)
+                $('#event_id').val(response['event_id'])
+                $('#Cancle_button').show()
+                $('#Event_list').hide()
+                $('#Add_Event_button').hide()
+                $('#save_button').show()
+                $('#edit_event').html("");
+                $('#edit_event').append(response);
+                {#$('#Activity_list').show()#}
+                {#$('#Event_list').hide()#}
+                if ($("#title").val() == "None"){
+                    $('#title').val("")
+                    $('#start_date').val("")
+                    $('#end_date').val("")
+                    $('#exampleFormControlTextarea1').val("")
+                }
+                {#$('#start_date').val(response['start_date'])#}
+                {#$('#end_date').val(response['end_date'])#}
+                {#$('#course').val(response['event_course'])#}
+                {#$('#exampleFormControlTextarea1').val(response['event_details'])#}
+            }
+        })
+
+    }
+
+    function delete_event(id) {
+        console.log(id)
+        swal({
+            title: "Are you sure?",
+            text: "To Delete this Event!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: "/delete-event",
+                        method: "POST",
+                        data: {
+                            "event_id": id
+                        },
+                        success: function (response) {
+                            if (response == "success") {
+                                swal("The Event Deleted Successfully", {
+                                    icon: "success",
+                                    button: "Ok",
+                                    closeOnClickOutside: false,
+                                }).then(function () {
+                                    $("#event_row" + id).remove();
+                                });
+                            }
+                        }
+                    })
+                }
+                else {
+                    swal("Event is not Deleted!"
+                    )
+                    ;
+                }
+            })
+        ;
+    }
+
+
+
+    function filtermember(id) {
+        var event_id = id
+        var member_key = $("#member_key").val()
+        var course = $("#coursem").val()
+        var semester = $("#semesterm").val()
+        var sections = $("#sectionm").val()
+        $.ajax({
+            url:"/filter-member/",
+            method:"POST",
+            data:{
+                event_id:event_id,
+                member_key:member_key,
+                course:course,
+                semester:semester,
+                sections:sections,
+            },
+            success:function (response) {
+                console.log(response)
+                $("#filter_members_list").show()
+                $("#Member_list_div").html("")
+                $("#Member_list_div").html(response)
+            }
+        })
+    }
+
+    function add_member() {
+        SelectedMemberList = [];
+        $("#studentselect:checked").each(function () {
+            SelectedMemberList.push($(this).val());
+        });
+        console.log(SelectedMemberList)
+        var event_id = $("#event_id").val()
+        var member_key = $("#member_key").val()
+        var formdata = new FormData();
+        formdata.append("member_list", SelectedMemberList)
+        formdata.append("event_id", event_id)
+        formdata.append("member_key", member_key)
+
+        $.ajax({
+            url: "/add-event-member/",
+            method: "POST",
+            enctype: 'multipart/form-data',
+            async: false,
+            cache: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            processData: false,
+            data: formdata,
+            success: function (response) {
+                console.log(response)
+                $("#Member_list_div").html("")
+                $("#Selected_Member_list_div").html("")
+                $("#Selected_Member_list_div").html(response)
+                $("#filter_members_list").hide()
+            }
+        })
+    }
+</script>
+{% endblock content %}

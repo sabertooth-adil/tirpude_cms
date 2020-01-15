@@ -1,0 +1,291 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+{#{% for u in  user_operation_obj %}#}
+{#{% if u.fk_screen.screen_url == "StreamOrFields" %}#}
+{#{% if u.view_data == "Y" %}#}
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">Stream/Fields</h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+{#                {% for u in  user_operation_obj %}#}
+{#                    {% if u.fk_screen.screen_url == "StreamOrFields" %}#}
+{#                        {% if u.save_data == "Y" %}#}
+                            <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAddSubject_Div()" id="ShowAddSubject_Button">Add Stream/Fields</button>
+{#                        {% endif %}#}
+{#                    {% endif %}#}
+{#                {% endfor %}#}
+                <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAllSubject_Div()" id="ShowAllSubject_Button" style="display: none;">All Stream/Fields</button>
+                <button class="btn btn-success btn-sm" onclick="addstreamorfields()" id="addsubject_button" style="display:none;">Save</button>
+                <button class="btn btn-success btn-sm" onclick="updatestreamorfields()" id="updatesubject_button" style="display:none;">Update</button>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <div class="block">
+        <div class="block-content block-content-full">
+            <div id="ShowAddSubject_Div" style="display: none;">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group clearfix">
+                            <label class="form-control-label text-right">Twelveth/Diploma<span class="text-danger">*</span>:</label>
+                            <select name="twelvethordiploma" class="form-control form-control-sm form-control-alternative" id="twelvethordiploma" required>
+                                <option value="" selected hidden>Select Twelveth/Diploma</option>
+                                {% for i in twelveth_or_diploma_obj %}
+                                <option value="{{i.id}}">{{i.twelveth_or_diploma}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size:12px;" id="err_twelvethordiploma">Please Enter Twelveth/Diploma</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Stream/Field<span class="text-danger">*</span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="stream_or_field_name" name="stream_or_field_name" required>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_stream_or_field_name">Please Enter Stream/Field</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                    </div>
+                </div>
+            </div>
+            <div id="ShowUpdateSubject_Div" style="display: none;">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <input type="hidden" id="streamorfieldsid" name="streamorfieldsid">
+                        <div class="form-group clearfix">
+                            <label class="form-control-label text-right">Twelveth/Diploma<span class="text-danger">*</span>:</label>
+                            <select name="edittwelvethordiploma" class="form-control form-control-sm form-control-alternative" id="edittwelvethordiploma" required>
+                                <option value="" selected hidden>Select Twelveth/Diploma</option>
+                                {% for i in twelveth_or_diploma_obj %}
+                                <option value="{{i.id}}">{{i.twelveth_or_diploma}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_edittwelvethordiploma">Please Enter Twelveth/Diploma</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Stream/Field<span class="text-danger">*</span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="editstream_or_field_name" name="editstream_or_field_name" required>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editstream_or_field_name">Please Enter Stream/Field</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive" id="ShowAllSubject_Div">
+                <table class="table table-vcenter" id="mydatatable">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="text-center" style="width: 10% !important;">Sr No.</th>
+                            <th>Twelveth/Diploma</th>
+                            <th>Stream/Field</th>
+{#                            {% for u in  user_operation_obj %}#}
+{#                                {% if u.fk_screen.screen_url == "StreamOrFields" %}#}
+{#                                    {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                                        <th class="text-center" style="width: 10% !important;">Actions</th>
+{#                                    {% endif %}#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in stream_or_field_obj %}
+                        <tr>
+                            <td class="text-center font-size-sm">{{forloop.counter}}</td>
+                            <td class="font-w600 font-size-sm">{{ i.fk_twelveth_or_diploma.twelveth_or_diploma }}</td>
+                            <td class="font-w600 font-size-sm">{{ i.stream_or_field_name }}</td>
+{#                            {% for u in  user_operation_obj %}#}
+{#                                {% if u.fk_screen.screen_url == "StreamOrFields" %}#}
+{#                                    {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                                        <td class="text-center">
+                                            <div class="btn-group">
+{#                                                {% if u.edit_data == "Y" %}#}
+                                                    <button type="button" class="btn btn-sm btn-outline-primary js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Edit Client" onclick="edit_streamorfields({{i.id}})">
+                                                        <i class="fa fa-fw fa-pencil-alt"></i>
+                                                    </button>
+{#                                                {% endif %}#}
+{#                                                {% if u.delete_data == "Y" %}#}
+                                                    <button type="button" class="btn btn-sm btn-outline-danger js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Remove Client" onclick="delete_streamorfields({{i.id}})">
+                                                        <i class="fa fa-fw fa-times"></i>
+                                                    </button>
+{#                                                {% endif %}#}
+                                            </div>
+                                        </td>
+{#                                    {% endif %}#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+		$('#MastersMainNavPage').addClass('open');
+		$('#StreamOrFieldsNavPage').addClass('active');
+        $('#mydatatable').DataTable();
+        $("#AssignmentModal").on("hidden.bs.modal", function () {
+            location.reload();
+        });
+    });
+    function delete_streamorfields(id){
+    console.log(id)
+    swal({
+        title: "Are you sure?",
+        text: "To delete this Stream/Fields!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,})
+        .then((willDelete) => {
+        if(willDelete) {
+            $.ajax({
+                url: "/delete-stream-or-field/",
+                method: "POST",
+                data: {
+                    "id": id
+                },
+                success: function (response) {
+                    if (response == "success") {
+                        swal("The Stream/Fields has been successfully Deleted!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+            })
+        }
+        else {
+            swal("Stream/Fields is NOT deleted!");
+        }
+    });
+    }
+    function ShowAddSubject_Div(){
+        $("#ShowAddSubject_Div").show();
+        $("#ShowAllSubject_Div").hide();
+        $("#ShowAddSubject_Button").hide();
+        $("#ShowAllSubject_Button").show();
+        $("#addsubject_button").show();
+        $("#updatesubject_button").hide();
+    }
+    function ShowAllSubject_Div(){
+        $("#ShowAddSubject_Div").hide();
+        $("#ShowAllSubject_Div").show();
+        $("#ShowAddSubject_Button").show();
+        $("#ShowAllSubject_Button").hide();
+        $("#ShowUpdateSubject_Div").hide();
+        $("#addsubject_button").hide();
+        $("#updatesubject_button").hide();
+    }
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+    function edit_streamorfields(id){
+        $("#ShowUpdateSubject_Div").show();
+        $("#ShowAllSubject_Div").hide();
+        $("#ShowAddSubject_Button").hide();
+        $("#ShowAllSubject_Button").show();
+        $("#addsubject_button").hide();
+        $("#updatesubject_button").show();
+        $.ajax({
+             url: "/edit-stream-or-field/",
+             method: "POST",
+             data: {
+                 "id": id
+             },
+             success: function (response) {
+                 console.log(response)
+                 $("#streamorfieldsid").val(response['list'][0]['id'])
+                 $("#edittwelvethordiploma").val(response['list'][0]['fk_twelveth_or_diploma'])
+                 $("#editstream_or_field_name").val(response['list'][0]['stream_or_field_name'])
+             }
+         })
+    }
+    $("#twelvethordiploma").change(function () {
+        $("#err_twelvethordiploma").hide();
+    });$("#stream_or_field_name").change(function () {
+        $("#err_stream_or_field_name").hide();
+    });
+    function addstreamorfields(){
+        var twelvethordiploma = $("#twelvethordiploma").val();
+        var stream_or_field_name = $("#stream_or_field_name").val();
+        if(twelvethordiploma == ""){
+            $("#err_twelvethordiploma").show();
+        }else if(stream_or_field_name == ""){
+            $("#err_stream_or_field_name").show();
+        }else{
+            $.ajax({
+            url: "/add-stream-or-field/",
+            method: "POST",
+            data: {
+                "twelveth_or_diploma":twelvethordiploma,
+                "stream_or_field_name":stream_or_field_name,
+            },
+            success: function(response){
+                console.log(response)
+                if (response == "success") {
+                    swal("The Stream/Field has been Added successfully!", {
+                        icon: "success",
+                        button: "Ok",
+                        closeOnClickOutside: false,
+                    }).then(function () {
+                        location.reload();
+                    });
+                }
+            }
+            })
+        }
+    }
+    $("#edittwelvethordiploma").change(function () {
+        $("#err_edittwelvethordiploma").hide();
+    });$("#editstream_or_field_name").change(function () {
+        $("#err_editstream_or_field_name").hide();
+    })
+    function updatestreamorfields(){
+        var streamorfieldsid = $("#streamorfieldsid").val();
+        var edittwelvethordiploma = $("#edittwelvethordiploma").val();
+        var editstream_or_field_name = $("#editstream_or_field_name").val();
+        if(edittwelvethordiploma == ""){
+            $("#err_edittwelvethordiploma").show();
+        }else if(editstream_or_field_name == ""){
+            $("#err_editstream_or_field_name").show();
+        }else{
+            $.ajax({
+            url: "/update-stream-or-field/",
+            method: "POST",
+            data: {
+                "edit_twelveth_or_diploma":edittwelvethordiploma,
+                "edit_stream_or_field_name":editstream_or_field_name,
+                "stream_or_field_id":streamorfieldsid,
+            },
+            success: function(response){
+                console.log(response)
+                if (response == "success") {
+                    swal("The Stream/Field has been Added successfully!", {
+                        icon: "success",
+                        button: "Ok",
+                        closeOnClickOutside: false,
+                    }).then(function () {
+                        location.reload();
+                    });
+                }
+            }
+            })
+        }
+    }
+</script>
+{#{% endif %}#}
+{#{% endif %}#}
+{#{% endfor %}#}
+{% endblock content %}

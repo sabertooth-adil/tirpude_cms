@@ -1,0 +1,392 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+{#{% for u in  user_operation_obj %}#}
+{#{% if u.fk_screen.screen_url == "Subject" %}#}
+{#{% if u.view_data == "Y" %}#}
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">Subject</h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+{#                {% for u in  user_operation_obj %}#}
+{#                    {% if u.fk_screen.screen_url == "Subject" %}#}
+{#                        {% if u.save_data == "Y" %}#}
+                            <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAddSubject_Div()" id="ShowAddSubject_Button">Add Subject</button>
+{#                        {% endif %}#}
+{#                    {% endif %}#}
+{#                {% endfor %}#}
+                <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAllSubject_Div()" id="ShowAllSubject_Button" style="display: none;">All Subject</button>
+                  <button class="btn btn-success btn-sm" onclick="addsubject()" id="addsubject_button" style="display:none;">Save</button>
+                <button class="btn btn-success btn-sm" onclick="updatesubject()" id="updatesubject_button" style="display:none;">Update</button>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <div class="block">
+        <div class="block-content block-content-full">
+            <!-- DataTables init on table by adding .js-dataTable-simple class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _es6/pages/be_tables_datatables.js -->
+            <div id="ShowAddSubject_Div" style="display: none;">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group clearfix">
+                            <label class="form-control-label text-right">Course<span
+                                    class="text-danger">*</span>:</label>
+                            <select name="course"
+                                    class="form-control form-control-sm form-control-alternative"
+                                    id="course" required>
+                                <option value="" selected hidden>Select Course</option>
+                                {% for i in course_obj %}
+                                <option value="{{i.id}}">{{i.course}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_course">Please Enter Course</span>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="form-control-label text-right">Semester<span
+                                    class="text-danger">*</span>:</label>
+                            <select name="semester"
+                                    class="form-control form-control-sm form-control-alternative"
+                                    id="semester" required>
+                                <option value="" selected hidden>Select Semesters
+                                </option>
+                                {% for i in semester_obj %}
+                                <option value="{{i.id}}">{{i.semester}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_semester">Please Enter Semester</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Subject<span
+                                    class="text-danger">*</span>:</label>
+                            <input type="text"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="subject" maxlength="95" name="subject" required>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_subject">Please Enter Subject</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Compulsory
+                                Attendance(%)<span class="text-danger">*</span>:</label>
+                            <input type="text"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="compulsory_attendance" name="compulsory_attendance"
+                                   maxlength="2" pattern="\d*"
+                                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                   required>
+                            <span style="display:none;color:red;font-size: 12px;"
+                                  id="err_compulsoryattendance">Please Enter Compulsory Attendance</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                    </div>
+                </div>
+            </div>
+            <div id="ShowUpdateSubject_Div" style="display: none;">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <input type="hidden" id="subjectid" name="subjectid">
+                        <div class="form-group clearfix">
+                            <label class="form-control-label text-right">Course<span
+                                    class="text-danger">*</span>:</label>
+                            <select name="editcourse"
+                                    class="form-control form-control-sm form-control-alternative"
+                                    id="editcourse" required>
+                                <option value="" selected hidden>Select Course</option>
+                                {% for i in course_obj %}
+                                <option value="{{i.id}}">{{i.course}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;"
+                                  id="err_editcourse">Please Enter Course</span>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="form-control-label text-right">Semester<span
+                                    class="text-danger">*</span>:</label>
+                            <select name="editsemester"
+                                    class="form-control form-control-sm form-control-alternative"
+                                    id="editsemester" required>
+                                <option value="" selected hidden>Select Semesters
+                                </option>
+                                {% for i in semester_obj %}
+                                <option value="{{i.id}}">{{i.semester}}</option>
+                                {% endfor %}
+                            </select>
+                            <span style="display:none;color:red;font-size: 12px;"
+                                  id="err_editsemester">Please Enter Semester</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Subject<span
+                                    class="text-danger">*</span>:</label>
+                            <input type="text"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="editsubject" name="editsubject" maxlength="95" required>
+                            <span style="display:none;color:red;font-size: 12px;"
+                                  id="err_editsubject">Please Enter Subject</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Compulsory
+                                Attendance(%)<span class="text-danger">*</span>:</label>
+                            <input type="text"
+                                   class="form-control form-control-sm form-control-alternative"
+                                   id="editcompulsoryattendance" name="editcompulsoryattendance"
+                                   maxlength="2" pattern="\d*"
+                                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                   required>
+                            <span style="display:none;color:red;font-size: 12px;"
+                                  id="err_editcompulsoryattendance">Please Enter Compulsory Attendance</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive" id="ShowAllSubject_Div">
+                <table class="table table-vcenter" id="mydatatable">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="text-center" style="width: 10% !important;">Sr No.</th>
+                            <th>Course</th>
+                            <th>Semester</th>
+                            <th>Subjects</th>
+                            <th style="width:15%">Compulsory Attendance</th>
+{#                            {% for u in  user_operation_obj %}#}
+{#                                {% if u.fk_screen.screen_url == "Subject" %}#}
+{#                                    {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                                        <th class="text-center" style="width: 10% !important;">Actions</th>
+{#                                    {% endif %}#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in subject_obj %}
+                        <tr>
+                            <td class="text-center font-size-sm">{{ forloop.counter }}</td>
+                            <td class="font-w600 font-size-sm">{{ i.fk_course.course }}</td>
+                            <td class="font-w600 font-size-sm">Semester {{ i.fk_semesters.semester }}</td>
+                            <td class="font-w600 font-size-sm">{{ i.subjects }}</td>
+                            <td class="font-w600 font-size-sm">{{ i.compulsory_attendance }}</td>
+{#                            {% for u in  user_operation_obj %}#}
+{#                                {% if u.fk_screen.screen_url == "Subject" %}#}
+{#                                    {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                                        <td class="text-center">
+                                            <div class="btn-group">
+{#                                                {% if u.edit_data == "Y" %}#}
+                                                    <button type="button" class="btn btn-sm btn-outline-primary  js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Edit Client" onclick="edit_subject({{i.id}})">
+                                                        <i class="fa fa-fw fa-pencil-alt"></i>
+                                                    </button>
+{#                                                {% endif %}#}
+{#                                                {% if u.delete_data == "Y" %}#}
+                                                    <button type="button" class="btn btn-sm btn-outline-danger  js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Remove Client" onclick="delete_subject({{i.id}})">
+                                                        <i class="fa fa-fw fa-times"></i>
+                                                    </button>
+{#                                                {% endif %}#}
+                                            </div>
+                                        </td>
+{#                                    {% endif %}#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+	$(document).ready(function () {
+	  $('#MastersMainNavPage').addClass('open');
+	  $('#SubjectNavPage').addClass('active');
+	  $('#mydatatable').DataTable();
+        $("#AssignmentModal").on("hidden.bs.modal", function () {
+            location.reload();
+        });
+	});
+    function delete_subject(id){
+    console.log(id)
+    swal({
+        title: "Are you sure?",
+        text: "To delete this Subject!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,})
+        .then((willDelete) => {
+        if(willDelete) {
+            $.ajax({
+                url: "/delete-subject/",
+                method: "POST",
+                data: {
+                    "id": id
+                },
+                success: function (response) {
+                    if (response == "success") {
+                        swal("The Subject has been successfully Deleted!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+            })
+        }
+        else {
+            swal("Subject is NOT deleted!");
+        }
+    });
+    }
+    function ShowAddSubject_Div(){
+        $("#ShowAddSubject_Div").show();
+        $("#ShowAllSubject_Div").hide();
+        $("#ShowAddSubject_Button").hide();
+        $("#ShowAllSubject_Button").show();
+        $("#addsubject_button").show();
+        $("#updatesubject_button").hide();
+    }
+
+    function ShowAllSubject_Div(){
+        $("#ShowAddSubject_Div").hide();
+        $("#ShowAllSubject_Div").show();
+        $("#ShowAddSubject_Button").show();
+        $("#ShowAllSubject_Button").hide();
+        $("#ShowUpdateSubject_Div").hide();
+        $("#addsubject_button").hide();
+        $("#updatesubject_button").hide();
+    }
+
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+
+    function edit_subject(id){
+        $("#ShowUpdateSubject_Div").show();
+        $("#ShowAllSubject_Div").hide();
+        $("#ShowAddSubject_Button").hide();
+        $("#ShowAllSubject_Button").show();
+        $("#addsubject_button").hide();
+        $("#updatesubject_button").show();
+        $.ajax({
+             url: "/edit-subject/",
+             method: "POST",
+             data: {
+                 "id": id
+             },
+             success: function (response) {
+                 console.log(response)
+                 $("#subjectid").val(response['list'][0]['id'])
+                 $("#editcourse").val(response['list'][0]['fk_course'])
+                 $("#editsemester").val(response['list'][0]['fk_semester'])
+                 $("#editsubject").val(response['list'][0]['subject'])
+                 $("#editcompulsoryattendance").val(response['list'][0]['compulsory_attendance'])
+             }
+         })
+    }
+    $("#course").change(function () {
+        $("#err_course").hide();
+    });$("#semester").change(function () {
+        $("#err_semester").hide();
+    });$("#subject").keyup(function () {
+        $("#err_subject").hide();
+    });$("#compulsory_attendance").keyup(function () {
+        $("#err_compulsoryattendance").hide();
+    });
+    function addsubject(){
+        var course = $("#course").val();
+        var semester = $("#semester").val();
+        var subject = $("#subject").val();
+        var compulsory_attendance = $("#compulsory_attendance").val();
+        if(course == ""){
+            $("#err_course").show();
+        }else if(semester == ""){
+            $("#err_semester").show();
+        }else if(subject == ""){
+            $("#err_subject").show();
+        }else if(compulsory_attendance == ""){
+            $("#err_compulsoryattendance").show();
+        }else{
+            $.ajax({
+            url: "/add-subject/",
+            method: "POST",
+            data: {
+                "course":course,
+                "semester":semester,
+                "subject":subject,
+                "compulsory_attendance":compulsory_attendance
+            },
+            success: function(response){
+                console.log(response)
+                if (response == "success") {
+                    swal("The Subject has been Added successfully!", {
+                        icon: "success",
+                        button: "Ok",
+                        closeOnClickOutside: false,
+                    }).then(function () {
+                        location.reload();
+                    });
+                }
+            }
+            })
+        }
+    }
+    $("#editcourse").change(function () {
+        $("#err_editcourse").hide();
+    });$("#editsemester").change(function () {
+        $("#err_editsemester").hide();
+    });$("#editsubject").keyup(function () {
+        $("#err_editsubject").hide();
+    });$("#editcompulsoryattendance").keyup(function () {
+        $("#err_editcompulsoryattendance").hide();
+    });
+    function updatesubject(){
+        var subjectid = $("#subjectid").val();
+        var editcourse = $("#editcourse").val();
+        var editsemester = $("#editsemester").val();
+        var editsubject = $("#editsubject").val();
+        var editcompulsoryattendance = $("#editcompulsoryattendance").val();
+        if(editcourse == ""){
+            $("#err_editcourse").show();
+        }else if(editsemester == ""){
+            $("#err_editsemester").show();
+        }else if(editsubject == ""){
+            $("#err_editsubject").show();
+        }else if(editcompulsoryattendance == ""){
+            $("#err_editcompulsoryattendance").show();
+        }else{
+            $.ajax({
+            url: "/update-subject/",
+            method: "POST",
+            data: {
+                "subject_id":subjectid,
+                "edit_course":editcourse,
+                "edit_semester":editsemester,
+                "edit_subject":editsubject,
+                "edit_compulsory_attendance":editcompulsoryattendance
+            },
+            success: function(response){
+                console.log(response)
+                if (response == "success") {
+                    swal("The Subject has been Updated successfully!", {
+                        icon: "success",
+                        button: "Ok",
+                        closeOnClickOutside: false,
+                    }).then(function () {
+                        location.reload();
+                    });
+                }
+            }
+            })
+        }
+    }
+</script>
+{#{% endif %}#}
+{#{% endif %}#}
+{#{% endfor %}#}
+{% endblock content %}

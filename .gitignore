@@ -116,7 +116,7 @@ celerybeat-schedule
 .mypy_cache/
 .dmypy.json
 dmypy.json
-
+error_log.txt
 # Pyre type checker
 .pyre/
 
@@ -124,3 +124,5 @@ dmypy.json
 /.idea
 /__pycache__
 .iml
+
+error_log.txt

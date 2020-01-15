@@ -1,0 +1,228 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">Selection Process Test</h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAddCourse_Div()" id="ShowAddCourse_Button">Add Test Name</button>
+                <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAllCourse_Div()" id="ShowAllCourse_Button" style="display: none;">All Test Name</button>
+                <button class="btn btn-success btn-sm" onclick="add_selection_process_test()" id="addcourse_button" style="display:none;">Save</button>
+                <button class="btn btn-success btn-sm" onclick="update_selection_process_test()" id="updatecourse_button" style="display:none;">Update</button>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <div class="block">
+        <div class="block-content block-content-full">
+            <div id="ShowAddCourse_Div" style="display: none;">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Selection Process Test Name<span class="text-danger">*</span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="selection_process_test_name" name="selection_process_test_name" required>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_selection_process_test_name">Please Enter Selection Process Test Name</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                    </div>
+                </div>
+            </div>
+            <div id="ShowUpdateCourse_Div" style="display: none;">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                        <input type="hidden" id="selection_process_test_name_id" name="selection_process_test_name_id">
+                        <div class="form-group">
+                            <label class="form-control-label text-right">Selection Process Test Name<span class="text-danger">*</span>:</label>
+                            <input type="text" class="form-control form-control-sm form-control-alternative" id="editselection_process_test_name" name="editselection_process_test_name" required>
+                            <span style="display:none;color:red;font-size: 12px;" id="err_editselection_process_test_name">Please Enter Selection Process Test Name</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-4">
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive" id="ShowAllCourse_Div">
+                <table class="table table-vcenter" id="mydatatable">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="text-center" style="width: 10% !important;">Sr No.</th>
+                            <th>Test Name</th>
+                            <th class="text-center" style="width: 10% !important;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in selection_process_test_obj %}
+                        <tr>
+                            <td class="text-center font-size-sm">{{forloop.counter}}</td>
+                            <td class="font-w600 font-size-sm">{{ i.test_name }}</td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-outline-primary js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Edit Client" onclick="edit_selection_process_test({{i.id}})">
+                                        <i class="fa fa-fw fa-pencil-alt"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Remove Client" onclick="delete_selection_process_test({{i.id}})">
+                                        <i class="fa fa-fw fa-times"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function (){
+		$('#MastersMainNavPage').addClass('open');
+		$('#SelectionProcessTestsNavPage').addClass('active');
+        $('#mydatatable').DataTable();
+        $("#AssignmentModal").on("hidden.bs.modal", function () {
+            location.reload();
+        });
+    });
+    function delete_selection_process_test(id){
+    console.log(id)
+    swal({
+        title: "Are you sure?",
+        text: "To delete this Test Name!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,})
+        .then((willDelete) => {
+        if(willDelete) {
+            $.ajax({
+                url: "/delete-selection-process-test/",
+                method: "POST",
+                data: {
+                    "id": id
+                },
+                success: function (response) {
+                    if (response == "success") {
+                        swal("The Test Name has been successfully Deleted!", {
+                            icon: "success",
+                            button: "Ok",
+                            closeOnClickOutside: false,
+                        }).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+            })
+        }
+        else {
+            swal("Test Name is NOT deleted!");
+        }
+    });
+    }
+    function ShowAddCourse_Div(){
+        $("#ShowAddCourse_Div").show();
+        $("#ShowAllCourse_Div").hide();
+        $("#ShowAddCourse_Button").hide();
+        $("#ShowAllCourse_Button").show();
+        $("#addcourse_button").show();
+        $("#updatecourse_button").hide();
+    }
+    function ShowAllCourse_Div(){
+        $("#ShowAddCourse_Div").hide();
+        $("#ShowAllCourse_Div").show();
+        $("#ShowAddCourse_Button").show();
+        $("#ShowAllCourse_Button").hide();
+        $("#ShowUpdateCourse_Div").hide();
+        $("#addcourse_button").hide();
+        $("#updatecourse_button").hide();
+    }
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+    function edit_selection_process_test(id){
+        $("#ShowUpdateCourse_Div").show();
+        $("#ShowAllCourse_Div").hide();
+        $("#ShowAddCourse_Button").hide();
+        $("#ShowAllCourse_Button").show();
+        $("#addcourse_button").hide();
+        $("#updatecourse_button").show();
+        $.ajax({
+             url: "/edit-selection-process-test/",
+             method: "POST",
+             data: {
+                 "id": id
+             },
+             success: function (response) {
+                 console.log(response)
+                 $("#selection_process_test_name_id").val(response['list'][0]['id'])
+                 $("#editselection_process_test_name").val(response['list'][0]['test_name'])
+             }
+         })
+    }
+    $("#selection_process_test_name").keyup(function () {
+        $("#err_selection_process_test_name").hide();
+    });
+    function add_selection_process_test(){
+        var selection_process_test_name = $("#selection_process_test_name").val();
+        if(selection_process_test_name == ""){
+            $("#err_selection_process_test_name").show();
+        }else{
+            $.ajax({
+            url: "/add-selection-process-test/",
+            method: "POST",
+            data: {
+                "selection_process_test_name":selection_process_test_name
+            },
+            success: function(response){
+                console.log(response)
+                if (response == "success") {
+                    swal("The Test Name has been Added successfully!", {
+                        icon: "success",
+                        button: "Ok",
+                        closeOnClickOutside: false,
+                    }).then(function () {
+                        location.reload();
+                    });
+                }
+            }
+            })
+        }
+    }
+    $("#editselection_process_test_name").keyup(function () {
+        $("#err_editselection_process_test_name").hide();
+    });
+    function update_selection_process_test(){
+        var selection_process_test_name_id = $("#selection_process_test_name_id").val();
+        var editselection_process_test_name = $("#editselection_process_test_name").val();
+        if(editselection_process_test_name == ""){
+            $("#err_editselection_process_test_name").show();
+        }else{
+            $.ajax({
+            url: "/update-selection-process-test/",
+            method: "POST",
+            data: {
+                "selection_process_test_name_id":selection_process_test_name_id,
+                "edit_selection_process_test_name":editselection_process_test_name,
+            },
+            success: function(response){
+                console.log(response)
+                if (response == "success") {
+                    swal("The Test Name has been Updated successfully!", {
+                        icon: "success",
+                        button: "Ok",
+                        closeOnClickOutside: false,
+                    }).then(function () {
+                        location.reload();
+                    });
+                }
+            }
+            })
+        }
+    }
+</script>
+{% endblock content %}

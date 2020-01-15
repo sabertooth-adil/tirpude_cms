@@ -1,0 +1,138 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+<input type="hidden" id="modal_appledcompanyappearance_id" name="modal_appledcompanyappearance_id" value="{{appled_company_appearance_id}}">
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">Test Result</h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                <a href="{% url 'view-company-appearances-detail' id=company_appearance_obj.id %}"><button class="btn btn-primary btn-sm submit-btn">Back</button></a>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="content" style="padding: 10px !important;">
+    <div class="block">
+        <div class="block-content block-content-full">
+            <div class="block-content block-content-full" style="padding-bottom: 0px !important;">
+                <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+                    <div class="row flex-sm-fill h3 my-2">
+                        <div class="col-lg-4 col-md-4 col-xs-4" style="padding-right: 0px;padding-left: 0px;">
+                            <div class="form-group tab-responsive">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">Test Name </div>
+                                <div class="font-w400 text-dark">
+                                    <select class="form-control form-control-sm" id="test_name" onchange="ChangeFilterdata()">
+                                        <option value="" selected hidden>Select Test Name</option>
+                                        {% for i in company_appearance_obj.fk_company_appearance_date_time_list.all %}
+                                            <option value="{{i.fk_selection_process_test.id}}">{{i.fk_selection_process_test.test_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_test_name">Please Select Test Name</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-xs-1" style="padding-right: 0px;padding-left: 0px;">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted"></div>
+                                <div class="font-w400 text-dark">
+                                   <buttton class="btn btn-warning nu-orange-button submit-btn btn-block btn-sm" onclick="FilterTestResult()" style="margin: 10px;">
+                                       <i class="fa fa-filter" aria-hidden="true"></i> Filter
+                                   </buttton>
+                                </div>
+                           </div>
+                        </div>
+                    </div>
+                    <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                        <button class="btn btn-primary btn-sm submit-btn" style="display: none;" id="SaveAllStudentTestResult_Button" onclick="SaveAllStudentTestResult()">Save All</button>
+                    </nav>
+                </div>
+            </div>
+            <div class="block-content block-content-full" id="TestResultbysubject_Div">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function ChangeFilterdata() {
+        $("#TestResultbysubject_Div").hide();
+        $("#SaveAllStudentTestResult_Button").hide();
+    }
+    function FilterTestResult() {
+        var test_name = $("#test_name").val();
+        if(test_name == ""){
+            $("#err_test_name").show();
+        }else{
+            $.ajax({
+                url : "/filter-test-result-by-subject/",
+                method : "POST",
+                data : {
+                    "test_name" : test_name,
+                    "company_appearance_id" : {{company_appearance_obj.id}},
+                },
+                success: function (response) {
+                    console.log(response)
+                    $("#TestResultbysubject_Div").show();
+                    $("#TestResultbysubject_Div").html("");
+                    $("#TestResultbysubject_Div").append(response);
+                    $("#SaveAllStudentTestResult_Button").show();
+                }
+            });
+        }
+    }
+    function SaveTestResult(company_appearance_id,user_id) {
+        var test_result = $("#test_result_"+company_appearance_id).val();
+        var test_name = $("#test_name").val();
+        $.ajax({
+            url : "/save-test-result-by-subject/",
+            method : "POST",
+            data : {
+                "test_name" : test_name,
+                "test_result" : test_result,
+                "user_id" : user_id,
+                "company_appearance_id" : company_appearance_id,
+            },
+            success: function (response) {
+                console.log(response)
+                swal("Placement Result Save successfully!", {
+                    icon: "success",
+                    button: "Ok",
+                    closeOnClickOutside: false,
+                }).then(function () {
+                });
+            }
+        });
+    }
+    
+    function SaveAllStudentTestResult() {
+        var test_name = $("#test_name").val();
+        dict = []
+        {% for i in apple_company_appearance_obj %}
+            dict.push({
+                "appled_company_appearance_id" : $("#appledcompanyappearance_id_{{i.id}}").val(),
+                "user_id" : $("#user_id_{{i.id}}").val(),
+                "test_result" : $("#test_result_{{i.id}}").val(),
+            });
+        {% endfor %}
+        console.log(dict)
+        $.ajax({
+            url : "/save-all-student-test-result-by-subject/",
+            method : "POST",
+            data : {
+                "dict":JSON.stringify(dict),
+                "test_name":test_name,
+            },
+            success: function (response) {
+                console.log(response)
+                swal("Placement Result Save successfully!", {
+                    icon: "success",
+                    button: "Ok",
+                    closeOnClickOutside: false,
+                }).then(function () {
+                });
+            }
+        });
+    }
+    
+</script>
+{% endblock content %}

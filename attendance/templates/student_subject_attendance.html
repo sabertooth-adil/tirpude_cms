@@ -1,0 +1,36 @@
+<div class="block block-mode-loading-oneui">
+    <div class="block-header border-bottom">
+        <h3 class="block-title">{{subjects_obj.subjects}}</h3>
+    </div>
+    <div class="block-content block-content-full">
+        <table class="table table-striped table-hover table-borderless table-vcenter font-size-sm mb-0" id="mydatatable_child">
+            <thead class="thead-light">
+            <tr class="text-uppercase">
+                <th class="text-center" style="width: 33% !important;">Sr No.</th>
+                <th class="text-center" scope="col" style="width: 33% !important;">Date</th>
+                <th class="text-center" scope="col" style="width: 33% !important;">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in student_attendance_obj %}
+            <tr>
+                <td class="text-center">{{forloop.counter}}</td>
+                <td class="text-center">{{i.date}}</td>
+                <td class="text-center">
+                    {% if i.attendance_status == "P" %}
+                    <span style="color:green">Present</span>
+                    {% else %}
+                    <span style="color:red">Absent</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+$(document).ready( function () {
+    $('#mydatatable_child').DataTable();
+});
+</script>

@@ -14,12 +14,12 @@ from master_forms.models import City, District, SubCast, StreamOrField, DegreeSt
     Reserved, ApplyingConcession, PhysicallyChallenged, Degree, TwelvethOrDiploma, UserOperation, Subject, Cast
 
 
-def handler404(request, exception):
-    return render(request, "404.html")
-
-
-def handler400(request, exception):
-    return render(request, "400.html")
+# def handler404(request, exception):
+#     return render(request, "404.html")
+#
+#
+# def handler400(request, exception):
+#     return render(request, "400.html")
 
 
 def error_handler_500(request):
@@ -79,6 +79,7 @@ def get_sub_cast_list(request):
         cast = request.POST.get("cast")
         sub_cast_list = list(SubCast.objects.filter(fk_cast_id=cast).values_list("id", "sub_cast"))
         return JsonResponse({"sub_cast_list": sub_cast_list})
+
     except:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
@@ -300,7 +301,7 @@ def profile_user(request):
                                "sub_cast_obj": sub_cast_obj, "physically_challenged_obj": physically_challenged_obj,
                                "degree_obj": degree_obj, "degree_stream_or_field_obj": degree_stream_or_field_obj})
             else:
-                user_operations_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
+                user_operation_obj = UserOperation.objects.filter(fk_user_role_id=user_info_obj.fk_user_role.id)
                 subjects_obj = Subject.objects.all()
                 return render(request, "faculty_profile.html",
                               {"user_info_obj": user_info_obj, "subject_obj": subjects_obj, "state_obj": state_obj,
@@ -308,7 +309,7 @@ def profile_user(request):
                                "religion_obj": religion_obj, "blood_group_obj": blood_group_obj,
                                "nationality_obj": nationality_obj, "district_obj": district_obj, "tehsil_obj":
                                    tehsil_obj,
-                               "address_detail_obj": address_detail_obj, "user_operations_obj": user_operations_obj})
+                               "address_detail_obj": address_detail_obj, "user_operation_obj": user_operation_obj})
         else:
             return redirect("/")
     except Exception as e:

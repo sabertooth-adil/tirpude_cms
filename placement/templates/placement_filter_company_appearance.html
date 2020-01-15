@@ -1,0 +1,84 @@
+<div class="table-responsive">
+    <table class="table table-vcenter" id="mydatatable">
+        <thead class="thead-light">
+            <tr>
+                <th>Company Name</th>
+                <th>Company Type</th>
+                <th>Company Location</th>
+                <th>Job Title</th>
+                <th style="width: 8% !important;">Date</th>
+                <th>Excel</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in company_obj %}
+            <tr>
+                <td class="font-w600 font-size-sm">{{ i.company_name }}</td>
+                <td class="font-w600 font-size-sm">{{ i.fk_company_type.company_type }}</td>
+                <td class="font-w600 font-size-sm">{{ i.company_location }}</td>
+                <td>
+                {% for j in company_appearance_obj %}
+                    {% if i.id == j.fk_company.id %}
+                            <table class="table table-vcenter table-borderless" style="background-color: #ffffff;margin-bottom: 0.5rem;">
+                                <tr>
+                                    <td>
+                                        {% if j.fk_company_appearance_job_type_detail_list.all %}
+                                            {% for k in j.fk_company_appearance_job_type_detail_list.all %}
+                                                {% for l in k.fk_job_type.all %}
+                                                    {{ l.job_type }},
+                                                {% endfor %}
+                                            {% endfor %}
+                                        {% else %}
+                                            Job Title Not Define
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </table>
+                    {% endif %}
+                {% endfor %}
+                </td>
+                <td>
+                {% for j in company_appearance_obj %}
+                    {% for k in list_data %}
+                        {% if j.id == k.company_appearance_id and i.id == j.fk_company.id%}
+                            <table class="table table-vcenter table-borderless" style="background-color: #ffffff;margin-bottom: 0.5rem;">
+                                    <tr>
+                                        <td>
+                                            {{k.min_date|date:'d-m-Y'}} to {{k.max_date|date:'d-m-Y'}}
+                                        </td>
+                                    </tr>
+                            </table>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                </td>
+                <td>
+                    {% for j in company_appearance_obj %}
+                    {% if i.id == j.fk_company.id %}
+                            <table class="table table-vcenter table-borderless" style="background-color: #ffffff;margin-bottom: 0.5rem;">
+                                <tr>
+                                    <td>
+                                       <button type="button" class="btn btn-sm btn-outline-primary js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Edit Client" onclick="download_excel_file({{j.id}})">Excel</button>
+                                    </td>
+                                </tr>
+                            </table>
+                    {% endif %}
+                {% endfor %}
+                </td>
+                <td>
+                    <a href="{% url 'edit-company-appearances' id=i.id %}"><button type="button" class="btn btn-sm btn-outline-danger js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Remove Client">View Detail</button></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#PlacementMainNavPage').addClass('open');
+        $('#CompanyAppearanceNavPage').addClass('active');
+        $(".datepicker").datepicker({autoclose: true});
+        $('#mydatatable').DataTable();
+    });
+</script>

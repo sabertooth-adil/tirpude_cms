@@ -1,0 +1,36 @@
+{% for i in event_registration_obj %}
+    {% if i.id in event_registration_ids_list %}
+        <tr>
+            <td scope="row" style="text-align: center">
+                {{ forloop.counter }}
+            </td>
+            <td scope="row">
+                {{ i.first_name }} {{ i.last_name }}
+            </td>
+            <td scope="row">
+                {{ i.college }}
+            </td>
+            <td scope="row">
+                {{ i.email }}
+            </td>
+            <td scope="row">
+                {{ i.contact_no }}
+            </td>
+            <td scope="row" style="padding-top: 0rem;" class="table-borderless">
+                <table>
+                    <tbody>
+                    {% for j in activity_grpmember_obj reversed %}
+                        {% if j.fk_events_registrations.id == i.id %}
+                            <tr>
+                                <td>
+                                    {{ j.grp_member_name }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    {% endif %}
+{% endfor %}

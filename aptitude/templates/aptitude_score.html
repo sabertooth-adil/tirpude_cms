@@ -1,0 +1,243 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+{#{% for u in  user_operation_obj %}#}
+{#{% if u.fk_screen.screen_url == "aptitude_score" %}#}
+{#{% if u.view_data == "Y" %}#}
+<style>
+       .nu-orange-button {
+        padding: 3px 6px 3px 6px;
+    }
+
+    .nu-orange-button:hover {
+        padding: 3px 6px 3px 6px;
+    }
+</style>
+<div class="block block-header bg-body-light" style="margin-bottom: 0.3rem;">
+    <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+        <h1 class="flex-sm-fill h3 my-2">
+            Aptitude Test Score
+        </h1>
+    </div>
+</div>
+<div class="container-fluid mt--7" id="filter_div" style="padding-bottom: 0rem; padding-top: 0.7rem;">
+   <a class="block block-rounded block-link-pop border-left border-primary border-4x" style="width: 100%;margin-bottom: 0rem;">
+       <div class="block-content block-content-full">
+           <div class="row order-xl-1">
+               <div class="form-group tab-responsive" style="width:16%; padding-right: 2rem;">
+                   <label for="course">Course</label>
+                   <select class="form-control form-control-sm" id="course">
+                       <option value="" selected hidden>Select Course</option>
+                       <option value="">All</option>
+                       {% for i in course_obj %}
+                       <option value="{{i.id}}">{{i.course}}</option>
+                       {% endfor %}
+                   </select>
+               </div>
+               <div class="form-group" style="width:16%; padding-right: 2rem;">
+                   <label for="semesters">Semesters</label>
+                   <select class="form-control form-control-sm" id="semesters">
+                       <option value="" selected hidden>Select Semesters</option>
+                       <option value="">All</option>
+                       {% for i in semesters_obj %}
+                       <option value="{{i.id}}">{{i.semester}}</option>
+                       {% endfor %}
+                   </select>
+               </div>
+               <div class="form-group" style="width:16%; padding-right: 2rem;">
+                   <label for="sections">Sections</label>
+                   <select class="form-control form-control-sm" id="sections">
+                       <option value="" selected hidden>Select Sections</option>
+                       <option value="">All</option>
+                       {% for i in section_obj %}
+                       <option value="{{i.id}}">{{i.sections}}</option>
+                       {% endfor %}
+                   </select>
+               </div>
+               <div class="form-group" style="width:15%; padding-right: 2rem;">
+                   <label for="faculty">Faculty</label>
+                   <select class="form-control form-control-sm" id="faculty">
+                       <option value="" selected hidden>Select Faculty</option>
+                       <option value="">All</option>
+                       {% for i in faculty_obj %}
+                       <option value="{{i.id}}">{{i.first_name}} {{ i.last_name }}</option>
+                       {% endfor %}
+                   </select>
+               </div>
+               <div class="form-group" style="width:15%; padding-right: 2rem;">
+                   <label for="start_date">Form</label>
+                   <input id="start_date"
+                          class="form-control form-control-sm form-control-alternative js-datepicker"
+                          data-date-format="dd/mm/yyyy" placeholder="DD/MM/YYYY" required>
+               </div>
+               <div class="form-group"  style="width:15%; padding-right: 2rem;">
+                   <label for="end_date">To</label>
+                   <input id="end_date"
+                          class="form-control form-control-sm form-control-alternative js-datepicker"
+                          data-date-format="dd/mm/yyyy" placeholder="DD/MM/YYYY" required>
+               </div>
+               <div class="form-group cols-lg-1">
+                   <label for="end_date">&nbsp;</label>
+                   <buttton class="btn btn-warning nu-orange-button submit-btn btn-block btn-sm"
+                            onclick="filterpublishtest()">
+                       <i class="fa fa-filter" aria-hidden="true"></i> Filter
+                   </buttton>
+               </div>
+           </div>
+       </div>
+   </a>
+</div>
+
+<div class="container-fluid mt--7"  style="padding-top: 0.7rem;">
+            <div class="card shadow" id="publish_test_table">
+                <div id="tabsJustifiedContent" class="tab-content">
+
+                        <div class="block block-content block-content-full">
+                            <!--                        id="PublishTestList<div class="block">"-->
+                            <div class="block-header">
+                                <h3 class="block-title border-bottom pb-2">Attempted Tests
+                                </h3>
+                            </div>
+                            <div class="table-responsive">
+                            <table class="table align-items-center dtable" >
+                                <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">
+                                    </th>
+                                    <th scope="col">
+                                        Sr. no
+                                    </th>
+                                    <th scope="col">
+                                        Test
+                                    </th>
+                                    <th scope="col">
+                                        Publish on
+                                    </th>
+                                    <th scope="col">
+                                        Duration
+                                    </th>
+                                    <th scope="col">
+                                        Detail
+                                    </th>
+                                    <th>
+                                        Total Students
+                                    </th>
+                                    <th scope="col" class="text-center">
+                                        Students Marks
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody class="list" id="PublishTestList">
+                                {% for i in AptitudeSet_obj reversed %}
+                                <tr class="btn-light">
+                                    <th scope="col">
+                                    </th>
+                                    <td scope="row">
+                                        {{ forloop.counter }}
+                                    </td>
+                                    <td scope="row" class="name"  style="text-overflow: ellipsis;width: 300px;overflow: hidden; white-space: nowrap;">
+                                        {{ i.test_name }}
+                                    </td>
+                                    <td class="status">
+                                        {{ i.schedule}}
+                                    </td>
+                                    <td>
+                                        <div>
+                                            {{ i.test_duration }}
+                                        </div>
+                                    </td>
+                                    <td>{% if not i.fk_course and not i.fk_semesters and not i.fk_sections %}
+                                        All
+                                        {% else %}
+                                        {% if i.fk_course %}
+                                        Course : {{ i.fk_course.course }} <br>
+                                        {% endif %}
+                                        {% if i.fk_semesters %}
+                                        Sem : {{ i.fk_semesters.semester }} <br>
+                                        {% endif %}
+                                        {% if i.fk_sections %}
+                                        Section : {{ i.fk_sections.sections }}
+                                        {% endif %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center" style="width: 10%;">
+                                        {% for j in my_list %}
+                                        {% if j.id == i.id %}
+                                        {{ j.total }}
+                                        {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    </td>
+                                    <td class="completion text-center">
+                                        <div class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target=""
+                                             onclick="viewtestscore({{i.id}})">View
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card shadow" id="student_score_table">
+            </div>
+            <iv class="card shadow" id="student_answer_table">
+        </div>
+    <script>
+function viewtestscore(id) {
+        id = id
+        console.log(id)
+        $.ajax({
+            url : "/student-score-list/",
+            method : "POST",
+            data : {
+                "test_id":id,
+                },
+                success : function(response){
+                $("#student_score_table").show()
+                $("#student_score_table").html("")
+                $("#student_score_table").append(response)
+                $("#publish_test_table").hide()
+                $("#filter_div").hide()
+                }
+        })
+    }
+
+function filterpublishtest() {
+        course = $("#course").val()
+        section = $("#sections").val()
+        semester = $("#semesters").val()
+        faculty = $("#faculty").val()
+        start_date = $("#start_date").val()
+        end_date = $("#end_date").val()
+        $.ajax({
+            url : "/filter-publish-list/",
+            method : "POST",
+            data : {
+                "course":course,
+                "section":section,
+                "sem":semester,
+                "faculty":faculty,
+                "start_date":start_date,
+                "end_date":end_date,
+                },
+                success : function(response){
+                $("#PublishTestList").html("")
+                $("#PublishTestList").append(response)
+                }
+        })
+    }
+
+$(document).ready(function(){
+    $('.dtable').DataTable();
+    $('#AptitudeMainNavPage').addClass('open');
+    $('#AptitudeScoreNavPage').addClass('active');
+});
+    </script>
+{#{% endif %}#}
+{#{% endif %}#}
+{#{% endfor %}#}
+{% endblock content %}

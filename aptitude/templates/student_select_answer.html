@@ -1,0 +1,119 @@
+<div class="block content">
+<div class="card-header">
+    <div class="row">
+    <div class="col-lg-11">
+        <h3 class="mb-0">Student Answer</h3>
+    </div>
+    <div class="col-lg-1">
+        <div id="close_answer_table" class="btn btn-primary submit-btn">
+              <i class="fa fa-arrow-left"></i>
+                Back
+        </div>
+    </div>
+    </div>
+</div>
+<div class="table-responsive" id="Test_Table" style="overflow: scroll;height: 600px;">
+    <div>
+        {% for j in student_apt_answer_obj %}
+        <table class="table align-items-center">
+            <thead class="thead-light">
+            <table class="table align-items-center">
+                <tbody class="thead-light">
+                <tr>
+                    <td scope="col" width="5%">
+                        <b>Q no.{{forloop.counter}}</b>
+                    </td>
+                    <td scope="col" width="89%" class="padding_class">
+                        <span style="white-space: initial">{{ j.fk_aptitude_question.questions }}</span>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+            <table class="table align-items-center answer_table table-borderless">
+                <tbody class="thead-light">
+                <tr>
+                <td width="93%" style="padding-right: 0;">
+                <table>
+                <tr>hjghj
+                    <td scope="col" width="2%">
+                        <b>A :</b>
+                    </td>
+                    <td scope="col" width="45%" class="padding_class" {% if j.fk_aptitude_question.answer == "A" %} style="background-color: #cbf5cd; !important" {% endif %}>
+                        <span style="white-space: initial">{{ j.fk_aptitude_question.option_a }}</span>
+                    </td>
+                    <td>
+                        <input type="radio" value="A" name="optradio{{j.id}}" {% if j.answer == "A" %} checked {% endif %} disabled>
+                    </td>
+                    <td scope="col" width="2%">
+                        <b>B :</b>
+                    </td>
+                    <td scope="col" width="45%" class="padding_class" {% if j.fk_aptitude_question.answer == "B" %} style="background-color: #cbf5cd; !important" {% endif %}>
+                        <span style="white-space: initial">{{ j.fk_aptitude_question.option_b }}</span>
+                    </td>
+                    <td>
+                        <input type="radio" value="B" name="optradio{{j.id}}" {% if j.answer == "B" %} checked {% endif %} disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <td scope="col" width="2%">
+                        <b>C :</b>
+                    </td>
+                    <td scope="col" width="45%" class="padding_class" {% if j.fk_aptitude_question.answer == "C" %} style="background-color: #cbf5cd; !important" {% endif %}>
+                        <span style="white-space: initial">{{ j.fk_aptitude_question.option_c }}</span>
+                    </td>
+                    <td>
+                        <input type="radio" value="C" name="optradio{{j.id}}" {% if j.answer == "C" %} checked {% endif %}disabled>
+                    </td>
+                    <td scope="col" width="2%">
+                        <b>D :</b>
+                    </td>
+                    <td scope="col" width="45%" class="padding_class" {% if j.fk_aptitude_question.answer == "D" %} style="background-color: #cbf5cd; !important" {% endif %}>
+                        <span style="white-space: initial">{{ j.fk_aptitude_question.option_d }}</span>
+                    </td>
+                    <td>
+                        <input type="radio" value="D" name="optradio{{j.id}}" {% if j.answer == "D" %} checked {% endif %} disabled>
+                    </td>
+                </tr>
+                </table>
+                </td >
+                    <td width="7%" style="padding-left: 0.2rem;">
+                        {% if j.answer == j.fk_aptitude_question.answer %}
+                        <i class="si si-check fa-3x text-success" aria-hidden="true"></i>
+                        {% else %}
+                        <i class="si si-close fa-3x text-danger" aria-hidden="true"></i>
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="table align-items-center table-borderless" style="margin-bottom: 0rem;">
+                <tbody class="thead-light">
+                <tr>
+                    <td scope="col" width="5%">
+                        <b>Solution:</b>
+                    </td>
+                    <td scope="col" width="89%" class="padding_class">
+                        <span style="white-space: initial">{{ j.fk_aptitude_question.solution }}</span>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+            {% endfor %}
+            </thead>
+        </table>
+    </div>
+</div>
+</div>
+
+<script>
+    $(document).ready(function() {
+    $("#close_answer_table").click(function() {
+        $("#student_score_table").show();
+        $("#publish_test_table_student").show();
+        $("#student_answer_table").hide();
+    })
+})
+
+</script>

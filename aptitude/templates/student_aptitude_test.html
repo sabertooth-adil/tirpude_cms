@@ -1,0 +1,232 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+<div class="content">
+            <div class="block">
+                <div class="card-header bg-primary-dark">
+                    <div class="row text-center">
+                        <div class="col-lg-4 fixed">
+                            <h4 class="mb-0 block-content text-left text-white" >{{ aptitude_obj.test_name }}</h4>
+                        </div>
+                        <div class="col-lg-4">
+                            <h6 class="mbo-0 block-content text-white">Questions Attempt : <span id="questions_attempt" class="text-info questions_attempt">{{ student_apt_answer_obj.answer.count }}</span> Out of : <span id="out_of" class="text-warning">{{ student_apt_answer_obj.count }}</span></h6>
+                        </div>
+                        <div class="col-lg-3 text-right ">
+                            <h6 class="mbo-0 block-content text-white">Test Ends in : <span id="countdown_time" class="text-danger"></span></h6>
+                        </div>
+                        <div class="col-lg-1 block-header">
+                            <button  class="btn btn-info btn-sm submit-btn" data-toggle="modal" data-target="#submission_warning">submit
+                            </button>
+                        </div>
+                    </div>
+                    <div id="ShowAddTest" style="display: none;">
+                    </div>
+                </div>
+                <div class="table-responsive" id="Test_Table" style="overflow: scroll;height: 600px;">
+                    <div class="content">
+                            {% for j in student_apt_answer_obj %}
+                        <table class="table align-items-center" >
+                            <thead class="thead-light">
+                            <table class="table align-items-center">
+                                <tbody class="thead-light">
+                                <tr>
+                                    <td scope="col" width="5%">
+                                        Q no.{{forloop.counter}}
+                                    </td>
+                                    <td scope="col" width="89%" class="padding_class">
+                                        <span style="white-space: initial">{{ j.fk_aptitude_question.questions }}</span>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table class="table align-items-center answer_table table-borderless">
+                                <tbody class="thead-light">
+                                <tr>
+                                    <td scope="col" width="2%">
+                                        A :
+                                    </td>
+                                    <td scope="col" width="25%" class="padding_class">
+                                        <span style="white-space: initial">{{ j.fk_aptitude_question.option_a }}</span>
+                                    </td>
+                                    <td>
+                                        <input type="radio" value="A" name="optradio{{j.id}}" {% if j.answer == "A" %} checked {% endif %}>
+                                    </td>
+                                    <td scope="col" width="2%">
+                                        B :
+                                    </td>
+                                    <td scope="col" width="25%" class="padding_class">
+                                        <span style="white-space: initial">{{ j.fk_aptitude_question.option_b }}</span>
+                                    </td>
+                                    <td>
+                                        <input type="radio" value="B" name="optradio{{j.id}}" {% if j.answer == "B" %} checked {% endif %}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td scope="col" width="2%">
+                                        C :
+                                    </td>
+                                    <td scope="col" width="25%" class="padding_class">
+                                        <span style="white-space: initial">{{ j.fk_aptitude_question.option_c }}</span>
+                                    </td>
+                                    <td>
+                                        <input type="radio" value="C" name="optradio{{j.id}}" {% if j.answer == "C" %} checked {% endif %}>
+                                    </td>
+                                    <td scope="col" width="2%">
+                                        D :
+                                    </td>
+                                    <td scope="col" width="25%" class="padding_class">
+                                        <span style="white-space: initial">{{ j.fk_aptitude_question.option_d }}</span>
+                                    </td>
+                                    <td>
+                                        <input type="radio" value="D" name="optradio{{j.id}}" {% if j.answer == "D" %} checked {% endif %}>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <script>
+                                 $(document).ready(function() {
+                                 $("input[name=optradio{{j.id}}]").change(
+                                    function() {
+                                    console.log("{{j.id}}");
+                                        apt_session_id = "{{ apt_session_obj.id }}"
+                                        aptitude_test_id = "{{ aptitude_obj.id }}"
+                                        question_id = "{{ j.fk_aptitude_question.id }}"
+                                        answer = $(this).val()
+                                        console.log(answer)
+                                        $.ajax({
+                                        url : "/select-answer/",
+                                        method : "POST",
+                                        data : {
+                                            "apt_session_id":apt_session_id,
+                                            "aptitude_test_id":aptitude_test_id,
+                                            "question_id":question_id,
+                                            "answer":answer,
+                                            },
+                                            success : function(response){
+                                            console.log(response)
+                                            $(".questions_attempt").html(response['questions_attempt'])
+                                            $(".questions_remaining").html({{ student_apt_answer_obj.count }} - response['questions_attempt'])
+                                            }
+                                    })
+                                    })
+                                 })
+                            </script>
+                                {% endfor %}
+                            </thead>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+<div class="modal fade" id="submission_warning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Want To Submit the Test ?</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <h4>Questions Remaining : <span id="questions_remaining" class="questions_remaining"></span> </h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button id="aptitudesetsubmit" type="button" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="time_expired" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-warning" id="exampleModalLabel">Time Expired</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <h4>Test has been Submitted</h4>
+          <h4>Question Solved : <span id="questions_attempt" class="questions_attempt"></span></h4>
+          <h4>Questions Remaining : <span id="questions_remaining" class="questions_remaining"></span></h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+
+
+
+
+function SubmitAptitudeTest() {
+        apt_session_id = "{{ apt_session_obj.id }}"
+        aptitude_id = "{{ aptitude_obj.id }}"
+        console.log(apt_session_id)
+        $.ajax({
+            url : "/submit-aptitude-test/",
+            method : "POST",
+            data : {
+                "apt_session_id":apt_session_id,
+                "aptitude_id":aptitude_id,
+                },
+                success : function(response){
+                console.log(response)
+                window.location = "/aptitude-test/";
+                }
+        })
+    }
+
+<!--  Reload Page on Close Modal   -->
+
+      $("#time_expired").on("hidden.bs.modal", function () {
+            SubmitAptitudeTest()
+      });
+
+// Set the date we're counting down to
+var countDownDate = new Date("{{ duration }}").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+// Get today's date and time
+var now = new Date().getTime();
+
+// Find the distance between now and the count down date
+var distance = countDownDate - now;
+
+// Time calculations for days, hours, minutes and seconds
+var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+var hours= Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+// Output the result in an element with id="demo"
+$("#countdown_time").html(hours+ "h " + minutes+ "m " + seconds + "s ");
+
+// If the count down is over, write some text
+if (distance < 0) {
+clearInterval(x);
+$("#countdown_time").html("Start Test");
+$("#countdown_time").removeAttr("disabled")
+ $("#time_expired").modal('show');
+}
+}, 1000);
+
+$("#time_expired").on('hidden', function () {
+    SubmitAptitudeTest()
+})
+
+$(document).ready(function() {
+    $("#aptitudesetsubmit").on("click", function(){
+      SubmitAptitudeTest()
+    });
+})
+
+</script>
+{% endblock content %}

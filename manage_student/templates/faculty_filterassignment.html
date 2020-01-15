@@ -1,0 +1,103 @@
+<table class="table align-items-center dtable">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">
+            Topic
+        </th>
+        <th scope="col">
+            Subject
+        </th>
+        <th scope="col">
+            Course
+        </th>
+        <th scope="col">
+            Sem
+        </th>
+        <th scope="col">
+            Section
+        </th>
+        <th scope="col">
+            Date Post
+        </th>
+        <th scope="col">
+            Due Date
+        </th>
+        <th scope="col">
+            status
+        </th>
+        {#        {% for u in  user_operations_obj %}#}
+        {#            {% if u.fk_screen.screen_url == "Assignment" %}#}
+        {#                {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+        <th scope="col" style="width: 10%;">Action</th>
+        {#                {% endif %}#}
+        {#            {% endif %}#}
+        {#        {% endfor %}#}
+    </tr>
+    </thead>
+    <tbody class="list">
+    {% for i in assignment_obj %}
+        <tr class="btn-light">
+            <td class="status" data-toggle="modal" data-target="#myModal{{ i.id }}"
+                style="text-overflow: ellipsis;width: 200px;overflow: hidden; white-space: nowrap;padding-left: 1rem">
+                {{ i.assignment_title }}
+            </td>
+            <td scope="row" data-toggle="modal" data-target="#myModal{{ i.id }}">
+                {{ i.fk_subjects.subjects }}
+            </td>
+            <td scope="row" class="name" data-toggle="modal" data-target="#myModal{{ i.id }}">
+                Course : {{ i.fk_course.course }}
+            </td>
+            <td scope="row" data-toggle="modal" data-target="#myModal{{ i.id }}">
+                Semester {{ i.fk_semesters.semester }}
+            </td>
+            <td scope="row" data-toggle="modal" data-target="#myModal{{ i.id }}">
+                Section {{ i.fk_sections.sections }}
+            </td>
+            <td class="budget" data-toggle="modal" data-target="#myModal{{ i.id }}">
+                {{ i.date_post|date:'d/m/Y' }}
+            </td>
+            <td data-toggle="modal" data-target="#myModal{{ i.id }}">
+                {{ i.date_final|date:'d/m/Y' }}
+            </td>
+            <td class="completion">
+                {% if time_now < i.date_final %}
+                    Active
+                {% else %}
+                    Expired
+                {% endif %}
+            </td>
+            {#        {% for u in  user_operations_obj %}#}
+            {#            {% if u.fk_screen.screen_url == "Assignment" %}#}
+            {#                {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+            <td>
+                {% if time_now < i.date_final %}
+                    <div class="btn-group">
+                        {#                            {% if u.edit_data == "Y" %}#}
+                        <button type="button" class="btn btn-sm btn-outline-primary js-tooltip-enabled"
+                                data-toggle="tooltip" title="" data-original-title="Edit Client"
+                                onclick="edit_assigement({{ i.id }})">
+                            <i class="fa fa-fw fa-pencil-alt"></i>
+                        </button>
+                        {#                            {% endif %}#}
+                        {#                            {% if u.delete_data == "Y" %}#}
+                        <button type="button" class="btn btn-sm btn-outline-danger js-tooltip-enabled"
+                                data-toggle="tooltip" title="" data-original-title="Remove Client"
+                                onclick="delete_assigement({{ i.id }})">
+                            <i class="fa fa-fw fa-times"></i>
+                        </button>
+                        {#                            {% endif %}#}
+                    </div>
+                {% endif %}
+            </td>
+            {#                {% endif %}#}
+            {#            {% endif %}#}
+            {#        {% endfor %}#}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<script>
+    $(document).ready(function () {
+        $('.dtable').DataTable();
+    })
+</script>

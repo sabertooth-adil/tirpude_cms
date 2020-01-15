@@ -1,0 +1,701 @@
+{% extends 'index_base.html' %}
+{% block content %}
+    {% load static %}
+
+    <style>
+        .content .block, .content .items-push > div, .content .push, .content p {
+            margin-bottom: 0px !important;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+
+    <div class="bg-body-light">
+        <div class="content" style="padding: 10px !important;">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+                <h1 class="flex-sm-fill h3 my-2">Books Purchase Details</h1>
+                <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                    <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAddBook_Div()"
+                            id="ShowAddBook_Button">Add Book
+                    </button>
+                    <form action="" id="save_book" role="form" enctype="multipart/form-data" style="display: inline;">
+                        <button class="btn btn-primary btn-sm submit-btn"
+                                id="ShowSaveBook_Button" style="display:none;">Save
+                        </button>
+                    </form>
+                    <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAllBook_Div()"
+                            id="ShowAllBook_Button" style="display:none;">All Books
+                    </button>
+                    <form action="" id="update_book" role="form" enctype="multipart/form-data" style="display: inline;">
+                        <button class="btn btn-info btn-sm" id="updatebook_button"
+                                style="display:none;">
+                            Update
+                        </button>
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static '/js/Chartnew.min.js' %}"></script>
+
+    <style>
+        canvas {
+            height: 400px !important;
+        }
+    </style>
+
+
+    <div id="BookPurchaseFilter_Div">
+        <div class="content" style="padding: 10px !important;">
+            <div class="block block-rounde ink-pop border-left border-primary border-4x"
+                 href="javascript:void(0)">
+                <div class="block-content block-content-full" style="padding-bottom: 0px !important;">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-xs-2">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">Subject</div>
+                                <div class="font-w400 font-w400 text-dark">
+                                    <select class="form-control form-control-sm" data-style="btn-white"
+                                            data-live-search="true" name="fsubject" id="fsubject"
+                                            onchange="PurchaseChange()">
+                                        <option value="" selected>Select Subject</option>
+                                        {% for i in book_subject_obj %}
+                                            <option value="{{ i.id }}">{{ i.subjects }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-xs-2">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">Author</div>
+                                <div class="font-w400 font-w400 text-dark">
+                                    <select class="form-control form-control-sm" data-style="btn-white"
+                                            data-live-search="true" name="fauthor" id="fauthor"
+                                            onchange="PurchaseChangeAuthor()">
+                                        <option value="" selected>Select Author</option>
+                                        {% for i in book_purchase_obj %}
+                                            <option value="{{ i.author }}">{{ i.author }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-2 col-xs-2">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">Title</div>
+                                <div class="font-w400 font-w400 text-dark">
+                                    <select class="form-control form-control-sm" data-style="btn-white"
+                                            data-live-search="true" name="ftitle" id="ftitle">
+                                        <option value="" selected>Select Title</option>
+                                        {% for i in book_purchase_obj %}
+                                            <option value="{{ i.title }}">{{ i.title }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-xs-2">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">ISBN</div>
+                                <div class="font-w400 text-dark">
+
+                                    <input type="text" maxlength="200" placeholder="Enter ISBN"
+                                           class="form-control form-control-sm form-control-alternative"
+                                           id="fisbn" name="fisbn" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-1 col-md-2 col-xs-2">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">From</div>
+                                <div class="font-w400 text-dark">
+                                    <input name="ffromdate" id="ffromdate"
+                                           class="form-control form-control-sm form-control-alternative js-datepicker"
+                                           data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-1 col-md-2 col-xs-2">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">To</div>
+                                <input name="ftodate" id="ftodate"
+                                       class="form-control form-control-sm form-control-alternative js-datepicker"
+                                       data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-1 col-md-1 col-xs-1">
+                            <div class="form-group">
+                                <div class="font-size-sm font-w600 text-uppercase text-muted">&nbsp;</div>
+                                <div class="font-w400 text-dark">
+                                    <buttton class="btn btn-sm btn-primary submit-btn btn-block" onclick="Filterbook()">
+                                        <i class="fa fa-filter" aria-hidden="true"></i> Filter
+                                    </buttton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content" style="padding: 10px !important;">
+        <div class="block">
+            <div class="block-content block-content-full">
+                <div id="ShowAddBook_Div" style="display: none;">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-4 col-xs-4">
+                            <div class="form-group">
+                                <label class="form-control-label text-right">Title<span
+                                        class="text-danger">*</span>:</label>
+                                <input type="text" maxlength="200" form="save_book"
+                                       class="form-control form-control-sm form-control-alternative"
+                                       id="title" name="title" required>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="col-lg-6 col-sm-4 col-xs-4">
+                            <div class="form-group">
+                                <label class="form-control-label text-right">Author<span
+                                        class="text-danger">*</span>:</label>
+                                <input type="text" maxlength="120" form="save_book"
+                                       class="form-control form-control-sm form-control-alternative"
+                                       id="author" name="author" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-4 col-xs-4">
+                            <div class="form-group">
+                                <label class="form-control-label text-right">Publisher<span
+                                        class="text-danger">*</span>:</label>
+                                <input type="text" maxlength="120" form="save_book"
+                                       class="form-control form-control-sm form-control-alternative"
+                                       id="publisher" name="publisher" required>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="col-lg-3 col-sm-4 col-xs-4">
+                            <div class="form-group">
+                                <label class="form-control-label text-right">Subject<span
+                                        class="text-danger">*</span>:</label>
+                                <select class="form-control form-control-sm form-control-alternative" form="save_book"
+                                        id="subject" name="subject" required>
+                                    <option value="" selected hidden>Select Subject</option>
+                                    {% for i in book_subject_obj %}
+                                        <option value="{{ i.id }}">{{ i.subjects }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-4 col-xs-4">
+                            <div class="form-group">
+                                <label class="form-control-label text-right">Published Date<span
+                                        class="text-danger">*</span>:</label>
+                                <input name="publisheddate" id="publisheddate" form="save_book"
+                                       class="form-control form-control-sm form-control-alternative js-datepicker"
+                                       data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-4 col-xs-4">
+                            <div class="form-group">
+                                <label class="form-control-label text-right">ISBN<span
+                                        class="text-danger">*</span>:</label>
+                                <input type="text" maxlength="50" form="save_book"
+                                       class="form-control form-control-sm form-control-alternative"
+                                       id="isbn" name="isbn" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-4 col-xs-4">
+                            <div class="form-group">
+                                <label class="form-control-label text-right">Price<span
+                                        class="text-danger">*</span>:</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">Rs -</div>
+                                    <input type="text" maxlength="120" form="save_book"
+                                           class="form-control form-control-sm form-control-alternative"
+                                           id="price" name="price" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-4 col-xs-4">
+                            <div class="form-group">
+                                <label class="form-control-label text-right">No. of Copies<span
+                                        class="text-danger">*</span>:</label>
+                                <input type="text" maxlength="120" form="save_book"
+                                       class="form-control form-control-sm form-control-alternative"
+                                       id="noofcopies" name="noofcopies" required>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="col-lg-3 col-sm-4 col-xs-4">
+                            <div class="form-group">
+                                <label class="form-control-label text-right">Purchase Date<span
+                                        class="text-danger">*</span>:</label>
+                                <input name="purchasedate" id="purchasedate" form="save_book"
+                                       class="form-control form-control-sm form-control-alternative js-datepicker"
+                                       data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="ShowEditBook_Div" style="display: none;">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-4 col-xs-4">
+                            <input type="hidden" id="titleid" name="titleid">
+                            <div class="form-group">
+                                <label class="form-control-label text-right">Title<span
+                                        class="text-danger">*</span>:</label>
+                                <input type="text" maxlength="200" form="update_book"
+                                       class="form-control form-control-sm form-control-alternative"
+                                       id="edittitle" name="edittitle" required>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="col-lg-6 col-sm-4 col-xs-4">
+                            <input type="hidden" id="authorid" name="authorid">
+                            <div class="form-group">
+                                <label class="form-control-label text-right">Author<span
+                                        class="text-danger">*</span>:</label>
+                                <input type="text" maxlength="120" form="update_book"
+                                       class="form-control form-control-sm form-control-alternative"
+                                       id="editauthor" name="editauthor" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-4 col-xs-4">
+                            <input type="hidden" id="publisherid" name="publisherid">
+                            <div class="form-group">
+                                <label class="form-control-label text-right">Publisher<span
+                                        class="text-danger">*</span>:</label>
+                                <input type="text" maxlength="120" form="update_book"
+                                       class="form-control form-control-sm form-control-alternative"
+                                       id="editpublisher" name="editpublisher" required>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="col-lg-3 col-sm-4 col-xs-4">
+                            <div class="form-group">
+                                <label class="form-control-label text-right">Subject<span
+                                        class="text-danger">*</span>:</label>
+                                <select class="form-control form-control-sm form-control-alternative" form="update_book"
+                                        id="editsubject" name="editsubject" required>
+                                    <option value="" selected hidden>Select Subject</option>
+                                    {% for i in book_subject_obj %}
+                                        <option value="{{ i.id }}">{{ i.subjects }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-4 col-xs-4">
+                            <input type="hidden" id="publisheddateid" name="publisheddateid">
+                            <div class="form-group">
+                                <label class="form-control-label text-right">Published Date<span
+                                        class="text-danger">*</span>:</label>
+                                <input name="editpublisheddate" id="editpublisheddate" form="update_book"
+                                       class="form-control form-control-sm form-control-alternative js-datepicker"
+                                       data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-4 col-xs-4">
+                            <input type="hidden" id="isbnid" name="isbnid">
+                            <div class="form-group">
+                                <label class="form-control-label text-right">ISBN<span
+                                        class="text-danger">*</span>:</label>
+                                <input type="text" maxlength="120" form="update_book"
+                                       class="form-control form-control-sm form-control-alternative"
+                                       id="editisbn" name="editisbn" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-4 col-xs-4">
+                            <input type="hidden" id="priceid" name="priceid">
+                            <div class="form-group">
+                                <label class="form-control-label text-right">Price<span
+                                        class="text-danger">*</span>:</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">Rs -</div>
+                                    <input type="text" maxlength="120" form="update_book"
+                                           class="form-control form-control-sm form-control-alternative"
+                                           id="editprice" name="editprice" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-4 col-xs-4">
+                            <input type="hidden" id="noofcopiesid" name="noofcopiesid">
+                            <div class="form-group">
+                                <label class="form-control-label text-right">No. of Copies<span
+                                        class="text-danger">*</span>:</label>
+                                <input type="text" maxlength="120" form="update_book"
+                                       class="form-control form-control-sm form-control-alternative"
+                                       id="editnoofcopies" name="editnoofcopies" required>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="col-lg-3 col-sm-4 col-xs-4">
+                            <input type="hidden" id="purchasedateid" name="purchasedateid">
+                            <div class="form-group">
+                                <label class="form-control-label text-right">Purchase Date<span
+                                        class="text-danger">*</span>:</label>
+                                <input name="editpurchasedate" id="editpurchasedate" form="update_book"
+                                       class="form-control form-control-sm form-control-alternative js-datepicker"
+                                       data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="show showInbox">
+                    <div class="table-responsive" id="ShowBookTable_Div">
+                        <table class="table table-vcenter" id="mydatatable">
+                            <thead class="thead-light">
+                            <tr>
+                                <th class="text-center" style="width: 7%;">Sr No.</th>
+                                <th style="width: 25%">Title</th>
+                                <th style="width: 15%">Author</th>
+                                <th style="width: 15%">Subject</th>
+                                <th style="width: 8%">ISBN</th>
+                                <th class="text-center" scope="col" style="width: 5%">no. of copies</th>
+                                <th class="text-center" scope="col" style="width: 8%">purchase date</th>
+                                <th class="text-center navhide" scope="col" style="width: 7%">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody id="bookbody">
+                            {% for i in book_purchase_obj reversed %}
+                                <tr>
+                                    <td class="text-center font-size-sm">{{ forloop.counter }}</td>
+                                    <td class="font-size-sm">{{ i.title }}</td>
+                                    <td class="font-size-sm">{{ i.author }}</td>
+                                    <td class="font-size-sm">{{ i.subject.subjects }}</td>
+                                    <td class="font-size-sm">{{ i.isbn }}</td>
+                                    <td class="text-center font-size-sm">{{ i.no_of_copies }}</td>
+                                    <td class="text-center font-size-sm">{{ i.purchase_date|date:"d-M-Y" }}</td>
+                                    <td class="text-center navhide">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-info js-tooltip-enabled"
+                                                    id="editbutton"
+                                                    data-toggle="tooltip" title="" data-original-title="Edit Client"
+                                                    onclick="edit_book({{ i.id }})">
+                                                <i class="fa fa-fw fa-pencil-alt"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-danger js-tooltip-enabled"
+                                                    id="deletebutton"
+                                                    data-toggle="tooltip" title="" data-original-title="Remove Client"
+                                                    onclick="delete_book({{ i.id }})">
+                                                <i class="fa fa-fw fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#mydatatable').DataTable();
+            $('#fauthor').selectpicker({
+                maxOptions: 2
+            });
+            $('#ftitle').selectpicker({
+                maxOptions: 2
+            });
+            $('#fsubject').selectpicker({
+                maxOptions: 2
+            });
+        });
+
+        function ShowAddBook_Div() {
+            $("#purchasedate").datepicker().datepicker("setDate", new Date());
+            $("#ShowAddBook_Div").show();
+            $("#ShowSaveBook_Button").show();
+            $("#ShowAddBook_Button").hide();
+            $("#ShowAllBook_Button").show();
+            $("#BookPurchaseFilter_Div").hide();
+            $("#ShowEditBook_Div").hide();
+            $("#ShowBookTable_Div").hide();
+            $("#updatebook_button").hide();
+            $("#printbutton").hide();
+            $("#excelbutton").hide();
+        }
+
+        function ShowAllBook_Div() {
+            $("#ShowAddBook_Div").hide();
+            $("#ShowSaveBook_Button").hide();
+            $("#ShowAddBook_Button").show();
+            $("#ShowAllBook_Button").hide();
+            $("#BookPurchaseFilter_Div").show();
+            $("#ShowEditBook_Div").hide();
+            $("#ShowBookTable_Div").show();
+            $("#updatebook_button").hide();
+            $("#printbutton").show();
+            $("#excelbutton").show();
+        }
+
+        $("#save_book").submit(function (e) {
+                e.preventDefault();
+                var title = $("#title").val();
+                var author = $("#author").val();
+                var publisher = $("#publisher").val();
+                var publisheddate = $("#publisheddate").val();
+                var isbn = $("#isbn").val();
+                var price = $("#price").val();
+                var noofcopies = $("#noofcopies").val();
+                var purchasedate = $("#purchasedate").val();
+                var subject = $("#subject").val();
+                $.ajax({
+                    url: "/add-book-purchase/",
+                    method: "POST",
+                    data: {
+                        "title": title,
+                        "author": author,
+                        "publisher": publisher,
+                        "published_date": publisheddate,
+                        "isbn": isbn,
+                        "price": price,
+                        "no_of_copies": noofcopies,
+                        "purchase_date": purchasedate,
+                        "subject": subject,
+                    },
+                    success: function (response) {
+                        console.log(response)
+                        if (response == "success") {
+                            swal("The Purchase Book has been Added successfully!", {
+                                icon: "success",
+                                button: "Ok",
+                                closeOnClickOutside: false,
+                            }).then(function () {
+                                location.reload();
+                            });
+                        }
+                    }
+                })
+            }
+        )
+
+        function delete_book(id) {
+            console.log(id)
+            swal({
+                title: "Are you sure?",
+                text: "To delete this Book!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: "/delete-book-purchase/",
+                            method: "POST",
+                            data: {
+                                "id": id
+                            },
+                            success: function (response) {
+                                if (response == "success") {
+                                    swal("The Book has been successfully Deleted!", {
+                                        icon: "success",
+                                        button: "Ok",
+                                        closeOnClickOutside: false,
+                                    }).then(function () {
+                                        location.reload();
+                                    });
+                                }
+                            }
+                        })
+                    }
+                    else {
+                        swal("Book is NOT deleted!");
+                    }
+                });
+        }
+
+        function edit_book(id) {
+            $("#ShowAddBook_Div").hide();
+            $("#ShowSaveBook_Button").hide();
+            $("#ShowAddBook_Button").hide();
+            $("#ShowAllBook_Button").show();
+            $("#BookPurchaseFilter_Div").hide();
+            $("#ShowEditBook_Div").show();
+            $("#ShowBookTable_Div").hide();
+            $("#updatebook_button").show();
+            $("#printbutton").hide();
+            $("#excelbutton").hide();
+            $.ajax({
+                url: "/edit-book-purchase/",
+                method: "POST",
+                data: {
+                    "id": id
+                },
+                success: function (response) {
+                    console.log(response)
+                    $("#titleid").val(response['list'][0]['id'])
+                    $("#authorid").val(response['list'][0]['id'])
+                    $("#publisherid").val(response['list'][0]['id'])
+                    $("#publisheddateid").val(response['list'][0]['id'])
+                    $("#isbnid").val(response['list'][0]['id'])
+                    $("#priceid").val(response['list'][0]['id'])
+                    $("#noofcopiesid").val(response['list'][0]['id'])
+                    $("#purchasedateid").val(response['list'][0]['id'])
+                    $("#subjectid").val(response['list'][0]['id'])
+                    $("#edittitle").val(response['list'][0]['title'])
+                    $("#editauthor").val(response['list'][0]['author'])
+                    $("#editpublisher").val(response['list'][0]['publisher'])
+                    $("#editpublisheddate").val(response['list'][0]['published_date'])
+                    $("#editisbn").val(response['list'][0]['isbn'])
+                    $("#editprice").val(response['list'][0]['price'])
+                    $("#editnoofcopies").val(response['list'][0]['no_of_copies'])
+                    $("#editpurchasedate").val(response['list'][0]['purchase_date'])
+                    $("#editsubject").val(response['list'][0]['subject'])
+                }
+            })
+        }
+
+        function Filterbook() {
+            author = $("#fauthor").val()
+            title = $("#ftitle").val()
+            isbn = $("#fisbn").val()
+            subject = $("#fsubject").val()
+            fromdate = $("#ffromdate").val()
+            todate = $("#ftodate").val()
+            $.ajax({
+                url: "/filter-book-purchase/",
+                method: "POST",
+                data: {
+                    "author": author,
+                    "title": title,
+                    "isbn": isbn,
+                    "subject": subject,
+                    "purchase_date_from_date": fromdate,
+                    "purchase_date_to_date": todate,
+                },
+                success: function (response) {
+                    console.log(response)
+                    $("#ShowBookTable_Div").html("")
+                    $("#ShowBookTable_Div").append(response)
+                }
+            })
+        }
+
+        $("#update_book").submit(function (e) {
+                e.preventDefault();
+                var titleid = $("#titleid").val();
+                var edittitle = $("#edittitle").val();
+                var editauthor = $("#editauthor").val();
+                var editpublisher = $("#editpublisher").val();
+                var editpublisheddate = $("#editpublisheddate").val();
+                var editisbn = $("#editisbn").val();
+                var editsubject = $("#editsubject").val();
+                var editprice = $("#editprice").val();
+                var editnoofcopies = $("#editnoofcopies").val();
+                var editpurchasedate = $("#editpurchasedate").val();
+                $.ajax({
+                    url: "/update-book-purchase/",
+                    method: "POST",
+                    data: {
+                        "title_id": titleid,
+                        "edit_title": edittitle,
+                        "edit_author": editauthor,
+                        "edit_publisher": editpublisher,
+                        "edit_subject": editsubject,
+                        "edit_published_date": editpublisheddate,
+                        "edit_isbn": editisbn,
+                        "edit_price": editprice,
+                        "edit_no_of_copies": editnoofcopies,
+                        "edit_purchase_date": editpurchasedate
+                    },
+                    success: function (response) {
+                        console.log(response)
+                        if (response == "success") {
+                            swal("The Book has been Updated successfully!", {
+                                icon: "success",
+                                button: "Ok",
+                                closeOnClickOutside: false,
+                            }).then(function () {
+                                location.reload();
+                            });
+                        }
+                    }
+                })
+            }
+        )
+
+        function PurchaseChange() {
+            var subject = $("#fsubject").val();
+            $.ajax({
+                method: "POST",
+                url: "/filter-author-title/",
+                data: {
+                    "subject": subject,
+                },
+                success: function (response) {
+                    console.log(response)
+                    $("#ftitle").html("");
+                    $("#fauthor").html("");
+                    if (JSON.parse(response).length == 0) {
+                        $("#ftitle").html("<option value='' selected hidden>Title Not Found</option>")
+                        $("#ftitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
+                        $("#fauthor").html("<option value='' selected hidden>Author Not Found</option>")
+                        $("#fauthor").html("<option value='' selected hidden>Select Author</option><option value=''>Select Author</option>")
+                    }
+                    else {
+                        $("#ftitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
+                        $("#fauthor").html("<option value='' selected hidden>Select Author</option><option value=''>Select Author</option>")
+                    }
+                    for (i = 0; i < JSON.parse(response).length; i++) {
+                        tit = document.createElement('option');
+                        tit.value = JSON.parse(response)[i][1]
+                        tit.innerHTML = JSON.parse(response)[i][1]
+                        $("#ftitle").append(tit).selectpicker('refresh');
+
+                        auth = document.createElement('option');
+                        auth.value = JSON.parse(response)[i][2]
+                        auth.innerHTML = JSON.parse(response)[i][2]
+                        $("#fauthor").append(auth).selectpicker('refresh');
+                    }
+                }
+            })
+        }
+
+        function PurchaseChangeAuthor() {
+            var fauthor = $("#fauthor").val();
+            $.ajax({
+                method: "POST",
+                url: "/filter-title/",
+                data: {
+                    "author": fauthor,
+                },
+                success: function (response) {
+                    console.log(response)
+
+                    $("#ftitle").html("")
+                    if (JSON.parse(response).length == 0) {
+                        $("#ftitle").html("<option value='' selected hidden>Title Not Found</option>")
+                        $("#ftitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
+                    }
+                    else {
+                        $("#ftitle").html("<option value='' selected hidden>Select Title</option><option value=''>Select Title</option>")
+                    }
+                    for (i = 0; i < JSON.parse(response).length; i++) {
+                        tit = document.createElement('option');
+                        tit.value = JSON.parse(response)[i][1]
+                        tit.innerHTML = JSON.parse(response)[i][1]
+                        $("#ftitle").append(tit).selectpicker('refresh');
+                    }
+                }
+            })
+        }
+
+    </script>
+{% endblock content %}
