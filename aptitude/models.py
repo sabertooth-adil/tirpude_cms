@@ -107,4 +107,4 @@ class AptitudeTestScore(models.Model):
     percent = models.IntegerField(blank=True, null=True)
 
     def __int__(self):
-        return self.percent
+        return str(self.percent)

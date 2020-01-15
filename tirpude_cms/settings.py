@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'tirpude_cms.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tirpude_cms',
+        'NAME': 'tirpude_cms_new',
         'USER': 'root',
         'PASSWORD': 'Newuser@123',
         'HOST': '3.6.127.100',

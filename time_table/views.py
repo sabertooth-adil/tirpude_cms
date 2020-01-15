@@ -32,6 +32,11 @@ from time_table.models import TimeTableMaster, TimeTableDetail
 
 
 def time_table(request):
+    """
+    Time Table Page
+    :param request:
+    :return:
+    """
     try:
         list_data = []
         dict_data = {}
@@ -133,6 +138,11 @@ def time_table(request):
 
 @csrf_exempt
 def filter_time_table(request):
+    """
+    Time Table Filter
+    :param request:
+    :return:
+    """
     try:
         course = request.POST.get("course")
         semesters = request.POST.get("semesters")
@@ -163,6 +173,11 @@ def filter_time_table(request):
 
 @csrf_exempt
 def save_update_date_note_timetable(request):
+    """
+    save, update date note timetable
+    :param request:
+    :return:
+    """
     try:
         course = request.POST.get("course")
         semesters = request.POST.get("semesters")
@@ -196,6 +211,12 @@ def save_update_date_note_timetable(request):
 
 @csrf_exempt
 def edit_time_table(request, id):
+    """
+    edit time table
+    :param request:
+    :param id:
+    :return:
+    """
     try:
         time_table_detail_obj = TimeTableDetail.objects.filter(fk_timetable_master_id=id, fk_day_id=1)
         time_table_master_obj = TimeTableMaster.objects.get(id=id)
@@ -221,6 +242,11 @@ def edit_time_table(request, id):
 
 @csrf_exempt
 def add_time_table(request):
+    """
+    add time table
+    :param request:
+    :return:
+    """
     try:
         course = request.POST.get("course")
         semesters = request.POST.get("semesters")
@@ -304,6 +330,11 @@ def add_time_table(request):
 
 @csrf_exempt
 def change_time_table_day(request):
+    """
+    change time table day
+    :param request:
+    :return:
+    """
     try:
         course = request.POST.get("course")
         semesters = request.POST.get("semesters")
@@ -327,6 +358,11 @@ def change_time_table_day(request):
 
 @csrf_exempt
 def edit_day_time_table(request):
+    """
+    edit day time table
+    :param request:
+    :return:
+    """
     try:
         list_data = []
         faculty_list = []
@@ -362,6 +398,11 @@ def edit_day_time_table(request):
 
 @csrf_exempt
 def update_time_table(request):
+    """
+    update time table
+    :param request:
+    :return:
+    """
     try:
         time_table_detail_id = request.POST.get("time_table_detail_id")
         time_table_master_id = request.POST.get("time_table_master_id")
@@ -452,6 +493,11 @@ def update_time_table(request):
 
 @csrf_exempt
 def delete_time_table_row(request):
+    """
+    delete time table row
+    :param request:
+    :return:
+    """
     try:
         id = request.POST.get("id")
         time_table_detail_obj = TimeTableDetail.objects.get(id=id)
@@ -463,6 +509,11 @@ def delete_time_table_row(request):
 
 
 def faculty_workload(request):
+    """
+    faculty workload page
+    :param request:
+    :return:
+    """
     try:
         dict_data = {}
         list_data = []
@@ -532,6 +583,11 @@ def faculty_workload(request):
 
 @csrf_exempt
 def all_time_table(request):
+    """
+    all time table Page
+    :param request:
+    :return:
+    """
     try:
         list_data = []
         dict_data = {}
@@ -585,6 +641,11 @@ def all_time_table(request):
 
 @csrf_exempt
 def all_faculty_workload(request):
+    """
+    all faculty workload Page
+    :param request:
+    :return:
+    """
     try:
         list_data = []
         dict_data = {}
@@ -638,6 +699,11 @@ def all_faculty_workload(request):
 
 @csrf_exempt
 def delete_time_table(request):
+    """
+    delete time table Master
+    :param request:
+    :return:
+    """
     try:
         id = request.POST.get("id")
         time_table_master_obj = TimeTableMaster.objects.get(id=id)
