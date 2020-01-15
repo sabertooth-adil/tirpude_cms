@@ -63,6 +63,12 @@
                             <span class="nav-main-link-name">&nbsp;&nbsp;Time Table</span>
                         </a>
                     </li>
+                    <li class="nav-main-item">
+                            <a class="nav-main-link" href="/leave-application/" id="LeaveApplicationNavPage">
+                                <img class="icon-size" src="{% static "media/dashboard-icons/icon-leaveapplication.png" %}" alt="icon">
+                                <span class="nav-main-link-name">&nbsp;&nbsp;Leave Application</span>
+                            </a>
+                        </li>
                     <li class="nav-main-item" id="PlacementMainNavPage">
                         <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                             aria-expanded="false" href="#">
@@ -169,6 +175,12 @@
                             </a>
                         </li>
                 {% else %}
+                <li class="nav-main-item">
+                            <a class="nav-main-link" href="/leave-application/" id="LeaveApplicationNavPage">
+                                <img class="icon-size" src="{% static "media/dashboard-icons/icon-leaveapplication.png" %}" alt="icon">
+                                <span class="nav-main-link-name">&nbsp;&nbsp;Leave Application</span>
+                            </a>
+                        </li>
                     <li class="nav-main-item">
                         <a class="nav-main-link" href="/attendance/" id="AttendanceNavPage">
                             <img class="icon-size" src="{% static "media/dashboard-icons/icon-attendance.png" %}"
