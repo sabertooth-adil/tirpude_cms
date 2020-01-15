@@ -28,4 +28,7 @@ urlpatterns = [
       path('', include('library.urls')),
       path('', include('notice.urls')),
       path('', include('master_forms.urls')),
+      path('', include('time_table.urls')),
+      path('', include('authenticate_user.urls')),
+      path('', include('placement.urls')),
   ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
