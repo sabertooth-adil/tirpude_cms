@@ -18,8 +18,10 @@ class LeaveApplication(models.Model):
     """
          Leave application model for students and faculty
     """
-    fk_user_info = models.ForeignKey(UserInfo, null=True, blank=True, related_name='fk_user_info', on_delete=models.CASCADE)
-    fk_faculty_user = models.ForeignKey(UserInfo, null=True, blank=True, related_name='fk_faculty_user', on_delete=models.CASCADE)
+    fk_user_info = models.ForeignKey(UserInfo, null=True, blank=True, related_name='fk_user_info',
+                                     on_delete=models.CASCADE)
+    fk_faculty_user = models.ForeignKey(UserInfo, null=True, blank=True, related_name='fk_faculty_user',
+                                        on_delete=models.CASCADE)
     fk_leave_reason = models.ForeignKey(LeaveReason, blank=True, null=True, on_delete=models.CASCADE)
     fk_sections = models.ForeignKey(Section, blank=True, null=True, on_delete=models.CASCADE)
     fk_semesters = models.ForeignKey(Semester, blank=True, null=True, on_delete=models.CASCADE)
