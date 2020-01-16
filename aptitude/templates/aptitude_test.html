@@ -283,7 +283,7 @@
         fd.append('file', $("#customFile")[0].files[0]);
         fd.append('test_id', '{{ aptitude_set_obj.id }}');
         $.ajax({
-            url: "/UploadQuestionFile/",
+            url: "/upload-question-file",
             method: "POST",
             async: false,
             cache: false,

@@ -20,5 +20,6 @@ urlpatterns = [
     path('view-student-answer/', view_student_answer, name='view_student_answer'),
     path('filter-publish-list/', filter_publish_list, name='filter_publish_list'),
     path('filter-test-list/', filter_test_list, name='filter_test_list'),
-    path('fliter-select-list/', filter_select_list, name='filter_select_list'),
+    path('filter-select-list/', filter_select_list, name='filter_select_list'),
+    path('upload-question-file', upload_question_file, name='UploadQuestionFile'),
 ]

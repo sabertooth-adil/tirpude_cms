@@ -108,3 +108,10 @@ class AptitudeTestScore(models.Model):
 
     def __int__(self):
         return str(self.percent)
+
+class TempFile(models.Model):
+    """
+    Database for temporary saving uploaded question
+    set csv file location
+    """
+    temp_file = models.FileField(upload_to="exam__csv",null=True, blank=True)

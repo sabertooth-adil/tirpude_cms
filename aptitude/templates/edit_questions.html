@@ -665,7 +665,7 @@ $(".custom-file-input").on("change", function() {
    fd.append( 'file', $("#customFile")[0].files[0] );
    fd.append( 'test_id', '{{ aptitude_set_obj.id }}' );
    $.ajax({
-            url : "/UploadQuestionFile/",
+            url : "/upload-question-file",
             method : "POST",
             async: false,
        cache: false,
@@ -683,6 +683,8 @@ $(".custom-file-input").on("change", function() {
                     $("#selectquestions").html("");
                     $("#selectquestions").append(response['render_string']);
                     $("#file_error").html(response['error'])
+                    $("#footer_div").hide()
+                    $("#add_selected_question").show()
                    }
                 }
         })
@@ -706,7 +708,7 @@ function filterselecttest() {
         start_date = $("#start_date1").val()
         end_date = $("#end_date1").val()
         $.ajax({
-            url : "/fliter-select-list/",
+            url : "/filter-select-list/",
             method : "POST",
             data : {
                 "course":course,

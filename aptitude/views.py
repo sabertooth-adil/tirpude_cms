@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.template.loader import render_to_string
 from django.utils import timezone
 import pandas as pd
+import os
 
 import datetime
 from .models import *
@@ -377,6 +378,37 @@ def delete_aptitude_question(request):
 
 
 @csrf_exempt
+def upload_question_file(request):
+    file = request.FILES.get("file")
+    test_id = "5"
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    temp_file = TempFile(temp_file=file)
+    temp_file.save()
+    # file  = TempFile.objects.all()[:1].get()
+    file = (BASE_DIR + temp_file.temp_file.url)
+
+    df = pd.read_csv(file)
+    temp_questions = AllottedQuestion.objects.filter(fk_aptitude_set_id=test_id)
+    temp_questions.delete()
+    for i in range(len(df)):
+        apt_question = AptitudeQuestion(fk_aptitude_set_id=test_id, \
+                                        questions=df['Questions'][i], \
+                                        option_a=df['OptionA'][i], \
+                                        option_b=df['OptionB'][i], \
+                                        option_c=df['OptionC'][i], \
+                                        option_d=df['OptionD'][i], \
+                                        answer=df['Answer'][i])
+        apt_question.save()
+        allotedquestion_obj = AllottedQuestion(fk_aptitude_set_id=test_id,
+                                               fk_question_id=apt_question.id)
+        allotedquestion_obj.save()
+
+    question_obj = AllottedQuestion.objects.filter(fk_aptitude_set_id=test_id)
+    render_string = render_to_string("select_questions.html", {"question_obj": question_obj})
+    return JsonResponse({"render_string": render_string, "error": ""})
+
+
+@csrf_exempt
 def select_question(request):
     """
     Select Question from other aptitude test
@@ -659,7 +691,8 @@ def filter_publish_list(request):
         mylist_data = []
 
         if start_date:
-            start_date = datetime.datetime.strptime(str(request.POST.get("start_date")), '%d/%m/%Y').strftime('%Y-%m-%d')
+            start_date = datetime.datetime.strptime(str(request.POST.get("start_date")), '%d/%m/%Y').strftime(
+                '%Y-%m-%d')
         if end_date:
             end_date = datetime.datetime.strptime(str(request.POST.get("end_date")), '%d/%m/%Y').strftime('%Y-%m-%d')
 
@@ -716,7 +749,8 @@ def filter_test_list(request):
         mylist_data = []
 
         if start_date:
-            start_date = datetime.datetime.strptime(str(request.POST.get("start_date")), '%d/%m/%Y').strftime('%Y-%m-%d')
+            start_date = datetime.datetime.strptime(str(request.POST.get("start_date")), '%d/%m/%Y').strftime(
+                '%Y-%m-%d')
 
         if end_date:
             end_date = datetime.datetime.strptime(str(request.POST.get("end_date")), '%d/%m/%Y').strftime('%Y-%m-%d')
@@ -751,13 +785,13 @@ def filter_test_list(request):
 
         print(mylist_data)
         render_string = render_to_string("aptitidetestmaster_div.html",
-                                         {"user_operation_obj": user_operations_obj, "publish_test_obj": publish_test_obj,
+                                         {"user_operation_obj": user_operations_obj,
+                                          "publish_test_obj": publish_test_obj,
                                           "my_list": mylist_data})
         return HttpResponse(render_string)
     except Exception:
         error_save(str(traceback.format_exc()))
         return redirect('error_handler_500')
-
 
 
 @csrf_exempt
@@ -779,7 +813,8 @@ def filter_select_list(request):
         mylist_data = []
 
         if start_date:
-            start_date = datetime.datetime.strptime(str(request.POST.get("start_date")), '%d/%m/%Y').strftime('%Y-%m-%d')
+            start_date = datetime.datetime.strptime(str(request.POST.get("start_date")), '%d/%m/%Y').strftime(
+                '%Y-%m-%d')
 
         if end_date:
             end_date = datetime.datetime.strptime(str(request.POST.get("end_date")), '%d/%m/%Y').strftime('%Y-%m-%d')
@@ -797,7 +832,7 @@ def filter_select_list(request):
             filter_str += ".filter(schedule__gte=start_date)"
         if end_date:
             filter_str += ".filter(schedule__lte=end_date)"
-        if filter_str == "AptitudeSet.objects":
+        if filter_str == "AptitudeSet.objects(status='Attempted')":
             filter_str += ".all()"
 
         publish_test_obj = eval(filter_str)
