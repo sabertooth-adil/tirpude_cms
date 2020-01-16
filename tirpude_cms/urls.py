@@ -32,4 +32,5 @@ urlpatterns = [
       path('', include('authenticate_user.urls')),
       path('', include('placement.urls')),
       path('', include('leave_application.urls')),
+      path('', include('user_setup.urls')),
   ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

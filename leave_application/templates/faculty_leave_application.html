@@ -1,7 +1,7 @@
 {% extends 'index_base.html' %}
 {% block content %}
 {% load static %}
-<!--{#% for u in  useroperations_obj #%}-->
+<!--{#% for u in  user_operation_obj #%}-->
 <!--{#% if u.FK_modules.module_url == "leave-application" #%}-->
 <!--{#% if u.view_data == "Y" #%}-->
 <style>
@@ -133,7 +133,7 @@ canvas{
                                 <th scope="col">Title</th>
                                 <th scope="col">Current <br/>Status</th>
                                 <th scope="col" >View Details</th>
-<!--                                {#% for u in  useroperations_obj #%}-->
+<!--                                {#% for u in  user_operation_obj #%}-->
 <!--                                    {#% if u.FK_modules.module_url == "leave-application" #%}-->
 <!--                                        {#% if u.edit_data == "Y" #%}-->
                                             <th scope="col" style="width: 10%;">Change Status</th>
@@ -221,7 +221,7 @@ canvas{
                                         </div>
                                  </div>
                                 </td>
-<!--                                {#% for u in  useroperations_obj #%}-->
+<!--                                {#% for u in  user_operation_obj #%}-->
 <!--                                    {#% if u.FK_modules.module_url == "leave-application" #%}-->
 <!--                                        {#% if u.edit_data == "Y" #%}-->
                                             <td>

@@ -31,8 +31,6 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'leave_application',
-    'exam',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,6 +48,9 @@ INSTALLED_APPS = [
     'manage_student',
     'aptitude',
     'event',
+    'user_setup',
+    'leave_application',
+    'exam',
 ]
 
 MIDDLEWARE = [

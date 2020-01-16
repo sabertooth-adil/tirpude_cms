@@ -751,7 +751,7 @@ def filter_test_list(request):
 
         print(mylist_data)
         render_string = render_to_string("aptitidetestmaster_div.html",
-                                         {"useroperations_obj": user_operations_obj, "publish_test_obj": publish_test_obj,
+                                         {"user_operation_obj": user_operations_obj, "publish_test_obj": publish_test_obj,
                                           "my_list": mylist_data})
         return HttpResponse(render_string)
     except Exception:

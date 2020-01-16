@@ -1,0 +1,298 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+<div class="bg-body-light">
+    <div class="content" style="padding: 10px !important;">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">Manage Roles</h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                <a href="/manage-user/"><button class="btn btn-primary btn-sm submit-btn">All Roles</button></a>
+            </nav>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="user_role_obj_id" value="{{user_role_obj.id}}">
+<div class="content" style="padding: 10px !important;">
+    <div class="block">
+        <div class="block-content block-content-full">
+            <div id="ShowAddCourse_Div">
+                <div class="row">
+                    <div class="col-xs-12 col-md-1 col-lg-1"></div>
+                    <div class="col-xs-12 col-md-10 col-lg-10">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-4 col-lg-4" style="padding-left: 0px;">
+                                <div class="form-group" style="margin-bottom: 0%;">
+                                    <label class="form-control-label text-right">User Role<span class="text-danger">*</span>:</label>
+                                    <input type="text" class="form-control form-control-sm form-control-alternative" id="user_role" name="user_role" value="{{user_role_obj.user_role}}">
+                                    <span style="display:none;color:red;font-size: 12px;" id="err_user_role">Please Enter User Role</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-1 col-lg-1">
+                                <button class="btn btn-success btn-sm" onclick="update_user_role_name()" id="add_userrole_button" style="margin-top: 25%;">Update</button>
+                            </div>
+                        </div>
+                        <div id="RightsTable_Div">
+                            <div class="block-header" style="padding: 0%;">
+                                <h3 class="block-title">Rights Table</h3>
+                                <div class="block-options">
+                                    <div class="block-options-item">
+                                        <button class="btn btn-primary btn-sm" onclick="update_userright()"
+                                                id="add_userrole_button" style="margin-top: 25%;">Submit
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="js-table-sections table table-hover table-vcenter table-bordered" id="UserRights_Table">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th class="text-center">Screens</th>
+                                    <th class="text-center">Special</th>
+                                    <th class="text-center">View</th>
+                                    <th class="text-center">Edit</th>
+                                    <th class="text-center">Save</th>
+                                    <th class="text-center">Delete</th>
+                                </tr>
+                                </thead>
+                                {% for u in user_operation_obj %}
+                                    {% if u.fk_module.id in modules_list %}
+                                        {% if u.status == "master_module" %}
+                                            <tbody>
+                                                <tr style="background-color: #d0cece">
+                                                    <td class="text-center"><input type="hidden" value="{{u.id}}" data_value="master_module">{{u.fk_module.module_name}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {% if u.special_data == 'Y' %}
+                                                            <input type="checkbox" name="rights_checkbox" id="rights_checkbox" class="rights_checkbox_{{u.fk_module.id}}" onchange="opensubtables(this,{{u.fk_module.id}})" checked>
+                                                        {% else %}
+                                                            <input type="checkbox" name="rights_checkbox" id="rights_checkbox" class="rights_checkbox_{{u.fk_module.id}}" onchange="opensubtables(this,{{u.fk_module.id}})">
+                                                        {% endif %}
+                                                    </td>
+                                                    <td colspan="4"></td>
+                                                </tr>
+                                            </tbody>
+                                        {% endif %}
+                                        {% if u.status == "screen" %}
+                                                {% if u.special_data == 'Y' %}
+                                                    <tbody class="subtable_{{u.fk_module.id}}">
+                                                {% else %}
+                                                    <tbody class="subtable_{{u.fk_module.id}}" style="display: none;">
+                                                {% endif %}
+                                                <tr>
+                                                    <td class="text-center"><input type="hidden" value="{{u.id}}" data_value="module">{{u.fk_screen.screen_name}}</td>
+                                                    <td></td>
+                                                    <td class="text-center">
+                                                        {% if u.view_data == 'Y' %}
+                                                            <input type="checkbox" name="rights_checkbox" id="rights_checkbox" checked>
+                                                        {% else %}
+                                                            <input type="checkbox" name="rights_checkbox" id="rights_checkbox">
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {% if u.edit_data == 'Y' %}
+                                                            <input type="checkbox" name="rights_checkbox" id="rights_checkbox" checked>
+                                                        {% else %}
+                                                            <input type="checkbox" name="rights_checkbox" id="rights_checkbox">
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {% if u.save_data == 'Y' %}
+                                                            <input type="checkbox" name="rights_checkbox" id="rights_checkbox" checked>
+                                                        {% else %}
+                                                            <input type="checkbox" name="rights_checkbox" id="rights_checkbox">
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {% if u.delete_data == 'Y' %}
+                                                            <input type="checkbox" name="rights_checkbox" id="rights_checkbox" checked>
+                                                        {% else %}
+                                                            <input type="checkbox" name="rights_checkbox" id="rights_checkbox">
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% for u in user_operation_obj %}
+                                    {% if u.status == "module" %}
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center"><input type="hidden" value="{{u.id}}" data_value="module">{{u.fk_module.module_name}}
+                                                </td>
+                                                <td></td>
+                                                <td class="text-center">
+                                                    {% if u.view_data == 'Y' %}
+                                                        <input type="checkbox" name="rights_checkbox" id="rights_checkbox" checked>
+                                                    {% else %}
+                                                        <input type="checkbox" name="rights_checkbox" id="rights_checkbox">
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-center">
+                                                    {% if u.edit_data == 'Y' %}
+                                                        <input type="checkbox" name="rights_checkbox" id="rights_checkbox" checked>
+                                                    {% else %}
+                                                        <input type="checkbox" name="rights_checkbox" id="rights_checkbox">
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-center">
+                                                    {% if u.save_data == 'Y' %}
+                                                        <input type="checkbox" name="rights_checkbox" id="rights_checkbox" checked>
+                                                    {% else %}
+                                                        <input type="checkbox" name="rights_checkbox" id="rights_checkbox">
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-center">
+                                                    {% if u.delete_data == 'Y' %}
+                                                        <input type="checkbox" name="rights_checkbox" id="rights_checkbox" checked>
+                                                    {% else %}
+                                                        <input type="checkbox" name="rights_checkbox" id="rights_checkbox">
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    {% endif %}
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-1 col-lg-1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#mydatatable').DataTable();
+        $('#UserSetupMainNavPage').addClass('open');
+		$('#ManageUserNavPage').addClass('active');
+        $("#AssignmentModal").on("hidden.bs.modal", function () {
+            location.reload();
+        });
+    });
+    function opensubtables(t,id) {
+        if(t.checked){
+            $(".subtable_" + id).show();
+        }else{
+            $(".subtable_" + id).hide();
+        }
+    }
+
+    function ShowAddCourse_Div() {
+        $("#ShowAddCourse_Div").show();
+        $("#ShowAllCourse_Div").hide();
+        $("#ShowAddCourse_Button").hide();
+        $("#ShowAllCourse_Button").show();
+        $("#addcourse_button").show();
+        $("#updatecourse_button").hide();
+    }
+
+    function ShowAllCourse_Div() {
+        $("#ShowAddCourse_Div").hide();
+        $("#ShowAllCourse_Div").show();
+        $("#ShowAddCourse_Button").show();
+        $("#ShowAllCourse_Button").hide();
+        $("#ShowUpdateCourse_Div").hide();
+        $("#addcourse_button").hide();
+        $("#updatecourse_button").hide();
+    }
+
+    function update_user_role_name(){
+        var user_role = $("#user_role").val();
+        var user_role_obj_id = $("#user_role_obj_id").val();
+        if (user_role == "") {
+            $("#err_user_role").show();
+        }
+        else {
+            $.ajax({
+                url: "/update-user-role-name/",
+                method: "POST",
+                data: {
+                    "user_role": user_role,
+                    "user_role_obj_id": user_role_obj_id,
+                },
+                success: function (response) {
+                    swal("User Role name has been Updated Successfully!", {
+                        icon: "success",
+                        button: "Ok",
+                        closeOnClickOutside: false,
+                    }).then(function () {
+                        location.reload();
+                    });
+                }
+            })
+        }
+    }
+
+    function update_userright() {
+        var Special_value = "";
+        user_role_obj_id = $("#user_role_obj_id").val();
+        var table_body_id = "UserRights_Table";
+        val = document.getElementById(table_body_id).rows[0].cells[0].firstChild;
+        console.log(val)
+        var i;
+        var len = document.getElementById(table_body_id).rows.length;
+        console.log(len)
+        var data_item_table = {};
+        for (i = 1; i < len; i++) {
+            console.log(Special_value)
+            data_value = document.getElementById(table_body_id).rows[i].cells[0].firstChild.getAttribute("data_value")
+            if (data_value == "master_module") {
+                if (document.getElementById(table_body_id).rows[i].cells[1].children[0].checked == true){
+                    Special_value = true
+                }else{
+                    Special_value = false
+                }
+                data_item_table[i - 1] = {
+                    id: document.getElementById(table_body_id).rows[i].cells[0].firstChild.value,
+                    Special: document.getElementById(table_body_id).rows[i].cells[1].children[0].checked,
+                    View: "",
+                    Edit: "",
+                    Save: "",
+                    Delete: "",
+                }
+            }
+            else if (data_value == "module") {
+                data_item_table[i - 1] = {
+                    id: document.getElementById(table_body_id).rows[i].cells[0].firstChild.value,
+                    Special: Special_value,
+                    View: document.getElementById(table_body_id).rows[i].cells[2].children[0].checked,
+                    Edit: document.getElementById(table_body_id).rows[i].cells[3].children[0].checked,
+                    Save: document.getElementById(table_body_id).rows[i].cells[4].children[0].checked,
+                    Delete: document.getElementById(table_body_id).rows[i].cells[5].children[0].checked,
+                }
+            }
+            else {
+                data_item_table[i - 1] = {
+                    id: document.getElementById(table_body_id).rows[i].cells[1].firstChild.value,
+                    Special: Special_value,
+                    View: document.getElementById(table_body_id).rows[i].cells[3].children[0].checked,
+                    Edit: document.getElementById(table_body_id).rows[i].cells[4].children[0].checked,
+                    Save: document.getElementById(table_body_id).rows[i].cells[5].children[0].checked,
+                    Delete: document.getElementById(table_body_id).rows[i].cells[6].children[0].checked,
+                }
+            }
+        }
+        console.log(data_item_table)
+        $.ajax({
+            method: "POST",
+            url: "/update-userright/",
+            data: {
+                'user_role_obj_id': user_role_obj_id,
+                'user_operation': JSON.stringify(data_item_table)
+            },
+            success: function (response) {
+                swal("User Rights has been Updated Successfully!", {
+                    icon: "success",
+                    button: "Ok",
+                    closeOnClickOutside: false,
+                }).then(function () {
+                    location.reload();
+                });
+            }
+        })
+    }
+
+</script>
+{% endblock content %}
+

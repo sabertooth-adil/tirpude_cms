@@ -64,27 +64,33 @@
                         </a>
                     </li>
                     <li class="nav-main-item">
-                            <a class="nav-main-link" href="/leave-application/" id="LeaveApplicationNavPage">
-                                <img class="icon-size" src="{% static "media/dashboard-icons/icon-leaveapplication.png" %}" alt="icon">
-                                <span class="nav-main-link-name">&nbsp;&nbsp;Leave Application</span>
-                            </a>
-                        </li>
+                        <a class="nav-main-link" href="/leave-application/" id="LeaveApplicationNavPage">
+                            <img class="icon-size" src="{% static "media/dashboard-icons/icon-leaveapplication.png" %}"
+                                 alt="icon">
+                            <span class="nav-main-link-name">&nbsp;&nbsp;Leave Application</span>
+                        </a>
+                    </li>
                     <li class="nav-main-item" id="PlacementMainNavPage">
                         <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                            aria-expanded="false" href="#">
-                            <img class="icon-size" src="{% static "media/dashboard-icons/icons-aptitude.png" %}" alt="icon">
+                           aria-expanded="false" href="#">
+                            <img class="icon-size" src="{% static "media/dashboard-icons/icons-aptitude.png" %}"
+                                 alt="icon">
                             <span class="nav-main-link-name">&nbsp;&nbsp;Placement</span>
                         </a>
                         <ul class="nav-main-submenu">
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="/student-company-appearances/" id="CompanyAppearanceNavPage">
-                                    <img class="icon-size" src="{% static "media/dashboard-icons/icon-exam.png" %}" alt="icon">
+                                <a class="nav-main-link" href="/student-company-appearances/"
+                                   id="CompanyAppearanceNavPage">
+                                    <img class="icon-size" src="{% static "media/dashboard-icons/icon-exam.png" %}"
+                                         alt="icon">
                                     <span class="nav-main-link-name">&nbsp;&nbsp;&nbsp;Company Visited</span>
                                 </a>
                             </li>
                             <li class="nav-main-item">
-                                <a class="nav-main-link" href="/student-my-performance/" id="StudentMyPerformanceNavPage">
-                                    <img class="icon-size" src="{% static "media/dashboard-icons/icon-exam.png" %}" alt="icon">
+                                <a class="nav-main-link" href="/student-my-performance/"
+                                   id="StudentMyPerformanceNavPage">
+                                    <img class="icon-size" src="{% static "media/dashboard-icons/icon-exam.png" %}"
+                                         alt="icon">
                                     <span class="nav-main-link-name">&nbsp;&nbsp;&nbsp;My Performance</span>
                                 </a>
                             </li>
@@ -168,19 +174,54 @@
                             {#                            {% endfor %}#}
                         </ul>
                     </li>
-                     <li class="nav-main-item">
-                            <a class="nav-main-link" href="/students-event/" id="NoticeNavPage">
-                                <i class="nav-main-link-icon si si-note"></i>
-                                <span class="nav-main-link-name">Events</span>
-                            </a>
-                        </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="/students-event/" id="NoticeNavPage">
+                            <i class="nav-main-link-icon si si-note"></i>
+                            <span class="nav-main-link-name">Events</span>
+                        </a>
+                    </li>
                 {% else %}
-                <li class="nav-main-item">
-                            <a class="nav-main-link" href="/leave-application/" id="LeaveApplicationNavPage">
-                                <img class="icon-size" src="{% static "media/dashboard-icons/icon-leaveapplication.png" %}" alt="icon">
-                                <span class="nav-main-link-name">&nbsp;&nbsp;Leave Application</span>
-                            </a>
-                        </li>
+                    <li class="nav-main-item" id="UserSetupMainNavPage">
+                        <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                           aria-expanded="false" href="#">
+                            <img class="icon-size" src="{% static "media/dashboard-icons/icon-usersetup.png" %}"
+                                 alt="icon">
+                            <span class="nav-main-link-name">&nbsp;&nbsp;User Setup</span>
+                        </a>
+                        <ul class="nav-main-submenu">
+{#                            {% for i in  user_operation_obj %}#}
+{#                                {% if i.fk_screen.screen_url == "screens_modules" %}#}
+{#                                    {% if i.view_data == "Y" %}#}
+                                        <li class="nav-main-item">
+                                            <a class="nav-main-link" href="{% url 'screens-modules' %}"
+                                               id="ScreensModulesNavPage">
+                                                <span class="nav-main-link-name" style="padding-left: 10px;">Add Screens Modules</span>
+                                            </a>
+                                        </li>
+{#                                    {% endif %}#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+{#                            {% for i in  user_operation_obj %}#}
+{#                                {% if i.fk_screen.screen_url == "manage_user" %}#}
+{#                                    {% if i.view_data == "Y" %}#}
+                                        <li class="nav-main-item">
+                                            <a class="nav-main-link" href="{% url 'manage-user' %}"
+                                               id="ManageUserNavPage">
+                                                <span class="nav-main-link-name" style="padding-left: 10px;">Manage User</span>
+                                            </a>
+                                        </li>
+{#                                    {% endif %}#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+                        </ul>
+                    </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="/leave-application/" id="LeaveApplicationNavPage">
+                            <img class="icon-size" src="{% static "media/dashboard-icons/icon-leaveapplication.png" %}"
+                                 alt="icon">
+                            <span class="nav-main-link-name">&nbsp;&nbsp;Leave Application</span>
+                        </a>
+                    </li>
                     <li class="nav-main-item">
                         <a class="nav-main-link" href="/attendance/" id="AttendanceNavPage">
                             <img class="icon-size" src="{% static "media/dashboard-icons/icon-attendance.png" %}"
@@ -261,213 +302,215 @@
                         </ul>
                     </li>
                     <li class="nav-main-item" id="MastersMainNavPage">
-                    <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                       aria-expanded="false" href="#">
-                        <img class="icon-size" src="{% static "media/dashboard-icons/icons-mastertable.png" %}"
-                             alt="icon">
-                        <span class="nav-main-link-name">&nbsp;&nbsp;Master Tables</span>
-                    </a>
-                    <ul class="nav-main-submenu">
-                        {#                        {% for i in  useroperations_obj %}#}
-                        {#                            {% if i.fk_screen.screen_url == "Subject" %}#}
-                        {#                                {% if i.view_data == "Y" %}#}
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{% url 'subject_views' %}" id="SubjectNavPage">
-                                <span class="nav-main-link-name" style="padding-left: 10px;">Subject</span>
-                            </a>
-                        </li>
-                        {#                                {% endif %}#}
-                        {#                            {% endif %}#}
-                        {#                        {% endfor %}#}
-                        {#                        {% for i in  useroperations_obj %}#}
-                        {#                            {% if i.fk_screen.screen_url == "Courses" %}#}
-                        {#                                {% if i.view_data == "Y" %}#}
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{% url 'course_views' %}" id="CoursesNavPage">
-                                <span class="nav-main-link-name" style="padding-left: 10px;">Course</span>
-                            </a>
-                        </li>
-                        {#                                {% endif %}#}
-                        {#                            {% endif %}#}
-                        {#                        {% endfor %}#}
-                        {#                        {% for i in  useroperations_obj %}#}
-                        {#                            {% if i.fk_screen.screen_url == "StreamOrFields" %}#}
-                        {#                                {% if i.view_data == "Y" %}#}
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{% url 'stream_or_field' %}"
-                               id="StreamOrFieldsNavPage">
+                        <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                           aria-expanded="false" href="#">
+                            <img class="icon-size" src="{% static "media/dashboard-icons/icons-mastertable.png" %}"
+                                 alt="icon">
+                            <span class="nav-main-link-name">&nbsp;&nbsp;Master Tables</span>
+                        </a>
+                        <ul class="nav-main-submenu">
+                            {#                        {% for i in  user_operation_obj %}#}
+                            {#                            {% if i.fk_screen.screen_url == "Subject" %}#}
+                            {#                                {% if i.view_data == "Y" %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'subject_views' %}" id="SubjectNavPage">
+                                    <span class="nav-main-link-name" style="padding-left: 10px;">Subject</span>
+                                </a>
+                            </li>
+                            {#                                {% endif %}#}
+                            {#                            {% endif %}#}
+                            {#                        {% endfor %}#}
+                            {#                        {% for i in  user_operation_obj %}#}
+                            {#                            {% if i.fk_screen.screen_url == "Courses" %}#}
+                            {#                                {% if i.view_data == "Y" %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'course_views' %}" id="CoursesNavPage">
+                                    <span class="nav-main-link-name" style="padding-left: 10px;">Course</span>
+                                </a>
+                            </li>
+                            {#                                {% endif %}#}
+                            {#                            {% endif %}#}
+                            {#                        {% endfor %}#}
+                            {#                        {% for i in  user_operation_obj %}#}
+                            {#                            {% if i.fk_screen.screen_url == "StreamOrFields" %}#}
+                            {#                                {% if i.view_data == "Y" %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'stream_or_field' %}"
+                                   id="StreamOrFieldsNavPage">
                                     <span class="nav-main-link-name" style="padding-left: 10px;">College
                                         Stream/Fields</span>
-                            </a>
-                        </li>
-                        {#                                {% endif %}#}
-                        {#                            {% endif %}#}
-                        {#                        {% endfor %}#}
-                        {#                        {% for i in  useroperations_obj %}#}
-                        {#                            {% if i.fk_screen.screen_url == "Degrees" %}#}
-                        {#                                {% if i.view_data == "Y" %}#}
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{% url 'degree_views' %}" id="DegreesNavPage">
-                                <span class="nav-main-link-name" style="padding-left: 10px;">Degrees</span>
-                            </a>
-                        </li>
-                        {#                                {% endif %}#}
-                        {#                            {% endif %}#}
-                        {#                        {% endfor %}#}
-                        {#                        {% for i in  useroperations_obj %}#}
-                        {#                            {% if i.fk_screen.screen_url == "DegreeStreamOrFields" %}#}
-                        {#                                {% if i.view_data == "Y" %}#}
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{% url 'degree_stream_or_field' %}"
-                               id="DegreeStreamOrFieldsNavPage">
+                                </a>
+                            </li>
+                            {#                                {% endif %}#}
+                            {#                            {% endif %}#}
+                            {#                        {% endfor %}#}
+                            {#                        {% for i in  user_operation_obj %}#}
+                            {#                            {% if i.fk_screen.screen_url == "Degrees" %}#}
+                            {#                                {% if i.view_data == "Y" %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'degree_views' %}" id="DegreesNavPage">
+                                    <span class="nav-main-link-name" style="padding-left: 10px;">Degrees</span>
+                                </a>
+                            </li>
+                            {#                                {% endif %}#}
+                            {#                            {% endif %}#}
+                            {#                        {% endfor %}#}
+                            {#                        {% for i in  user_operation_obj %}#}
+                            {#                            {% if i.fk_screen.screen_url == "DegreeStreamOrFields" %}#}
+                            {#                                {% if i.view_data == "Y" %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'degree_stream_or_field' %}"
+                                   id="DegreeStreamOrFieldsNavPage">
                                     <span class="nav-main-link-name" style="padding-left: 10px;">Degree
                                         Stream/Fields</span>
-                            </a>
-                        </li>
-                        {#                                {% endif %}#}
-                        {#                            {% endif %}#}
-                        {#                        {% endfor %}#}
-                        {#                        {% for i in  useroperations_obj %}#}
-                        {#                            {% if i.fk_screen.screen_url == "Semester" %}#}
-                        {#                                {% if i.view_data == "Y" %}#}
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{% url 'semester_views' %}" id="SemesterNavPage">
+                                </a>
+                            </li>
+                            {#                                {% endif %}#}
+                            {#                            {% endif %}#}
+                            {#                        {% endfor %}#}
+                            {#                        {% for i in  user_operation_obj %}#}
+                            {#                            {% if i.fk_screen.screen_url == "Semester" %}#}
+                            {#                                {% if i.view_data == "Y" %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'semester_views' %}" id="SemesterNavPage">
                                             <span class="nav-main-link-name"
                                                   style="padding-left: 10px;">Semesters</span>
-                            </a>
-                        </li>
-                        {#                                {% endif %}#}
-                        {#                            {% endif %}#}
-                        {#                        {% endfor %}#}
-                        {#                        {% for i in  useroperations_obj %}#}
-                        {#                            {% if i.fk_screen.screen_url == "Section" %}#}
-                        {#                                {% if i.view_data == "Y" %}#}
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{% url 'section_view' %}" id="SectionNavPage">
-                                <span class="nav-main-link-name" style="padding-left: 10px;">Sections</span>
-                            </a>
-                        </li>
-                        {#                                {% endif %}#}
-                        {#                            {% endif %}#}
-                        {#                        {% endfor %}#}
-                        {#                        {% for i in  useroperations_obj %}#}
-                        {#                            {% if i.fk_screen.screen_url == "Categorys" %}#}
-                        {#                                {% if i.view_data == "Y" %}#}
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{% url 'category_views' %}" id="CategorysNavPage">
+                                </a>
+                            </li>
+                            {#                                {% endif %}#}
+                            {#                            {% endif %}#}
+                            {#                        {% endfor %}#}
+                            {#                        {% for i in  user_operation_obj %}#}
+                            {#                            {% if i.fk_screen.screen_url == "Section" %}#}
+                            {#                                {% if i.view_data == "Y" %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'section_view' %}" id="SectionNavPage">
+                                    <span class="nav-main-link-name" style="padding-left: 10px;">Sections</span>
+                                </a>
+                            </li>
+                            {#                                {% endif %}#}
+                            {#                            {% endif %}#}
+                            {#                        {% endfor %}#}
+                            {#                        {% for i in  user_operation_obj %}#}
+                            {#                            {% if i.fk_screen.screen_url == "Categorys" %}#}
+                            {#                                {% if i.view_data == "Y" %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'category_views' %}" id="CategorysNavPage">
                                             <span class="nav-main-link-name"
                                                   style="padding-left: 10px;">Categories</span>
-                            </a>
-                        </li>
-                        {#                                {% endif %}#}
-                        {#                            {% endif %}#}
-                        {#                        {% endfor %}#}
-                        {#                        {% for i in  useroperations_obj %}#}
-                        {#                            {% if i.fk_screen.screen_url == "IFReserved" %}#}
-                        {#                                {% if i.view_data == "Y" %}#}
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{% url 'reserved_category_views' %}" id="IFReservedNavPage">
+                                </a>
+                            </li>
+                            {#                                {% endif %}#}
+                            {#                            {% endif %}#}
+                            {#                        {% endfor %}#}
+                            {#                        {% for i in  user_operation_obj %}#}
+                            {#                            {% if i.fk_screen.screen_url == "IFReserved" %}#}
+                            {#                                {% if i.view_data == "Y" %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'reserved_category_views' %}"
+                                   id="IFReservedNavPage">
                                     <span class="nav-main-link-name" style="padding-left: 10px;">Reserved
                                         Categories</span>
-                            </a>
-                        </li>
-                        {#                                {% endif %}#}
-                        {#                            {% endif %}#}
-                        {#                        {% endfor %}#}
-                        {#                        {% for i in  useroperations_obj %}#}
-                        {#                            {% if i.fk_screen.screen_url == "Applyingconcession" %}#}
-                        {#                                {% if i.view_data == "Y" %}#}
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{% url 'apply_concession' %}"
-                               id="ApplyingconcessionNavPage">
+                                </a>
+                            </li>
+                            {#                                {% endif %}#}
+                            {#                            {% endif %}#}
+                            {#                        {% endfor %}#}
+                            {#                        {% for i in  user_operation_obj %}#}
+                            {#                            {% if i.fk_screen.screen_url == "Applyingconcession" %}#}
+                            {#                                {% if i.view_data == "Y" %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'apply_concession' %}"
+                                   id="ApplyingconcessionNavPage">
                                             <span class="nav-main-link-name"
                                                   style="padding-left: 10px;">Concessions</span>
-                            </a>
-                        </li>
-                        {#                                {% endif %}#}
-                        {#                            {% endif %}#}
-                        {#                        {% endfor %}#}
-                        {#                        {% for i in  useroperations_obj %}#}
-                        {#                            {% if i.fk_screen.screen_url == "Casts" %}#}
-                        {#                                {% if i.view_data == "Y" %}#}
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{% url 'caste' %}" id="CastsNavPage">
-                                <span class="nav-main-link-name" style="padding-left: 10px;">Castes</span>
-                            </a>
-                        </li>
-                        {#                                {% endif %}#}
-                        {#                            {% endif %}#}
-                        {#                        {% endfor %}#}
-                        {#                        {% for i in  useroperations_obj %}#}
-                        {#                            {% if i.fk_screen.screen_url == "Subcasts" %}#}
-                        {#                                {% if i.view_data == "Y" %}#}
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{% url 'sub_caste' %}" id="SubcastsNavPage">
+                                </a>
+                            </li>
+                            {#                                {% endif %}#}
+                            {#                            {% endif %}#}
+                            {#                        {% endfor %}#}
+                            {#                        {% for i in  user_operation_obj %}#}
+                            {#                            {% if i.fk_screen.screen_url == "Casts" %}#}
+                            {#                                {% if i.view_data == "Y" %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'caste' %}" id="CastsNavPage">
+                                    <span class="nav-main-link-name" style="padding-left: 10px;">Castes</span>
+                                </a>
+                            </li>
+                            {#                                {% endif %}#}
+                            {#                            {% endif %}#}
+                            {#                        {% endfor %}#}
+                            {#                        {% for i in  user_operation_obj %}#}
+                            {#                            {% if i.fk_screen.screen_url == "Subcasts" %}#}
+                            {#                                {% if i.view_data == "Y" %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'sub_caste' %}" id="SubcastsNavPage">
                                             <span class="nav-main-link-name"
                                                   style="padding-left: 10px;">Sub Castes</span>
-                            </a>
-                        </li>
-                        {#                                {% endif %}#}
-                        {#                            {% endif %}#}
-                        {#                        {% endfor %}#}
-                        {#                        {% for i in  useroperations_obj %}#}
-                        {#                            {% if i.fk_screen.screen_url == "States" %}#}
-                        {#                                {% if i.view_data == "Y" %}#}
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{% url 'state' %}" id="StatesNavPage">
-                                <span class="nav-main-link-name" style="padding-left: 10px;">States</span>
-                            </a>
-                        </li>
-                        {#                                {% endif %}#}
-                        {#                            {% endif %}#}
-                        {#                        {% endfor %}#}
-                        {#                        {% for i in  useroperations_obj %}#}
-                        {#                            {% if i.fk_screen.screen_url == "Citys" %}#}
-                        {#                                {% if i.view_data == "Y" %}#}
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{% url 'city_views' %}" id="CitysNavPage">
-                                <span class="nav-main-link-name" style="padding-left: 10px;">Cities</span>
-                            </a>
-                        </li>
-                        {#                                {% endif %}#}
-                        {#                            {% endif %}#}
-                        {#                        {% endfor %}#}
-                        {#                        {% for i in  useroperations_obj %}#}
-                        {#                            {% if i.fk_screen.screen_url == "Districts" %}#}
-                        {#                                {% if i.view_data == "Y" %}#}
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{% url 'district' %}" id="DistrictsNavPage">
+                                </a>
+                            </li>
+                            {#                                {% endif %}#}
+                            {#                            {% endif %}#}
+                            {#                        {% endfor %}#}
+                            {#                        {% for i in  user_operation_obj %}#}
+                            {#                            {% if i.fk_screen.screen_url == "States" %}#}
+                            {#                                {% if i.view_data == "Y" %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'state' %}" id="StatesNavPage">
+                                    <span class="nav-main-link-name" style="padding-left: 10px;">States</span>
+                                </a>
+                            </li>
+                            {#                                {% endif %}#}
+                            {#                            {% endif %}#}
+                            {#                        {% endfor %}#}
+                            {#                        {% for i in  user_operation_obj %}#}
+                            {#                            {% if i.fk_screen.screen_url == "Citys" %}#}
+                            {#                                {% if i.view_data == "Y" %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'city_views' %}" id="CitysNavPage">
+                                    <span class="nav-main-link-name" style="padding-left: 10px;">Cities</span>
+                                </a>
+                            </li>
+                            {#                                {% endif %}#}
+                            {#                            {% endif %}#}
+                            {#                        {% endfor %}#}
+                            {#                        {% for i in  user_operation_obj %}#}
+                            {#                            {% if i.fk_screen.screen_url == "Districts" %}#}
+                            {#                                {% if i.view_data == "Y" %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'district' %}" id="DistrictsNavPage">
                                             <span class="nav-main-link-name"
                                                   style="padding-left: 10px;">Districts</span>
-                            </a>
-                        </li>
-                        {#                                {% endif %}#}
-                        {#                            {% endif %}#}
-                        {#                        {% endfor %}#}
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{% url 'academic_session' %}" id="Academic_SessionNavPage">
-                                <span class="nav-main-link-name" style="padding-left: 10px;">Academic Session</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{% url 'company_type' %}" id="CompanyTypesNavPage">
-                                <span class="nav-main-link-name" style="padding-left: 10px;">Company Types</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{% url 'job_type' %}" id="JobTypesNavPage">
-                                <span class="nav-main-link-name" style="padding-left: 10px;">Job Types</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{% url 'selection_process_test' %}"
-                               id="SelectionProcessTestsNavPage">
+                                </a>
+                            </li>
+                            {#                                {% endif %}#}
+                            {#                            {% endif %}#}
+                            {#                        {% endfor %}#}
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'academic_session' %}"
+                                   id="Academic_SessionNavPage">
+                                    <span class="nav-main-link-name" style="padding-left: 10px;">Academic Session</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'company_type' %}" id="CompanyTypesNavPage">
+                                    <span class="nav-main-link-name" style="padding-left: 10px;">Company Types</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'job_type' %}" id="JobTypesNavPage">
+                                    <span class="nav-main-link-name" style="padding-left: 10px;">Job Types</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="{% url 'selection_process_test' %}"
+                                   id="SelectionProcessTestsNavPage">
                                 <span class="nav-main-link-name"
                                       style="padding-left: 10px;">Selection Process Test</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="nav-main-item" id="StudentManagementMainNavPage">
                         <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                            aria-expanded="false" href="#">
@@ -551,93 +594,94 @@
                         </ul>
                     </li>
                     <li class="nav-main-item">
-                    <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                       aria-expanded="false" href="#">
-                        <i class="nav-main-link-icon ">
-                             <img class="icon-size" src="{% static "media/dashboard-icons/icon-library.png" %}"
+                        <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                           aria-expanded="false" href="#">
+                            <i class="nav-main-link-icon ">
+                                <img class="icon-size" src="{% static "media/dashboard-icons/icon-library.png" %}"
+                                     alt="icon">
+                            </i>
+                            <span class="nav-main-link-name">Library</span>
+                        </a>
+                        <ul class="nav-main-submenu">
+
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="/book-purchase/">
+                                    <i class="nav-main-link-icon fa fa-book"></i>
+                                    <span class="nav-main-link-name">Books Purchase</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="/book-issue/">
+                                    <i class="nav-main-link-icon fa fa-book"></i>
+                                    <span class="nav-main-link-name">Books Issue</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="/book-return/">
+                                    <i class="nav-main-link-icon fa fa-book"></i>
+                                    <span class="nav-main-link-name">Books Return</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="/book-scrap/">
+                                    <i class="nav-main-link-icon fa fa-book"></i>
+                                    <span class="nav-main-link-name">Books Scrap</span>
+                                </a>
+                            </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
+                                   aria-haspopup="true"
+                                   aria-expanded="false" href="#">
+                                    <i class="nav-main-link-icon si si-energy"></i>
+                                    <span class="nav-main-link-name">Reports</span>
+                                </a>
+                                <ul class="nav-main-submenu">
+
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link" href="/available-book-report/">
+                                            <i class="nav-main-link-icon fa fa-book"></i>
+                                            <span class="nav-main-link-name">Books Available</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link" href="/issued-book-report/">
+                                            <i class="nav-main-link-icon fa fa-book"></i>
+                                            <span class="nav-main-link-name">Books Issued</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link" href="/returned-book-report/">
+                                            <i class="nav-main-link-icon fa fa-book"></i>
+                                            <span class="nav-main-link-name">Books Returned</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link" href="/scrapped-book-report/">
+                                            <i class="nav-main-link-icon fa fa-book"></i>
+                                            <span class="nav-main-link-name">Books Scrapped</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="/notice/" id="NoticeNavPage">
+                            <img class="icon-size" src="{% static "media/dashboard-icons/icon-notice.png" %}"
                                  alt="icon">
-                        </i>
-                        <span class="nav-main-link-name">Library</span>
-                    </a>
-                    <ul class="nav-main-submenu">
-
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="/book-purchase/">
-                                <i class="nav-main-link-icon fa fa-book"></i>
-                                <span class="nav-main-link-name">Books Purchase</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="/book-issue/">
-                                <i class="nav-main-link-icon fa fa-book"></i>
-                                <span class="nav-main-link-name">Books Issue</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="/book-return/">
-                                <i class="nav-main-link-icon fa fa-book"></i>
-                                <span class="nav-main-link-name">Books Return</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="/book-scrap/">
-                                <i class="nav-main-link-icon fa fa-book"></i>
-                                <span class="nav-main-link-name">Books Scrap</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
-                               aria-expanded="false" href="#">
-                                <i class="nav-main-link-icon si si-energy"></i>
-                                <span class="nav-main-link-name">Reports</span>
-                            </a>
-                            <ul class="nav-main-submenu">
-
-                                <li class="nav-main-item">
-                                    <a class="nav-main-link" href="/available-book-report/">
-                                        <i class="nav-main-link-icon fa fa-book"></i>
-                                        <span class="nav-main-link-name">Books Available</span>
-                                    </a>
-                                </li>
-                                <li class="nav-main-item">
-                                    <a class="nav-main-link" href="/issued-book-report/">
-                                        <i class="nav-main-link-icon fa fa-book"></i>
-                                        <span class="nav-main-link-name">Books Issued</span>
-                                    </a>
-                                </li>
-                                <li class="nav-main-item">
-                                    <a class="nav-main-link" href="/returned-book-report/">
-                                        <i class="nav-main-link-icon fa fa-book"></i>
-                                        <span class="nav-main-link-name">Books Returned</span>
-                                    </a>
-                                </li>
-                                <li class="nav-main-item">
-                                    <a class="nav-main-link" href="/scrapped-book-report/">
-                                        <i class="nav-main-link-icon fa fa-book"></i>
-                                        <span class="nav-main-link-name">Books Scrapped</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link" href="/notice/" id="NoticeNavPage">
-                        <img class="icon-size" src="{% static "media/dashboard-icons/icon-notice.png" %}"
-                             alt="icon">
-                        <span class="nav-main-link-name">&nbsp;&nbsp;Notice</span>
-                    </a>
-                </li>
+                            <span class="nav-main-link-name">&nbsp;&nbsp;Notice</span>
+                        </a>
+                    </li>
                     {#                    {% endif %}#}
                     {#                    {% endif %}#}
                     {#                    {% endfor %}#}
-                     <li class="nav-main-item">
-                            <a class="nav-main-link" href="/students-event/" id="NoticeNavPage">
-                                <img class="icon-size" src="{% static "media/dashboard-icons/icon-events.png" %}"
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="/students-event/" id="NoticeNavPage">
+                            <img class="icon-size" src="{% static "media/dashboard-icons/icon-events.png" %}"
                                  alt="icon">
-                                <span class="nav-main-link-name">Events</span>
-                            </a>
-                     </li>
+                            <span class="nav-main-link-name">Events</span>
+                        </a>
+                    </li>
                 {% endif %}
             </ul>
         </div>

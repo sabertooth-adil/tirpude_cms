@@ -1,0 +1,282 @@
+{% extends 'index_base.html' %}
+{% block content %}
+    {% load static %}
+    {#{% for u in  user_operation_obj %}#}
+    {#{% if u.fk_screen.screen_url == "manage_user" %}#}
+    {#{% if u.view_data == "Y" %}#}
+    <div class="bg-body-light">
+        <div class="content" style="padding: 10px !important;">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+                <h1 class="flex-sm-fill h3 my-2">Manage Roles</h1>
+                <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                    {#                {% for u in  user_operation_obj %}#}
+                    {#                    {% if u.fk_screen.screen_url == "manage_user" %}#}
+                    {#                        {% if u.save_data == "Y" %}#}
+                    <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAddCourse_Div()"
+                            id="ShowAddCourse_Button">Add Role
+                    </button>
+                    {#                        {% endif %}#}
+                    {#                    {% endif %}#}
+                    {#                {% endfor %}#}
+                    <button class="btn btn-primary btn-sm submit-btn" onclick="ShowAllCourse_Div()"
+                            id="ShowAllCourse_Button" style="display: none;">All Roles
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="user_role_obj_id">
+    <div class="content" style="padding: 10px !important;">
+        <div class="block">
+            <div class="block-content block-content-full">
+                <div id="ShowAddCourse_Div" style="display: none;">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-1 col-lg-1"></div>
+                        <div class="col-xs-12 col-md-10 col-lg-10">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-4 col-lg-4" style="padding-left: 0px;">
+                                    <div class="form-group">
+                                        <label class="form-control-label text-right">User Role<span
+                                                class="text-danger">*</span>:</label>
+                                        <input type="text" class="form-control form-control-sm form-control-alternative"
+                                               id="user_role" name="user_role">
+                                        <span style="display:none;color:red;font-size: 12px;" id="err_user_role">Please Enter User Role</span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-1 col-lg-1">
+                                    <button class="btn btn-success btn-sm" onclick="add_user_role()"
+                                            id="add_userrole_button" style="margin-top: 25%;">Save
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="RightsTable_Div" style="display: none;">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-1 col-lg-1"></div>
+                    </div>
+                </div>
+                <div class="table-responsive" id="ShowAllCourse_Div">
+                    <table class="table table-vcenter" id="mydatatable">
+                        <thead class="thead-light">
+                        <tr>
+                            <th class="text-center" style="width: 10% !important;">Sr No.</th>
+                            <th>Roles</th>
+                            {#                        {% for u in  user_operation_obj %}#}
+                            {#                            {% if u.fk_screen.screen_url == "manage_user" %}#}
+                            {#                                {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                            <th class="text-center" style="width: 10% !important;">Actions</th>
+                            {#                                {% endif %}#}
+                            {#                            {% endif %}#}
+                            {#                        {% endfor %}#}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in user_role_obj %}
+                            <tr>
+                                <td class="text-center font-size-sm">{{ forloop.counter }}</td>
+                                <td class="font-w600 font-size-sm">{{ i.user_role }}</td>
+                                {#                        {% for u in  user_operation_obj %}#}
+                                {#                            {% if u.fk_screen.screen_url == "manage_user" %}#}
+                                {#                                {% if u.edit_data == "Y" or u.delete_data == "Y" %}#}
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        {#                                            {% if u.edit_data == "Y" %}#}
+                                        <a href="{% url 'edit-manage-user' id=i.id %}">
+                                            <button type="button"
+                                                    class="btn btn-sm btn-outline-primary js-tooltip-enabled"
+                                                    data-toggle="tooltip" title="" data-original-title="Edit Client">
+                                                <i class="fa fa-fw fa-pencil-alt"></i>
+                                            </button>
+                                        </a>
+                                        {#                                            {% endif %}#}
+                                        {#                                            {% if u.delete_data == "Y" %}#}
+                                        <button type="button" class="btn btn-sm btn-outline-danger js-tooltip-enabled"
+                                                data-toggle="tooltip" title="" data-original-title="Remove Client"
+                                                onclick="delete_manage_role({{ i.id }})">
+                                            <i class="fa fa-fw fa-times"></i>
+                                        </button>
+                                        {#                                            {% endif %}#}
+                                    </div>
+                                </td>
+                                {#                                {% endif %}#}
+                                {#                            {% endif %}#}
+                                {#                        {% endfor %}#}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#UserSetupMainNavPage').addClass('open');
+            $('#ManageUserNavPage').addClass('active');
+            $('#mydatatable').DataTable();
+            $("#AssignmentModal").on("hidden.bs.modal", function () {
+                location.reload();
+            });
+        });
+
+        function delete_manage_role(id) {
+            console.log(id)
+            swal({
+                title: "Are you sure?",
+                text: "To delete this User Role!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: "/delete-manage-role/",
+                            method: "POST",
+                            data: {
+                                "id": id
+                            },
+                            success: function (response) {
+                                if (response == "success") {
+                                    swal("User Role has been successfully Deleted!", {
+                                        icon: "success",
+                                        button: "Ok",
+                                        closeOnClickOutside: false,
+                                    }).then(function () {
+                                        location.reload();
+                                    });
+                                }
+                            }
+                        })
+                    }
+                    else {
+                        swal("User Role is NOT deleted!");
+                    }
+                });
+        }
+
+        function opensubtables(t, id) {
+            if (t.checked) {
+                $(".subtable_" + id).show();
+            } else {
+                $(".subtable_" + id).hide();
+            }
+        }
+
+        function ShowAddCourse_Div() {
+            $("#ShowAddCourse_Div").show();
+            $("#ShowAllCourse_Div").hide();
+            $("#ShowAddCourse_Button").hide();
+            $("#ShowAllCourse_Button").show();
+            $("#addcourse_button").show();
+            $("#updatecourse_button").hide();
+        }
+
+        function ShowAllCourse_Div() {
+            $("#ShowAddCourse_Div").hide();
+            $("#ShowAllCourse_Div").show();
+            $("#ShowAddCourse_Button").show();
+            $("#ShowAllCourse_Button").hide();
+            $("#ShowUpdateCourse_Div").hide();
+            $("#addcourse_button").hide();
+            $("#updatecourse_button").hide();
+        }
+
+        function add_user_role() {
+            var user_role = $("#user_role").val();
+            if (user_role == "") {
+                $("#err_user_role").show();
+            }
+            else {
+                $.ajax({
+                    url: "/add_user_role/",
+                    method: "POST",
+                    data: {
+                        "user_role": user_role
+                    },
+                    success: function (response) {
+                        console.log(response)
+                        $("#RightsTable_Div").show();
+                        $("#add_userrole_button").hide();
+                        $("#RightsTable_Div").html("");
+                        $("#RightsTable_Div").html(response);
+                    }
+                })
+            }
+        }
+
+        function update_userright() {
+            var Special_value = "";
+            user_role_obj_id = $("#user_role_obj_id").val();
+            var table_body_id = "UserRights_Table";
+            val = document.getElementById(table_body_id).rows[0].cells[0].firstChild;
+            console.log(val)
+            var i;
+            var len = document.getElementById(table_body_id).rows.length;
+            console.log(len)
+            var data_item_table = {};
+            for (i = 1; i < len; i++) {
+                console.log(Special_value)
+                data_value = document.getElementById(table_body_id).rows[i].cells[0].firstChild.getAttribute("data_value")
+                if (data_value == "master_module") {
+                    if (document.getElementById(table_body_id).rows[i].cells[1].children[0].checked == true) {
+                        Special_value = true
+                    } else {
+                        Special_value = false
+                    }
+                    data_item_table[i - 1] = {
+                        id: document.getElementById(table_body_id).rows[i].cells[0].firstChild.value,
+                        Special: document.getElementById(table_body_id).rows[i].cells[1].children[0].checked,
+                        View: "",
+                        Edit: "",
+                        Save: "",
+                        Delete: "",
+                    }
+                }
+                else if (data_value == "module") {
+                    data_item_table[i - 1] = {
+                        id: document.getElementById(table_body_id).rows[i].cells[0].firstChild.value,
+                        Special: Special_value,
+                        View: document.getElementById(table_body_id).rows[i].cells[2].children[0].checked,
+                        Edit: document.getElementById(table_body_id).rows[i].cells[3].children[0].checked,
+                        Save: document.getElementById(table_body_id).rows[i].cells[4].children[0].checked,
+                        Delete: document.getElementById(table_body_id).rows[i].cells[5].children[0].checked,
+                    }
+                }
+                else {
+                    data_item_table[i - 1] = {
+                        id: document.getElementById(table_body_id).rows[i].cells[1].firstChild.value,
+                        Special: Special_value,
+                        View: document.getElementById(table_body_id).rows[i].cells[3].children[0].checked,
+                        Edit: document.getElementById(table_body_id).rows[i].cells[4].children[0].checked,
+                        Save: document.getElementById(table_body_id).rows[i].cells[5].children[0].checked,
+                        Delete: document.getElementById(table_body_id).rows[i].cells[6].children[0].checked,
+                    }
+                }
+            }
+            console.log(data_item_table)
+            $.ajax({
+                method: "POST",
+                url: "/update-userright/",
+                data: {
+                    'user_role_obj_id': user_role_obj_id,
+                    'user_operation': JSON.stringify(data_item_table)
+                },
+                success: function (response) {
+                    swal("User Rights has been Updated Successfully!", {
+                        icon: "success",
+                        button: "Ok",
+                        closeOnClickOutside: false,
+                    }).then(function () {
+                        location.reload();
+                    });
+                }
+            })
+        }
+
+    </script>
+    {#{% endif %}#}
+    {#{% endif %}#}
+    {#{% endfor %}#}
+{% endblock content %}
+

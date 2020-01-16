@@ -1,0 +1,122 @@
+<div class="block-header" style="padding: 0%;">
+    <h3 class="block-title">Rights Table</h3>
+    <div class="block-options">
+        <div class="block-options-item">
+            <button class="btn btn-info btn-sm" onclick="update_userright()"
+                    id="add_userrole_button" style="margin-top: 25%;">Submit
+            </button>
+        </div>
+    </div>
+</div>
+<table class="js-table-sections table table-hover table-vcenter table-bordered" id="UserRights_Table">
+    <thead class="thead-light">
+    <tr>
+        <th class="text-center">Screens</th>
+        <th class="text-center">Menu</th>
+        <th class="text-center">View</th>
+        <th class="text-center">Edit</th>
+        <th class="text-center">Save</th>
+        <th class="text-center">Delete</th>
+    </tr>
+    </thead>
+    {% for u in user_operation_obj %}
+        {% if u.fk_module.id in modules_list %}
+            {% if u.status == "master_module" %}
+                <tbody>
+                    <tr style="background-color: #d0cece">
+                        <td class="text-center"><input type="hidden" value="{{u.id}}" data_value="master_module">{{u.fk_module.module_name}}
+                        </td>
+                        <td class="text-center">
+                            {% if u.special_data == 'Y' %}
+                                <input type="checkbox" name="rights_checkbox" id="rights_checkbox" class="rights_checkbox_{{u.fk_module.id}}" onchange="opensubtables(this,{{u.fk_module.id}})" checked>
+                            {% else %}
+                                <input type="checkbox" name="rights_checkbox" id="rights_checkbox" class="rights_checkbox_{{u.fk_module.id}}" onchange="opensubtables(this,{{u.fk_module.id}})">
+                            {% endif %}
+                        </td>
+                        <td colspan="4"></td>
+                    </tr>
+                </tbody>
+            {% endif %}
+            {% if u.status == "screen" %}
+                    {% if u.special_data == 'Y' %}
+                        <tbody class="subtable_{{u.fk_module.id}}">
+                    {% else %}
+                        <tbody class="subtable_{{u.fk_module.id}}" style="display: none;">
+                    {% endif %}
+                    <tr>
+                        <td class="text-center"><input type="hidden" value="{{u.id}}" data_value="module">{{u.fk_screen.screen_name}}
+                        </td>
+                        <td></td>
+                        <td class="text-center">
+                            {% if u.view_data == 'Y' %}
+                                <input type="checkbox" name="rights_checkbox" id="rights_checkbox" checked>
+                            {% else %}
+                                <input type="checkbox" name="rights_checkbox" id="rights_checkbox">
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            {% if u.edit_data == 'Y' %}
+                                <input type="checkbox" name="rights_checkbox" id="rights_checkbox" checked>
+                            {% else %}
+                                <input type="checkbox" name="rights_checkbox" id="rights_checkbox">
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            {% if u.save_data == 'Y' %}
+                                <input type="checkbox" name="rights_checkbox" id="rights_checkbox" checked>
+                            {% else %}
+                                <input type="checkbox" name="rights_checkbox" id="rights_checkbox">
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            {% if u.delete_data == 'Y' %}
+                                <input type="checkbox" name="rights_checkbox" id="rights_checkbox" checked>
+                            {% else %}
+                                <input type="checkbox" name="rights_checkbox" id="rights_checkbox">
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+    {% for u in user_operation_obj %}
+        {% if u.status == "module" %}
+            <tbody>
+                <tr>
+                    <td class="text-center"><input type="hidden" value="{{u.id}}" data_value="module">{{u.fk_module.module_name}}
+                    </td>
+                    <td></td>
+                    <td class="text-center">
+                        {% if u.view_data == 'Y' %}
+                            <input type="checkbox" name="rights_checkbox" id="rights_checkbox" checked>
+                        {% else %}
+                            <input type="checkbox" name="rights_checkbox" id="rights_checkbox">
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if u.edit_data == 'Y' %}
+                            <input type="checkbox" name="rights_checkbox" id="rights_checkbox" checked>
+                        {% else %}
+                            <input type="checkbox" name="rights_checkbox" id="rights_checkbox">
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if u.save_data == 'Y' %}
+                            <input type="checkbox" name="rights_checkbox" id="rights_checkbox" checked>
+                        {% else %}
+                            <input type="checkbox" name="rights_checkbox" id="rights_checkbox">
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if u.delete_data == 'Y' %}
+                            <input type="checkbox" name="rights_checkbox" id="rights_checkbox" checked>
+                        {% else %}
+                            <input type="checkbox" name="rights_checkbox" id="rights_checkbox">
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        {% endif %}
+    {% endfor %}
+</table>

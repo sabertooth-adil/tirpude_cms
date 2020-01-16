@@ -1,0 +1,407 @@
+{% extends 'index_base.html' %}
+{% block content %}
+{% load static %}
+<div class="content" style="padding: 10px !important;">
+    <div class="block">
+        <div class="table-responsive" id="ShowAllCourse_Div">
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 col-xs-4">
+                    <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center" style="padding-left: 3%;padding-right: 3%;">
+                        <h1 class="flex-sm-fill h3 my-2">Modules</h1>
+                        <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                            <button class="btn btn-primary btn-sm submit-btn" onclick="add_module_name_button()">Add Module</button>
+                        </nav>
+                    </div>
+                    <table class="table table-vcenter" id="moduledatatable">
+                        <thead class="thead-light">
+                            <tr>
+                                <th class="text-center">Sr No.</th>
+                                <th>Module</th>
+                                <th>url</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in modules_obj %}
+                            <tr>
+                                <td class="text-center font-size-sm">{{forloop.counter}}</td>
+                                <td class="font-w600 font-size-sm">{{ i.module_name }}</td>
+                                <td class="font-w600 font-size-sm">{{ i.module_url }}</td>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-primary js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Edit Client" onclick="edit_module({{i.id}})">
+                                            <i class="fa fa-fw fa-pencil-alt"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-danger js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Remove Client" onclick="delete_module({{i.id}})">
+                                            <i class="fa fa-fw fa-times"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-lg-8 col-sm-6 col-xs-8">
+                    <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center" style="padding-left: 1.5%;padding-right: 1.5%;">
+                        <h1 class="flex-sm-fill h3 my-2">Screens</h1>
+                        <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                            <button class="btn btn-primary btn-sm submit-btn" onclick="add_screenname_button()">Add Screen</button>
+                        </nav>
+                    </div>
+                    <table class="table table-vcenter" id="screensdatatable">
+                        <thead class="thead-light">
+                            <tr>
+                                <th class="text-center" style="width: 10% !important;">Sr No.</th>
+                                <th>Module</th>
+                                <th>Screen</th>
+                                <th>url</th>
+                                <th class="text-center" style="width: 10% !important;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in screen_obj %}
+                            <tr>
+                                <td class="text-center font-size-sm">{{forloop.counter}}</td>
+                                <td class="font-w600 font-size-sm">{{ i.fk_module.module_name }}</td>
+                                <td class="font-w600 font-size-sm">{{ i.screen_name }}</td>
+                                <td class="font-w600 font-size-sm">{{ i.screen_url }}</td>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-primary js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Edit Client" onclick="edit_screen({{i.id}})">
+                                            <i class="fa fa-fw fa-pencil-alt"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-danger js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Remove Client" onclick="delete_screen({{i.id}})">
+                                            <i class="fa fa-fw fa-times"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="Module_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" style="text-align: justify;">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Modules</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="module_id" name="module_id" class="form-control form-control-sm form-control-alternative" placeholder="module id">
+                <div class="form-group">
+                    <label class="form-control-label" for="input-username">Module<span style="color:red">*</span>:</label>
+                    <input type="text" id="module_name" name="module_name" class="form-control form-control-sm form-control-alternative" placeholder="Module Name">
+                    <span style="color: red;display: none;" id="err_module_name">Please Enter Module Name</span>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="input-username">Module url<span style="color:red">*</span>:</label>
+                    <input type="text" id="module_url" name="module_url" class="form-control form-control-sm form-control-alternative" placeholder="Module Url">
+                    <span style="color: red;display: none;" id="err_module_url">Please Enter Module Url</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <buttton class="btn btn-sm btn-success" id="add_module_name_button" onclick="add_module_name()">Submit</buttton>
+                <buttton class="btn btn-sm btn-success" id="update_modulename_button" style="display: none;" onclick="update_module_name()">Update</buttton>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="Screen_Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" style="text-align: justify;">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Screen</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="screen_id" name="screen_id" class="form-control form-control-sm form-control-alternative" placeholder="screen id">
+                <div class="form-group">
+                    <label class="form-control-label" for="input-username">Module<span style="color:red">*</span>:</label>
+                    <select name="screen_module_name" class="form-control form-control-sm form-control-alternative" id="screen_module_name">
+                        <option value="" selected hidden>Select Module</option>
+                        {% for i in modules_obj %}
+                        <option value="{{i.id}}">{{i.module_name}}</option>
+                        {% endfor %}
+                    </select>
+                    <span style="color: red;display: none;" id="err_screen_module_name">Please Enter Module Name</span>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="input-username">Screen<span style="color:red">*</span>:</label>
+                    <input type="text" id="screen_name" name="screen_name" class="form-control form-control-sm form-control-alternative" placeholder="Screen Name">
+                    <span style="color: red;display: none;" id="err_screen_name">Please Enter Screen Name</span>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="input-username">Screen<span style="color:red">*</span>:</label>
+                    <input type="text" id="screen_url" name="screen_url" class="form-control form-control-sm form-control-alternative" placeholder="Screen Url">
+                    <span style="color: red;display: none;" id="err_screen_url">Please Enter Screen Url</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <buttton class="btn btn-sm btn-success" id="add_screenname_button" onclick="add_screen_name()">Submit</buttton>
+                <buttton class="btn btn-sm btn-success" id="update_screenname_button" style="display: none;" onclick="update_screen_name()">Update</buttton>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$(document).ready( function () {
+    $('#moduledatatable').DataTable();
+    $('#screensdatatable').DataTable();
+});
+
+function add_module_name_button() {
+    $("#Module_Modal").modal('show');
+    $("#add_module_name_button").show();
+    $("#update_modulename_button").hide();
+}
+function add_screenname_button() {
+    $("#Screen_Modal").modal('show');
+    $("#add_screenname_button").show();
+    $("#update_screenname_button").hide();
+}
+
+function add_module_name(){
+    var module_name = $("#module_name").val();
+    var module_url = $("#module_url").val();
+    if(module_name == ""){
+        $("#err_module_name").show();
+    }else if(module_url == ""){
+        $("#err_module_url").show();
+    }else{
+        $.ajax({
+            method : "POST",
+            url : "/add-module-name/",
+            data:{
+                "module_name":module_name,
+                "module_url":module_url,
+            },
+            success : function(response){
+                console.log(response)
+                $("#Module_Modal").modal('hide');
+                swal("The Module has been Added successfully!", {
+                    icon: "success",
+                    button: "Ok",
+                    closeOnClickOutside: false,
+                }).then(function () {
+                    location.reload();
+                });
+            }
+        })
+    }
+}
+
+function edit_module(id) {
+    $.ajax({
+        method : "POST",
+        url : "/edit-module-name/",
+        data:{
+            "id":id
+        },
+        success : function(response){
+            console.log(response)
+            $("#Module_Modal").modal('show');
+            $("#add_module_name_button").hide();
+            $("#update_modulename_button").show();
+            $("#module_id").val(response['id'])
+            $("#module_name").val(response['module_name'])
+            $("#module_url").val(response['module_url'])
+        }
+    })
+}
+
+function update_module_name() {
+    var module_name = $("#module_name").val();
+    var module_url = $("#module_url").val();
+    var module_id = $("#module_id").val();
+    if(module_name == ""){
+        $("#err_module_name").show();
+    }else if(module_url == ""){
+        $("#err_module_url").show();
+    }else{
+        $.ajax({
+            method : "POST",
+            url : "/update-module-name/",
+            data:{
+                "module_id":module_id,
+                "module_name":module_name,
+                "module_url":module_url,
+            },
+            success : function(response){
+                console.log(response)
+                $("#Module_Modal").modal('hide');
+                swal("The Module has been Updated successfully!", {
+                    icon: "success",
+                    button: "Ok",
+                    closeOnClickOutside: false,
+                }).then(function () {
+                    location.reload();
+                });
+            }
+        })
+    }
+}
+
+function delete_module(id) {
+    swal({
+    title: "Are you sure?",
+    text: "To delete this Module!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,})
+    .then((willDelete) => {
+    if(willDelete) {
+        $.ajax({
+            url: "/delete-module/",
+            method: "POST",
+            data: {
+                "id": id
+            },
+            success: function (response) {
+                if (response == "success") {
+                    swal("The Module has been successfully Deleted!", {
+                        icon: "success",
+                        button: "Ok",
+                        closeOnClickOutside: false,
+                    }).then(function () {
+                        location.reload();
+                    });
+                }
+            }
+        })
+    }
+    else {
+        swal("Module is NOT deleted!");
+    }
+    });
+}
+
+function add_screen_name() {
+    var screen_module_name = $("#screen_module_name").val();
+    var screen_name = $("#screen_name").val();
+    var screen_url = $("#screen_url").val();
+    if(screen_module_name == ""){
+        $("#err_screen_module_name").show();
+    } else if(screen_name == ""){
+        $("#err_screen_name").show();
+    }else if(screen_url == ""){
+        $("#err_screen_url").show();
+    }else{
+        $.ajax({
+            method : "POST",
+            url : "/add-screen-name/",
+            data:{
+                "screen_module_name":screen_module_name,
+                "screen_name":screen_name,
+                "screen_url":screen_url,
+            },
+            success : function(response){
+                console.log(response)
+                $("#Screen_Modal").modal('hide');
+                swal("The Screen has been Added successfully!", {
+                    icon: "success",
+                    button: "Ok",
+                    closeOnClickOutside: false,
+                }).then(function () {
+                    location.reload();
+                });
+            }
+        })
+    }
+}
+function edit_screen(id) {
+    $.ajax({
+        method : "POST",
+        url : "/edit-screen-name/",
+        data:{
+            "id":id
+        },
+        success : function(response){
+            console.log(response)
+            $("#Screen_Modal").modal('show');
+            $("#add_screenname_button").hide();
+            $("#update_screenname_button").show();
+            $("#screen_id").val(response['id'])
+            $("#screen_module_name").val(response['module_name'])
+            $("#screen_name").val(response['screen_name'])
+            $("#screen_url").val(response['screen_url'])
+        }
+    })
+}
+
+function update_screen_name() {
+    var screen_id = $("#screen_id").val();
+    var screen_module_name = $("#screen_module_name").val();
+    var screen_name = $("#screen_name").val();
+    var screen_url = $("#screen_url").val();
+    if(screen_module_name == ""){
+        $("#err_screen_module_name").show();
+    }else if(screen_name == ""){
+        $("#err_screen_name").show();
+    }else if(screen_url == ""){
+        $("#err_screen_url").show();
+    }else{
+        $.ajax({
+            method : "POST",
+            url : "/update-screen-name/",
+            data:{
+                "screen_id":screen_id,
+                "screen_module_name":screen_module_name,
+                "screen_name":screen_name,
+                "screen_url":screen_url,
+            },
+            success : function(response){
+                console.log(response)
+                $("#Screen_Modal").modal('hide');
+                swal("The Screen has been Updated successfully!", {
+                    icon: "success",
+                    button: "Ok",
+                    closeOnClickOutside: false,
+                }).then(function () {
+                    location.reload();
+                });
+            }
+        })
+    }
+}
+
+function delete_screen(id) {
+    swal({
+    title: "Are you sure?",
+    text: "To delete this Screen!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,})
+    .then((willDelete) => {
+    if(willDelete) {
+        $.ajax({
+            url: "/delete-screen/",
+            method: "POST",
+            data: {
+                "id": id
+            },
+            success: function (response) {
+                if (response == "success") {
+                    swal("The Screen has been successfully Deleted!", {
+                        icon: "success",
+                        button: "Ok",
+                        closeOnClickOutside: false,
+                    }).then(function () {
+                        location.reload();
+                    });
+                }
+            }
+        })
+    }
+    else {
+        swal("Screen is NOT deleted!");
+    }
+    });
+}
+</script>
+{% endblock content %}
