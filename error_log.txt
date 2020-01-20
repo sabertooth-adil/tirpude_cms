@@ -1,0 +1,170 @@
+2020-01-16 18:49:55.146048
+Traceback (most recent call last):
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\tirpude_cms\authentication\views.py", line 62, in get_city_district_list
+    city_list = list(City.objects.filter(fk_state_id=state_id).values_list("id", "city"))
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-16 18:49:55.146048
+Traceback (most recent call last):
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\tirpude_cms\authentication\views.py", line 80, in get_sub_cast_list
+    sub_cast_list = list(SubCast.objects.filter(fk_cast_id=cast).values_list("id", "sub_cast"))
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-16 18:49:55.146048
+Traceback (most recent call last):
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\tirpude_cms\authentication\views.py", line 99, in get_stream_or_field_list
+    StreamOrField.objects.filter(fk_twelveth_or_diploma_id=twelveth_or_diploma).values_list("id",
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-16 18:49:55.146048
+Traceback (most recent call last):
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\tirpude_cms\authentication\views.py", line 62, in get_city_district_list
+    city_list = list(City.objects.filter(fk_state_id=state_id).values_list("id", "city"))
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+
+2020-01-16 18:49:55.147050
+Traceback (most recent call last):
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1768, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CMS\tirpude_cms\authentication\views.py", line 118, in get_degree_stream_or_field_list
+    DegreeStreamOrField.objects.filter(fk_degree_id=degree).values_list("id", "stream_or_field_name"))
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\query.py", line 904, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\query.py", line 923, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1340, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1371, in _add_q
+    check_filterable=check_filterable,
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1301, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\sql\query.py", line 1155, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\fields\related_lookups.py", line 115, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "D:\CMS\tirpude_cms\venv\lib\site-packages\django\db\models\fields\__init__.py", line 1772, in get_prep_value
+    ) from e
+ValueError: Field 'id' expected a number but got ''.
+
+

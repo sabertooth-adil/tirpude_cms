@@ -1133,6 +1133,9 @@
     });
 
     $(document).ready(function() {
+        $("#ManageFinanceModal").on("hidden.bs.modal", function () {
+            console.log("hello")
+        });
         $('.dtable').DataTable();
         $('#Add_Event_button').click(function () {
             $.ajax({

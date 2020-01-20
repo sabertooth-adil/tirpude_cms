@@ -185,6 +185,7 @@ function SubmitAptitudeTest() {
 <!--  Reload Page on Close Modal   -->
 
       $("#time_expired").on("hidden.bs.modal", function () {
+          console.log('hello')
             SubmitAptitudeTest()
       });
 
@@ -217,10 +218,6 @@ $("#countdown_time").removeAttr("disabled")
  $("#time_expired").modal('show');
 }
 }, 1000);
-
-$("#time_expired").on('hidden.bs.modal', function () {
-    SubmitAptitudeTest()
-})
 
 $(document).ready(function() {
     $("#aptitudesetsubmit").on("click", function(){
