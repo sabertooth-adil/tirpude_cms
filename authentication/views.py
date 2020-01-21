@@ -224,7 +224,7 @@ def signup_user(request):
         id_password = request.POST.get("id_password")
         if UserInfo.objects.filter(email=id_username, password=id_password).exists():
             if UserInfo.objects.filter(email=id_username, password=id_password, status="Active").exists():
-                obj_user_info = UserInfo.objects.get(email=id_username, password=id_password)
+                obj_user_info = UserInfos.objects.get(email=id_username, password=id_password)
                 request.session["user_id"] = obj_user_info.id
                 return HttpResponse("success")
             else:
